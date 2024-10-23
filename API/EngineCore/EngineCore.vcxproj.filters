@@ -2,8 +2,21 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="AActor.h" />
+    <ClInclude Include="EngineAPICore.h" />
+    <ClInclude Include="..\EngineBase\PreCompile.h">
+      <Filter>PreCompile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AActor.cpp" />
+    <ClCompile Include="EngineAPICore.cpp" />
+    <ClCompile Include="..\EngineBase\PreCompile.cpp">
+      <Filter>PreCompile</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="PreCompile">
+      <UniqueIdentifier>{7e3cae4b-ac1d-4ebe-86d5-cf466388c892}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
