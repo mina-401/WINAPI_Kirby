@@ -13,7 +13,7 @@ UContentsCore* UEngineAPICore::UserCore = nullptr;
 
 UEngineAPICore::UEngineAPICore()
 {
-
+	MainCore = this;
 }
 
 UEngineAPICore::~UEngineAPICore()
@@ -47,6 +47,7 @@ int UEngineAPICore::EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore)
 	Core.EngineMainWindow.Open();
 	MainCore = &Core;
 
+	//순서: user begin, tick -> engine level tick, render
 	EngineDelegate Start = EngineDelegate(std::bind(EngineBeginPlay));
 	EngineDelegate FrameLoop = EngineDelegate(std::bind(EngineTick));;
 	return UEngineWindow::WindowMessageLoop(Start, FrameLoop);
@@ -91,27 +92,25 @@ void UEngineAPICore::OpenLevel(std::string_view _LevelName)
 {
 	std::string ChangeName = _LevelName.data();
 
-	//if (true == Levels.contains(ChangeName))
+	if (false == Levels.contains(ChangeName))
+	{
+		MSGASSERT(ChangeName + "라는 이름의 레벨은 존재하지 않습니다.");
+		return;
+	}
+
+	 // 최신 방식
+	 //내부에서 없으면 만든다.
+	 CurLevel = Levels[ChangeName];
+
+	//std::map<std::string, class ULevel*>::iterator FindIter = Levels.find(ChangeName);
+	//std::map<std::string, class ULevel*>::iterator EndIter = Levels.end();
+
+	//if (EndIter == FindIter)
 	//{
 	//	MSGASSERT(ChangeName + "라는 이름의 레벨은 존재하지 않습니다.");
 	//	return;
 	//}
 
 	//// 최신 방식
-	// 주의할 점이 하나가 있다.
-	// 없으면 노드를 insert까지 해버린다.
-	// 내부에서 없으면 만든다까지 겸하고 있다.
-	// CurLevel = Levels[ChangeName];
-
-	std::map<std::string, class ULevel*>::iterator FindIter = Levels.find(ChangeName);
-	std::map<std::string, class ULevel*>::iterator EndIter = Levels.end();
-
-	if (EndIter == FindIter)
-	{
-		MSGASSERT(ChangeName + "라는 이름의 레벨은 존재하지 않습니다.");
-		return;
-	}
-
-	// 최신 방식
-	CurLevel = FindIter->second;
+	//CurLevel = FindIter->second;
 }

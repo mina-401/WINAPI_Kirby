@@ -1,20 +1,20 @@
 #include "PreCompile.h"
-#include "EduContentsCore.h"
+#include "KirbyContentsCore.h"
 #include <EngineCore/EngineAPICore.h>
 
 #include "PlayGameMode.h"
 #include "Player.h"
 
-EduContentsCore::EduContentsCore()
+KirbyContentsCore::KirbyContentsCore()
 {
 }
 
-EduContentsCore::~EduContentsCore()
+KirbyContentsCore::~KirbyContentsCore()
 {
 }
 
 // 엔진이 실행되고 단 1번 실행된다.
-void EduContentsCore::BeginPlay()
+void KirbyContentsCore::BeginPlay()
 {
 	// 아무 쓸모 없는 코드.
 	// 애는 님들이 지워줘야한다.
@@ -31,6 +31,6 @@ void EduContentsCore::BeginPlay()
 
 }
 
-void EduContentsCore::Tick()
+void KirbyContentsCore::Tick()
 {
 }

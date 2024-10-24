@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{ff6353c1-f445-4001-aa75-89ea5f23ad81}</ProjectGuid>
+    <ProjectGuid>{7F5DDBCF-34AC-4991-B584-BC080D16A110}</ProjectGuid>
     <RootNamespace>ContentsProject</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -155,7 +155,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="EduContentsCore.h">
+    <ClInclude Include="KirbyContentsCore.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -170,7 +170,7 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="EduContentsCore.cpp">
+    <ClCompile Include="KirbyContentsCore.cpp">
       <SubType>
       </SubType>
     </ClCompile>
