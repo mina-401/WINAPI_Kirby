@@ -1,23 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="EngineWindow.h" />
-    <ClInclude Include="..\EngineBase\PreCompile.h">
-      <Filter>PreComile</Filter>
-    </ClInclude>
+    <Filter Include="Window">
+      <UniqueIdentifier>{1a58ac3a-56bb-4fd1-beaa-715e38dd917c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PreCompile">
+      <UniqueIdentifier>{851e9c80-3b24-4156-8b0a-e6537c61ab7f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EngineWindow.cpp" />
-    <ClCompile Include="..\EngineBase\PreCompile.cpp">
-      <Filter>PreComile</Filter>
+    <ClCompile Include="EngineWindow.cpp">
+      <Filter>Window</Filter>
+    </ClCompile>
+    <ClCompile Include="PreCompile.cpp">
+      <Filter>PreCompile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="PreComile">
-      <UniqueIdentifier>{03b8ee7b-6cff-41a4-9d3d-400220958471}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="PreCompile">
-      <UniqueIdentifier>{02341bd0-e0cd-405f-bbff-cb5a55565631}</UniqueIdentifier>
-    </Filter>
+    <ClInclude Include="EngineWindow.h">
+      <Filter>Window</Filter>
+    </ClInclude>
+    <ClInclude Include="PreCompile.h">
+      <Filter>PreCompile</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,11 +1,17 @@
 #pragma once
 #include <functional>
+
 // 설명 :
 class EngineDelegate
 {
 public:
 	// constrcuter destructer
 	EngineDelegate();
+	EngineDelegate(std::function<void()> _Function)
+	{
+		Functions.push_back(_Function);
+	}
+
 	~EngineDelegate();
 
 	// delete Function
@@ -18,22 +24,24 @@ public:
 	{
 		return false == Functions.empty();
 	}
-	void operator=(std::function<void()> _Function)
+
+	void operator+=(std::function<void()> _Function)
 	{
 		Functions.push_back(_Function);
 	}
+
 	void operator()()
 	{
 		std::list<std::function<void()>>::iterator StartIter = Functions.begin();
 		std::list<std::function<void()>>::iterator EndIter = Functions.end();
 
-		//다 돌아서 델리게이트 function 실행
 		for (; StartIter != EndIter; ++StartIter)
 		{
 			std::function<void()>& Function = *StartIter;
 			Function();
 		}
 	}
+
 	void Clear()
 	{
 		Functions.clear();
