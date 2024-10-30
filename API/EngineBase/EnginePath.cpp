@@ -28,9 +28,21 @@ std::string UEnginePath::GetPathToString()
 	return Path.string();
 }
 
+std::string UEnginePath::GetFileName()
+{
+	return Path.filename().string();
+}
+
+std::string UEnginePath::GetExtension()
+{
+	return Path.extension().string();
+}
+
 
 bool UEnginePath::IsExists()
 {
+	// C++이 빌드되는곳에서는 모두다 동일하게 돌아간다.
+	// std::filesystem::create_directory()
 	return std::filesystem::exists(Path);
 }
 

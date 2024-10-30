@@ -13,13 +13,12 @@ ACamera::~ACamera()
 
 void ACamera::BeginPlay()
 {
-	//UEngineAPICore::GetCore()->GetMainWindow().
-
 	UEngineInput::GetInst().BindAction(VK_LBUTTON, KeyEvent::Press, std::bind(&ACamera::ClickFunction, this, VK_LBUTTON));
 }
 
 void ACamera::Tick(float _DeltaTime)
 {
+	//if(GetWorld()== )
 }
 
 void ACamera::ClickFunction(int _KeyIndex)

@@ -10,6 +10,8 @@ APlayer::APlayer()
 	//UEngineAPICore::GetCore()->GetMainWindow().GetBackBuffer();
 	SetActorLocation({100, 100});
 	SetActorScale({ 100, 100 });
+
+	SetSprite("LifeIcon.png");
 }
 
 APlayer::~APlayer()
@@ -19,7 +21,6 @@ APlayer::~APlayer()
 
 void APlayer::BeginPlay()
 {
-
 	//키 바인딩
 	//인자를 호출할 때 넣어줌을 명시하는 것이 placeholders
 
@@ -27,20 +28,27 @@ void APlayer::BeginPlay()
 	UEngineInput::GetInst().BindAction('D', KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::RIGHT));
 	UEngineInput::GetInst().BindAction('S', KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::DOWN));
 	UEngineInput::GetInst().BindAction('W', KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::UP));*/
-
-	
-
-
-
 }
 
 void APlayer::Tick(float _DeltaTime)
 {
-	//if (3.0f < UEngineInput::GetInst().IsPressTime(VK_LBUTTON))
-	//{
-	//	// 콘솔에서 슈팅 못만들면 API와서도 못만들어요.
-	//	MoveFunction(FVector2D::RIGHT);
-	//}
+	Super::Tick(_DeltaTime);
+	if (true == UEngineInput::GetInst().IsPress('D'))
+	{
+		AddActorLocation(FVector2D::RIGHT * _DeltaTime * Speed);
+	}
+	if (true == UEngineInput::GetInst().IsPress('A'))
+	{
+		AddActorLocation(FVector2D::LEFT * _DeltaTime * Speed);
+	}
+	if (true == UEngineInput::GetInst().IsPress('S'))
+	{
+		AddActorLocation(FVector2D::DOWN * _DeltaTime * Speed);
+	}
+	if (true == UEngineInput::GetInst().IsPress('W'))
+	{
+		AddActorLocation(FVector2D::UP * _DeltaTime * Speed);
+	}
 }
 void APlayer::MoveFunction(FVector2D _Dir/*, AMonster* Monster*/)
 {

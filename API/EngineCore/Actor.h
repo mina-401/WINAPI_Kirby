@@ -1,10 +1,15 @@
 #pragma once
+#include <EngineBase/Object.h>
 #include <EngineBase/EngineMath.h>
 
+#include "EngineSprite.h"
+
 // Ό³Έν :
-class AActor
+class AActor : public UObject
 {
 public:
+	typedef AActor Super;
+
 	friend class ULevel;
 
 	// constrcuter destructer
@@ -53,5 +58,10 @@ private:
 	class ULevel* World = nullptr;
 
 	FTransform Transform;
+
+
+public:
+	class UEngineSprite* Sprite = nullptr;
+	void SetSprite(std::string_view _Name);
 };
 

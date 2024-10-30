@@ -1,6 +1,10 @@
 #include "PreCompile.h"
 #include "Level.h"
-#include <EngineCore/EngineAPICore.h>
+#include "EngineAPICore.h"
+
+#include <EngineBase/EngineMath.h>
+#include <EnginePlatform/EngineWindow.h>
+#include <EnginePlatform/EngineWinImage.h>
 
 ULevel::ULevel()
 {
@@ -23,12 +27,12 @@ ULevel::~ULevel()
 
 		if (nullptr != CurActor)
 		{
-			delete *StartIter;
+			delete* StartIter;
 		}
 	}
 }
 
-void ULevel::Tick(float _deltaTime)
+void ULevel::Tick(float _DeltaTime)
 {
 	std::list<AActor*>::iterator StartIter = AllActors.begin();
 	std::list<AActor*>::iterator EndIter = AllActors.end();
@@ -37,13 +41,14 @@ void ULevel::Tick(float _deltaTime)
 	{
 		AActor* CurActor = *StartIter;
 
-		CurActor->Tick(_deltaTime);
+		CurActor->Tick(_DeltaTime);
 	}
 }
 
 void ULevel::Render()
 {
 	ScreenClear();
+
 	// 액터를 기반으로 랜더링을 돌리는건 곧 지워질 겁니다.
 	std::list<AActor*>::iterator StartIter = AllActors.begin();
 	std::list<AActor*>::iterator EndIter = AllActors.end();
@@ -57,15 +62,15 @@ void ULevel::Render()
 
 	DoubleBuffering();
 }
+
 void ULevel::ScreenClear()
 {
 	UEngineWindow& MainWindow = UEngineAPICore::GetCore()->GetMainWindow();
 	UEngineWinImage* BackBufferImage = MainWindow.GetBackBuffer();
 	FVector2D Size = MainWindow.GetWindowSize();
 
-	Rectangle(BackBufferImage->GetDC(), 0, 0, Size.iX(), Size.iY());
+	Rectangle(BackBufferImage->GetDC(), -1, -1, Size.iX() + 2, Size.iY() + 2);
 }
-
 
 void ULevel::DoubleBuffering()
 {
