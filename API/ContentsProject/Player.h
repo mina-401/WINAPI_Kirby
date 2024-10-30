@@ -26,7 +26,7 @@ public:
 protected:
 
 private:
-	
+	int MySpriteIndex = 0;
 	float Speed = 100.0f;
 };
 

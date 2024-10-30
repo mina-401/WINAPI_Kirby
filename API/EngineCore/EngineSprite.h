@@ -6,7 +6,7 @@
 class UEngineSprite : public UObject
 {
 public:
-	class SpriteData
+	class USpriteData
 	{
 	public:
 		// 이 이미지의
@@ -28,9 +28,19 @@ public:
 
 	void PushData(UEngineWinImage* Image, const FTransform& _Trans);
 
+	USpriteData GetSpriteData(int _Index = 0)
+	{
+		return Data[_Index];
+	}
+
+	void ClearSpriteData()
+	{
+		Data.clear();
+	}
+
 protected:
 
-	std::vector<SpriteData> Data;
+	std::vector<USpriteData> Data;
 
 	// UEngineWinImage* Image;
 };

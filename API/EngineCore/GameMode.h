@@ -17,7 +17,10 @@ public:
 	AGameMode& operator=(AGameMode&& _Other) noexcept = delete;
 
 protected:
+	void Render() override
+	{
 
+	}
 private:
 
 };

@@ -11,7 +11,7 @@ APlayer::APlayer()
 	SetActorLocation({100, 100});
 	SetActorScale({ 100, 100 });
 
-	SetSprite("LifeIcon.png");
+	SetSprite("KirbyDance.png");
 }
 
 APlayer::~APlayer()
@@ -33,6 +33,7 @@ void APlayer::BeginPlay()
 void APlayer::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
+
 	if (true == UEngineInput::GetInst().IsPress('D'))
 	{
 		AddActorLocation(FVector2D::RIGHT * _DeltaTime * Speed);
@@ -48,6 +49,12 @@ void APlayer::Tick(float _DeltaTime)
 	if (true == UEngineInput::GetInst().IsPress('W'))
 	{
 		AddActorLocation(FVector2D::UP * _DeltaTime * Speed);
+	}
+
+	if (true == UEngineInput::GetInst().IsDown('R'))
+	{
+		SetSprite("KirbyDance.png", MySpriteIndex);
+		++MySpriteIndex;
 	}
 }
 void APlayer::MoveFunction(FVector2D _Dir/*, AMonster* Monster*/)

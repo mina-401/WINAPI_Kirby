@@ -23,6 +23,8 @@ UEngineWinImage::UEngineWinImage()
 
 UEngineWinImage::~UEngineWinImage()
 {
+	// 윈도우 만들어준 메모리라도 릭은 안되겠지만
+	// 왠만하면 내가 명시적으로 지워주는것을 선호합니다.
 	if (nullptr != hBitMap)
 	{
 		DeleteObject(hBitMap);
@@ -109,6 +111,7 @@ void UEngineWinImage::CopyToBit(UEngineWinImage* _TargetImage, const FTransform&
 	FVector2D LeftTop = _Trans.CenterLeftTop();
 	FVector2D RightBot = _Trans.CenterRightBottom();
 
+	// 이미지 
 	BitBlt(
 		TargetDC,
 		LeftTop.iX(),
@@ -122,6 +125,45 @@ void UEngineWinImage::CopyToBit(UEngineWinImage* _TargetImage, const FTransform&
 
 	// SRCCOPY 카피할때 
 
+	FVector2D Vector;
+}
+
+void UEngineWinImage::CopyToTrans(UEngineWinImage* _TargetImage, const FTransform& _RenderTrans, const FTransform& _LTImageTrans, UColor _Color /*= UColor(255, 0, 255, 255)*/)
+{
+	// _RenderTrans 액터의 트랜스폼
+
+	// _LTImageTrans 이미지 쪼갠 크기가
+
+	HDC CopyDC = ImageDC;
+	HDC TargetDC = _TargetImage->ImageDC;
+
+	//_In_ HDC hdcDest, 여기에다가 카피해라
+	//_In_ int xoriginDest, 그려지는 위치
+	//_In_ int yoriginDest, 그려지는 위치
+	//_In_ int wDest, 그려지는 크기
+	//_In_ int hDest, 그려지는 크기
+	//_In_ HDC hdcSrc, 복사될 이미지 => 여러분들이 로드한 이미지
+	//_In_ int xoriginSrc, 이미지 이부분 
+	//_In_ int yoriginSrc, int X
+	//_In_ int wSrc,
+	//_In_ int hSrc,
+	//_In_ UINT crTransparent
+
+	FVector2D LeftTop = _RenderTrans.CenterLeftTop();
+
+	TransparentBlt(
+		TargetDC,
+		LeftTop.iX(),
+		LeftTop.iY(),
+		_RenderTrans.Scale.iX(),
+		_RenderTrans.Scale.iY(),
+		CopyDC,
+		_LTImageTrans.Location.iX(),
+		_LTImageTrans.Location.iY(),
+		_LTImageTrans.Scale.iX(),
+		_LTImageTrans.Scale.iY(),
+		_Color.Color
+	);
 }
 
 void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path)
@@ -176,7 +218,7 @@ void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path
 		// 복사본을 생성하고 거기에서 bitmap 부분을 뽑아내는 방식
 		Gdiplus::Bitmap* pBitMap = reinterpret_cast<Gdiplus::Bitmap*>(pImage->Clone());
 
-		Gdiplus::Status stat = pBitMap->GetHBITMAP(Gdiplus::Color(0, 0, 0, 0), &NewBitmap);
+		Gdiplus::Status stat = pBitMap->GetHBITMAP(Gdiplus::Color(255, 255, 0, 255), &NewBitmap);
 
 		if (Gdiplus::Status::Ok != stat)
 		{

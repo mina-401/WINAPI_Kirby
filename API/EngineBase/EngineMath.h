@@ -199,3 +199,26 @@ class EngineMath
 {
 };
 
+
+
+class UColor
+{
+public:
+	union
+	{
+		int Color;
+		struct
+		{
+			char R;
+			char G;
+			char B;
+			char A;
+		};
+	};
+
+	UColor(char _R, char _G, char _B, char _A)
+		:R(_R), G(_G), B(_B), A(_A)
+	{
+
+	}
+};

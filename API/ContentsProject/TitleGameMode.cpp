@@ -15,17 +15,17 @@ ATitleGameMode::~ATitleGameMode()
 
 void ATitleGameMode::ClickFunction(int _KeyIndex)
 {
-	int a;
-	switch (_KeyIndex)
-	{
-	case VK_LBUTTON:
-		//UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Title");
-		/*UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, APlayer>("Play");
-		UEngineAPICore::GetCore()->OpenLevel("Play");*/
-		break;
-	default:
-		break;
-	}
+	//int a;
+	//switch (_KeyIndex)
+	//{
+	//case VK_LBUTTON:
+	//	//UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Title");
+	//	/*UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, APlayer>("Play");
+	//	UEngineAPICore::GetCore()->OpenLevel("Play");*/
+	//	break;
+	//default:
+	//	break;
+	//}
 }
 
 void ATitleGameMode::Tick(float _DeltaTime)
