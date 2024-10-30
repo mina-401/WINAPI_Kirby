@@ -1,7 +1,5 @@
 #include "PreCompile.h"
 #include <ContentsProject/KirbyContentsCore.h>
-
-
 #include <EngineCore/EngineAPICore.h>
 
 #pragma comment (lib, "EngineCore.lib")

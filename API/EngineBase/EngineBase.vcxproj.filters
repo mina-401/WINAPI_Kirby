@@ -4,9 +4,6 @@
     <ClInclude Include="EngineDebug.h">
       <Filter>Debug</Filter>
     </ClInclude>
-    <ClInclude Include="EngineFile.h">
-      <Filter>IO</Filter>
-    </ClInclude>
     <ClInclude Include="EngineMath.h">
       <Filter>Math</Filter>
     </ClInclude>
@@ -16,13 +13,22 @@
     <ClInclude Include="PreCompile.h">
       <Filter>PreCompile</Filter>
     </ClInclude>
+    <ClInclude Include="EngineTimer.h">
+      <Filter>Time</Filter>
+    </ClInclude>
+    <ClInclude Include="EnginePath.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineDirectory.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineFile.h">
+      <Filter>IO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EngineDebug.cpp">
       <Filter>Debug</Filter>
-    </ClCompile>
-    <ClCompile Include="EngineFile.cpp">
-      <Filter>IO</Filter>
     </ClCompile>
     <ClCompile Include="EngineMath.cpp">
       <Filter>Math</Filter>
@@ -32,6 +38,18 @@
     </ClCompile>
     <ClCompile Include="PreCompile.cpp">
       <Filter>PreCompile</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineTimer.cpp">
+      <Filter>Time</Filter>
+    </ClCompile>
+    <ClCompile Include="EnginePath.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineDirectory.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineFile.cpp">
+      <Filter>IO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +67,9 @@
     </Filter>
     <Filter Include="PreCompile">
       <UniqueIdentifier>{81930aca-db5f-4e79-a8e2-be0ea3408be3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Time">
+      <UniqueIdentifier>{2c935f6e-2cac-4cd2-b502-406166a8ee3b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

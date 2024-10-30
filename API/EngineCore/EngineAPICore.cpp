@@ -1,6 +1,6 @@
 #include "PreCompile.h"
 #include "EngineAPICore.h"
-
+#include <EnginePlatform/EngineInput.h>
 #include <EnginePlatform/EngineWindow.h>
 #include <EngineBase/EngineDelegate.h>
 #include <EngineBase/EngineDebug.h>
@@ -36,16 +36,16 @@ UEngineAPICore::~UEngineAPICore()
 
 int UEngineAPICore::EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore)
 {
+	//릭 체크
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	UserCore = _UserCore;
 
 	UEngineWindow::EngineWindowInit(_Inst);
 
-	// 객체 안만들면 객체지향이 아닌거 같아서 객체로 하자.
 	UEngineAPICore Core = UEngineAPICore();
 	Core.EngineMainWindow.Open();
-	MainCore = &Core;
+	//MainCore = &Core; //생성자에서 MainCore = this와 같음
 
 	//순서: user begin, tick -> engine level tick, render
 	EngineDelegate Start = EngineDelegate(std::bind(EngineBeginPlay));
@@ -60,8 +60,6 @@ void UEngineAPICore::EngineBeginPlay()
 
 void UEngineAPICore::EngineTick()
 {
-	//AXVidio NewVidio;
-	//NewVidio.Play("AAAA.avi");
 
 	// 시간재기
 	// 이벤트
@@ -77,13 +75,21 @@ void UEngineAPICore::EngineTick()
 
 void UEngineAPICore::Tick()
 {
+	// 시간을 잴겁니다. 현재시간 
+	DeltaTimer.TimeCheck();
+	float DeltaTime = DeltaTimer.GetDeltaTime();
+
+	// 키체크
+	UEngineInput::GetInst().KeyCheck(DeltaTime);
+
 	if (nullptr == CurLevel)
 	{
 		MSGASSERT("엔진 코어에 현재 레벨이 지정되지 않았습니다");
 		return;
 	}
 
-	CurLevel->Tick();
+	UEngineInput::GetInst().EventCheck(DeltaTime);
+	CurLevel->Tick(DeltaTime);
 	CurLevel->Render();
 }
 

@@ -16,7 +16,7 @@ public:
 	ULevel& operator=(const ULevel& _Other) = delete;
 	ULevel& operator=(ULevel&& _Other) noexcept = delete;
 
-	void Tick();
+	void Tick(float _deltaTime);
 	void Render();
 
 	template<typename ActorType>
@@ -36,7 +36,8 @@ public:
 protected:
 
 private:
-
+	void ScreenClear();
+	void DoubleBuffering();
 	// 게임레벨과 메인폰을 만들어서 게임을 준비시키는 함수로도 만들었다.
 	template<typename GameModeType, typename MainPawnType>
 	void CreateGameMode()

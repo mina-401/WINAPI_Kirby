@@ -9,11 +9,9 @@
 
 // user header
 #include <EngineBase/EngineDelegate.h>
+#include <EngineBase/EngineMath.h>
+#include "EngineWinImage.h"
 
-
-// 정신 잘 붙
-
-// 설명 :
 class UEngineWindow
 {
 public:
@@ -33,31 +31,38 @@ public:
 
 	void Create(std::string_view _TitleName, std::string_view _ClassName = "Default");
 	void Open(std::string_view _TitleName = "Window");
-
-	inline HDC GetBackBuffer()
+	inline FVector2D GetWindowSize() const
 	{
-		return BackBuffer;
+		return WindowSize;
 	}
 
+	inline UEngineWinImage* GetWindowImage() const
+	{
+		return WindowImage;
+	}
 
+	inline UEngineWinImage* GetBackBuffer() const
+	{
+		return BackBufferImage;
+	}
 
+	inline void SetWindowTitle(std::string_view Text)
+	{
+		SetWindowTextA(WindowHandle, Text.data());
+	}
+	void SetWindowPosAndScale(FVector2D _Pos, FVector2D _Scale);
 protected:
 
 private:
 	static HINSTANCE hInstance;
 	static std::map<std::string, WNDCLASSEXA> WindowClasss;
 
-	// WinApi의 기본랜더링의 핵심은
-	// HDC이다. HDC는 window창에 그리기 위한 권한 핸들입니다.
-	// HDC는 이미지이면서 그 이미지의 수정 권한
-	// 한 윈도우한 1개의 Main HDC만 존재할수 있다.
-	// 보통 이녀석을 BackBuffer라고 부릅니다.
+	FVector2D WindowSize;
 
-	// 리눅스에서는 컴파일이 안되거나 실행이 안되는 코드가 된다.
-	// hwnd => 위도우 창 1개
-	// 윈도우에서 뭔가를 그리려는 함수의 대부분의 첫번째 인자는 hdc일것입니다.
-	HDC BackBuffer = nullptr;
+	UEngineWinImage* BackBufferImage = nullptr;
 	HWND WindowHandle = nullptr;
+	// 윈도우 이미지로 랩핑되었다.
+	UEngineWinImage* WindowImage = nullptr;
 };
 
 

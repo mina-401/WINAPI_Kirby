@@ -156,8 +156,11 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="EngineDirectory.h" />
     <ClInclude Include="EngineFile.h" />
     <ClInclude Include="EngineMath.h" />
+    <ClInclude Include="EnginePath.h" />
+    <ClInclude Include="EngineTimer.h" />
     <ClInclude Include="PreCompile.h">
       <SubType>
       </SubType>
@@ -169,8 +172,11 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="EngineDirectory.cpp" />
     <ClCompile Include="EngineFile.cpp" />
     <ClCompile Include="EngineMath.cpp" />
+    <ClCompile Include="EnginePath.cpp" />
+    <ClCompile Include="EngineTimer.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <SubType>
       </SubType>

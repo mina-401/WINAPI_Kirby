@@ -1,11 +1,14 @@
 #include "PreCompile.h"
 #include "Player.h"
+#include <EnginePlatform/EngineInput.h>
+
 #include <EngineCore/EngineAPICore.h>
 
 APlayer::APlayer()
 {
 	// UEngineAPICore::GetCore()->CreateLevel("Title");
-	SetActorLoaction({100, 100});
+	//UEngineAPICore::GetCore()->GetMainWindow().GetBackBuffer();
+	SetActorLocation({100, 100});
 	SetActorScale({ 100, 100 });
 }
 
@@ -16,13 +19,37 @@ APlayer::~APlayer()
 
 void APlayer::BeginPlay()
 {
-	// 기본크기가 존재하지 않으므로 
-	// 기본 크기 및 기본 스케일을 지정해줘야 합니다.
+
+	//키 바인딩
+	//인자를 호출할 때 넣어줌을 명시하는 것이 placeholders
+
+	/*UEngineInput::GetInst().BindAction('A', KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::LEFT));
+	UEngineInput::GetInst().BindAction('D', KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::RIGHT));
+	UEngineInput::GetInst().BindAction('S', KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::DOWN));
+	UEngineInput::GetInst().BindAction('W', KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::UP));*/
+
+	
+
 
 
 }
 
-void APlayer::Tick()
+void APlayer::Tick(float _DeltaTime)
 {
-	AddActorLoaction(FVector2D::RIGHT * 0.0001f);
+	//if (3.0f < UEngineInput::GetInst().IsPressTime(VK_LBUTTON))
+	//{
+	//	// 콘솔에서 슈팅 못만들면 API와서도 못만들어요.
+	//	MoveFunction(FVector2D::RIGHT);
+	//}
 }
+void APlayer::MoveFunction(FVector2D _Dir/*, AMonster* Monster*/)
+{
+	// 몬스터를 찾아오는 함수가 존재할것이다.
+	// 액터 전체르 관리하기 때문에.
+	// 찾아오는 함수가 존재합니다.
+
+	float DeltaTime = UEngineAPICore::GetCore()->GetDeltaTime();
+
+	AddActorLocation(_Dir * DeltaTime * Speed);
+}
+

@@ -174,26 +174,49 @@ void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassN
     }
 
     // 윈도우가 만들어지면 hdc를 여기서 얻어올 겁니다.
-    BackBuffer = GetDC(WindowHandle);
+    HDC WindowMainDC = GetDC(WindowHandle);
+
+    // nullptr이 아니게 만든 순간 이제 진짜 윈도우 버퍼가 만들어졌다.
+    WindowImage = new UEngineWinImage();
+    // 이건 만든다는 개념이 아니다.
+    WindowImage->Create(WindowMainDC);
 }
 
 void UEngineWindow::Open(std::string_view _TitleName /*= "Window"*/)
 {
-    // 어 window 안만들고 띄우려고 하네?
     if (0 == WindowHandle)
     {
-        // 만들어
-        Create("Window");
+        Create(_TitleName);
     }
 
     if (0 == WindowHandle)
     {
         return;
     }
-
-	// 단순히 윈도창을 보여주는 것만이 아니라
 	ShowWindow(WindowHandle, SW_SHOW);
     UpdateWindow(WindowHandle);
     ++WindowCount;
-	// ShowWindow(WindowHandle, SW_HIDE);
+}
+void UEngineWindow::SetWindowPosAndScale(FVector2D _Pos, FVector2D _Scale)
+{
+
+    if (false == WindowSize.EqualToInt(_Scale))
+    {
+        if (nullptr != BackBufferImage)
+        {
+            delete BackBufferImage;
+            BackBufferImage = nullptr;
+        }
+
+        BackBufferImage = new UEngineWinImage();
+        BackBufferImage->Create(WindowImage, _Scale);
+    }
+
+    WindowSize = _Scale;
+
+    RECT Rc = { 0, 0, _Scale.iX(), _Scale.iY() };
+
+    AdjustWindowRect(&Rc, WS_OVERLAPPEDWINDOW, FALSE);
+
+    ::SetWindowPos(WindowHandle, nullptr, _Pos.iX(), _Pos.iY(), Rc.right - Rc.left, Rc.bottom - Rc.top, SWP_NOZORDER);
 }
