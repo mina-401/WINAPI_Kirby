@@ -2,6 +2,7 @@
 #include "Player.h"
 #include <EnginePlatform/EngineInput.h>
 
+#include <EngineCore/SpriteRenderer.h>
 #include <EngineCore/EngineAPICore.h>
 
 APlayer::APlayer()
@@ -9,9 +10,11 @@ APlayer::APlayer()
 	// UEngineAPICore::GetCore()->CreateLevel("Title");
 	//UEngineAPICore::GetCore()->GetMainWindow().GetBackBuffer();
 	SetActorLocation({100, 100});
-	SetActorScale({ 100, 100 });
+	SetActorScale({ 1, 1 });
 
-	SetSprite("KirbyDance.png");
+	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
+	SpriteRenderer->SetSprite("KirbyDance.png");
+	SpriteRenderer->SetComponentScale({ 300, 300 });
 }
 
 APlayer::~APlayer()
@@ -53,7 +56,7 @@ void APlayer::Tick(float _DeltaTime)
 
 	if (true == UEngineInput::GetInst().IsDown('R'))
 	{
-		SetSprite("KirbyDance.png", MySpriteIndex);
+		SpriteRenderer->SetSprite("KirbyDance.png", MySpriteIndex);
 		++MySpriteIndex;
 	}
 }

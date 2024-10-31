@@ -23,6 +23,9 @@
     <ClInclude Include="Camera.h">
       <Filter>ContentsObject</Filter>
     </ClInclude>
+    <ClInclude Include="ContentsEnum.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -47,6 +50,9 @@
     <ClCompile Include="Camera.cpp">
       <Filter>ContentsObject</Filter>
     </ClCompile>
+    <ClCompile Include="ContentsEnum.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -60,6 +66,9 @@
     </Filter>
     <Filter Include="ContentsObject\GameMode">
       <UniqueIdentifier>{853cd216-882a-48b9-a584-a08e11d0a3b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global">
+      <UniqueIdentifier>{29ba7cbb-bcfd-4de0-94f1-8fc42faf73e2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

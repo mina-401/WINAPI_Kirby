@@ -151,10 +151,12 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="2DCollision.h" />
     <ClInclude Include="Actor.h">
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ActorComponent.h" />
     <ClInclude Include="EngineSprite.h" />
     <ClInclude Include="GameMode.h">
       <SubType>
@@ -170,12 +172,16 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="SceneComponent.h" />
+    <ClInclude Include="SpriteRenderer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="2DCollision.cpp" />
     <ClCompile Include="Actor.cpp">
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ActorComponent.cpp" />
     <ClCompile Include="EngineSprite.cpp" />
     <ClCompile Include="GameMode.cpp">
       <SubType>
@@ -194,6 +200,8 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="SceneComponent.cpp" />
+    <ClCompile Include="SpriteRenderer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

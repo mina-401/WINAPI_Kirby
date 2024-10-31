@@ -38,7 +38,17 @@ void KirbyContentsCore::BeginPlay()
 		std::string FilePath = ImageFiles[i].GetPathToString();
 		UImageManager::GetInst().Load(FilePath);
 	}
+
 	UImageManager::GetInst().CuttingSprite("KirbyDance.png", { 128, 128 });
+
+	{
+
+		UEngineDirectory KirbyDir;
+		KirbyDir.MoveParentToDirectory("Resource");
+		KirbyDir.Append("PlayLevel");
+		KirbyDir.Append("Kirby");
+ 		UImageManager::GetInst().LoadFolder(KirbyDir.GetPathToString());
+	}
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("WinAPI_Kirby");
 	// main windowÀÇ backbuffer
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowPosAndScale({ 0, 0 }, { 1280, 720 });

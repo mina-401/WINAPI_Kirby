@@ -13,14 +13,26 @@
     <ClInclude Include="Level.h">
       <Filter>Object\Level</Filter>
     </ClInclude>
-    <ClInclude Include="GameMode.h">
-      <Filter>Object\Actor</Filter>
-    </ClInclude>
     <ClInclude Include="ImageManager.h">
       <Filter>Resource</Filter>
     </ClInclude>
     <ClInclude Include="EngineSprite.h">
       <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteRenderer.h">
+      <Filter>Object\Actor\Component\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMode.h">
+      <Filter>Object\Actor</Filter>
+    </ClInclude>
+    <ClInclude Include="2DCollision.h">
+      <Filter>Object\Actor\Component\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneComponent.h">
+      <Filter>Object\Actor\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorComponent.h">
+      <Filter>Object\Actor\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -36,14 +48,26 @@
     <ClCompile Include="Level.cpp">
       <Filter>Object\Level</Filter>
     </ClCompile>
-    <ClCompile Include="GameMode.cpp">
-      <Filter>Object\Actor</Filter>
-    </ClCompile>
     <ClCompile Include="ImageManager.cpp">
       <Filter>Resource</Filter>
     </ClCompile>
     <ClCompile Include="EngineSprite.cpp">
       <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteRenderer.cpp">
+      <Filter>Object\Actor\Component\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMode.cpp">
+      <Filter>Object\Actor</Filter>
+    </ClCompile>
+    <ClCompile Include="2DCollision.cpp">
+      <Filter>Object\Actor\Component\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneComponent.cpp">
+      <Filter>Object\Actor\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorComponent.cpp">
+      <Filter>Object\Actor\Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -64,6 +88,15 @@
     </Filter>
     <Filter Include="Resource">
       <UniqueIdentifier>{85f5afad-9cc9-40d1-bab5-7868bcdcad6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Actor\Component">
+      <UniqueIdentifier>{3174bf44-3f8e-413e-a6f3-f819642a80f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Actor\Component\Rendering">
+      <UniqueIdentifier>{6aa180e6-c357-4538-8cdd-3d5b05cdbd98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Actor\Component\Collision">
+      <UniqueIdentifier>{3d490b33-7b11-4f78-acc8-3b1de0225a4b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
