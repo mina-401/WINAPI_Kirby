@@ -23,9 +23,20 @@
     <ClInclude Include="ContentsEnum.h">
       <Filter>Global</Filter>
     </ClInclude>
-    <ClInclude Include="TitleMap.h" />
     <ClInclude Include="TitleLogo.h">
       <Filter>ContentsObject\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleMap.h">
+      <Filter>KirbyMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage1_1Map.h">
+      <Filter>KirbyMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage1_1GameMode.h">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage1_2GameMode.h">
+      <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -51,9 +62,20 @@
     <ClCompile Include="ContentsEnum.cpp">
       <Filter>Global</Filter>
     </ClCompile>
-    <ClCompile Include="TitleMap.cpp" />
     <ClCompile Include="TitleLogo.cpp">
       <Filter>ContentsObject\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleMap.cpp">
+      <Filter>KirbyMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage1_1Map.cpp">
+      <Filter>KirbyMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage1_1GameMode.cpp">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage1_2GameMode.cpp">
+      <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +96,9 @@
     </Filter>
     <Filter Include="ContentsObject\Title">
       <UniqueIdentifier>{cca73199-5896-44f3-9efd-4e859017b9f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KirbyMap">
+      <UniqueIdentifier>{9d67429e-8506-4dc5-81cf-84ef29f5fc32}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

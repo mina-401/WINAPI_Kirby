@@ -20,11 +20,10 @@ APlayMap::APlayMap()
 
 		FVector2D MapScale = SpriteRenderer->SetSpriteScale(1.5f);
 
-		FVector2D PlayerPos = Size - MapScale.Half();
+		//FVector2D PlayerPos = Size - MapScale.Half();
 
 
-		SpriteRenderer->SetComponentLocation({0.f, PlayerPos.Y});
-		//SpriteRenderer->SetComponentLocation({100, PlayerPos.Y });
+		SpriteRenderer->SetComponentLocation({0.f,0.0f });
 		//FTransform tfrom= SpriteRenderer->Sprite->GetSpriteData().Transform;
 
 

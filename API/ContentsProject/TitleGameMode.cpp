@@ -26,13 +26,8 @@ void ATitleGameMode::Tick(float _DeltaTime)
 
 	if (true == UEngineInput::GetInst().IsDown(VK_LBUTTON))
 	{
-		UEngineAPICore::GetCore()->OpenLevel("Play");
+		UEngineAPICore::GetCore()->OpenLevel("Stage1_1");
 	}
 
-
-	/*if (true == UEngineInput::GetInst().IsDown('R'))
-	{
-		UEngineAPICore::GetCore()->OpenLevel("Play");
-	}*/
 }
 

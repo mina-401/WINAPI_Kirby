@@ -7,6 +7,8 @@
 #include <EngineCore/ImageManager.h>
 
 #include "PlayGameMode.h"
+#include "Stage1_1GameMode.h"
+#include "Stage1_2GameMode.h"
 #include "TitleGameMode.h"
 #include "Player.h"
 KirbyContentsCore::KirbyContentsCore()
@@ -52,7 +54,14 @@ void KirbyContentsCore::BeginPlay()
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowPosAndScale({ 0, 0 }, { 590, 440 });
 
 
-	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
+	//UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<AStage1_1GameMode, APlayer>("Stage1_1");
+	UEngineAPICore::GetCore()->CreateLevel<AStage1_2GameMode, APlayer>("Stage1_2");
+	//UEngineAPICore::GetCore()->CreateLevel<AStage1_3GameMode, APlayer>("Stage1_3");
+	//UEngineAPICore::GetCore()->CreateLevel<AStage1_4GameMode, APlayer>("Stage1_4");
+	//UEngineAPICore::GetCore()->CreateLevel<AStageBeforeBoss, APlayer>("StageBeforeBoss");
+	//UEngineAPICore::GetCore()->CreateLevel<AStageBossKingDedede, APlayer>("StageBossKingDedede");
+
 	UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, AActor>("Title"); 
 
 	UEngineAPICore::GetCore()->OpenLevel("Title");

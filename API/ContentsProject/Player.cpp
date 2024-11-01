@@ -15,7 +15,7 @@ APlayer::APlayer()
 
 	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 	SpriteRenderer->SetSprite("KirbyDance.png");
-	SpriteRenderer->SetComponentScale({ 300, 300 });
+	SpriteRenderer->SetComponentScale({ 150, 150 });
 }
 
 APlayer::~APlayer()
