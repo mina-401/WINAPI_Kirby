@@ -157,6 +157,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ActorComponent.h" />
+    <ClInclude Include="EngineCoreDebug.h" />
     <ClInclude Include="EngineSprite.h" />
     <ClInclude Include="GameMode.h">
       <SubType>
@@ -182,6 +183,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ActorComponent.cpp" />
+    <ClCompile Include="EngineCoreDebug.cpp" />
     <ClCompile Include="EngineSprite.cpp" />
     <ClCompile Include="GameMode.cpp">
       <SubType>

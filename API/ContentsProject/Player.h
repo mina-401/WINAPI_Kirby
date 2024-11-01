@@ -19,16 +19,27 @@ public:
 	void Tick(float _DeltaTime) override;
 
 	void MoveFunction(FVector2D _Dir);
+
 	/*void LeftMove();
 	void RightMove();
 	void UpMove();
 	void DownMove();*/
+
+	//void RunSoundPlay();
+
+	void LevelChangeStart() override;
+	void LevelChangeEnd() override;
+
 protected:
 
 private:
+
+	float Speed = 100.0f;
 	int MySpriteIndex = 0;
 
 	class USpriteRenderer* SpriteRenderer;
-	float Speed = 100.0f;
+
+	// class std::vector< USpriteRenderer* LeftRenderer;
+
 };
 

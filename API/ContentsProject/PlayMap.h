@@ -15,6 +15,7 @@ public:
 	APlayMap& operator=(const APlayMap& _Other) = delete;
 	APlayMap& operator=(APlayMap&& _Other) noexcept = delete;
 
+	class USpriteRenderer* SpriteRenderer = nullptr;
 protected:
 	// void BeginPlay() override;
 	

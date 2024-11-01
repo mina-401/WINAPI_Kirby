@@ -66,7 +66,16 @@ void USpriteRenderer::Render(float _DeltaTime)
 	UEngineWindow& MainWindow = UEngineAPICore::GetCore()->GetMainWindow();
 	UEngineWinImage* BackBufferImage = MainWindow.GetBackBuffer();
 	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
-	CurData.Image->CopyToTrans(BackBufferImage, GetActorTransform(), CurData.Transform);
+
+	FTransform Trans = GetActorTransform();
+
+	ULevel* Level = GetActor()->GetWorld();
+
+	Trans.Location = Trans.Location - Level->CameraPos;
+
+	// Trans.Location -= 카메라포스
+
+	CurData.Image->CopyToTrans(BackBufferImage, Trans, CurData.Transform);
 }
 
 void USpriteRenderer::BeginPlay()

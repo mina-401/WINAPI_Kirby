@@ -14,8 +14,7 @@ public:
 	ATitleGameMode& operator=(const ATitleGameMode& _Other) = delete;
 	ATitleGameMode& operator=(ATitleGameMode&& _Other) noexcept = delete;
 
-
-	void ClickFunction(int _KeyIndex);
+	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 protected:
 

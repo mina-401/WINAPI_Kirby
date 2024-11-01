@@ -2,7 +2,8 @@
 #include "TitleGameMode.h"
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/EngineAPICore.h>
-#include "Player.h"
+
+#include "TitleLogo.h"
 
 
 ATitleGameMode::ATitleGameMode()
@@ -13,27 +14,25 @@ ATitleGameMode::~ATitleGameMode()
 {
 }
 
-void ATitleGameMode::ClickFunction(int _KeyIndex)
+void ATitleGameMode::BeginPlay()
 {
-	//int a;
-	//switch (_KeyIndex)
-	//{
-	//case VK_LBUTTON:
-	//	//UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Title");
-	//	/*UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, APlayer>("Play");
-	//	UEngineAPICore::GetCore()->OpenLevel("Play");*/
-	//	break;
-	//default:
-	//	break;
-	//}
+	Super::BeginPlay();
+	TitleLogo* NewActor = GetWorld()->SpawnActor<TitleLogo>();
 }
 
 void ATitleGameMode::Tick(float _DeltaTime)
 {
-//	if (true == UEngineInput::GetInst().IsDown(VK_LBUTTON))
-//	{
-//		// 콘솔에서 슈팅 못만들면 API와서도 못만들어요.
-//		ClickFunction(VK_LBUTTON);
-//	}
+	Super::Tick(_DeltaTime);
+
+	if (true == UEngineInput::GetInst().IsDown(VK_LBUTTON))
+	{
+		UEngineAPICore::GetCore()->OpenLevel("Play");
+	}
+
+
+	/*if (true == UEngineInput::GetInst().IsDown('R'))
+	{
+		UEngineAPICore::GetCore()->OpenLevel("Play");
+	}*/
 }
 

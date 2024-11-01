@@ -20,11 +20,12 @@
     <ClInclude Include="EndingGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>ContentsObject</Filter>
-    </ClInclude>
     <ClInclude Include="ContentsEnum.h">
       <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleMap.h" />
+    <ClInclude Include="TitleLogo.h">
+      <Filter>ContentsObject\Title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -47,11 +48,12 @@
     <ClCompile Include="EndingGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>ContentsObject</Filter>
-    </ClCompile>
     <ClCompile Include="ContentsEnum.cpp">
       <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleMap.cpp" />
+    <ClCompile Include="TitleLogo.cpp">
+      <Filter>ContentsObject\Title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +71,9 @@
     </Filter>
     <Filter Include="Global">
       <UniqueIdentifier>{29ba7cbb-bcfd-4de0-94f1-8fc42faf73e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Title">
+      <UniqueIdentifier>{cca73199-5896-44f3-9efd-4e859017b9f0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -1,5 +1,4 @@
 #pragma once
-
 // FVector로 통일하겠습니다.
 // FVector2D xy
 // FVector3D xyz
@@ -59,6 +58,22 @@ public:
 		return { X * 0.5f, Y * 0.5f };
 	}
 
+	float Length() const
+	{
+		return sqrtf(X * X + Y * Y);
+	}
+
+	void Normalize()
+	{
+		float Len = Length();
+		if (0.0f < Len && false == isnan(Len))
+		{
+			X = X / Len;
+			X = Y / Len;
+		}
+		return;
+	}
+
 	FVector2D operator*(float _Value) const
 	{
 		FVector2D Result;
@@ -66,8 +81,6 @@ public:
 		Result.Y = Y * _Value;
 		return Result;
 	}
-
-
 
 	FVector2D operator+(FVector2D _Other) const
 	{
@@ -120,6 +133,18 @@ public:
 		X += _Other.X;
 		Y += _Other.Y;
 		return *this;
+	}
+
+	std::string ToString()
+	{
+		std::string Stream;
+
+		Stream += "X : [";
+		Stream += std::to_string(X);
+		Stream += "] Y : [";
+		Stream += std::to_string(Y);
+		Stream += "]";
+		return Stream;
 	}
 };
 
@@ -209,14 +234,14 @@ public:
 		int Color;
 		struct
 		{
-			char R;
-			char G;
-			char B;
-			char A;
+			unsigned char R;
+			unsigned char G;
+			unsigned char B;
+			unsigned char A;
 		};
 	};
 
-	UColor(char _R, char _G, char _B, char _A)
+	UColor(unsigned char _R, unsigned char _G, unsigned char _B, unsigned char _A)
 		:R(_R), G(_G), B(_B), A(_A)
 	{
 

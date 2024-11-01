@@ -1,12 +1,13 @@
 #include "PreCompile.h"
 #include "Level.h"
 #include "EngineAPICore.h"
-
+#include "EngineCoreDebug.h"
 #include <EngineBase/EngineMath.h>
 #include <EnginePlatform/EngineWindow.h>
 #include <EnginePlatform/EngineWinImage.h>
 
 #include "SpriteRenderer.h"
+
 
 ULevel::ULevel()
 {
@@ -14,11 +15,19 @@ ULevel::ULevel()
 
 ULevel::~ULevel()
 {
-	//if (nullptr != GameMode)
-	//{
-	//	delete GameMode;
-	//	GameMode = nullptr;
-	//}
+	{
+		// BeginPlayList 한번도 체인지 안한 액터는 
+		// 액터들이 다 비긴 플레이 리스트에 들어가 있다.
+
+		std::list<AActor*>::iterator StartIter = BeginPlayList.begin();
+		std::list<AActor*>::iterator EndIter = BeginPlayList.end();
+
+		for (; StartIter != EndIter; ++StartIter)
+		{
+			AActor* CurActor = *StartIter;
+			delete CurActor;
+		}
+	}
 
 	std::list<AActor*>::iterator StartIter = AllActors.begin();
 	std::list<AActor*>::iterator EndIter = AllActors.end();
@@ -75,7 +84,11 @@ void ULevel::Render(float _DeltaTime)
 
 	// 액터가 SpriteRenderer를 만들면
 	// Level도 그 스프라이트 랜더러를 알아야 한다.
-
+	if (true == IsCameraToMainPawn)
+	{
+		// CameraPivot = FVector2D(-1280, -720) * 0.5f;
+		CameraPos = MainPawn->GetTransform().Location + CameraPivot;
+	}
 
 	std::map<int, std::list<class USpriteRenderer*>>::iterator StartOrderIter = Renderers.begin();
 	std::map<int, std::list<class USpriteRenderer*>>::iterator EndOrderIter = Renderers.end();
@@ -143,5 +156,38 @@ void ULevel::ChangeRenderOrder(class USpriteRenderer* _Renderer, int _PrevOrder)
 
 	Renderers[_Renderer->GetOrder()].push_back(_Renderer);
 
+
+}
+// 내가 CurLevel 됐을대
+void ULevel::LevelChangeStart()
+{
+	{
+		std::list<AActor*>::iterator StartIter = AllActors.begin();
+		std::list<AActor*>::iterator EndIter = AllActors.end();
+
+		for (; StartIter != EndIter; ++StartIter)
+		{
+			AActor* CurActor = *StartIter;
+
+			CurActor->LevelChangeStart();
+		}
+	}
+
+}
+
+// 나 이제 새로운 레벨로 바뀔거야.
+void ULevel::LevelChangeEnd()
+{
+	{
+		std::list<AActor*>::iterator StartIter = AllActors.begin();
+		std::list<AActor*>::iterator EndIter = AllActors.end();
+
+		for (; StartIter != EndIter; ++StartIter)
+		{
+			AActor* CurActor = *StartIter;
+
+			CurActor->LevelChangeEnd();
+		}
+	}
 
 }

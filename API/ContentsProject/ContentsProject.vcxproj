@@ -151,10 +151,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="ContentsEnum.h">
       <SubType>
       </SubType>
@@ -181,12 +177,13 @@
       <SubType>
       </SubType>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Camera.cpp">
+    <ClInclude Include="TitleLogo.h" />
+    <ClInclude Include="TitleMap.h">
       <SubType>
       </SubType>
-    </ClCompile>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="ContentsEnum.cpp">
       <SubType>
       </SubType>
@@ -213,6 +210,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TitleGameMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="TitleLogo.cpp" />
+    <ClCompile Include="TitleMap.cpp">
       <SubType>
       </SubType>
     </ClCompile>

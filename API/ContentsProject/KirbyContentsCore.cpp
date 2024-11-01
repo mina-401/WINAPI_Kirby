@@ -9,8 +9,6 @@
 #include "PlayGameMode.h"
 #include "TitleGameMode.h"
 #include "Player.h"
-#include "Camera.h"
-
 KirbyContentsCore::KirbyContentsCore()
 {
 }
@@ -51,13 +49,13 @@ void KirbyContentsCore::BeginPlay()
 	}
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("WinAPI_Kirby");
 	// main windowÀÇ backbuffer
-	UEngineAPICore::GetCore()->GetMainWindow().SetWindowPosAndScale({ 0, 0 }, { 1280, 720 });
+	UEngineAPICore::GetCore()->GetMainWindow().SetWindowPosAndScale({ 0, 0 }, { 590, 440 });
 
 
-	UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, ACamera>("Title"); 
 	UEngineAPICore::GetCore()->CreateLevel<APlayGameMode, APlayer>("Play");
+	UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, AActor>("Title"); 
 
-	UEngineAPICore::GetCore()->OpenLevel("Play");
+	UEngineAPICore::GetCore()->OpenLevel("Title");
 
 }
 
