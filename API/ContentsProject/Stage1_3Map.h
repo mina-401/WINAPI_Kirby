@@ -15,6 +15,7 @@ public:
 	AStage1_3Map& operator=(const AStage1_3Map& _Other) = delete;
 	AStage1_3Map& operator=(AStage1_3Map&& _Other) noexcept = delete;
 
+	void BeginPlay() override;
 protected:
 
 private:

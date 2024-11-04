@@ -23,3 +23,8 @@ AStage1_3Map::~AStage1_3Map()
 {
 }
 
+void AStage1_3Map::BeginPlay()
+{
+
+}
+

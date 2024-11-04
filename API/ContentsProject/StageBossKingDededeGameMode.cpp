@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "StageBossKingDededeGameMode.h"
+#include "StageKingDededeMap.h"
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/EngineAPICore.h>
 AStageBossKingDededeGameMode::AStageBossKingDededeGameMode()
@@ -14,7 +15,7 @@ void AStageBossKingDededeGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//AStage1_1Map* NewActor = GetWorld()->SpawnActor<AStage1_1Map>();
+	AStageKingDededeMap* NewActor = GetWorld()->SpawnActor<AStageKingDededeMap>();
 }
 
 void AStageBossKingDededeGameMode::Tick(float _DeltaTime)

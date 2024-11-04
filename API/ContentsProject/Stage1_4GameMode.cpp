@@ -26,7 +26,7 @@ void AStage1_4GameMode::Tick(float _DeltaTime)
 
 	if (true == UEngineInput::GetInst().IsDown(VK_LBUTTON))
 	{
-		//UEngineAPICore::GetCore()->OpenLevel("Stage1_5");
+		UEngineAPICore::GetCore()->OpenLevel("ItemRoomBeforeBoss");
 	}
 
 }

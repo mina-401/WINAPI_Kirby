@@ -44,7 +44,7 @@
     <ClInclude Include="StageBossKingDededeGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
-    <ClInclude Include="ItemRoomBeforeBoss.h">
+    <ClInclude Include="ItemRoomBeforeBossMap.h">
       <Filter>ContentsObject\GameMap</Filter>
     </ClInclude>
     <ClInclude Include="Stage1_1Map.h">
@@ -67,6 +67,9 @@
     </ClInclude>
     <ClInclude Include="KirbyLevel.h">
       <Filter>ContentsObject</Filter>
+    </ClInclude>
+    <ClInclude Include="StageBackground.h">
+      <Filter>ContentsObject\GameMap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -113,7 +116,7 @@
     <ClCompile Include="StageBossKingDededeGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
-    <ClCompile Include="ItemRoomBeforeBoss.cpp">
+    <ClCompile Include="ItemRoomBeforeBossMap.cpp">
       <Filter>ContentsObject\GameMap</Filter>
     </ClCompile>
     <ClCompile Include="Stage1_1Map.cpp">
@@ -136,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="KirbyLevel.cpp">
       <Filter>ContentsObject</Filter>
+    </ClCompile>
+    <ClCompile Include="StageBackground.cpp">
+      <Filter>ContentsObject\GameMap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

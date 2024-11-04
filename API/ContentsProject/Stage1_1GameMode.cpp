@@ -25,7 +25,7 @@ void AStage1_1GameMode::Tick(float _DeltaTime)
 
 	if (true == UEngineInput::GetInst().IsDown(VK_LBUTTON))
 	{
-		//UEngineAPICore::GetCore()->OpenLevel("Stage1_2");
+		UEngineAPICore::GetCore()->OpenLevel("Stage1_2");
 	}
 
 }

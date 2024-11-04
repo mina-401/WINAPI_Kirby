@@ -6,6 +6,7 @@
 #include <EngineCore/EngineCoreDebug.h>
 #include <EngineCore/SpriteRenderer.h>
 #include <EngineCore/EngineAPICore.h>
+#include <EngineCore/ImageManager.h>
 
 APlayer::APlayer()
 {
@@ -14,10 +15,27 @@ APlayer::APlayer()
 	SetActorLocation({ 150, 325 });
 
 	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
-	SpriteRenderer->SetSprite("KirbyDance.png");
+	SpriteRenderer->SetSprite("Idle_Right.png");
 	SpriteRenderer->SetComponentScale({ 270, 270 });
 
 	SetName("Kirby");
+	UImageManager::GetInst().CuttingSprite("Idle_Left.png", { 128, 128 });
+	UImageManager::GetInst().CuttingSprite("Idle_Right.png", { 128, 128 });
+	UImageManager::GetInst().CuttingSprite("Run_Left.png", { 128, 128 });
+	UImageManager::GetInst().CuttingSprite("Run_Right.png", { 128, 128 });
+	UImageManager::GetInst().CuttingSprite("Jump_Left.png", { 128, 128 });
+	UImageManager::GetInst().CuttingSprite("Jump_Right.png", { 128, 128 });
+	SpriteRenderer->CreateAnimation("Idle_Left", "Idle_Left.png", 0, 2, 3.f);
+	SpriteRenderer->CreateAnimation("Idle_Right", "Idle_Right.png", 0, 2, 3.f);
+	SpriteRenderer->CreateAnimation("Run_Left", "Run_Left.png",  0, 6, 0.1f);
+	SpriteRenderer->CreateAnimation("Run_Right", "Run_Right.png",  0, 6, 0.1f);
+	SpriteRenderer->CreateAnimation("Jump_Left", "Jump_Left.png",  0, 8, 0.1f);
+	SpriteRenderer->CreateAnimation("Jump_Right", "Jump_Right.png",  0, 8, 0.1f);
+
+	SpriteRenderer->ChangeAnimation("Idle_Right");
+	//SpriteRenderer->SetAnimationEvent("Run_Right", 2, std::bind(&APlayer::RunSoundPlay, this));
+
+	//std::string Name = SpriteRenderer->GetCurSpriteName();
 }
 
 APlayer::~APlayer()
@@ -49,33 +67,32 @@ void APlayer::Tick(float _DeltaTime)
 	UEngineDebug::CoreOutPutString("FPS : " + std::to_string(1.0f / _DeltaTime));
 	UEngineDebug::CoreOutPutString("PlayerPos : " + GetActorLocation().ToString());
 
-	if (true == UEngineInput::GetInst().IsDown('R'))
+	if (true == UEngineInput::GetInst().IsPress('Z'))
 	{
-		UEngineAPICore::GetCore()->OpenLevel("Title");
-		// UEngineDebug::SwitchIsDebug();
+		SpriteRenderer->ChangeAnimation("Jump_Right");
 	}
-	if (true == UEngineInput::GetInst().IsPress('D'))
+	if (true == UEngineInput::GetInst().IsPress('X'))
 	{
-		AddActorLocation(FVector2D::RIGHT * _DeltaTime * Speed);
+		//SpriteRenderer->ChangeAnimation("Run_Right");
+		//AddActorLocation(FVector2D::UP * _DeltaTime * Speed);
 	}
-	if (true == UEngineInput::GetInst().IsPress('A'))
+	if (true == UEngineInput::GetInst().IsPress(VK_LEFT))
 	{
+		SpriteRenderer->ChangeAnimation("Run_Left");
 		AddActorLocation(FVector2D::LEFT * _DeltaTime * Speed);
 	}
-	if (true == UEngineInput::GetInst().IsPress('S'))
-	{
-		AddActorLocation(FVector2D::DOWN * _DeltaTime * Speed);
-	}
-	if (true == UEngineInput::GetInst().IsPress('W'))
-	{
-		AddActorLocation(FVector2D::UP * _DeltaTime * Speed);
-	}
 
-	if (true == UEngineInput::GetInst().IsDown('R'))
+	if (true == UEngineInput::GetInst().IsPress(VK_RIGHT))
 	{
-		/*SpriteRenderer->SetSprite("KirbyDance.png", MySpriteIndex);
-		++MySpriteIndex;*/
-		UEngineAPICore::GetCore()->OpenLevel("Title");
+		SpriteRenderer->ChangeAnimation("Run_Right");
+		AddActorLocation(FVector2D::RIGHT * _DeltaTime * Speed);
+	}
+	if (false == UEngineInput::GetInst().IsPress(VK_LEFT) &&
+		false == UEngineInput::GetInst().IsPress(VK_RIGHT) &&
+		false == UEngineInput::GetInst().IsPress(VK_UP) &&
+		false == UEngineInput::GetInst().IsPress(VK_DOWN))
+	{
+		SpriteRenderer->ChangeAnimation("Idle_Right");
 	}
 
 }
