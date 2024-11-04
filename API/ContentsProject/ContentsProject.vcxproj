@@ -151,11 +151,19 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="StageBossKingDededeGameMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="ContentsEnum.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="EndingGameMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ItemRoomBeforeBoss.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -185,6 +193,34 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Stage1_2Map.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Stage1_3GameMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Stage1_3Map.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Stage1_4GameMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Stage1_4Map.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ItemRoomBeforeBossGameMode.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="StageKingDededeMap.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="TitleGameMode.h">
       <SubType>
       </SubType>
@@ -196,11 +232,19 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="StageBossKingDededeGameMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ContentsEnum.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="EndingGameMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ItemRoomBeforeBoss.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -230,6 +274,34 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Stage1_2GameMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Stage1_2Map.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Stage1_3GameMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Stage1_3Map.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Stage1_4GameMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Stage1_4Map.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ItemRoomBeforeBossGameMode.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="StageKingDededeMap.cpp">
       <SubType>
       </SubType>
     </ClCompile>

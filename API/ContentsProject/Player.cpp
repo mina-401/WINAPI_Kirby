@@ -11,11 +11,13 @@ APlayer::APlayer()
 {
 	// UEngineAPICore::GetCore()->CreateLevel("Title");
 	//UEngineAPICore::GetCore()->GetMainWindow().GetBackBuffer();
-	SetActorLocation({ 100, 100 });
+	SetActorLocation({ 180, 346 });
 
 	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 	SpriteRenderer->SetSprite("KirbyDance.png");
-	SpriteRenderer->SetComponentScale({ 150, 150 });
+	SpriteRenderer->SetComponentScale({ 180, 180 });
+
+	SetName("Kirby");
 }
 
 APlayer::~APlayer()
@@ -29,6 +31,8 @@ void APlayer::BeginPlay()
 
 	FVector2D Size = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 	GetWorld()->SetCameraPivot(Size.Half() * -1.0f);
+
+	
 	//키 바인딩
 	//인자를 호출할 때 넣어줌을 명시하는 것이 placeholders
 

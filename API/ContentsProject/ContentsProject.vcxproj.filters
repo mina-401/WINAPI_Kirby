@@ -38,6 +38,33 @@
     <ClInclude Include="Stage1_2GameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
+    <ClInclude Include="Stage1_3GameMode.h">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage1_2Map.h">
+      <Filter>KirbyMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage1_3Map.h">
+      <Filter>KirbyMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage1_4Map.h">
+      <Filter>KirbyMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage1_4GameMode.h">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemRoomBeforeBossGameMode.h">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemRoomBeforeBoss.h">
+      <Filter>KirbyMap</Filter>
+    </ClInclude>
+    <ClInclude Include="StageBossKingDededeGameMode.h">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClInclude>
+    <ClInclude Include="StageKingDededeMap.h">
+      <Filter>KirbyMap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -76,6 +103,33 @@
     </ClCompile>
     <ClCompile Include="Stage1_2GameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage1_3GameMode.cpp">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage1_2Map.cpp">
+      <Filter>KirbyMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage1_3Map.cpp">
+      <Filter>KirbyMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage1_4Map.cpp">
+      <Filter>KirbyMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage1_4GameMode.cpp">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemRoomBeforeBossGameMode.cpp">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemRoomBeforeBoss.cpp">
+      <Filter>KirbyMap</Filter>
+    </ClCompile>
+    <ClCompile Include="StageBossKingDededeGameMode.cpp">
+      <Filter>ContentsObject\GameMode</Filter>
+    </ClCompile>
+    <ClCompile Include="StageKingDededeMap.cpp">
+      <Filter>KirbyMap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
