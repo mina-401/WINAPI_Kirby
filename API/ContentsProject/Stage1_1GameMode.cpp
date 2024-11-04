@@ -15,6 +15,7 @@ void AStage1_1GameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
+
 	AStage1_1Map* NewActor = GetWorld()->SpawnActor<AStage1_1Map>();
 }
 

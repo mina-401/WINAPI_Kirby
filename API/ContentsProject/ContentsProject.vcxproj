@@ -151,6 +151,10 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="KirbyLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="StageBossKingDededeGameMode.h">
       <SubType>
       </SubType>
@@ -232,6 +236,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="KirbyLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="StageBossKingDededeGameMode.cpp">
       <SubType>
       </SubType>

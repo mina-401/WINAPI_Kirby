@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "Stage1_3GameMode.h"
+#include "Stage1_3Map.h"
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/EngineAPICore.h>
 AStage1_3GameMode::AStage1_3GameMode()
@@ -12,6 +13,8 @@ AStage1_3GameMode::~AStage1_3GameMode()
 void AStage1_3GameMode::BeginPlay()
 {
 	Super::BeginPlay();
+	AStage1_3Map* NewMap = GetWorld()->SpawnActor<AStage1_3Map>();
+	// 레벨 카메라 위치 이동
 }
 
 void AStage1_3GameMode::Tick(float _DeltaTime)
@@ -20,7 +23,7 @@ void AStage1_3GameMode::Tick(float _DeltaTime)
 
 	if (true == UEngineInput::GetInst().IsDown(VK_LBUTTON))
 	{
-		//UEngineAPICore::GetCore()->OpenLevel("Stage1_4");
+		UEngineAPICore::GetCore()->OpenLevel("Stage1_4");
 	}
 
 }

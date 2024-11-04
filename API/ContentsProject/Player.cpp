@@ -11,11 +11,11 @@ APlayer::APlayer()
 {
 	// UEngineAPICore::GetCore()->CreateLevel("Title");
 	//UEngineAPICore::GetCore()->GetMainWindow().GetBackBuffer();
-	SetActorLocation({ 180, 346 });
+	SetActorLocation({ 150, 325 });
 
 	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 	SpriteRenderer->SetSprite("KirbyDance.png");
-	SpriteRenderer->SetComponentScale({ 180, 180 });
+	SpriteRenderer->SetComponentScale({ 270, 270 });
 
 	SetName("Kirby");
 }

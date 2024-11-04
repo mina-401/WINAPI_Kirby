@@ -58,6 +58,7 @@ void KirbyContentsCore::BeginPlay()
 	// main windowÀÇ backbuffer
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowPosAndScale({ 0, 0 }, { 590, 440 });
 
+	UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, AActor>("Title"); 
 
 	UEngineAPICore::GetCore()->CreateLevel<AStage1_1GameMode, APlayer>("Stage1_1");
 	UEngineAPICore::GetCore()->CreateLevel<AStage1_2GameMode, APlayer>("Stage1_2");
@@ -66,7 +67,6 @@ void KirbyContentsCore::BeginPlay()
 	UEngineAPICore::GetCore()->CreateLevel<AItemRoomBeforeBossGameMode, APlayer>("ItemRoomBeforeBoss");
 	UEngineAPICore::GetCore()->CreateLevel<AStageBossKingDededeGameMode, APlayer>("StageBossKingDedede");
 
-	UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, AActor>("Title"); 
 
 	UEngineAPICore::GetCore()->OpenLevel("Title");
 

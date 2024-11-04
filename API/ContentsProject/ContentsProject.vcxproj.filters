@@ -26,12 +26,6 @@
     <ClInclude Include="TitleLogo.h">
       <Filter>ContentsObject\Title</Filter>
     </ClInclude>
-    <ClInclude Include="TitleMap.h">
-      <Filter>KirbyMap</Filter>
-    </ClInclude>
-    <ClInclude Include="Stage1_1Map.h">
-      <Filter>KirbyMap</Filter>
-    </ClInclude>
     <ClInclude Include="Stage1_1GameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
@@ -41,29 +35,38 @@
     <ClInclude Include="Stage1_3GameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
-    <ClInclude Include="Stage1_2Map.h">
-      <Filter>KirbyMap</Filter>
-    </ClInclude>
-    <ClInclude Include="Stage1_3Map.h">
-      <Filter>KirbyMap</Filter>
-    </ClInclude>
-    <ClInclude Include="Stage1_4Map.h">
-      <Filter>KirbyMap</Filter>
-    </ClInclude>
     <ClInclude Include="Stage1_4GameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
     <ClInclude Include="ItemRoomBeforeBossGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
-    <ClInclude Include="ItemRoomBeforeBoss.h">
-      <Filter>KirbyMap</Filter>
-    </ClInclude>
     <ClInclude Include="StageBossKingDededeGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
+    <ClInclude Include="ItemRoomBeforeBoss.h">
+      <Filter>ContentsObject\GameMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage1_1Map.h">
+      <Filter>ContentsObject\GameMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage1_2Map.h">
+      <Filter>ContentsObject\GameMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage1_3Map.h">
+      <Filter>ContentsObject\GameMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage1_4Map.h">
+      <Filter>ContentsObject\GameMap</Filter>
+    </ClInclude>
     <ClInclude Include="StageKingDededeMap.h">
-      <Filter>KirbyMap</Filter>
+      <Filter>ContentsObject\GameMap</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleMap.h">
+      <Filter>ContentsObject\GameMap</Filter>
+    </ClInclude>
+    <ClInclude Include="KirbyLevel.h">
+      <Filter>ContentsObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -92,12 +95,6 @@
     <ClCompile Include="TitleLogo.cpp">
       <Filter>ContentsObject\Title</Filter>
     </ClCompile>
-    <ClCompile Include="TitleMap.cpp">
-      <Filter>KirbyMap</Filter>
-    </ClCompile>
-    <ClCompile Include="Stage1_1Map.cpp">
-      <Filter>KirbyMap</Filter>
-    </ClCompile>
     <ClCompile Include="Stage1_1GameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
@@ -107,29 +104,38 @@
     <ClCompile Include="Stage1_3GameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
-    <ClCompile Include="Stage1_2Map.cpp">
-      <Filter>KirbyMap</Filter>
-    </ClCompile>
-    <ClCompile Include="Stage1_3Map.cpp">
-      <Filter>KirbyMap</Filter>
-    </ClCompile>
-    <ClCompile Include="Stage1_4Map.cpp">
-      <Filter>KirbyMap</Filter>
-    </ClCompile>
     <ClCompile Include="Stage1_4GameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
     <ClCompile Include="ItemRoomBeforeBossGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
-    <ClCompile Include="ItemRoomBeforeBoss.cpp">
-      <Filter>KirbyMap</Filter>
-    </ClCompile>
     <ClCompile Include="StageBossKingDededeGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
+    <ClCompile Include="ItemRoomBeforeBoss.cpp">
+      <Filter>ContentsObject\GameMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage1_1Map.cpp">
+      <Filter>ContentsObject\GameMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage1_2Map.cpp">
+      <Filter>ContentsObject\GameMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage1_3Map.cpp">
+      <Filter>ContentsObject\GameMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage1_4Map.cpp">
+      <Filter>ContentsObject\GameMap</Filter>
+    </ClCompile>
     <ClCompile Include="StageKingDededeMap.cpp">
-      <Filter>KirbyMap</Filter>
+      <Filter>ContentsObject\GameMap</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleMap.cpp">
+      <Filter>ContentsObject\GameMap</Filter>
+    </ClCompile>
+    <ClCompile Include="KirbyLevel.cpp">
+      <Filter>ContentsObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -151,8 +157,14 @@
     <Filter Include="ContentsObject\Title">
       <UniqueIdentifier>{cca73199-5896-44f3-9efd-4e859017b9f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="KirbyMap">
+    <Filter Include="KirbyContents">
       <UniqueIdentifier>{9d67429e-8506-4dc5-81cf-84ef29f5fc32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KirbyContents\KirbyGameMode">
+      <UniqueIdentifier>{9b5823c4-b497-4000-a17d-9f23a38ac66a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\GameMap">
+      <UniqueIdentifier>{9930e700-f278-4e51-a8a2-33e1a9b3153f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

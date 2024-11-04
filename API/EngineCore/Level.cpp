@@ -88,8 +88,8 @@ void ULevel::Render(float _DeltaTime)
 	{
 		if (MainPawn->GetName() == "Kirby") {
 			CameraPos = MainPawn->GetTransform().Location + CameraPivot;
+			CameraPos.Y = 0;
 			if (CameraPos.X <= 0) CameraPos.X = 0;
-			if (CameraPos.Y >= 0) CameraPos.Y = 0;
 
 		}
 	}
