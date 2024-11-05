@@ -1,7 +1,8 @@
 #pragma once
 #include "SceneComponent.h"
-#include <map>
 #include "EngineSprite.h"
+#include <EngineBase/EngineDelegate.h>
+#include <map>
 
 // 설명 :
 class USpriteRenderer : public USceneComponent
@@ -15,6 +16,7 @@ public:
 		UEngineSprite* Sprite = nullptr;
 		std::vector<int> FrameIndex;
 		std::vector<float> FrameTime;
+		std::map<int, EngineDelegate> Events;
 
 		int CurIndex = 0;
 		int ResultIndex = 0;
@@ -73,17 +75,49 @@ public:
 	// _Loop = true면 반복 false면 마지막 프레임에서 정지
 	void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indexs, std::vector<float> _Frame, bool _Loop = true);
 
+	void CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indexs, float _Frame, bool _Loop = true);
+
 	// 내가 Idle인데 Idle 바꾸라고 했다. 
 	void ChangeAnimation(std::string_view _AnimationName, bool _Force = false);
 
+	void SetAnimationEvent(std::string_view _AnimationName, int _Frame, std::function<void()> _Function);
+
+	std::string GetCurSpriteName()
+	{
+		return Sprite->GetName();
+	}
+
+	bool IsActive() override
+	{
+		// 랜더러는 자신을 가진 액터에게 종속된다.
+		// 부모도        true            true
+		return UObject::IsActive() && GetActor()->IsActive();
+	}
+
+
+	bool IsDestroy() override
+	{
+		// 부모도        true            true
+		return UObject::IsDestroy() || GetActor()->IsDestroy();
+	}
+
+	void SetCameraEffect(bool _Value)
+	{
+		IsCameraEffect = _Value;
+	}
+
+	void SetCameraEffectScale(float _Effect);
+	void SetSprite(std::string_view _Name, int _CurIndex = 0);
+
 protected:
 
-public:
+private:
 	int Order = 0;
 	int CurIndex = 0;
+	bool IsCameraEffect = true;
+	float CameraEffectScale = 1.0f;
 
 	class UEngineSprite* Sprite = nullptr;
-	void SetSprite(std::string_view _Name, int _CurIndex = 0);
 
 	std::map<std::string, FrameAnimation> FrameAnimations;
 	FrameAnimation* CurAnimation = nullptr;

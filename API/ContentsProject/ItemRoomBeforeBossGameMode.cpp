@@ -24,7 +24,7 @@ void AItemRoomBeforeBossGameMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
-	if (true == UEngineInput::GetInst().IsDown(VK_LBUTTON))
+	if (true == UEngineInput::GetInst().IsDown('P'))
 	{
 		UEngineAPICore::GetCore()->OpenLevel("StageBossKingDedede");
 	}

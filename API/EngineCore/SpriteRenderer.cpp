@@ -37,11 +37,22 @@ void USpriteRenderer::Render(float _DeltaTime)
 			CurAnimation->CurTime -= CurFrameTime;
 			++CurAnimation->CurIndex;
 
+			if (CurAnimation->Events.contains(CurAnimation->CurIndex))
+			{
+				CurAnimation->Events[CurAnimation->CurIndex]();
+			}
+
 			if (CurAnimation->CurIndex >= Indexs.size())
 			{
 				if (true == CurAnimation->Loop)
 				{
 					CurAnimation->CurIndex = 0;
+
+					if (CurAnimation->Events.contains(CurAnimation->CurIndex))
+					{
+						CurAnimation->Events[CurAnimation->CurIndex]();
+					}
+
 				}
 				else
 				{
@@ -71,7 +82,10 @@ void USpriteRenderer::Render(float _DeltaTime)
 
 	ULevel* Level = GetActor()->GetWorld();
 
-	Trans.Location = Trans.Location - Level->CameraPos;
+	if (true == IsCameraEffect)
+	{
+		Trans.Location = Trans.Location - (Level->CameraPos * CameraEffectScale);
+	}
 
 	// Trans.Location -= 카메라포스
 
@@ -139,9 +153,9 @@ FVector2D USpriteRenderer::SetSpriteScale(float _Ratio /*= 1.0f*/, int _CurIndex
 		return FVector2D::ZERO;
 	}
 
-	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
+	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(_CurIndex);
 
-	FVector2D Scale = CurData.Transform.Scale* _Ratio;
+	FVector2D Scale = CurData.Transform.Scale * _Ratio;
 
 	SetComponentScale(CurData.Transform.Scale * _Ratio);
 
@@ -170,6 +184,19 @@ void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::stri
 	}
 
 	CreateAnimation(_AnimationName, _SpriteName, Indexs, Times, _Loop);
+}
+
+
+void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indexs, float _Frame, bool _Loop /*= true*/)
+{
+	std::vector<float> Times;
+
+	for (size_t i = 0; i < _Indexs.size(); i++)
+	{
+		Times.push_back(_Frame);
+	}
+
+	CreateAnimation(_AnimationName, _SpriteName, _Indexs, Times, _Loop);
 }
 
 void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<int> _Indexs, std::vector<float> _Frame, bool _Loop /*= true*/)
@@ -216,7 +243,7 @@ void USpriteRenderer::ChangeAnimation(std::string_view _AnimationName, bool _For
 		return;
 	}
 
-	FrameAnimation* ChangeAnimation =&FrameAnimations[UpperName];
+	FrameAnimation* ChangeAnimation = &FrameAnimations[UpperName];
 
 	if (CurAnimation == ChangeAnimation && false == _Force)
 	{
@@ -225,4 +252,50 @@ void USpriteRenderer::ChangeAnimation(std::string_view _AnimationName, bool _For
 
 	CurAnimation = &FrameAnimations[UpperName];
 	CurAnimation->Reset();
+
+	if (CurAnimation->Events.contains(CurAnimation->CurIndex))
+	{
+		CurAnimation->Events[CurAnimation->CurIndex]();
+	}
+
+	Sprite = CurAnimation->Sprite;
+}
+
+
+void USpriteRenderer::SetAnimationEvent(std::string_view _AnimationName, int _Frame, std::function<void()> _Function)
+{
+	std::string UpperName = UEngineString::ToUpper(_AnimationName);
+
+	if (false == FrameAnimations.contains(UpperName))
+	{
+		MSGASSERT("존재하지 않은 애니메이션으로 변경하려고 했습니다. = " + UpperName);
+		return;
+	}
+
+	FrameAnimation* ChangeAnimation = &FrameAnimations[UpperName];
+
+	bool Check = false;
+
+	for (size_t i = 0; i < ChangeAnimation->FrameIndex.size(); i++)
+	{
+		if (_Frame == ChangeAnimation->FrameIndex[i])
+		{
+			Check = true;
+			break;
+		}
+	}
+
+	if (false == Check)
+	{
+		MSGASSERT("존재하지 않는 프레임에 이벤트를 생성하려고 했습니다" + std::string(_AnimationName));
+		return;
+	}
+
+	ChangeAnimation->Events[_Frame] += _Function;
+
+}
+
+void USpriteRenderer::SetCameraEffectScale(float _Effect)
+{
+	CameraEffectScale = _Effect;
 }

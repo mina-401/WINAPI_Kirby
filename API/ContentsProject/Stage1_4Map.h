@@ -14,9 +14,17 @@ public:
 	AStage1_4Map& operator=(const AStage1_4Map& _Other) = delete;
 	AStage1_4Map& operator=(AStage1_4Map&& _Other) noexcept = delete;
 
+	void BeginPlay() override;
+	void Tick(float _deltaTime) override;
 protected:
 
 private:
+
+	FVector2D PngSize;
+	FVector2D WinSize;
+	FVector2D MapScale;
+
+	class AStageBackground* BackGroundMap = nullptr;
 	class USpriteRenderer* SpriteRenderer = nullptr;
 };
 

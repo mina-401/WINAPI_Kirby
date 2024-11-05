@@ -17,10 +17,10 @@ public:
 	void BeginPlay() override;
 	void Tick(float _deltaTime) override;
 
-	FVector2D PngSize;
 protected:
 
 private:
+	FVector2D PngSize;
 	FVector2D WinSize;
 	FVector2D MapScale;
 	class USpriteRenderer* SpriteRenderer = nullptr;

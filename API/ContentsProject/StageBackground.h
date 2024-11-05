@@ -14,6 +14,7 @@ public:
 	AStageBackground& operator=(const AStageBackground& _Other) = delete;
 	AStageBackground& operator=(AStageBackground&& _Other) noexcept = delete;
 
+	void BeginPlay() override;
 protected:
 
 private:

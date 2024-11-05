@@ -17,6 +17,7 @@ public:
 	UObject(UObject&& _Other) noexcept = delete;
 	UObject& operator=(const UObject& _Other) = delete;
 	UObject& operator=(UObject&& _Other) noexcept = delete;
+
 	std::string GetName() const
 	{
 		return Name;
@@ -26,15 +27,77 @@ public:
 	{
 		return Name.c_str();
 	}
+
 	// 이름 지정할때 뭔가 하고 싶으면 오버라이드해.
 	virtual void SetName(std::string_view _Name)
 	{
 		Name = _Name.data();
 	}
 
+	// bool IsActive()
+	virtual bool IsActive()
+	{
+		return IsActiveValue && false == IsDestroyValue;
+	}
+
+	virtual bool IsDestroy()
+	{
+		return IsDestroyValue;
+	}
+
+	// 바로 죽겠죠?
+	// _Time 시간후에 죽어라.
+	void Destroy(float _Time = 0.0f)
+	{
+		DeathTime = _Time;
+
+		if (0.0f < _Time)
+		{
+			IsDeathTimeCheck = true;
+			return;
+		}
+
+		IsDestroyValue = true;
+	}
+
+	virtual void ReleaseCheck(float _DeltaTime)
+	{
+		if (false == IsDeathTimeCheck)
+		{
+			return;
+		}
+
+		CurDeathTime += _DeltaTime;
+
+		if (DeathTime <= CurDeathTime)
+		{
+			IsDestroyValue = true;
+		}
+	}
+
+	// 모든 기능 정지.
+	// 얼음 외부에서 다른 객체가 풀어줘야 한다.
+	void SetActive(bool _IsActive)
+	{
+		IsActiveValue = _IsActive;
+	}
+
+	void SetActiveSwitch()
+	{
+		IsActiveValue = !IsActiveValue;
+	}
+
+
 protected:
 
 private:
+	bool IsDestroyValue = false;
+	bool IsActiveValue = true;
+
+	bool IsDeathTimeCheck = false;
+	float DeathTime = 0.0f;
+	float CurDeathTime = 0.0f;
+
 	std::string Name;
 
 };

@@ -14,11 +14,14 @@ public:
 	AItemRoomBeforeBossMap(AItemRoomBeforeBossMap&& _Other) noexcept = delete;
 	AItemRoomBeforeBossMap& operator=(const AItemRoomBeforeBossMap& _Other) = delete;
 	AItemRoomBeforeBossMap& operator=(AItemRoomBeforeBossMap&& _Other) noexcept = delete;
-	/*void BeginPlay() override;
-	void Tick(float _DeltaTime) override;*/
+	void BeginPlay() override;
+	void Tick(float _deltaTime) override;
 protected:
 
 private:
+	FVector2D PngSize;
+	FVector2D WinSize;
+	FVector2D MapScale;
 	class USpriteRenderer* SpriteRenderer = nullptr;
 };
 
