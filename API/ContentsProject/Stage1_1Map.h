@@ -15,10 +15,14 @@ public:
 	AStage1_1Map& operator=(const AStage1_1Map& _Other) = delete;
 	AStage1_1Map& operator=(AStage1_1Map&& _Other) noexcept = delete;
 	void BeginPlay() override;
+	void Tick(float _deltaTime) override;
 
+	FVector2D PngSize;
 protected:
 
 private:
+	FVector2D WinSize;
+	FVector2D MapScale;
 	class USpriteRenderer* SpriteRenderer = nullptr;
 };
 

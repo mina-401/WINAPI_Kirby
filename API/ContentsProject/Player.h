@@ -33,8 +33,8 @@ public:
 protected:
 
 private:
-
-	float Speed = 100.0f;
+	FVector2D Size;
+	float Speed = 1000.f;
 	int MySpriteIndex = 0;
 
 	class USpriteRenderer* SpriteRenderer;

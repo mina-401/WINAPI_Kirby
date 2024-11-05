@@ -86,13 +86,10 @@ void ULevel::Render(float _DeltaTime)
 	// Level도 그 스프라이트 랜더러를 알아야 한다.
 	if (true == IsCameraToMainPawn)
 	{
-		if (MainPawn->GetName() == "Kirby") {
-			CameraPos = MainPawn->GetTransform().Location + CameraPivot;
-			CameraPos.Y = 0;
-			if (CameraPos.X <= 0) CameraPos.X = 0;
+		CameraPos = MainPawn->GetTransform().Location + CameraPivot;
 
-		}
 	}
+
 
 	std::map<int, std::list<class USpriteRenderer*>>::iterator StartOrderIter = Renderers.begin();
 	std::map<int, std::list<class USpriteRenderer*>>::iterator EndOrderIter = Renderers.end();

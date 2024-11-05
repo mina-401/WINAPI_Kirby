@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "Player.h"
 
+#include "ContentsEnum.h"
 #include <EnginePlatform/EngineInput.h>
 
 #include <EngineCore/EngineCoreDebug.h>
@@ -12,10 +13,12 @@ APlayer::APlayer()
 {
 	// UEngineAPICore::GetCore()->CreateLevel("Title");
 	//UEngineAPICore::GetCore()->GetMainWindow().GetBackBuffer();
-	SetActorLocation({ 150, 325 });
+	SetActorLocation({ 0, 0 });
+	
 
 	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 	SpriteRenderer->SetSprite("Idle_Right.png");
+	SpriteRenderer->SetOrder(ERenderOrder::PLAYER);
 	SpriteRenderer->SetComponentScale({ 270, 270 });
 
 	SetName("Kirby");
@@ -47,9 +50,11 @@ void APlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	FVector2D Size = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
+	Size = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 	GetWorld()->SetCameraPivot(Size.Half() * -1.0f);
+	GetWorld()->SetCameraToMainPawn(false);
 
+	
 	
 	//키 바인딩
 	//인자를 호출할 때 넣어줌을 명시하는 것이 placeholders
@@ -64,17 +69,41 @@ void APlayer::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
+
+	ULevel* CurLevel = GetWorld();
+
+	FVector2D CurCameraPos = CurLevel->GetCameraPos();
+	FVector2D CurPlayerPos = GetActorLocation();
+	
+	CurLevel->SetCameraPos(CurPlayerPos-Size.Half());
+
+	FVector2D CamPos = CurLevel->GetCameraPos();
+
+	if (0.0f > CamPos.X)
+	{
+		CamPos.X = 0.0f;
+	}
+	if (0.0f < CamPos.Y)
+	{
+		CamPos.Y = 0;
+	}
+	//CamPos.Y -= 70;
+	CurLevel->SetCameraPos(CamPos);
+
+
 	UEngineDebug::CoreOutPutString("FPS : " + std::to_string(1.0f / _DeltaTime));
 	UEngineDebug::CoreOutPutString("PlayerPos : " + GetActorLocation().ToString());
 
 	if (true == UEngineInput::GetInst().IsPress('Z'))
 	{
 		SpriteRenderer->ChangeAnimation("Jump_Right");
+		AddActorLocation(FVector2D::UP * _DeltaTime * Speed);
+
 	}
 	if (true == UEngineInput::GetInst().IsPress('X'))
 	{
-		//SpriteRenderer->ChangeAnimation("Run_Right");
-		//AddActorLocation(FVector2D::UP * _DeltaTime * Speed);
+		SpriteRenderer->ChangeAnimation("Run_Right");
+		AddActorLocation(FVector2D::DOWN * _DeltaTime * Speed);
 	}
 	if (true == UEngineInput::GetInst().IsPress(VK_LEFT))
 	{

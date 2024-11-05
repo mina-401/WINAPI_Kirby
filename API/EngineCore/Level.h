@@ -25,6 +25,7 @@ public:
 
 	void Tick(float _DeltaTime);
 	void Render(float _DeltaTime);
+	void Release(float _DeltaTime);
 
 	template<typename ActorType>
 	ActorType* SpawnActor()
@@ -50,6 +51,32 @@ public:
 	{
 		CameraPivot = _Pivot;
 	}
+
+	void SetCameraPos(FVector2D _Pos)
+	{
+		CameraPos = _Pos;
+	}
+
+	FVector2D GetCameraPivot()
+	{
+		return CameraPivot;
+	}
+
+	FVector2D GetCameraPos()
+	{
+		return CameraPos;
+	}
+
+	AActor* GetPawn()
+	{
+		return MainPawn;
+	}
+
+	AGameMode* GetGameMode()
+	{
+		return GameMode;
+	}
+
 
 protected:
 

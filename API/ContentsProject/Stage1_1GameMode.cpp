@@ -16,7 +16,7 @@ void AStage1_1GameMode::BeginPlay()
 	Super::BeginPlay();
 
 
-	AStage1_1Map* NewActor = GetWorld()->SpawnActor<AStage1_1Map>();
+	AStage1_1Map* NewMap = GetWorld()->SpawnActor<AStage1_1Map>();
 }
 
 void AStage1_1GameMode::Tick(float _DeltaTime)

@@ -6,6 +6,7 @@
 #include "ContentsEnum.h"
 AItemRoomBeforeBossMap::AItemRoomBeforeBossMap()
 {
+	
 	{
 		USpriteRenderer* SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 		SpriteRenderer->SetOrder(ERenderOrder::FOREGROUND);
