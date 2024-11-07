@@ -71,6 +71,12 @@
     <ClInclude Include="StageBackground.h">
       <Filter>ContentsObject\GameMap</Filter>
     </ClInclude>
+    <ClInclude Include="Widget.h">
+      <Filter>ContentsObject\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="KirbyWidget.h">
+      <Filter>ContentsObject\HUD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -143,6 +149,12 @@
     <ClCompile Include="StageBackground.cpp">
       <Filter>ContentsObject\GameMap</Filter>
     </ClCompile>
+    <ClCompile Include="Widget.cpp">
+      <Filter>ContentsObject\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="KirbyWidget.cpp">
+      <Filter>ContentsObject\HUD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -166,11 +178,11 @@
     <Filter Include="KirbyContents">
       <UniqueIdentifier>{9d67429e-8506-4dc5-81cf-84ef29f5fc32}</UniqueIdentifier>
     </Filter>
-    <Filter Include="KirbyContents\KirbyGameMode">
-      <UniqueIdentifier>{9b5823c4-b497-4000-a17d-9f23a38ac66a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ContentsObject\GameMap">
       <UniqueIdentifier>{9930e700-f278-4e51-a8a2-33e1a9b3153f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\HUD">
+      <UniqueIdentifier>{05bb8190-22ce-46a7-b422-f208976c7a87}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

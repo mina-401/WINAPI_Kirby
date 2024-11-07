@@ -26,9 +26,11 @@ public:
 	virtual void BeginPlay() {}
 
 	// 델타타임이란 무엇인가?
-	virtual void Tick(float _DeltaTime) {}
+	virtual void Tick(float _DeltaTime);
+
 	virtual void LevelChangeStart() {}
 	virtual void LevelChangeEnd() {}
+
 	class ULevel* GetWorld()
 	{
 		return World;
@@ -42,11 +44,6 @@ public:
 	void AddActorLocation(FVector2D _Direction)
 	{
 		Transform.Location += _Direction;
-	}
-
-	void SetActorScale(FVector2D _Scale)
-	{
-		Transform.Scale = _Scale;
 	}
 
 	FTransform GetTransform()
@@ -80,6 +77,21 @@ public:
 		return NewComponent;
 	}
 
+	void DebugOn()
+	{
+		IsDebug = true;
+	}
+
+	void DebugOff()
+	{
+		IsDebug = false;
+	}
+
+	void DebugSwitch()
+	{
+		IsDebug = !IsDebug;
+	}
+
 protected:
 
 private:
@@ -88,8 +100,12 @@ private:
 	static bool IsNewActorCreate;
 	static std::list<class UActorComponent*> ComponentList;
 
+	void ReleaseCheck(float _DeltaTime) override;
+
 	class ULevel* World = nullptr;
 	FTransform Transform;
+
+	bool IsDebug = false;
 
 	std::list<class UActorComponent*> Components;
 };

@@ -16,8 +16,17 @@ AStageKingDededeMap::AStageKingDededeMap()
 
 		FVector2D Size = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 
-		MapScale = SpriteRenderer->SetSpriteScale(2.35f);
+		MapScale = SpriteRenderer->SetSpriteScale(1.f);
 		SpriteRenderer->SetComponentLocation(MapScale.Half());
+	} {
+
+		ColSpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
+		ColSpriteRenderer->SetOrder(ERenderOrder::COLMAP);
+		ColSpriteRenderer->SetSprite("foregroundKingDedede1-1_col.png");
+
+		FVector2D MapScale = ColSpriteRenderer->SetSpriteScale(1.0f);
+		ColSpriteRenderer->SetComponentLocation(MapScale.Half());
+
 	}
 }
 
@@ -29,14 +38,14 @@ void AStageKingDededeMap::BeginPlay()
 {
 	APlayer* player = GetWorld()->GetPawn<APlayer>();
 
-	player->SetActorLocation({ 107,340 });
+
+	player->SetActorLocation({ 0,0 });
 }
 
 void AStageKingDededeMap::Tick(float _deltaTime)
 {
 	APlayer* player = GetWorld()->GetPawn<APlayer>();
 	player->BlockCameraPos(MapScale, WinSize);
-
-	FVector2D CamPos = GetWorld()->GetCameraPos();
-	GetWorld()->SetCameraPos({ CamPos.X,CamPos.Y+70 });
+	FVector2D  CurCameraPos = GetWorld()->GetCameraPos();
+	//GetWorld()->SetCameraPos({ CurCameraPos.X,CurCameraPos.Y + 70 });
 }

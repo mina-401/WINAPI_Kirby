@@ -5,6 +5,7 @@
 #include <EngineCore/SpriteRenderer.h>
 #include "ContentsEnum.h"
 #include "Player.h"
+#include <EnginePlatform/EngineInput.h>
 AStage1_1Map::AStage1_1Map()
 {
 	PngSize = {(float) 792.5 ,(float)103.5 };
@@ -16,12 +17,17 @@ AStage1_1Map::AStage1_1Map()
 
 		FVector2D Size = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 
-		MapScale = SpriteRenderer->SetSpriteScale(2.5f);
+		MapScale = SpriteRenderer->SetSpriteScale(1.0f);
 		SpriteRenderer->SetComponentLocation(MapScale.Half());
-
-	
 	}
+	{
+		ColSpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
+		ColSpriteRenderer->SetOrder(ERenderOrder::COLMAP);
+		ColSpriteRenderer->SetSprite("foreground1-1_col.png");
 
+		FVector2D MapScale = ColSpriteRenderer->SetSpriteScale(1.0f);
+		ColSpriteRenderer->SetComponentLocation(MapScale.Half());
+	}
 }
 
 AStage1_1Map::~AStage1_1Map()
@@ -31,12 +37,18 @@ AStage1_1Map::~AStage1_1Map()
 void AStage1_1Map::BeginPlay()
 {
 	
-	GetWorld()->GetPawn()->SetActorLocation({ 256,362 });
+	GetWorld()->GetPawn()->SetActorLocation({ 256,300 });
 
 }
 
 void AStage1_1Map::Tick(float _deltaTime)
 {
+	Super::Tick(_deltaTime);
+
+	if (true == UEngineInput::GetInst().IsDown('Y'))
+	{
+		ColSpriteRenderer->SetActiveSwitch();
+	}
 	APlayer* player = GetWorld()->GetPawn<APlayer>();
 	player->BlockCameraPos(MapScale, WinSize);
 }

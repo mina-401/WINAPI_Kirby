@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "Stage1_4GameMode.h"
 #include "Stage1_4Map.h"
+#include "Player.h"
 
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/EngineAPICore.h>
@@ -18,6 +19,8 @@ void AStage1_4GameMode::BeginPlay()
 
 	
 	AStage1_4Map* NewMap = GetWorld()->SpawnActor<AStage1_4Map>();
+	APlayer* player = GetWorld()->GetPawn<APlayer>();
+	player->SetColImage("foreground1-4_col.png");
 
 }
 

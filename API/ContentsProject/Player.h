@@ -42,16 +42,18 @@ public:
 	void SetColImage(std::string_view _ColImageName);
 
 	void BlockCameraPos(FVector2D _MapScale, FVector2D _WinSize);
+	void SetDebug(bool _debug);
+
+
 protected:
 
 private:
 	FVector2D Size;
 	float Speed = 1000.0f;
-	int MySpriteIndex = 0;
 
 	class USpriteRenderer* SpriteRenderer;
 	class UEngineWinImage* ColImage = nullptr;
-	// class std::vector< USpriteRenderer* LeftRenderer;
+
 	PlayerState CurPlayerState = PlayerState::Idle;
 
 	// 점프
@@ -70,18 +72,28 @@ private:
 	void JumpDown(float _DeltaTime);
 	void Move(float _DeltaTime);
 	void SlideStart();
+	void BreakRunning();
 	void Slide(float _DeltaTime);
-	void SlideRight(float _DeltaTime);
-	void SlideLeft(float _DeltaTime);
+	void PlayerCameraCheck();
+	void PlayerGroundCheck(FVector2D _MovePos);
 	//void Fly(float _DeltaTime);
+
+	
+	// 상태는 아니지만 도움이나 체크에 처리되는 함수
+	void Gravity(float _DeltaTime);
+
+private:
+	double CurrTime = 0;
+	double CurrJumpTime = 0;
+
+	bool IsDebug = true;
+
+	int IsGround = false;
+	bool IsMove = false;
 
 	bool isJump = false;
 	bool isJumpLanding = false;
-	// 상태는 아니지만 도움이나 체크에 처리되는 함수
-	void Gravity()
-	{
 
-	}
-
+	FVector2D GravityForce = FVector2D::ZERO;
 };
 

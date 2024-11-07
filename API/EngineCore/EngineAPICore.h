@@ -63,7 +63,7 @@ public:
 
 		return NewLevel;
 	}
-
+	
 	void OpenLevel(std::string_view _LevelName);
 
 

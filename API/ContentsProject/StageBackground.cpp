@@ -13,12 +13,12 @@ AStageBackground::AStageBackground()
 
 		FVector2D WinSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 
-		FVector2D MapScale = SpriteRenderer->SetSpriteScale(3.0f);
+		FVector2D MapScale = SpriteRenderer->SetSpriteScale(1.0f);
 		SpriteRenderer->SetComponentLocation(MapScale.Half());
 		SpriteRenderer->SetCameraEffect(TRUE);
 		SpriteRenderer->SetCameraEffectScale(0.2f);
 	}
-
+	//SetActorLocation({})
 
 }
 
@@ -28,6 +28,6 @@ AStageBackground::~AStageBackground()
 
 void AStageBackground::BeginPlay()
 {
-	//SetActorLocation({ 0,-70 });
+	//SetActorLocation({ 0,70 });
 }
 

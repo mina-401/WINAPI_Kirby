@@ -17,8 +17,16 @@ AStage1_3Map::AStage1_3Map()
 
 		FVector2D Size = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 
-		MapScale = SpriteRenderer->SetSpriteScale(2.5f);
+		MapScale = SpriteRenderer->SetSpriteScale(1.0f);
 		SpriteRenderer->SetComponentLocation(MapScale.Half());
+	}
+	{
+		ColSpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
+		ColSpriteRenderer->SetOrder(ERenderOrder::COLMAP);
+		ColSpriteRenderer->SetSprite("foreground1-3_col.png");
+
+		FVector2D MapScale = ColSpriteRenderer->SetSpriteScale(1.0f);
+		ColSpriteRenderer->SetComponentLocation(MapScale.Half());
 	}
 }
 
@@ -32,7 +40,7 @@ void AStage1_3Map::BeginPlay()
 	AStageBackground* BackGroundMap = GetWorld()->SpawnActor<AStageBackground>();
 	//BackGroundMap->SetActorLocation({ (float)0,(float)PngSize.Y+70 });
 	APlayer* player = GetWorld()->GetPawn<APlayer>();
-	player->SetActorLocation({ 60,663 });
+	player->SetActorLocation({ 60,400 });
 }
 
 void AStage1_3Map::Tick(float _deltaTime)

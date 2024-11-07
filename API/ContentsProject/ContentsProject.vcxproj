@@ -155,6 +155,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="KirbyWidget.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="StageBackground.h">
       <SubType>
       </SubType>
@@ -238,9 +242,17 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="Widget.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KirbyLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="KirbyWidget.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -327,6 +339,10 @@
     </ClCompile>
     <ClCompile Include="TitleLogo.cpp" />
     <ClCompile Include="TitleMap.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Widget.cpp">
       <SubType>
       </SubType>
     </ClCompile>

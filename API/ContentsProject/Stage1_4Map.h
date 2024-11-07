@@ -26,5 +26,6 @@ private:
 
 	class AStageBackground* BackGroundMap = nullptr;
 	class USpriteRenderer* SpriteRenderer = nullptr;
+	class USpriteRenderer* ColSpriteRenderer = nullptr;
 };
 

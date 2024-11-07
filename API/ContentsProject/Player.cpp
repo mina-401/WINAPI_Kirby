@@ -30,14 +30,18 @@ APlayer::APlayer()
 	UImageManager::GetInst().CuttingSprite("Jump_Right.png", { 128, 128 });
 	UImageManager::GetInst().CuttingSprite("Slide_Left.png", { 128, 128 });
 	UImageManager::GetInst().CuttingSprite("Slide_Right.png", { 128, 128 });
+	UImageManager::GetInst().CuttingSprite("Break_Left.png", { 128, 128 });
+	UImageManager::GetInst().CuttingSprite("Break_Right.png", { 128, 128 });
 	SpriteRenderer->CreateAnimation("Idle_Left", "Idle_Left.png", 0, 2, 3.f);
 	SpriteRenderer->CreateAnimation("Idle_Right", "Idle_Right.png", 0, 2, 3.f);
 	SpriteRenderer->CreateAnimation("Run_Left", "Run_Left.png",  0, 6, 0.1f);
 	SpriteRenderer->CreateAnimation("Run_Right", "Run_Right.png",  0, 6, 0.1f);
 	SpriteRenderer->CreateAnimation("Jump_Left", "Jump_Left.png",  0, 8, 0.1f);
 	SpriteRenderer->CreateAnimation("Jump_Right", "Jump_Right.png",  0, 8, 0.1f);
-	SpriteRenderer->CreateAnimation("Slide_Left", "Slide_Right.png", 0, 1, 0.2f);
-	SpriteRenderer->CreateAnimation("Slide_Right", "Slide_Right.png", 0, 1, 0.2f);
+	SpriteRenderer->CreateAnimation("Slide_Left", "Slide_Left.png", 0, 0, 0.5f,false);
+	SpriteRenderer->CreateAnimation("Slide_Right", "Slide_Right.png", 0, 0, 0.5f, false);
+	SpriteRenderer->CreateAnimation("Break_Left", "Break_Left.png", 0, 0, 0.2f);
+	SpriteRenderer->CreateAnimation("Break_Right", "Break_Right.png", 0, 0, 0.2f);
 
 	SpriteRenderer->ChangeAnimation("Idle_Right");
 	//SpriteRenderer->SetAnimationEvent("Run_Right", 2, std::bind(&APlayer::RunSoundPlay, this));
@@ -74,7 +78,6 @@ void APlayer::BlockCameraPos(FVector2D _MapScale, FVector2D _WinSize)
 		CamPos.Y = (CamPos.Y + _WinSize.Y);
 		CamPos.Y -= (CamPos.Y + _WinSize.Y) - _MapScale.Y;
 	}
-	CamPos.Y -= 70;
 	GetWorld()->SetCameraPos(CamPos);
 
 	
@@ -135,6 +138,10 @@ void APlayer::ChangeState(PlayerState _CurPlayerState)
 void APlayer::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
+	if (true == UEngineInput::GetInst().IsDown('R'))
+	{
+		UEngineDebug::SwitchIsDebug();
+	}
 
 	UEngineDebug::CoreOutPutString("FPS : " + std::to_string(1.0f / _DeltaTime));
 	UEngineDebug::CoreOutPutString("PlayerPos : " + GetActorLocation().ToString());
@@ -176,20 +183,35 @@ void APlayer::LevelChangeEnd()
 
 void APlayer::Idle(float _DeltaTime)
 {
-	Gravity();
+	//Gravity();
+
+	/*PlayerCameraCheck();
+	PlayerGroundCheck(GravityForce);
+	Gravity(_DeltaTime);*/
 
 
-	SpriteRenderer->ChangeAnimation("Idle_Right");
-
-
-	if (true == UEngineInput::GetInst().IsPress(VK_LEFT) ||
-		true == UEngineInput::GetInst().IsPress(VK_RIGHT) ||
-		true == UEngineInput::GetInst().IsPress(VK_UP)||
-		true == UEngineInput::GetInst().IsPress(VK_DOWN) )
+	if (true == IsDebug)
 	{
+		if (true == UEngineInput::GetInst().IsPress(VK_LEFT) ||
+			true == UEngineInput::GetInst().IsPress(VK_RIGHT) ||
+			true == UEngineInput::GetInst().IsPress(VK_UP) ||
+			true == UEngineInput::GetInst().IsPress(VK_DOWN))
+		{
 
-		ChangeState(PlayerState::Move);
-		return;
+			ChangeState(PlayerState::Move);
+			return;
+		}
+	}
+	else {
+		if (true == UEngineInput::GetInst().IsPress(VK_LEFT) ||
+			true == UEngineInput::GetInst().IsPress(VK_RIGHT) ||
+			true == UEngineInput::GetInst().IsPress(VK_UP) )
+			
+		{
+
+			ChangeState(PlayerState::Move);
+			return;
+		}
 	}
 
 	if (true == UEngineInput::GetInst().IsPress('Z'))
@@ -198,35 +220,46 @@ void APlayer::Idle(float _DeltaTime)
 		return;
 	}
 
-	if (true == UEngineInput::GetInst().IsPress(VK_DOWN))
-	{
-		ChangeState(PlayerState::Slide);
-		return;
-	}
+
 
 }
 
 void APlayer::MoveStart()
 {
-	SpriteRenderer->ChangeAnimation("Run_Right");
+	if (true == UEngineInput::GetInst().IsPress(VK_LEFT)) SpriteRenderer->ChangeAnimation("Run_Left");
+	if (true == UEngineInput::GetInst().IsPress(VK_RIGHT)) SpriteRenderer->ChangeAnimation("Run_Right");
+	if (true == UEngineInput::GetInst().IsPress(VK_UP)) {}
+	if (true == UEngineInput::GetInst().IsPress(VK_DOWN)) {}
+		
+
 }
 void APlayer::JumpStart()
 {
-	SpriteRenderer->ChangeAnimation("Jump_Right");
+	if (true == UEngineInput::GetInst().IsPress(VK_LEFT)) SpriteRenderer->ChangeAnimation("Jump_Left");
+	if (true == UEngineInput::GetInst().IsPress(VK_RIGHT)) SpriteRenderer->ChangeAnimation("Jump_Right");
 }
 void APlayer::Jump(float _DeltaTime)
 {
-	Gravity();
-	if (true == isJumpLanding) isJump = false;
-	if (true == isJump) return;
+	//Gravity();
+
+	if ( 100.0f<CurrJumpTime)
+	{
+		CurrJumpTime = 0;
+		ChangeState(PlayerState::Idle);
+
+	}
+	CurrJumpTime += 0.2f;
+	//if (true == isJumpLanding) isJump = false;
+	//if (true == isJump) return;
 
 	FVector2D Vector = FVector2D::ZERO;
 
 	if (true == UEngineInput::GetInst().IsDown('Z')) {
 		isJump = true;
+		JumpUp(_DeltaTime);
 	}
-	//if (true == UEngineInput::GetInst().IsUp('Z')) isJump = false;
-	JumpUp(_DeltaTime);
+	////if (true == UEngineInput::GetInst().IsUp('Z')) isJump = false;
+	//
 
 	//시간재서 1초지나면 JumpDown
 
@@ -250,7 +283,6 @@ void APlayer::Move(float _DeltaTime)
 	{
 		Vector += FVector2D::UP;
 
-
 	}
 	if (true == UEngineInput::GetInst().IsPress(VK_DOWN))
 	{
@@ -265,15 +297,26 @@ void APlayer::Move(float _DeltaTime)
 	{
 		Vector += FVector2D::RIGHT;
 	}
-
+	if (true == UEngineInput::GetInst().IsDown('Z') && true == UEngineInput::GetInst().IsPress(VK_DOWN))
+	{
+		ChangeState(PlayerState::Slide);
+		return;
+	}
+	if (true == UEngineInput::GetInst().IsPress('Z'))
+	{
+		//ChangeState(PlayerState::Jump);
+		//return;
+	}
 	if (false == UEngineInput::GetInst().IsPress(VK_LEFT) &&
 		false == UEngineInput::GetInst().IsPress(VK_RIGHT) &&
 		false == UEngineInput::GetInst().IsPress(VK_UP) &&
 		false == UEngineInput::GetInst().IsPress(VK_DOWN))
 	{
 		ChangeState(PlayerState::Idle);
-		//	return;
+		return;
 	}
+
+	
 	if (nullptr != ColImage)
 	{
 
@@ -281,36 +324,105 @@ void APlayer::Move(float _DeltaTime)
 		FVector2D NextPos = GetActorLocation() + Vector * _DeltaTime * Speed;
 
 		UColor Color = ColImage->GetColor(NextPos, UColor::BLACK);
+
 		if (Color == UColor::WHITE)
 		{
 			AddActorLocation(Vector * _DeltaTime * Speed);
 		}
 	}
-
-	AddActorLocation(Vector * _DeltaTime * Speed);
+	
 
 }
 
 void APlayer::SlideStart()
 {
-	// 오른쪽으로 가고 있으면 righth start
-	//
-	SpriteRenderer->ChangeAnimation("Slide_Right");
+
+	if (true == UEngineInput::GetInst().IsPress(VK_LEFT)) SpriteRenderer->ChangeAnimation("Slide_Left");
+	if (true == UEngineInput::GetInst().IsPress(VK_RIGHT)) SpriteRenderer->ChangeAnimation("Slide_Right");
+
+}
+
+void APlayer::BreakRunning()
+{
+	if (true == UEngineInput::GetInst().IsPress(VK_RIGHT)) SpriteRenderer->ChangeAnimation("Break_Left");
+	if (true == UEngineInput::GetInst().IsPress(VK_LEFT)) SpriteRenderer->ChangeAnimation("Break_right");
+
 
 }
 
 void APlayer::Slide(float _DeltaTime)
 {
+	if (CurrTime >80.0f)
+	{
+		CurrTime = 0;
+		ChangeState(PlayerState::Idle);
+		
+	}
+	CurrTime += 0.2f;
+	FVector2D Vector = FVector2D::ZERO;
+
+	if (true == UEngineInput::GetInst().IsPress(VK_LEFT))
+	{
+		Vector += FVector2D::LEFT;
+
+	}
+	if (true == UEngineInput::GetInst().IsPress(VK_RIGHT))
+	{
+		Vector += FVector2D::RIGHT;
+	}
+	
+	if (nullptr != ColImage)
+	{
+
+		// 픽셀충돌에서 제일 중요한건 애초에 박히지 않는것이다.
+		FVector2D NextPos = GetActorLocation() + Vector * _DeltaTime * Speed;
+
+		UColor Color = ColImage->GetColor(NextPos, UColor::BLACK);
+
+		if (Color == UColor::WHITE)
+		{
+			AddActorLocation(Vector * _DeltaTime * Speed);
+		}
+	}
+	//AddActorLocation(Vector * _DeltaTime * Speed);
+}void APlayer::PlayerCameraCheck()
+{
+	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
+	GetWorld()->SetCameraPos(GetActorLocation() - WindowSize.Half());
 }
 
-void APlayer::SlideRight(float _DeltaTime)
+void APlayer::PlayerGroundCheck(FVector2D _MovePos)
 {
-	AddActorLocation(FVector2D::RIGHT * _DeltaTime * Speed);
+	IsMove = false;
+	IsGround = false;
+
+	if (nullptr != ColImage)
+	{
+		// 픽셀충돌에서 제일 중요한건 애초에 박히지 않는것이다.
+		FVector2D NextPos = GetActorLocation() + _MovePos;
+
+		UColor Color = ColImage->GetColor(NextPos, UColor::BLACK);
+		if (Color == UColor::WHITE)
+		{
+			IsMove = true;
+		}
+		else if(Color == UColor::BLACK)
+		{
+			IsGround = true;
+		}
+	}
 }
-void APlayer::SlideLeft(float _DeltaTime)
+
+void APlayer::Gravity(float _DeltaTime)
 {
+	if (false == IsGround)
+	{
+		GravityForce += FVector2D::DOWN * _DeltaTime * 0.1f;
+	}
+	else {
+		GravityForce = FVector2D::ZERO;
+	}
 
-	//SpriteRenderer->ChangeAnimation("Slide_Left");
-
-	AddActorLocation(FVector2D::LEFT * _DeltaTime * Speed);
+	// 상시 
+	AddActorLocation(GravityForce);
 }

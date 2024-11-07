@@ -7,18 +7,24 @@
 AStage1_2Map::AStage1_2Map()
 {
 
-	PngSize = { (float)728 ,(float)104 };
 	WinSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 
-	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
-	SpriteRenderer->SetOrder(ERenderOrder::FOREGROUND);
-	SpriteRenderer->SetSprite("foreground1-2.png");
+	{
+		SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
+		SpriteRenderer->SetOrder(ERenderOrder::FOREGROUND);
+		SpriteRenderer->SetSprite("foreground1-2.png");
 
-	FVector2D Size = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
+		MapScale = SpriteRenderer->SetSpriteScale(1.0f);
+		SpriteRenderer->SetComponentLocation(MapScale.Half());
+	}
+	{
+		ColSpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
+		ColSpriteRenderer->SetOrder(ERenderOrder::COLMAP);
+		ColSpriteRenderer->SetSprite("foreground1-2_col.png");
 
-
-	MapScale = SpriteRenderer->SetSpriteScale(2.5f);
-	SpriteRenderer->SetComponentLocation(MapScale.Half());
+		FVector2D MapScale = ColSpriteRenderer->SetSpriteScale(1.0f);
+		ColSpriteRenderer->SetComponentLocation(MapScale.Half());
+	}
 }
 
 AStage1_2Map::~AStage1_2Map()
@@ -27,11 +33,14 @@ AStage1_2Map::~AStage1_2Map()
 
 void AStage1_2Map::BeginPlay()
 {
-	GetWorld()->GetPawn()->SetActorLocation({ 85,366 });
+	APlayer* player = GetWorld()->GetPawn<APlayer>();
+	player->SetActorLocation({ 85,350 });
+
 }
 
 void AStage1_2Map::Tick(float _deltaTime)
 {
+	
 	APlayer* player = GetWorld()->GetPawn<APlayer>();
 	player->BlockCameraPos(MapScale, WinSize);
 }

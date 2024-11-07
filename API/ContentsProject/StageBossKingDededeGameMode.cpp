@@ -1,4 +1,5 @@
 #include "PreCompile.h"
+#include "Player.h"
 #include "StageBossKingDededeGameMode.h"
 #include "StageKingDededeMap.h"
 #include <EnginePlatform/EngineInput.h>
@@ -14,7 +15,9 @@ AStageBossKingDededeGameMode::~AStageBossKingDededeGameMode()
 void AStageBossKingDededeGameMode::BeginPlay()
 {
 	Super::BeginPlay();
+	APlayer* player = GetWorld()->GetPawn<APlayer>();
 
+	player->SetColImage("foregroundKingDedede1-1_col.png");
 	AStageKingDededeMap* NewActor = GetWorld()->SpawnActor<AStageKingDededeMap>();
 }
 
