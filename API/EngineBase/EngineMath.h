@@ -114,6 +114,14 @@ public:
 		return Result;
 	}
 
+	FVector2D& operator-=(FVector2D _Other)
+	{
+		X -= _Other.X;
+		Y -= _Other.Y;
+		return *this;
+	}
+
+
 	FVector2D operator-(FVector2D _Other) const
 	{
 		FVector2D Result;
@@ -122,6 +130,13 @@ public:
 		return Result;
 	}
 
+	FVector2D operator-() const
+	{
+		FVector2D Result;
+		Result.X = -X;
+		Result.Y = -Y;
+		return Result;
+	}
 
 	FVector2D operator/(int _Value) const
 	{

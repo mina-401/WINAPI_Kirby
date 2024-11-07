@@ -16,7 +16,7 @@ AStageBackground::AStageBackground()
 		FVector2D MapScale = SpriteRenderer->SetSpriteScale(1.0f);
 		SpriteRenderer->SetComponentLocation(MapScale.Half());
 		SpriteRenderer->SetCameraEffect(TRUE);
-		SpriteRenderer->SetCameraEffectScale(0.2f);
+		SpriteRenderer->SetCameraEffectScale(0.15f);
 	}
 	//SetActorLocation({})
 

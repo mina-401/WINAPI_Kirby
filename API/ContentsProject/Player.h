@@ -10,6 +10,7 @@ enum class PlayerState
 	Move,
 	Jump,
 	Slide,
+	Attack,
 };
 
 class APlayer : public AActor
@@ -42,16 +43,16 @@ public:
 	void SetColImage(std::string_view _ColImageName);
 
 	void BlockCameraPos(FVector2D _MapScale, FVector2D _WinSize);
-	void SetDebug(bool _debug);
+	//void SetDebug(bool _debug);
 
 
 protected:
 
 private:
-	FVector2D Size;
+	FVector2D Size = { 0,0 };
 	float Speed = 1000.0f;
 
-	class USpriteRenderer* SpriteRenderer;
+	class USpriteRenderer* SpriteRenderer = nullptr;
 	class UEngineWinImage* ColImage = nullptr;
 
 	PlayerState CurPlayerState = PlayerState::Idle;
@@ -76,12 +77,21 @@ private:
 	void Slide(float _DeltaTime);
 	void PlayerCameraCheck();
 	void PlayerGroundCheck(FVector2D _MovePos);
-	//void Fly(float _DeltaTime);
+	//void Attack(float _DeltaTime);
 
 	
 	// 상태는 아니지만 도움이나 체크에 처리되는 함수
-	void Gravity(float _DeltaTime);
+	//void Gravity(float _DeltaTime);
 
+
+
+	void Accel(float _DeltaTime, FVector2D Vector)
+	{
+		 Acc += Vector * _DeltaTime * 2.0f;
+
+		// 상시 
+		AddActorLocation(Acc);
+	}
 private:
 	double CurrTime = 0;
 	double CurrJumpTime = 0;
@@ -90,10 +100,15 @@ private:
 
 	int IsGround = false;
 	bool IsMove = false;
+	bool IsAcc = false;
 
 	bool isJump = false;
 	bool isJumpLanding = false;
 
-	FVector2D GravityForce = FVector2D::ZERO;
+	//FVector2D GravityForce = FVector2D::ZERO;
+	FVector2D Acc = FVector2D::ZERO;
+
+	class U2DCollision* CollisionComponent=nullptr;
+	class AKirbyWidget* PlayerHud=nullptr;
 };
 

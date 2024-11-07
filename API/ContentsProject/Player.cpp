@@ -1,7 +1,10 @@
 #include "PreCompile.h"
 #include "Player.h"
 
+#include "KirbyWidget.h"
 #include "ContentsEnum.h"
+#include <EngineCore/2DCollision.h>
+
 #include <EnginePlatform/EngineInput.h>
 
 #include <EngineCore/EngineCoreDebug.h>
@@ -44,9 +47,15 @@ APlayer::APlayer()
 	SpriteRenderer->CreateAnimation("Break_Right", "Break_Right.png", 0, 0, 0.2f);
 
 	SpriteRenderer->ChangeAnimation("Idle_Right");
-	//SpriteRenderer->SetAnimationEvent("Run_Right", 2, std::bind(&APlayer::RunSoundPlay, this));
+	
 
-	//std::string Name = SpriteRenderer->GetCurSpriteName();
+	{
+		CollisionComponent = CreateDefaultSubObject<U2DCollision>();
+		CollisionComponent->SetComponentLocation({ 200, 0 });
+		CollisionComponent->SetComponentScale({ 50, 50 });
+		CollisionComponent->SetCollisionGroup(ECollisionGroup::PlayerBody);
+	}
+
 }
 
 APlayer::~APlayer()
@@ -95,6 +104,9 @@ void APlayer::BeginPlay()
 	GetWorld()->SetCameraPivot(Size.Half() * -1.0f);
 	GetWorld()->SetCameraToMainPawn(false);
 
+	PlayerHud = GetWorld()->SpawnActor<AKirbyWidget>();
+
+
 	ChangeState(PlayerState::Idle);
 	
 	//키 바인딩
@@ -104,6 +116,8 @@ void APlayer::BeginPlay()
 	UEngineInput::GetInst().BindAction('D', KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::RIGHT));
 	UEngineInput::GetInst().BindAction('S', KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::DOWN));
 	UEngineInput::GetInst().BindAction('W', KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::UP));*/
+
+	DebugOn();
 }
 
 void APlayer::IdleStart()
@@ -142,7 +156,10 @@ void APlayer::Tick(float _DeltaTime)
 	{
 		UEngineDebug::SwitchIsDebug();
 	}
-
+	
+		// CameraPivot = FVector2D(-1280, -720) * 0.5f;
+	
+	
 	UEngineDebug::CoreOutPutString("FPS : " + std::to_string(1.0f / _DeltaTime));
 	UEngineDebug::CoreOutPutString("PlayerPos : " + GetActorLocation().ToString());
 
@@ -189,6 +206,7 @@ void APlayer::Idle(float _DeltaTime)
 	PlayerGroundCheck(GravityForce);
 	Gravity(_DeltaTime);*/
 
+	//Acc = FVector2D::ZERO;
 
 	if (true == IsDebug)
 	{
@@ -276,7 +294,6 @@ void APlayer::JumpDown(float _DeltaTime)
 }
 void APlayer::Move(float _DeltaTime)
 {
-
 	FVector2D Vector = FVector2D::ZERO;
 
 	if (true == UEngineInput::GetInst().IsPress(VK_UP))
@@ -297,6 +314,9 @@ void APlayer::Move(float _DeltaTime)
 	{
 		Vector += FVector2D::RIGHT;
 	}
+
+	//Accel(_DeltaTime, Vector);
+
 	if (true == UEngineInput::GetInst().IsDown('Z') && true == UEngineInput::GetInst().IsPress(VK_DOWN))
 	{
 		ChangeState(PlayerState::Slide);
@@ -315,15 +335,13 @@ void APlayer::Move(float _DeltaTime)
 		ChangeState(PlayerState::Idle);
 		return;
 	}
-
-	
 	if (nullptr != ColImage)
 	{
 
-		// 픽셀충돌에서 제일 중요한건 애초에 박히지 않는것이다.
+	//	// 픽셀충돌에서 제일 중요한건 애초에 박히지 않는것이다.
 		FVector2D NextPos = GetActorLocation() + Vector * _DeltaTime * Speed;
 
-		UColor Color = ColImage->GetColor(NextPos, UColor::BLACK);
+	UColor Color = ColImage->GetColor(NextPos, UColor::BLACK);
 
 		if (Color == UColor::WHITE)
 		{
@@ -413,16 +431,16 @@ void APlayer::PlayerGroundCheck(FVector2D _MovePos)
 	}
 }
 
-void APlayer::Gravity(float _DeltaTime)
-{
-	if (false == IsGround)
-	{
-		GravityForce += FVector2D::DOWN * _DeltaTime * 0.1f;
-	}
-	else {
-		GravityForce = FVector2D::ZERO;
-	}
-
-	// 상시 
-	AddActorLocation(GravityForce);
-}
+//void APlayer::Gravity(float _DeltaTime)
+//{
+//	if (false == IsGround)
+//	{
+//		GravityForce += FVector2D::DOWN * _DeltaTime * 0.1f;
+//	}
+//	else {
+//		GravityForce = FVector2D::ZERO;
+//	}
+//
+//	// 상시 
+//	AddActorLocation(GravityForce);
+//}

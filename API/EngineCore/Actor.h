@@ -77,20 +77,7 @@ public:
 		return NewComponent;
 	}
 
-	void DebugOn()
-	{
-		IsDebug = true;
-	}
-
-	void DebugOff()
-	{
-		IsDebug = false;
-	}
-
-	void DebugSwitch()
-	{
-		IsDebug = !IsDebug;
-	}
+	
 
 protected:
 
@@ -105,7 +92,7 @@ private:
 	class ULevel* World = nullptr;
 	FTransform Transform;
 
-	bool IsDebug = false;
+
 
 	std::list<class UActorComponent*> Components;
 };

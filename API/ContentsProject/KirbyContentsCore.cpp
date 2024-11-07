@@ -56,7 +56,7 @@ void KirbyContentsCore::BeginPlay()
 	}
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("WinAPI_Kirby");
 	// main windowÀÇ backbuffer
-	UEngineAPICore::GetCore()->GetMainWindow().SetWindowPosAndScale({ 0, 0 }, { 590, 440 });
+	UEngineAPICore::GetCore()->GetMainWindow().SetWindowPosAndScale({ 0, 0 }, { 640, 440 });
 
 	UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, AActor>("Title"); 
 

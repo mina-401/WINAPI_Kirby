@@ -1,10 +1,10 @@
 #include "PreCompile.h"
 #include "Stage1_1Map.h"
+#include "Player.h"
 #include "StageBackground.h"
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/SpriteRenderer.h>
 #include "ContentsEnum.h"
-#include "Player.h"
 #include <EnginePlatform/EngineInput.h>
 AStage1_1Map::AStage1_1Map()
 {
