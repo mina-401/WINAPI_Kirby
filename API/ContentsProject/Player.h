@@ -68,8 +68,8 @@ private:
 	void MoveStart();
 	void JumpStart();
 	void Jump(float _DeltaTime);
-	void JumpUp(float _DeltaTime);
-	void JumpDown(float _DeltaTime);
+	//void JumpUp(float _DeltaTime);
+	//void JumpDown(float _DeltaTime);
 	void Move(float _DeltaTime);
 	void SlideStart();
 	void BreakRunning();
@@ -108,8 +108,8 @@ private:
 		if (false == IsGround)
 		{
 			//float NextPos = ::floorf(GravityForce * _DeltaTime);
-			GravityForce += FVector2D::DOWN * _DeltaTime *200.0f;
-			AddActorLocation(GravityForce * _DeltaTime);
+			GravityForce += FVector2D::DOWN * _DeltaTime *0.2f;
+			AddActorLocation(GravityForce );
 		}
 		else {
 			GravityForce = FVector2D::ZERO;
@@ -143,8 +143,9 @@ private:
 	//bool IsMove = true;
 	bool IsAcc = false;
 
-	bool isJump = false;
-	bool isJumpLanding = false;
+	bool IsUP = false;
+	bool IsDown = false;
+	bool IsJump = false;
 
 	//FVector2D GravityForce = FVector2D::ZERO;
 	FVector2D Acc = FVector2D::ZERO;

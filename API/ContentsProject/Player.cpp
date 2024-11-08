@@ -39,8 +39,8 @@ APlayer::APlayer()
 	SpriteRenderer->CreateAnimation("Idle_Right", "Idle_Right.png", 0, 2, 3.f);
 	SpriteRenderer->CreateAnimation("Run_Left", "Run_Left.png",  0, 6, 0.1f);
 	SpriteRenderer->CreateAnimation("Run_Right", "Run_Right.png",  0, 6, 0.1f);
-	SpriteRenderer->CreateAnimation("Jump_Left", "Jump_Left.png",  0, 8, 0.1f);
-	SpriteRenderer->CreateAnimation("Jump_Right", "Jump_Right.png",  0, 8, 0.1f);
+	SpriteRenderer->CreateAnimation("Jump_Left", "Jump_Left.png",  0, 8, 0.2f);
+	SpriteRenderer->CreateAnimation("Jump_Right", "Jump_Right.png",  0, 8, 0.2f);
 	SpriteRenderer->CreateAnimation("Slide_Left", "Slide_Left.png", 0, 0, 0.5f,false);
 	SpriteRenderer->CreateAnimation("Slide_Right", "Slide_Right.png", 0, 0, 0.5f, false);
 	SpriteRenderer->CreateAnimation("Break_Left", "Break_Left.png", 0, 0, 0.2f);
@@ -227,8 +227,8 @@ void APlayer::Idle(float _DeltaTime)
 	}
 	else {
 		if (true == UEngineInput::GetInst().IsPress(VK_LEFT) ||
-			true == UEngineInput::GetInst().IsPress(VK_RIGHT) ||
-			true == UEngineInput::GetInst().IsPress(VK_UP) )
+			true == UEngineInput::GetInst().IsPress(VK_RIGHT))
+			
 			
 		{
 
@@ -237,17 +237,18 @@ void APlayer::Idle(float _DeltaTime)
 		}
 	}
 
-	if (true == UEngineInput::GetInst().IsPress('Z'))
+	if (true == UEngineInput::GetInst().IsDown('Z'))
 	{
 		ChangeState(PlayerState::Jump);
 		return;
 	}
-
-	//Accel(_DeltaTime, FVector2D::ZERO);
 }
 
 void APlayer::MoveStart()
 {
+	
+
+
 	if (true == UEngineInput::GetInst().IsPress(VK_LEFT)) SpriteRenderer->ChangeAnimation("Run_Left");
 	if (true == UEngineInput::GetInst().IsPress(VK_RIGHT)) SpriteRenderer->ChangeAnimation("Run_Right");
 	if (true == UEngineInput::GetInst().IsPress(VK_UP)) {}
@@ -257,47 +258,35 @@ void APlayer::MoveStart()
 }
 void APlayer::JumpStart()
 {
+	//IsJump = true;
+	SpriteRenderer->ChangeAnimation("Jump_Right");
 	if (true == UEngineInput::GetInst().IsPress(VK_LEFT)) SpriteRenderer->ChangeAnimation("Jump_Left");
 	if (true == UEngineInput::GetInst().IsPress(VK_RIGHT)) SpriteRenderer->ChangeAnimation("Jump_Right");
 }
 void APlayer::Jump(float _DeltaTime)
 {
-	//Gravity();
+	PlayerGroundCheck(GravityForce);
+	Gravity(_DeltaTime);
+	FVector2D Vector = FVector2D::UP;
 
-	if ( 100.0f<CurrJumpTime)
+	if( 400.0f<CurrJumpTime)
 	{
 		CurrJumpTime = 0;
 		ChangeState(PlayerState::Idle);
 
 	}
 	CurrJumpTime += 0.2f;
-	//if (true == isJumpLanding) isJump = false;
-	//if (true == isJump) return;
 
-	FVector2D Vector = FVector2D::ZERO;
-
-	if (true == UEngineInput::GetInst().IsDown('Z')) {
-		isJump = true;
-		JumpUp(_DeltaTime);
-	}
-	////if (true == UEngineInput::GetInst().IsUp('Z')) isJump = false;
-	//
+	
+	AddActorLocation(Vector*_DeltaTime*200.0f);
+	
 
 	//시간재서 1초지나면 JumpDown
 
 }
-void APlayer::JumpUp(float _DeltaTime)
-{
-	
-	AddActorLocation(FVector2D::UP * _DeltaTime * Speed);
-}
-void APlayer::JumpDown(float _DeltaTime)
-{
-	AddActorLocation(FVector2D::DOWN * _DeltaTime * Speed);
-	//
-}
 void APlayer::Move(float _DeltaTime)
 {
+	//if (true == IsJump) return;
 	PlayerGroundCheck(GravityForce);
 	Gravity(_DeltaTime);
 	FVector2D Vector = FVector2D::ZERO;
@@ -330,8 +319,8 @@ void APlayer::Move(float _DeltaTime)
 	}
 	if (true == UEngineInput::GetInst().IsPress('Z'))
 	{
-		//ChangeState(PlayerState::Jump);
-		//return;
+		ChangeState(PlayerState::Jump);
+		return;
 	}
 	if (false == UEngineInput::GetInst().IsPress(VK_LEFT) &&
 		false == UEngineInput::GetInst().IsPress(VK_RIGHT) &&
@@ -423,8 +412,8 @@ void APlayer::PlayerGroundCheck(FVector2D _MovePos)
 		// 픽셀충돌에서 제일 중요한건 애초에 박히지 않는것이다.
 		FVector2D NextPos = GetActorLocation() + _MovePos;
 
-		NextPos.X = floorf(NextPos.X);
-		NextPos.Y = floorf(NextPos.Y);
+		//NextPos.X = floorf(NextPos.X);
+		//NextPos.Y = floorf(NextPos.Y);
 
 		UColor Color = ColImage->GetColor(NextPos, UColor::WHITE);
 		if (Color == UColor::WHITE)
