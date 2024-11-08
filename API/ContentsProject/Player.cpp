@@ -331,16 +331,6 @@ void APlayer::Move(float _DeltaTime)
 		return;
 	}
 
-	
-	//AddActorLocation(Vector * _DeltaTime * Speed);
-
-	
-	//UColor Color = ColImage->GetColor(GetActorLocation(), UColor::BLACK);
-	//if (Color == UColor::WHITE)
-	//{
-	//	AddActorLocation(Vector* _DeltaTime * Speed);
-	//	// 나가 땅위로 올라갈때까지 while 계속 올려준다.
-	//}
 	AddActorLocation(Vector * _DeltaTime * Speed);
 	while (true)
 	{
@@ -393,9 +383,13 @@ void APlayer::Slide(float _DeltaTime)
 	{
 		Vector += FVector2D::RIGHT;
 	}
-	
+	FVector2D NextPos = GetActorLocation() + Vector;
+	UColor Color = ColImage->GetColor(NextPos, UColor::WHITE);
+	if (Color == UColor::WHITE)
+	{
+		AddActorLocation(Vector * _DeltaTime * Speed);
 
-	//AddActorLocation(Vector * _DeltaTime * Speed);
+	}
 }void APlayer::PlayerCameraCheck()
 {
 	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
