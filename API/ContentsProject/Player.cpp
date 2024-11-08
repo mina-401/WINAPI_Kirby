@@ -89,6 +89,8 @@ void APlayer::BlockCameraPos(FVector2D _MapScale, FVector2D _WinSize)
 	}
 	GetWorld()->SetCameraPos(CamPos);
 
+
+	BlockPlayerPos(_MapScale);
 	
 }
 void APlayer::SetColImage(std::string_view _ColImageName)
@@ -157,12 +159,15 @@ void APlayer::Tick(float _DeltaTime)
 		UEngineDebug::SwitchIsDebug();
 	}
 	
-		// CameraPivot = FVector2D(-1280, -720) * 0.5f;
-	
-	
+	UColor Color = ColImage->GetColor(GetActorLocation(), UColor::GRAY);
+	if (Color == UColor::GRAY) return;
 	UEngineDebug::CoreOutPutString("FPS : " + std::to_string(1.0f / _DeltaTime));
 	UEngineDebug::CoreOutPutString("PlayerPos : " + GetActorLocation().ToString());
 
+	FTransform PlayerTransform = GetTransform();
+	PlayerTransform.Location += FVector2D(20, 0) - GetWorld()->GetCameraPos();
+	PlayerTransform.Scale = { 6,6 };
+	UEngineDebug::CoreDebugRender(PlayerTransform, UEngineDebug::EDebugPosType::Circle);
 
 	switch (CurPlayerState)
 	{
@@ -202,11 +207,11 @@ void APlayer::Idle(float _DeltaTime)
 {
 	//Gravity();
 
-	/*PlayerCameraCheck();
+	//PlayerCameraCheck();
 	PlayerGroundCheck(GravityForce);
-	Gravity(_DeltaTime);*/
+	Gravity(_DeltaTime);
 
-	//Acc = FVector2D::ZERO;
+	//PlayerGroundCheck(FVector2D::ZERO);
 
 	if (true == IsDebug)
 	{
@@ -238,8 +243,7 @@ void APlayer::Idle(float _DeltaTime)
 		return;
 	}
 
-
-
+	//Accel(_DeltaTime, FVector2D::ZERO);
 }
 
 void APlayer::MoveStart()
@@ -294,7 +298,10 @@ void APlayer::JumpDown(float _DeltaTime)
 }
 void APlayer::Move(float _DeltaTime)
 {
+	PlayerGroundCheck(GravityForce);
+	Gravity(_DeltaTime);
 	FVector2D Vector = FVector2D::ZERO;
+	
 
 	if (true == UEngineInput::GetInst().IsPress(VK_UP))
 	{
@@ -315,7 +322,6 @@ void APlayer::Move(float _DeltaTime)
 		Vector += FVector2D::RIGHT;
 	}
 
-	//Accel(_DeltaTime, Vector);
 
 	if (true == UEngineInput::GetInst().IsDown('Z') && true == UEngineInput::GetInst().IsPress(VK_DOWN))
 	{
@@ -335,20 +341,30 @@ void APlayer::Move(float _DeltaTime)
 		ChangeState(PlayerState::Idle);
 		return;
 	}
-	if (nullptr != ColImage)
+
+	
+	//AddActorLocation(Vector * _DeltaTime * Speed);
+
+	
+	//UColor Color = ColImage->GetColor(GetActorLocation(), UColor::BLACK);
+	//if (Color == UColor::WHITE)
+	//{
+	//	AddActorLocation(Vector* _DeltaTime * Speed);
+	//	// 나가 땅위로 올라갈때까지 while 계속 올려준다.
+	//}
+	AddActorLocation(Vector * _DeltaTime * Speed);
+	while (true)
 	{
-
-	//	// 픽셀충돌에서 제일 중요한건 애초에 박히지 않는것이다.
-		FVector2D NextPos = GetActorLocation() + Vector * _DeltaTime * Speed;
-
-	UColor Color = ColImage->GetColor(NextPos, UColor::BLACK);
-
-		if (Color == UColor::WHITE)
+		UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
+		if (Color == UColor::BLACK)
 		{
-			AddActorLocation(Vector * _DeltaTime * Speed);
+			// 나가 땅위로 올라갈때까지 while 계속 올려준다.
+			AddActorLocation(FVector2D::UP);
+		}
+		else {
+			break;
 		}
 	}
-	
 
 }
 
@@ -389,19 +405,7 @@ void APlayer::Slide(float _DeltaTime)
 		Vector += FVector2D::RIGHT;
 	}
 	
-	if (nullptr != ColImage)
-	{
 
-		// 픽셀충돌에서 제일 중요한건 애초에 박히지 않는것이다.
-		FVector2D NextPos = GetActorLocation() + Vector * _DeltaTime * Speed;
-
-		UColor Color = ColImage->GetColor(NextPos, UColor::BLACK);
-
-		if (Color == UColor::WHITE)
-		{
-			AddActorLocation(Vector * _DeltaTime * Speed);
-		}
-	}
 	//AddActorLocation(Vector * _DeltaTime * Speed);
 }void APlayer::PlayerCameraCheck()
 {
@@ -409,9 +413,9 @@ void APlayer::Slide(float _DeltaTime)
 	GetWorld()->SetCameraPos(GetActorLocation() - WindowSize.Half());
 }
 
+
 void APlayer::PlayerGroundCheck(FVector2D _MovePos)
 {
-	IsMove = false;
 	IsGround = false;
 
 	if (nullptr != ColImage)
@@ -419,28 +423,38 @@ void APlayer::PlayerGroundCheck(FVector2D _MovePos)
 		// 픽셀충돌에서 제일 중요한건 애초에 박히지 않는것이다.
 		FVector2D NextPos = GetActorLocation() + _MovePos;
 
-		UColor Color = ColImage->GetColor(NextPos, UColor::BLACK);
+		NextPos.X = floorf(NextPos.X);
+		NextPos.Y = floorf(NextPos.Y);
+
+		UColor Color = ColImage->GetColor(NextPos, UColor::WHITE);
 		if (Color == UColor::WHITE)
 		{
-			IsMove = true;
+			IsGround = false;
 		}
-		else if(Color == UColor::BLACK)
+		else if (Color == UColor::BLACK)
 		{
 			IsGround = true;
+			// 땅에 박히지 않을때까지 올려주는 기능도 함께 만들거나 해야한다.
 		}
 	}
 }
 
-//void APlayer::Gravity(float _DeltaTime)
-//{
-//	if (false == IsGround)
-//	{
-//		GravityForce += FVector2D::DOWN * _DeltaTime * 0.1f;
-//	}
-//	else {
-//		GravityForce = FVector2D::ZERO;
-//	}
-//
-//	// 상시 
-//	AddActorLocation(GravityForce);
-//}
+void APlayer::BlockPlayerPos(FVector2D _MapScale)
+{
+	FVector2D PlayerPos = GetActorLocation();
+
+	if (0.0f > PlayerPos.X)
+	{
+		PlayerPos.X = 0.0f;
+	}
+	if (0.0f > PlayerPos.Y)
+	{
+		PlayerPos.Y = 0.0f;
+	}
+
+	if (_MapScale.X-10 < PlayerPos.X)
+	{
+		PlayerPos.X = _MapScale.X-10;
+	}
+	SetActorLocation(PlayerPos);
+}

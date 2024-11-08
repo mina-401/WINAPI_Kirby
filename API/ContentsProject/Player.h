@@ -50,7 +50,6 @@ protected:
 
 private:
 	FVector2D Size = { 0,0 };
-	float Speed = 1000.0f;
 
 	class USpriteRenderer* SpriteRenderer = nullptr;
 	class UEngineWinImage* ColImage = nullptr;
@@ -79,27 +78,69 @@ private:
 	void PlayerGroundCheck(FVector2D _MovePos);
 	//void Attack(float _DeltaTime);
 
-	
-	// 상태는 아니지만 도움이나 체크에 처리되는 함수
-	//void Gravity(float _DeltaTime);
-
-
-
 	void Accel(float _DeltaTime, FVector2D Vector)
 	{
-		 Acc += Vector * _DeltaTime * 2.0f;
+		//if (false == IsMove) return;
+
+		// 입력 방향으로 가속한다
+		Acc += Vector * Speed *_DeltaTime;
+
+		// 최대 속도 제한한다
+		float AccSize = (Acc.X * Acc.X) + (Acc.Y * Acc.Y);
+		if (AccSize > MaxAcc*MaxAcc)
+		{
+			Acc = Vector * MaxAcc;
+		}
+		 
+		if (FVector2D::ZERO == Vector)
+		{
+			//Acc += Vector * 0.9f * _DeltaTime;
+			Acc = Acc* 0.9f;
+			// 
+			//Acc -= Vector * 0.9f;
+			//Acc.Y -= 0.9f* _DeltaTime;
+		}
+
+		AddActorLocation(Acc* _DeltaTime);
+	}
+	void Gravity(float _DeltaTime)
+	{
+		if (false == IsGround)
+		{
+			//float NextPos = ::floorf(GravityForce * _DeltaTime);
+			GravityForce += FVector2D::DOWN * _DeltaTime *200.0f;
+			AddActorLocation(GravityForce * _DeltaTime);
+		}
+		else {
+			GravityForce = FVector2D::ZERO;
+		}
 
 		// 상시 
-		AddActorLocation(Acc);
 	}
+	void DeAccel(float _DeltaTime, FVector2D Vector)
+	{
+		// 입력 방향으로 가속한다
+		Acc += Vector * 50.0f * _DeltaTime;
+		AddActorLocation(Acc * _DeltaTime);
+	}
+	
+	void BlockPlayerPos(FVector2D _MapScale);
 private:
+	FVector2D WinSize;
+
+	FVector2D GravityForce = FVector2D::ZERO;
+
 	double CurrTime = 0;
 	double CurrJumpTime = 0;
+
+	float Speed = 1000.f;
+	float MaxAcc = 1000.0f;
 
 	bool IsDebug = true;
 
 	int IsGround = false;
-	bool IsMove = false;
+	//int Is = false;
+	//bool IsMove = true;
 	bool IsAcc = false;
 
 	bool isJump = false;
