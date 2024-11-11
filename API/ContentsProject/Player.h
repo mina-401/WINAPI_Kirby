@@ -7,10 +7,19 @@
 enum class PlayerState
 {
     Idle,
+    Crouch,
     Move,
+    Dash,
     Jump,
+    Fly,
+    FlyDown,
     Slide,
     Attack,
+};
+enum class PlayerDir
+{
+    Left,
+    Right,
 };
 
 class APlayer : public AActor
@@ -28,6 +37,7 @@ public:
 
     void BeginPlay() override;
     void Tick(float _DeltaTime) override;
+
 
 
 
@@ -56,57 +66,67 @@ private:
 
     PlayerState CurPlayerState = PlayerState::Idle;
 
+    std::string DirString = "_Right";
+
     // 점프
     // 공격
     // 점프공격
     // 
 
+    void DirCheck();
     void ChangeState(PlayerState CurPlayerState);
 
     void IdleStart();
     void Idle(float _DeltaTime);
+    void CrouchStart();
+    void Crouch(float _DeltaTime);
     void MoveStart();
+    void Move(float _DeltaTime);
+    void DashStart();
+    void PlayerDashCheck(float _DeltaTime, FVector2D _Vector);
+   // void IsDash(float _DeltaTime);
     void JumpStart();
     void Jump(float _DeltaTime);
     void JumpUp(float _DeltaTime);
     void JumpDown(float _DeltaTime);
-    void Move(float _DeltaTime);
     void SlideStart();
-    void BreakRunning();
+    void Breaking();
     void Slide(float _DeltaTime);
+    void FlyStart();
+    void FlyingStart();
+    void Fly(float _DeltaTime);
+    void FlyDownStart();
+    void FlyDown(float _DeltaTime);
+
     void PlayerCameraCheck();
     void PlayerGroundCheck(FVector2D _MovePos);
     void PlayerSlideCheck(float _DeltaTime, FVector2D _Vector);
+    bool PlayerNextPosCheck(float _DeltaTime, FVector2D _Vector);
 
     //void Attack(float _DeltaTime);
 
-    void Accel(float _DeltaTime, FVector2D Vector)
-    {
-        //if (false == IsMove) return;
-
-        // 입력 방향으로 가속한다
-        Acc += Vector * Speed * _DeltaTime;
-
-        // 최대 속도 제한한다
-        float AccSize = (Acc.X * Acc.X) + (Acc.Y * Acc.Y);
-        if (AccSize > MaxAcc * MaxAcc)
-        {
-            Acc = Vector * MaxAcc;
-        }
-
-        if (FVector2D::ZERO == Vector)
-        {
-            Acc = Acc * 0.9f;
-        }
-
-        AddActorLocation(Acc * _DeltaTime);
-    }
+    void Dash(float _DeltaTime);
+    void PlayerFlyCheck(float _DeltaTime);
+    void Accel(float _DeltaTime, FVector2D Vector);
     void Gravity(float _DeltaTime)
     {
         if (false == IsGround)
         {
             GravityForce += FVector2D::DOWN * _DeltaTime;
             AddActorLocation(GravityForce);
+        }
+        else {
+            GravityForce = FVector2D::ZERO;
+        }
+
+        // 상시 
+    }
+    void FlyGravity(float _DeltaTime)
+    {
+        if (false == IsGround)
+        {
+            GravityForce += FVector2D::DOWN * _DeltaTime*100.0f;
+            AddActorLocation(GravityForce* _DeltaTime);
         }
         else {
             GravityForce = FVector2D::ZERO;
@@ -127,8 +147,11 @@ private:
 
     FVector2D GravityForce = FVector2D::ZERO;
 
-    float JumpTime = 70.0f;
+    float JumpTime = 50.0f;
     float CurrJumpTime = 0;
+
+    float DashTime = 70.0f;
+    float CurrDashTime = 0;
 
     float CurrSlideTime = 0;
     float SlideTime = 80.0f;
@@ -143,6 +166,8 @@ private:
     bool IsAcc = false;
 
     bool IsJump = false;
+    bool IsDash = false;
+    bool IsFly = false;
 
     FVector2D Acc = FVector2D::ZERO;
 
