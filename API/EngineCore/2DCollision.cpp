@@ -27,6 +27,11 @@ void U2DCollision::BeginPlay()
 	}
 
 	Level->PushCollision(this);
+
+	if (nullptr != Enter || nullptr != Stay || nullptr != End)
+	{
+		Level->PushCheckCollision(this);
+	}
 }
 
 void U2DCollision::ComponentTick(float _DeltaTime)
@@ -57,7 +62,7 @@ void U2DCollision::ComponentTick(float _DeltaTime)
 
 
 
-bool U2DCollision::Collision(int _OtherCollisionGroup, std::vector<AActor*>& _Result, unsigned int  _Limite)
+bool U2DCollision::Collision(int _OtherCollisionGroup, std::vector<AActor*>& _Result, FVector2D _NextPos, unsigned int  _Limite)
 {
 	// 내가 xxxx 그룹이랑 충돌하는거죠.
 	// 모든 충돌체를 한곳에 모아놓는게 Level
@@ -74,6 +79,8 @@ bool U2DCollision::Collision(int _OtherCollisionGroup, std::vector<AActor*>& _Re
 		// 
 		FTransform ThisTrans = ThisCollision->GetActorTransform();
 		FTransform DestTrans = DestCollision->GetActorTransform();
+
+		ThisTrans.Location += _NextPos;
 
 		ECollisionType ThisType = ThisCollision->CollisionType;
 		ECollisionType DestType = DestCollision->CollisionType;
@@ -94,4 +101,28 @@ bool U2DCollision::Collision(int _OtherCollisionGroup, std::vector<AActor*>& _Re
 	}
 
 	return 0 != _Result.size();
+}
+
+
+
+// 이벤트 방식
+void U2DCollision::SetCollisionEnter(std::function<void(AActor*)> _Function)
+{
+	Enter = _Function;
+
+	ULevel* Level = GetActor()->GetWorld();
+
+	if (nullptr != GetActor()->GetWorld())
+	{
+		Level->PushCheckCollision(this);
+	}
+}
+
+void U2DCollision::SetCollisionStay(std::function<void(AActor*)> _Function)
+{
+}
+
+void U2DCollision::SetCollisionEnd(std::function<void(AActor*)> _Function)
+{
+
 }

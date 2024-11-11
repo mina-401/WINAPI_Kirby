@@ -39,8 +39,8 @@ APlayer::APlayer()
 	SpriteRenderer->CreateAnimation("Idle_Right", "Idle_Right.png", 0, 2, 3.f);
 	SpriteRenderer->CreateAnimation("Run_Left", "Run_Left.png",  0, 6, 0.1f);
 	SpriteRenderer->CreateAnimation("Run_Right", "Run_Right.png",  0, 6, 0.1f);
-	SpriteRenderer->CreateAnimation("Jump_Left", "Jump_Left.png",  0, 8, 0.2f);
-	SpriteRenderer->CreateAnimation("Jump_Right", "Jump_Right.png",  0, 8, 0.2f);
+	SpriteRenderer->CreateAnimation("Jump_Left", "Jump_Left.png",  0, 8, 0.1f, false);
+	SpriteRenderer->CreateAnimation("Jump_Right", "Jump_Right.png",  0, 8, 0.1f), false;
 	SpriteRenderer->CreateAnimation("Slide_Left", "Slide_Left.png", 0, 0, 0.5f,false);
 	SpriteRenderer->CreateAnimation("Slide_Right", "Slide_Right.png", 0, 0, 0.5f, false);
 	SpriteRenderer->CreateAnimation("Break_Left", "Break_Left.png", 0, 0, 0.2f);
@@ -158,16 +158,14 @@ void APlayer::Tick(float _DeltaTime)
 	{
 		UEngineDebug::SwitchIsDebug();
 	}
-	
-	UColor Color = ColImage->GetColor(GetActorLocation(), UColor::GRAY);
-	if (Color == UColor::GRAY) return;
+
 	UEngineDebug::CoreOutPutString("FPS : " + std::to_string(1.0f / _DeltaTime));
 	UEngineDebug::CoreOutPutString("PlayerPos : " + GetActorLocation().ToString());
 
-	FTransform PlayerTransform = GetTransform();
+	/*FTransform PlayerTransform = GetTransform();
 	PlayerTransform.Location += FVector2D(20, 0) - GetWorld()->GetCameraPos();
 	PlayerTransform.Scale = { 6,6 };
-	UEngineDebug::CoreDebugRender(PlayerTransform, UEngineDebug::EDebugPosType::Circle);
+	UEngineDebug::CoreDebugRender(PlayerTransform, UEngineDebug::EDebugPosType::Circle);*/
 
 	switch (CurPlayerState)
 	{
@@ -217,7 +215,6 @@ void APlayer::Idle(float _DeltaTime)
 	{
 		if (true == UEngineInput::GetInst().IsPress(VK_LEFT) ||
 			true == UEngineInput::GetInst().IsPress(VK_RIGHT) ||
-			true == UEngineInput::GetInst().IsPress(VK_UP) ||
 			true == UEngineInput::GetInst().IsPress(VK_DOWN))
 		{
 
@@ -228,8 +225,7 @@ void APlayer::Idle(float _DeltaTime)
 	else {
 		if (true == UEngineInput::GetInst().IsPress(VK_LEFT) ||
 			true == UEngineInput::GetInst().IsPress(VK_RIGHT))
-			
-			
+
 		{
 
 			ChangeState(PlayerState::Move);
@@ -237,12 +233,15 @@ void APlayer::Idle(float _DeltaTime)
 		}
 	}
 
-	if (true == UEngineInput::GetInst().IsDown('Z'))
+	if (true == UEngineInput::GetInst().IsPress('Z'))
 	{
 		ChangeState(PlayerState::Jump);
 		return;
 	}
+
+	//Accel(_DeltaTime, FVector2D::ZERO);
 }
+
 
 void APlayer::MoveStart()
 {
@@ -258,7 +257,6 @@ void APlayer::MoveStart()
 }
 void APlayer::JumpStart()
 {
-	//IsJump = true;
 	SpriteRenderer->ChangeAnimation("Jump_Right");
 	if (true == UEngineInput::GetInst().IsPress(VK_LEFT)) SpriteRenderer->ChangeAnimation("Jump_Left");
 	if (true == UEngineInput::GetInst().IsPress(VK_RIGHT)) SpriteRenderer->ChangeAnimation("Jump_Right");
@@ -266,37 +264,59 @@ void APlayer::JumpStart()
 void APlayer::Jump(float _DeltaTime)
 {
 	PlayerGroundCheck(GravityForce);
-	Gravity(_DeltaTime);
-	FVector2D Vector = FVector2D::UP;
+	FVector2D Vector = FVector2D::ZERO;
 
-	if( 400.0f<CurrJumpTime)
+	if (true == UEngineInput::GetInst().IsPress(VK_LEFT)) Vector = FVector2D::LEFT;
+	if (true == UEngineInput::GetInst().IsPress(VK_RIGHT))  Vector = FVector2D::RIGHT;
+
+
+	UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
+	if (Color == UColor::BLACK)
 	{
-		CurrJumpTime = 0;
-		ChangeState(PlayerState::Idle);
+		UColor NextColor = ColImage->GetColor(GetActorLocation() + Vector, UColor::WHITE);
+		if (NextColor != UColor::BLACK)
+			AddActorLocation(Vector); //가는 방향으로 이동
+
 
 	}
-	CurrJumpTime += 0.2f;
+	else
+		AddActorLocation(Vector * Speed * _DeltaTime);
 
-	
-	AddActorLocation(Vector*_DeltaTime*200.0f);
-	
-
-	//시간재서 1초지나면 JumpDown
-
+	if (CurrJumpTime > JumpTime)
+	{
+		if (true == IsGround)
+		{
+			CurrJumpTime = 0;
+			ChangeState(PlayerState::Idle);
+			return;
+		}
+		JumpDown(_DeltaTime);
+	}
+	else {
+		CurrJumpTime += 0.2f;
+		JumpUp(_DeltaTime);
+	}
+	//if (true == UEngineInput::GetInst().IsPress('Z'))
 }
+
+
+void APlayer::JumpUp(float _DeltaTime)
+{
+	AddActorLocation(FVector2D::UP * _DeltaTime * Speed);
+}
+void APlayer::JumpDown(float _DeltaTime)
+{
+	AddActorLocation(FVector2D::DOWN * _DeltaTime * Speed);
+	//
+}
+
 void APlayer::Move(float _DeltaTime)
 {
-	//if (true == IsJump) return;
 	PlayerGroundCheck(GravityForce);
 	Gravity(_DeltaTime);
 	FVector2D Vector = FVector2D::ZERO;
-	
 
-	if (true == UEngineInput::GetInst().IsPress(VK_UP))
-	{
-		Vector += FVector2D::UP;
 
-	}
 	if (true == UEngineInput::GetInst().IsPress(VK_DOWN))
 	{
 		Vector += FVector2D::DOWN;
@@ -324,26 +344,26 @@ void APlayer::Move(float _DeltaTime)
 	}
 	if (false == UEngineInput::GetInst().IsPress(VK_LEFT) &&
 		false == UEngineInput::GetInst().IsPress(VK_RIGHT) &&
-		false == UEngineInput::GetInst().IsPress(VK_UP) &&
+		false == UEngineInput
+		::GetInst().IsPress(VK_UP) &&
 		false == UEngineInput::GetInst().IsPress(VK_DOWN))
 	{
 		ChangeState(PlayerState::Idle);
 		return;
 	}
 
-	AddActorLocation(Vector * _DeltaTime * Speed);
-	while (true)
+
+	UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
+	if (Color == UColor::BLACK)
 	{
-		UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
-		if (Color == UColor::BLACK)
-		{
-			// 나가 땅위로 올라갈때까지 while 계속 올려준다.
-			AddActorLocation(FVector2D::UP);
-		}
-		else {
-			break;
-		}
+		UColor NextColor = ColImage->GetColor(GetActorLocation() + FVector2D::UP * 3, UColor::WHITE);
+		if (NextColor != UColor::BLACK)
+			AddActorLocation(FVector2D::UP); //가는 방향으로 이동
+
+
 	}
+	else
+		AddActorLocation(Vector * Speed * _DeltaTime);
 
 }
 
@@ -365,13 +385,13 @@ void APlayer::BreakRunning()
 
 void APlayer::Slide(float _DeltaTime)
 {
-	if (CurrTime >80.0f)
+	if (CurrSlideTime >SlideTime)
 	{
-		CurrTime = 0;
+		CurrSlideTime = 0;
 		ChangeState(PlayerState::Idle);
 		
 	}
-	CurrTime += 0.2f;
+	CurrSlideTime += 0.2f;
 	FVector2D Vector = FVector2D::ZERO;
 
 	if (true == UEngineInput::GetInst().IsPress(VK_LEFT))
@@ -383,14 +403,10 @@ void APlayer::Slide(float _DeltaTime)
 	{
 		Vector += FVector2D::RIGHT;
 	}
-	FVector2D NextPos = GetActorLocation() + Vector;
-	UColor Color = ColImage->GetColor(NextPos, UColor::WHITE);
-	if (Color == UColor::WHITE)
-	{
-		AddActorLocation(Vector * _DeltaTime * Speed);
-
-	}
-}void APlayer::PlayerCameraCheck()
+	PlayerSlideCheck(_DeltaTime, Vector);
+	
+}
+void APlayer::PlayerCameraCheck()
 {
 	FVector2D WindowSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 	GetWorld()->SetCameraPos(GetActorLocation() - WindowSize.Half());
@@ -440,4 +456,37 @@ void APlayer::BlockPlayerPos(FVector2D _MapScale)
 		PlayerPos.X = _MapScale.X-10;
 	}
 	SetActorLocation(PlayerPos);
+}
+
+void APlayer::PlayerSlideCheck (float _DeltaTime, FVector2D _Vector)
+{
+	FVector2D NextPos = GetActorLocation() + _Vector;
+	UColor Color = ColImage->GetColor(NextPos, UColor::WHITE);
+	if (Color == UColor::WHITE)
+	{
+		AddActorLocation(_Vector * _DeltaTime * Speed);
+
+	}
+	//FTransform PlayerTransformNext = GetTransform();
+	//PlayerTransformNext.Location += FVector2D(30, 0) - GetWorld()->GetCameraPos();
+	//PlayerTransformNext.Scale = { 6,6 };
+	//UEngineDebug::CoreDebugRender(PlayerTransformNext, UEngineDebug::EDebugPosType::Circle);
+
+	//FTransform PlayerTransformDown = GetTransform();
+	//PlayerTransformDown.Location += FVector2D(30, 30) - GetWorld()->GetCameraPos();
+	//PlayerTransformDown.Scale = { 6,6 };
+	//UEngineDebug::CoreDebugRender(PlayerTransformDown, UEngineDebug::EDebugPosType::Circle);
+	//while (false == IsGround)
+	//{
+
+	//	// 내 앞이 white, 아래가 black 이면 
+	//	UColor ColorNext = ColImage->GetColor(PlayerTransformNext.Location, UColor::WHITE);
+	//	UColor ColorDown = ColImage->GetColor(PlayerTransformDown.Location, UColor::WHITE);
+	//	if (ColorNext == UColor::WHITE && ColorDown == UColor::BLACK) AddActorLocation(FVector2D::DOWN * 5);
+
+	//	UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
+	//	if (Color == UColor::BLACK) break;
+	//	else break;
+
+	//}
 }
