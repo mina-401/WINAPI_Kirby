@@ -1,11 +1,13 @@
 #include "PreCompile.h"
-#include "Stage1_1Map.h"
+#include "ContentsEnum.h"
 #include "Player.h"
+#include "Stage1_1Map.h"
 #include "StageBackground.h"
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/SpriteRenderer.h>
-#include "ContentsEnum.h"
 #include <EnginePlatform/EngineInput.h>
+#include "Stage1_1GameMode.h"
+#include "Monster.h"
 AStage1_1Map::AStage1_1Map()
 {
 	PngSize = {(float) 792.5 ,(float)103.5 };
@@ -51,5 +53,13 @@ void AStage1_1Map::Tick(float _deltaTime)
 	}
 	APlayer* player = GetWorld()->GetPawn<APlayer>();
 	player->BlockCameraPos(MapScale, WinSize);
+
+	AStage1_1GameMode* GameMode = GetWorld()->GetGameMode<AStage1_1GameMode>();
+	AMonster* Dee = GameMode->MonsterWaddleDee;
+	AMonster* Doo = GameMode->MonsterWaddleDoo;
+	AMonster* Sparky = GameMode->MonsterSparky;
+	Dee->BlockMonsterPos(MapScale);
+	//Doo->BlockMonsterPos(MapScale);
+	//Sparky->BlockMonsterPos(MapScale);
 }
 

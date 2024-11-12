@@ -151,11 +151,15 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="KirbyLevel.h">
+    <ClInclude Include="KirbyWidget.h">
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="KirbyWidget.h">
+    <ClInclude Include="Monster.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Sparky.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -242,17 +246,25 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="WaddleDee.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Widget.h">
       <SubType>
       </SubType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="KirbyLevel.cpp">
+    <ClCompile Include="KirbyWidget.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="KirbyWidget.cpp">
+    <ClCompile Include="Monster.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Sparky.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -339,6 +351,10 @@
     </ClCompile>
     <ClCompile Include="TitleLogo.cpp" />
     <ClCompile Include="TitleMap.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="WaddleDee.cpp">
       <SubType>
       </SubType>
     </ClCompile>

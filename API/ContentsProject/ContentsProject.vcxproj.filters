@@ -7,9 +7,6 @@
     <ClInclude Include="KirbyContentsCore.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>ContentsObject</Filter>
-    </ClInclude>
     <ClInclude Include="PlayGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
@@ -65,9 +62,6 @@
     <ClInclude Include="TitleMap.h">
       <Filter>ContentsObject\GameMap</Filter>
     </ClInclude>
-    <ClInclude Include="KirbyLevel.h">
-      <Filter>ContentsObject</Filter>
-    </ClInclude>
     <ClInclude Include="StageBackground.h">
       <Filter>ContentsObject\GameMap</Filter>
     </ClInclude>
@@ -77,6 +71,18 @@
     <ClInclude Include="KirbyWidget.h">
       <Filter>ContentsObject\HUD</Filter>
     </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>ContentsObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ContentsObject\Kirby</Filter>
+    </ClInclude>
+    <ClInclude Include="Sparky.h">
+      <Filter>ContentsObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="WaddleDee.h">
+      <Filter>ContentsObject\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -84,9 +90,6 @@
     </ClCompile>
     <ClCompile Include="KirbyContentsCore.cpp">
       <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>ContentsObject</Filter>
     </ClCompile>
     <ClCompile Include="PlayGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
@@ -143,9 +146,6 @@
     <ClCompile Include="TitleMap.cpp">
       <Filter>ContentsObject\GameMap</Filter>
     </ClCompile>
-    <ClCompile Include="KirbyLevel.cpp">
-      <Filter>ContentsObject</Filter>
-    </ClCompile>
     <ClCompile Include="StageBackground.cpp">
       <Filter>ContentsObject\GameMap</Filter>
     </ClCompile>
@@ -154,6 +154,18 @@
     </ClCompile>
     <ClCompile Include="KirbyWidget.cpp">
       <Filter>ContentsObject\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Monster.cpp">
+      <Filter>ContentsObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ContentsObject\Kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="Sparky.cpp">
+      <Filter>ContentsObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="WaddleDee.cpp">
+      <Filter>ContentsObject\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +195,15 @@
     </Filter>
     <Filter Include="ContentsObject\HUD">
       <UniqueIdentifier>{05bb8190-22ce-46a7-b422-f208976c7a87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helper">
+      <UniqueIdentifier>{37a166b0-066b-4a19-b8c9-bdf01c4ff537}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Monster">
+      <UniqueIdentifier>{a64bbb43-c97e-4103-8818-53e46246aaf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Kirby">
+      <UniqueIdentifier>{fdae237f-29e8-4c5b-9d88-571307bb7dab}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -1,5 +1,6 @@
 #pragma once
 #include "SceneComponent.h"
+#include <set>
 
 // 매쉬 충돌. 
 
@@ -8,6 +9,8 @@
 class U2DCollision : public USceneComponent
 {
 public:
+	friend class ULevel;
+
 	// constrcuter destructer
 	U2DCollision();
 	~U2DCollision();
@@ -78,6 +81,11 @@ public:
 		CollisionType = _CollisionType;
 	}
 
+	ECollisionType GetCollisionType()
+	{
+		return CollisionType;
+	}
+
 	//                                        충돌한 상대
 	void SetCollisionEnter(std::function<void(AActor*)> _Function);
 	void SetCollisionStay(std::function<void(AActor*)> _Function);
@@ -86,12 +94,17 @@ public:
 protected:
 
 private:
+	void CollisionEventCheck(class U2DCollision* _Other);
+
 	// 충돌체의 오더는 약간 의미가 다르다.
 	// -1 충돌 그룹을 지정해주지 않았다
 	// -1 은 사용하면 안된다.
 	// 양수만 된다.
 	ECollisionType CollisionType = ECollisionType::CirCle;
 	int CollisionGroup = -1;
+
+	// value없는 맵입니다.
+	std::set<U2DCollision*> CollisionCheckSet;
 
 	std::function<void(AActor*)> Enter;
 	std::function<void(AActor*)> Stay;

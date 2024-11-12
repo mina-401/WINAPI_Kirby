@@ -1,15 +1,26 @@
 #include "PreCompile.h"
 #include "EngineInput.h"
 
-//UEngineInput* UEngineInput::Inst = nullptr;
+// UEngineInput UEngineInput::Inst = UEngineInput();
+// UEngineInput* UEngineInput::Inst = nullptr;
+
 // Input 내부에 Key 내부의 keyCheck 함수
 void UEngineInput::UEngineKey::KeyCheck(float _DeltaTime)
 {
+	// if (true == GetAsyncKeyState('B'))
 	if (0 != GetAsyncKeyState(Key))
 	{
+		if (Key == VK_RIGHT)
+		{
+			int a = 0;
+		}
+
 		// 게임엔진에서 시간재는법
 		// 특정 float을 만들어 놓고 그 float 계속 델타타임을 더해주면
-		PressTime += _DeltaTime;
+		if (true == IsPress)
+		{
+			PressTime += _DeltaTime;
+		}
 		// 이전전까지 안눌려있어다면
 		if (true == IsFree)
 		{
@@ -20,16 +31,25 @@ void UEngineInput::UEngineKey::KeyCheck(float _DeltaTime)
 		}
 		else if (true == IsDown)
 		{
+			// 한프레임을 지연시킨것.
+			FreeTime = 0.0f;
 			IsDown = false;
 			IsPress = true;
 			IsFree = false;
 			IsUp = false;
 		}
 
+		// B키가 눌렸다면
 	}
 	else
 	{
-		PressTime = 0.0f;
+		// 안누른 시간 누적되는데
+		if (true == IsFree)
+		{
+			FreeTime += _DeltaTime;
+		}
+
+		// B키가 안눌렸다면
 		if (true == IsPress)
 		{
 			IsDown = false;
@@ -39,6 +59,7 @@ void UEngineInput::UEngineKey::KeyCheck(float _DeltaTime)
 		}
 		else if (true == IsUp)
 		{
+			PressTime = 0.0f;
 			IsDown = false;
 			IsPress = false;
 			IsFree = true;
@@ -47,8 +68,45 @@ void UEngineInput::UEngineKey::KeyCheck(float _DeltaTime)
 
 	}
 }
+
+void UEngineInput::UEngineKey::EventCheck()
+{
+	if (true == IsDown)
+	{
+		for (size_t i = 0; i < DownEvents.size(); i++)
+		{
+			DownEvents[i]();
+		}
+	}
+
+	if (true == IsPress)
+	{
+		for (size_t i = 0; i < PressEvents.size(); i++)
+		{
+			PressEvents[i]();
+		}
+	}
+
+	if (true == IsFree)
+	{
+		for (size_t i = 0; i < FreeEvents.size(); i++)
+		{
+			FreeEvents[i]();
+		}
+	}
+
+	if (true == IsUp)
+	{
+		for (size_t i = 0; i < UpEvents.size(); i++)
+		{
+			UpEvents[i]();
+		}
+	}
+}
+
 UEngineInput::UEngineInput()
-{// 여기에 
+{
+	// 여기에 
 	// 기본 알파뱃
 	Keys.insert({ 'Q', UEngineKey('Q') });
 	Keys.insert({ 'W', UEngineKey('W') });
@@ -94,11 +152,6 @@ UEngineInput::UEngineInput()
 	Keys.insert({ VK_RIGHT , UEngineKey(VK_RIGHT) });
 	Keys.insert({ VK_UP , UEngineKey(VK_UP) });
 	Keys.insert({ VK_DOWN , UEngineKey(VK_DOWN) });
-
-	Keys.insert({ VK_LEFT, UEngineKey(VK_LEFT) });
-	Keys.insert({ VK_RIGHT, UEngineKey(VK_RIGHT) });
-	Keys.insert({ VK_UP, UEngineKey(VK_UP) });
-	Keys.insert({ VK_DOWN, UEngineKey(VK_DOWN) });
 
 	Keys.insert({ VK_SPACE		, UEngineKey(VK_SPACE) });
 	Keys.insert({ VK_PRIOR		, UEngineKey(VK_PRIOR) });
@@ -156,40 +209,7 @@ UEngineInput::UEngineInput()
 	Keys.insert({ VK_F24		, UEngineKey(VK_F24) });
 
 }
-void UEngineInput::UEngineKey::EventCheck()
-{
-	if (true == IsDown)
-	{
-		for (size_t i = 0; i < DownEvents.size(); i++)
-		{
-			DownEvents[i]();
-		}
-	}
 
-	if (true == IsPress)
-	{
-		for (size_t i = 0; i < PressEvents.size(); i++)
-		{
-			PressEvents[i]();
-		}
-	}
-
-	if (true == IsFree)
-	{
-		for (size_t i = 0; i < FreeEvents.size(); i++)
-		{
-			FreeEvents[i]();
-		}
-	}
-
-	if (true == IsUp)
-	{
-		for (size_t i = 0; i < UpEvents.size(); i++)
-		{
-			UpEvents[i]();
-		}
-	}
-}
 void UEngineInput::EventCheck(float _DeltaTime)
 {
 	std::map<int, UEngineKey>::iterator StartIter = Keys.begin();
@@ -215,9 +235,11 @@ void UEngineInput::KeyCheck(float _DeltaTime)
 		CurKey.KeyCheck(_DeltaTime);
 	}
 }
+
 UEngineInput::~UEngineInput()
 {
 }
+
 void UEngineInput::BindAction(int _KeyIndex, KeyEvent _EventType, std::function<void() > _Function)
 {
 	if (false == Keys.contains(_KeyIndex))

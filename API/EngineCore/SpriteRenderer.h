@@ -29,6 +29,7 @@ public:
 		int ResultIndex = 0;
 		float CurTime = 0.0f;
 		bool Loop = true;
+		bool IsEnd = false;
 
 		void Reset()
 		{
@@ -110,6 +111,13 @@ public:
 	void SetCameraEffectScale(float _Effect);
 	void SetSprite(std::string_view _Name, int _CurIndex = 0);
 
+	// 애니메이션이 실행되고 있다면.
+	// 그 애니메이션이 끝난 순간을 체크하고 싶은것.
+	bool IsCurAnimationEnd()
+	{
+		return CurAnimation->IsEnd;
+	}
+
 protected:
 
 private:
@@ -124,4 +132,3 @@ private:
 	std::map<std::string, FrameAnimation> FrameAnimations;
 	FrameAnimation* CurAnimation = nullptr;
 };
-

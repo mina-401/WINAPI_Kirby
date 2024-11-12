@@ -1,6 +1,23 @@
 #pragma once
 #include "GameMode.h"
 
+
+// 이런식으로 
+class CollisionLinkData
+{
+public:
+	union
+	{
+		struct
+		{
+			int Left;
+			int Right;
+		};
+		__int64 Key;
+	};
+};
+
+
 // 설명 :
 class ULevel
 {
@@ -26,6 +43,7 @@ public:
 
 	void Tick(float _DeltaTime);
 	void Render(float _DeltaTime);
+	void Collision(float _DeltaTime);
 	void Release(float _DeltaTime);
 
 	template<typename ActorType>
@@ -84,6 +102,18 @@ public:
 		return dynamic_cast<ConvertType*>(MainPawn);
 	}
 
+	AActor* GetGameMode()
+	{
+		return GameMode;
+	}
+
+	template<typename ConvertType>
+	ConvertType* GetGameMode()
+	{
+		return dynamic_cast<ConvertType*>(GameMode);
+	}
+
+
 	template<typename LeftEnumType, typename RightEnumType>
 	static void CollisionGroupLink(LeftEnumType _Left, RightEnumType _Right)
 	{
@@ -92,16 +122,20 @@ public:
 
 	static void CollisionGroupLink(int _Left, int _Right)
 	{
-		for (size_t i = 0; i < CollisionLink[_Left].size(); i++)
+		CollisionLinkData LinkData;
+		LinkData.Left = _Left;
+		LinkData.Right = _Right;
+
+		for (size_t i = 0; i < CollisionLink.size(); i++)
 		{
 			// 조금 추하지만 vector
-			if (CollisionLink[_Left][i] == _Right)
+			if (CollisionLink[i].Key == _Right)
 			{
 				return;
 			}
 		}
 
-		CollisionLink[_Left].push_back(_Right);
+		CollisionLink.push_back(LinkData);
 	}
 
 
@@ -142,6 +176,8 @@ private:
 
 	void PushCheckCollision(class U2DCollision* _Collision);
 
+	void CollisionEventCheck(class U2DCollision* _Left, class U2DCollision* _Right);
+
 
 	// 헝가리안 표기법
 	// 이름은 마음대로
@@ -171,7 +207,7 @@ private:
 	std::map<int, std::list<class U2DCollision*>> Collisions;
 
 	// 이벤트 체크방식을 위해서 어떤 그룹이 어떤 그룹과 충돌하지 기록해 놓은 자료구조
-	static std::map<int, std::vector<int>> CollisionLink;
+	static std::vector<CollisionLinkData> CollisionLink;
 
 	// 프레임마다 충돌체크를 하는 콜리전들을 따로 모아 놓은 자료구조 => 이거 피하고 싶다.
 	std::map<int, std::list<class U2DCollision*>> CheckCollisions;

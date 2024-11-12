@@ -10,11 +10,13 @@ enum class PlayerState
     Crouch,
     Move,
     Dash,
+    Break,
     Jump,
     Fly,
     FlyDown,
     Slide,
     Attack,
+    Inhale,
 };
 enum class PlayerDir
 {
@@ -83,20 +85,25 @@ private:
     void MoveStart();
     void Move(float _DeltaTime);
     void DashStart();
-    void PlayerDashCheck(float _DeltaTime, FVector2D _Vector);
+    void BreakStart();
+    void Breaking(float _DeltaTime);
+    void Dash(float _DeltaTime);
+    void PlayerDashCheck();
    // void IsDash(float _DeltaTime);
     void JumpStart();
     void Jump(float _DeltaTime);
-    void JumpUp(float _DeltaTime);
-    void JumpDown(float _DeltaTime);
+
     void SlideStart();
-    void Breaking();
     void Slide(float _DeltaTime);
     void FlyStart();
     void FlyingStart();
     void Fly(float _DeltaTime);
     void FlyDownStart();
     void FlyDown(float _DeltaTime);
+
+    void InhaleStart();
+    void Inhale(float _DeltaTime);
+    void Inhaling(float _DeltaTime);
 
     void PlayerCameraCheck();
     void PlayerGroundCheck(FVector2D _MovePos);
@@ -105,8 +112,7 @@ private:
 
     //void Attack(float _DeltaTime);
 
-    void Dash(float _DeltaTime);
-    void PlayerFlyCheck(float _DeltaTime);
+    void PlayerFlyCheck();
     void Accel(float _DeltaTime, FVector2D Vector);
     void Gravity(float _DeltaTime)
     {
@@ -121,6 +127,19 @@ private:
 
         // »ó½Ã 
     }
+    void JumpGravity(float _DeltaTime)
+    {
+        if (false == IsGround)
+        {
+            AddActorLocation(GravityForce * _DeltaTime );
+            GravityForce += FVector2D::DOWN * _DeltaTime * 500.0f;
+        }
+        else {
+            GravityForce = FVector2D::ZERO;
+        }
+
+    }
+
     void FlyGravity(float _DeltaTime)
     {
         if (false == IsGround)
@@ -146,9 +165,10 @@ private:
     FVector2D WinSize;
 
     FVector2D GravityForce = FVector2D::ZERO;
+    FVector2D DashVector = FVector2D::RIGHT;
+    FVector2D JumpPower = FVector2D(0.0f, -300.0f);
 
-    float JumpTime = 50.0f;
-    float CurrJumpTime = 0;
+    float BreakTime = 100.0f;
 
     float DashTime = 70.0f;
     float CurrDashTime = 0;
