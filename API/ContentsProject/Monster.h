@@ -24,33 +24,15 @@ public:
 
 
 public:
-
 	void BlockMonsterPos(FVector2D _MapScale);
 	void SetColImage(std::string_view _ColImageName);
+
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
-
-private:
-	MonsterState CurMonsterState = MonsterState::Move;
-
-	class USpriteRenderer* SpriteRenderer = nullptr;
-	class UEngineWinImage* ColImage = nullptr;
-
-	std::string DirString = "_Left";
-
-	bool IsGround = false;
-
-	float Speed = 100.0f;
-
-	FVector2D GravityForce = FVector2D::ZERO;
-	FVector2D MoveVector = FVector2D::LEFT;
-
-private:
-
-	void DirCheck();
-
+	virtual void MoveStart() {};
 	void Gravity(float _DeltaTime)
 	{
 		if (false == IsGround)
@@ -64,8 +46,29 @@ private:
 
 		// »ó½Ã 
 	}
+
+	std::string DirString = "_Left";
+
+private:
+	MonsterState CurMonsterState = MonsterState::Move;
+
+	class UEngineWinImage* ColImage = nullptr;
+
+
+	bool IsGround = false;
+
+	float Speed = 100.0f;
+
+	FVector2D GravityForce = FVector2D::ZERO;
+	FVector2D MoveVector = FVector2D::LEFT;
+
+	
+private:
+
+	void DirCheck();
+
+	
 	void ChangeState(MonsterState _CurMonsterState);
-	void MoveStart();
 	void Move(float _DeltaTime);
 
 	void ChangeMonsterDir(float _DeltaTime);

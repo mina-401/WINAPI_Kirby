@@ -15,8 +15,9 @@ public:
 	AWaddleDee& operator=(AWaddleDee&& _Other) noexcept = delete;
 
 protected:
-
+	void MoveStart() override;
 private:
 
+	class USpriteRenderer* SpriteRenderer = nullptr;
 };
 

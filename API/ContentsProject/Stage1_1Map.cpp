@@ -8,6 +8,7 @@
 #include <EnginePlatform/EngineInput.h>
 #include "Stage1_1GameMode.h"
 #include "Monster.h"
+#include "WaddleDee.h"
 AStage1_1Map::AStage1_1Map()
 {
 	PngSize = {(float) 792.5 ,(float)103.5 };
@@ -56,8 +57,8 @@ void AStage1_1Map::Tick(float _deltaTime)
 
 	AStage1_1GameMode* GameMode = GetWorld()->GetGameMode<AStage1_1GameMode>();
 	AMonster* Dee = GameMode->MonsterWaddleDee;
-	AMonster* Doo = GameMode->MonsterWaddleDoo;
-	AMonster* Sparky = GameMode->MonsterSparky;
+	//AMonster* Doo = GameMode->MonsterWaddleDoo;
+	//AMonster* Sparky = GameMode->MonsterSparky;
 	Dee->BlockMonsterPos(MapScale);
 	//Doo->BlockMonsterPos(MapScale);
 	//Sparky->BlockMonsterPos(MapScale);

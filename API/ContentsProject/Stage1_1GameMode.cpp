@@ -7,6 +7,7 @@
 #include <EngineCore/SpriteRenderer.h>
 #include "Player.h"
 #include "Monster.h"
+#include "WaddleDee.h"
 #include "Sparky.h"
 
 
@@ -26,7 +27,7 @@ void AStage1_1GameMode::BeginPlay()
 	AStage1_1Map* NewMap = GetWorld()->SpawnActor<AStage1_1Map>();
 	APlayer* Player = GetWorld()->GetPawn<APlayer>();
 	
-	MonsterWaddleDee = GetWorld()->SpawnActor<AMonster>();
+	MonsterWaddleDee = GetWorld()->SpawnActor<AWaddleDee>();
 	MonsterWaddleDee->SetActorLocation({ 1500, 300 });
 	
 	Player->SetColImage("foreground1-1_col.png");

@@ -12,35 +12,7 @@
 
 AMonster::AMonster()
 {
-	{
-		SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
-		
-		SetName("Monster");
-
-		SpriteRenderer->SetSprite("WaddleDee_Left.png");
-		SpriteRenderer->SetComponentScale({ 270, 270 });
-		
-		SpriteRenderer->SetOrder(ERenderOrder::MONSTER);
-
-		UImageManager::GetInst().CuttingSprite("WaddleDee_Left.png", { 128, 128 });
-		UImageManager::GetInst().CuttingSprite("WaddleDee_Right.png", { 128, 128 });
-		
-		SpriteRenderer->CreateAnimation("Walk_Left", "WaddleDee_Left.png", 0, 4, 0.2f);
-		SpriteRenderer->CreateAnimation("Walk_Right", "WaddleDee_Right.png", 0, 4, 0.2f);
-		SpriteRenderer->ChangeAnimation("Walk_Left");
-
-
-	}
-
-	{
-		U2DCollision* CollisionComponent = CreateDefaultSubObject<U2DCollision>();
-		CollisionComponent->SetComponentLocation({ 0, 0 });
-		CollisionComponent->SetComponentScale({ 50, 50 });
-		CollisionComponent->SetCollisionGroup(ECollisionGroup::MonsterBody);
-		CollisionComponent->SetCollisionType(ECollisionType::CirCle);
-
-		DebugOn();
-	}
+	
 }
 
 AMonster::~AMonster()
@@ -71,10 +43,6 @@ void AMonster::ChangeState(MonsterState _CurMonsterState)
 	}
 }
 
-void AMonster::MoveStart()
-{
-	SpriteRenderer->ChangeAnimation("Walk" + DirString);
-}
 
 void AMonster::Move(float _DeltaTime)
 {
