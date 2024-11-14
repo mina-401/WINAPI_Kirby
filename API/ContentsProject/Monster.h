@@ -1,17 +1,29 @@
 #pragma once
 #include <EngineCore/Actor.h>
+#include <EngineCore/SpriteRenderer.h>
 
 // 설명 :
 
-enum class MonsterState
+enum class EMonsterState
 {
 	Move,
+	Chase,
 	Attack,  
+};
+
+enum class ECopyAbilityStatus
+{
+	AbleCopy,
+	UnableCopy,
+
 };
 class AMonster : public AActor
 {
 public:
 	// constrcuter destructer
+
+	//typedef AMonster Super;
+
 	AMonster();
 	~AMonster();
 
@@ -27,12 +39,55 @@ public:
 	void BlockMonsterPos(FVector2D _MapScale);
 	void SetColImage(std::string_view _ColImageName);
 
+	virtual void MoveStart();
+	virtual void Move(float _DeltaTime);
+	virtual void ChaseStart();
+	virtual void Chase(float _DeltaTime);
+	virtual void AttackStart();
+	virtual void Attack(float _DeltaTime);
 
+	class U2DCollision* AttackColComponent = nullptr;
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
-	virtual void MoveStart() {};
+	void CheckPlayerPos();
+
+	
+
+	virtual void CollisionEnter(AActor* _ColActor) {};
+	virtual void CollisionStay(AActor* _ColActor) {};
+	virtual void CollisionEnd(AActor* _ColActor) {};
+
+	void ChangeState(EMonsterState _CurMonsterState);
+	
+
+	std::string DirString = "_Left";
+	EMonsterState CurMonsterState = EMonsterState::Move;
+
+	class UEngineWinImage* ColImage = nullptr;
+	class USpriteRenderer* SpriteRenderer = nullptr;
+
+	bool IsGround = false;
+	float Speed = 100.0f;
+
+	FVector2D GravityForce = FVector2D::ZERO;
+	FVector2D MoveVector = FVector2D::LEFT;
+	FVector2D TargetPosVector = FVector2D::ZERO;
+
+	FVector2D CurrPos = FVector2D::ZERO;
+	float MonsterToPlayerRange = 150.0f;
+
+	ECopyAbilityStatus CopyAbilityStatus = ECopyAbilityStatus::UnableCopy;
+
+private:
+	void MonsterClimbingUphill();
+	void ChangeMonsterDir(float _DeltaTime);
+	void MonsterGroundCheck(FVector2D _MovePos);
+	bool MonsterNextPosCheck(float _DeltaTime, FVector2D _Vector);
+	void MonsterDirCheck();
+	void DirCheck();
+	void MoveDirCheck(FVector2D _Pos);
 	void Gravity(float _DeltaTime)
 	{
 		if (false == IsGround)
@@ -47,34 +102,10 @@ protected:
 		// 상시 
 	}
 
-	std::string DirString = "_Left";
-
-private:
-	MonsterState CurMonsterState = MonsterState::Move;
-
-	class UEngineWinImage* ColImage = nullptr;
-
-
-	bool IsGround = false;
-
-	float Speed = 100.0f;
-
-	FVector2D GravityForce = FVector2D::ZERO;
-	FVector2D MoveVector = FVector2D::LEFT;
-
-	
 private:
 
-	void DirCheck();
 
 	
-	void ChangeState(MonsterState _CurMonsterState);
-	void Move(float _DeltaTime);
 
-	void ChangeMonsterDir(float _DeltaTime);
-
-	void MonsterGroundCheck(FVector2D _MovePos);
-	bool MonsterNextPosCheck(float _DeltaTime, FVector2D _Vector);
-	void MonsterDirCheck();
 };
 

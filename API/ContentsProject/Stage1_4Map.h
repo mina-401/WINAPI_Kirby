@@ -16,6 +16,10 @@ public:
 
 	void BeginPlay() override;
 	void Tick(float _deltaTime) override;
+
+	void CollisionEnter(AActor* _ColActor);
+	void CollisionStay(AActor* _ColActor);
+	void CollisionEnd(AActor* _ColActor);
 protected:
 
 private:
@@ -27,5 +31,11 @@ private:
 	class AStageBackground* BackGroundMap = nullptr;
 	class USpriteRenderer* SpriteRenderer = nullptr;
 	class USpriteRenderer* ColSpriteRenderer = nullptr;
+
+	class U2DCollision* PotalColComponent = nullptr;
+
+	bool IsPlayerStayPotal = false;
 };
+
+
 

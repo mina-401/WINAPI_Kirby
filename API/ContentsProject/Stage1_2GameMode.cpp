@@ -17,6 +17,7 @@ AStage1_2GameMode::~AStage1_2GameMode()
 
 void AStage1_2GameMode::BeginPlay()
 {
+	//DebugOn();
 	Super::BeginPlay();
 	AStageBackground* NewActor = GetWorld()->SpawnActor<AStageBackground>();
 

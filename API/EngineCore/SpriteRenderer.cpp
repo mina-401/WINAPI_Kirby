@@ -38,9 +38,9 @@ void USpriteRenderer::Render(float _DeltaTime)
 			CurAnimation->CurTime -= CurFrameTime;
 			++CurAnimation->CurIndex;
 
-			if (CurAnimation->Events.contains(CurAnimation->CurIndex))
+			if (CurAnimation->Events.contains(CurIndex))
 			{
-				CurAnimation->Events[CurAnimation->CurIndex]();
+				CurAnimation->Events[CurIndex]();
 			}
 
 			// 애니메이션 앤드
@@ -55,9 +55,9 @@ void USpriteRenderer::Render(float _DeltaTime)
 				{
 					CurAnimation->CurIndex = 0;
 
-					if (CurAnimation->Events.contains(CurAnimation->CurIndex))
+					if (CurAnimation->Events.contains(CurIndex))
 					{
-						CurAnimation->Events[CurAnimation->CurIndex]();
+						CurAnimation->Events[CurIndex]();
 					}
 
 				}
@@ -99,7 +99,14 @@ void USpriteRenderer::Render(float _DeltaTime)
 
 	// Trans.Location -= 카메라포스
 
-	CurData.Image->CopyToTrans(BackBufferImage, Trans, CurData.Transform);
+	if (Alpha == 255)
+	{
+		CurData.Image->CopyToTrans(BackBufferImage, Trans, CurData.Transform);
+	}
+	else
+	{
+		CurData.Image->CopyToAlpha(BackBufferImage, Trans, CurData.Transform, Alpha);
+	}
 }
 
 void USpriteRenderer::BeginPlay()

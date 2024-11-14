@@ -13,7 +13,7 @@
 #include "Stage1_4GameMode.h"
 #include "ItemRoomBeforeBossGameMode.h"
 #include "StageBossKingDededeGameMode.h"
-
+#include "ContentsEnum.h"
 #include "TitleGameMode.h"
 #include "Player.h"
 KirbyContentsCore::KirbyContentsCore()
@@ -66,6 +66,9 @@ void KirbyContentsCore::BeginPlay()
 	UEngineAPICore::GetCore()->CreateLevel<AStage1_4GameMode, APlayer>("Stage1_4");
 	UEngineAPICore::GetCore()->CreateLevel<AItemRoomBeforeBossGameMode, APlayer>("ItemRoomBeforeBoss");
 	UEngineAPICore::GetCore()->CreateLevel<AStageBossKingDededeGameMode, APlayer>("StageBossKingDedede");
+
+	ULevel::CollisionGroupLink(ECollisionGroup::MonsterAttack, ECollisionGroup::PlayerBody);
+	ULevel::CollisionGroupLink(ECollisionGroup::MonsterBody, ECollisionGroup::PlayerBody);
 
 
 	UEngineAPICore::GetCore()->OpenLevel("Stage1_1");

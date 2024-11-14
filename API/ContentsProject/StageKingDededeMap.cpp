@@ -39,7 +39,7 @@ void AStageKingDededeMap::BeginPlay()
 	APlayer* player = GetWorld()->GetPawn<APlayer>();
 
 
-	player->SetActorLocation({ 0,0 });
+	player->SetActorLocation({ 10,300 });
 }
 
 void AStageKingDededeMap::Tick(float _deltaTime)

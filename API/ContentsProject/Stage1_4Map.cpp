@@ -1,10 +1,12 @@
 #include "PreCompile.h"
 #include "Stage1_4Map.h"
-#include "StageBackground.h"
-#include "Player.h"
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/SpriteRenderer.h>
+#include <EnginePlatform/EngineInput.h>
+#include <EngineCore/2DCollision.h>
 #include "ContentsEnum.h"
+#include "StageBackground.h"
+#include "Player.h"
 AStage1_4Map::AStage1_4Map()
 {
 	PngSize = { (float)792.5 ,(float)103.5 };
@@ -29,6 +31,21 @@ AStage1_4Map::AStage1_4Map()
 			ColSpriteRenderer->SetComponentLocation(MapScale.Half());
 		
 	}
+	{
+		GetWorld()->CollisionGroupLink(ECollisionGroup::Potal, ECollisionGroup::PlayerBody);
+
+
+		PotalColComponent = CreateDefaultSubObject<U2DCollision>();
+		PotalColComponent->SetComponentLocation({ (float)MapScale.X - 90,(float)50 });
+		PotalColComponent->SetComponentScale({ 20, 40 });
+		PotalColComponent->SetCollisionGroup(ECollisionGroup::Potal);
+		PotalColComponent->SetCollisionType(ECollisionType::CirCle);
+
+		PotalColComponent->SetCollisionEnter(std::bind(&AStage1_4Map::CollisionEnter, this, std::placeholders::_1));
+		PotalColComponent->SetCollisionStay(std::bind(&AStage1_4Map::CollisionStay, this, std::placeholders::_1));
+		PotalColComponent->SetCollisionEnd(std::bind(&AStage1_4Map::CollisionEnd, this, std::placeholders::_1));
+		DebugOn();
+	}
 }
 
 AStage1_4Map::~AStage1_4Map()
@@ -37,17 +54,37 @@ AStage1_4Map::~AStage1_4Map()
 
 void AStage1_4Map::BeginPlay()
 {
+	Super::BeginPlay();
 	AStageBackground* BackGroundMap = GetWorld()->SpawnActor<AStageBackground>();
 	
 	BackGroundMap->SetActorLocation({ (float)BackGroundMap->GetActorLocation().X,(float)BackGroundMap->GetActorLocation().Y -80});
 	APlayer* player = GetWorld()->GetPawn<APlayer>();
 
-	player->SetActorLocation({ 107,200 });
+	player->SetActorLocation({ 100,200 });
 }
 
 void AStage1_4Map::Tick(float _deltaTime)
 {
+	Super::Tick(_deltaTime);
+	if (true == UEngineInput::GetInst().IsPress(VK_UP) && IsPlayerStayPotal) {
+		UEngineAPICore::GetCore()->OpenLevel("ItemRoomBeforeBoss");
+	}
 	APlayer* player = GetWorld()->GetPawn<APlayer>();
 	player->BlockCameraPos(MapScale, WinSize);
 }
+void AStage1_4Map::CollisionEnter(AActor* _ColActor)
+{
+	//IsPlayerStayPotal = true;
+}
 
+void AStage1_4Map::CollisionStay(AActor* _ColActor)
+{
+
+	APlayer* Player = dynamic_cast<APlayer*>(_ColActor);
+	IsPlayerStayPotal = true;
+}
+
+void AStage1_4Map::CollisionEnd(AActor* _ColActor)
+{
+	IsPlayerStayPotal = false;
+}

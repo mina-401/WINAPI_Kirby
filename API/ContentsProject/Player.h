@@ -58,6 +58,9 @@ public:
     //void SetDebug(bool _debug);
 
 
+    void CollisionEnter(AActor* _ColActor);
+    void CollisionStay(AActor* _ColActor);
+    void CollisionEnd(AActor* _ColActor);
 protected:
 
 private:
@@ -111,6 +114,7 @@ private:
     bool PlayerNextPosCheck(float _DeltaTime, FVector2D _Vector);
 
     //void Attack(float _DeltaTime);
+
 
     void PlayerFlyCheck();
     void Accel(float _DeltaTime, FVector2D Vector);

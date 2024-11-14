@@ -14,10 +14,14 @@ public:
 	AWaddleDee& operator=(const AWaddleDee& _Other) = delete;
 	AWaddleDee& operator=(AWaddleDee&& _Other) noexcept = delete;
 
-protected:
-	void MoveStart() override;
-private:
+	void AttackStart() override;
+	void Attack(float _DeltaTime) override;
 
-	class USpriteRenderer* SpriteRenderer = nullptr;
+	void CollisionEnter(AActor* _ColActor) override;
+	//void CollisionStay(AActor* _ColActor)override;
+	//void CollisionEnd(AActor* _ColActor)override;
+protected:
+	
+private:
 };
 

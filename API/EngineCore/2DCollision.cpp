@@ -151,8 +151,12 @@ void U2DCollision::CollisionEventCheck(class U2DCollision* _Other)
 	// 최초 충돌
 	// 중돌중
 	// 충돌 끝
+
 	U2DCollision* ThisCollision = this;
 	U2DCollision* DestCollision = _Other;
+
+	AActor* Ptr0 = ThisCollision->GetActor();
+	AActor* Ptr1 = DestCollision->GetActor();
 	// 
 	FTransform ThisTrans = ThisCollision->GetActorTransform();
 	FTransform DestTrans = DestCollision->GetActorTransform();

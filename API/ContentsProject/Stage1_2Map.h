@@ -14,6 +14,9 @@ public:
 	AStage1_2Map(AStage1_2Map&& _Other) noexcept = delete;
 	AStage1_2Map& operator=(const AStage1_2Map& _Other) = delete;
 	AStage1_2Map& operator=(AStage1_2Map&& _Other) noexcept = delete;
+	void CollisionEnter(AActor* _ColActor);
+	void CollisionStay(AActor* _ColActor);
+	void CollisionEnd(AActor* _ColActor);
 
 	void BeginPlay() override;
 	void Tick(float _deltaTime) override;
@@ -26,5 +29,8 @@ private:
 	FVector2D MapScale;
 	class USpriteRenderer* SpriteRenderer = nullptr;
 	class USpriteRenderer* ColSpriteRenderer = nullptr;
+
+	class U2DCollision* PotalColComponent = nullptr;
+	bool IsPlayerStayPotal = false;
 };
 

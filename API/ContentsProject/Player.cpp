@@ -14,72 +14,70 @@
 
 APlayer::APlayer()
 {
-	// UEngineAPICore::GetCore()->CreateLevel("Title");
-	//UEngineAPICore::GetCore()->GetMainWindow().GetBackBuffer();
-	SetActorLocation({ 0, 0 });
-	
+	//SetActorLocation({ 3050,50 });
 
-	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
-	SpriteRenderer->SetSprite("Idle_Right.png");
-	SpriteRenderer->SetOrder(ERenderOrder::PLAYER);
-	SpriteRenderer->SetComponentScale({ 270, 270 });
 
-	SetName("Kirby");
-	UImageManager::GetInst().CuttingSprite("Idle_Left.png", { 128, 128 });
-	UImageManager::GetInst().CuttingSprite("Idle_Right.png", { 128, 128 });
-	UImageManager::GetInst().CuttingSprite("Crouch_Left.png", { 128, 128 });
-	UImageManager::GetInst().CuttingSprite("Crouch_Right.png", { 128, 128 });
-	UImageManager::GetInst().CuttingSprite("Walk_Right.png", { 128, 128 });
-	UImageManager::GetInst().CuttingSprite("Walk_Left.png", { 128, 128 });
-	UImageManager::GetInst().CuttingSprite("Run_Left.png", { 128, 128 });
-	UImageManager::GetInst().CuttingSprite("Run_Right.png", { 128, 128 });
-	UImageManager::GetInst().CuttingSprite("Jump_Left.png", { 128, 128 });
-	UImageManager::GetInst().CuttingSprite("Jump_Right.png", { 128, 128 });
-	UImageManager::GetInst().CuttingSprite("Fly_Left.png", { 128, 128 });
-	UImageManager::GetInst().CuttingSprite("Fly_Right.png", { 128, 128 });
-	UImageManager::GetInst().CuttingSprite("Flying_Left.png", { 128, 128 });
-	UImageManager::GetInst().CuttingSprite("Flying_Right.png", { 128, 128 });
-	UImageManager::GetInst().CuttingSprite("FlyingDown_Left.png", { 128, 128 });
-	UImageManager::GetInst().CuttingSprite("FlyingDown_Right.png", { 128, 128 });
-	UImageManager::GetInst().CuttingSprite("Slide_Left.png", { 128, 128 });
-	UImageManager::GetInst().CuttingSprite("Slide_Right.png", { 128, 128 });
-	UImageManager::GetInst().CuttingSprite("Break_Left.png", { 128, 128 });
-	UImageManager::GetInst().CuttingSprite("Break_Right.png", { 128, 128 });
-	UImageManager::GetInst().CuttingSprite("Inhale_Left.png", { 128, 128 });
-	UImageManager::GetInst().CuttingSprite("Inhale_Right.png", { 128, 128 });
-	SpriteRenderer->CreateAnimation("Idle_Left", "Idle_Left.png", 0, 2, 3.f);
-	SpriteRenderer->CreateAnimation("Idle_Right", "Idle_Right.png", 0, 2, 3.f);
-	SpriteRenderer->CreateAnimation("Crouch_Left", "Crouch_Left.png", 0, 1, 0.2f, false);
-	SpriteRenderer->CreateAnimation("Crouch_Right", "Crouch_Right.png", 0, 1, 0.2f, false);
-	SpriteRenderer->CreateAnimation("Walk_Left", "Walk_Left.png", 0, 3, 0.25f);
-	SpriteRenderer->CreateAnimation("Walk_Right", "Walk_Right.png", 0, 3, 0.25f);
-	SpriteRenderer->CreateAnimation("Run_Left", "Run_Left.png",  0, 6, 0.1f);
-	SpriteRenderer->CreateAnimation("Run_Right", "Run_Right.png",  0, 6, 0.1f);
-	SpriteRenderer->CreateAnimation("Jump_Left", "Jump_Left.png",  0, 8, 0.1f, false);
-	SpriteRenderer->CreateAnimation("Jump_Right", "Jump_Right.png",  0, 8, 0.1f, false);
-	SpriteRenderer->CreateAnimation("Fly_Left", "Fly_Left.png",  0, 9, 0.1f, false);
-	SpriteRenderer->CreateAnimation("Fly_Right", "Fly_Right.png",  0, 9, 0.1f, false);
-	SpriteRenderer->CreateAnimation("Flying_Right", "Flying_Right.png",  0, 0, 0.1f);
-	SpriteRenderer->CreateAnimation("Flying_Left", "Flying_Left.png",  0, 0, 0.1f);
-	SpriteRenderer->CreateAnimation("FlyingDown_Left", "FlyingDown_Left.png",  0, 2, 0.1f, false);
-	SpriteRenderer->CreateAnimation("FlyingDown_Right", "FlyingDown_Right.png",  0, 2, 0.1f, false);
-	SpriteRenderer->CreateAnimation("Slide_Left", "Slide_Left.png", 0, 0, 0.5f,false);
-	SpriteRenderer->CreateAnimation("Slide_Right", "Slide_Right.png", 0, 0, 0.5f, false);
-	SpriteRenderer->CreateAnimation("Break_Left", "Break_Left.png", 0, 0, 0.1f,false);
-	SpriteRenderer->CreateAnimation("Break_Right", "Break_Right.png", 0, 0, 0.1f, false);
-	SpriteRenderer->CreateAnimation("Inhale_Left", "Inhale_Left.png", { 4,5,6,7,8,7,8,7,6,9,10,11,12 }, 0.15f);
-	SpriteRenderer->CreateAnimation("Inhale_Right", "Inhale_Right.png", { 4,5,6,7,8,7,8,7,6,9,10,11,12 }, 0.15f);
-	//SpriteRenderer->CreateAnimation("Inhaling_Left", "Inhale_Left.png", { 6,7,8,7 }, { 0.15f }, true);
-	//SpriteRenderer->CreateAnimation("Inhaling_Right", "Inhale_Right.png", { 4,5,6,7,8,7,8,7,6 }, { 0.15f }, true);
+	{	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
+		SpriteRenderer->SetSprite("Idle_Right.png");
+		SpriteRenderer->SetOrder(ERenderOrder::PLAYER);
+		SpriteRenderer->SetComponentScale({ 270, 270 });
 
-	SpriteRenderer->ChangeAnimation("Idle_Right");
+		SetName("Kirby");
+		UImageManager::GetInst().CuttingSprite("Idle_Left.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Idle_Right.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Crouch_Left.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Crouch_Right.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Walk_Right.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Walk_Left.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Run_Left.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Run_Right.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Jump_Left.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Jump_Right.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Fly_Left.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Fly_Right.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Flying_Left.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Flying_Right.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("FlyingDown_Left.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("FlyingDown_Right.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Slide_Left.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Slide_Right.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Break_Left.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Break_Right.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Inhale_Left.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Inhale_Right.png", { 128, 128 });
+		SpriteRenderer->CreateAnimation("Idle_Left", "Idle_Left.png", 0, 2, 3.f);
+		SpriteRenderer->CreateAnimation("Idle_Right", "Idle_Right.png", 0, 2, 3.f);
+		SpriteRenderer->CreateAnimation("Crouch_Left", "Crouch_Left.png", 0, 1, 0.2f, false);
+		SpriteRenderer->CreateAnimation("Crouch_Right", "Crouch_Right.png", 0, 1, 0.2f, false);
+		SpriteRenderer->CreateAnimation("Walk_Left", "Walk_Left.png", 0, 3, 0.25f);
+		SpriteRenderer->CreateAnimation("Walk_Right", "Walk_Right.png", 0, 3, 0.25f);
+		SpriteRenderer->CreateAnimation("Run_Left", "Run_Left.png", 0, 6, 0.1f);
+		SpriteRenderer->CreateAnimation("Run_Right", "Run_Right.png", 0, 6, 0.1f);
+		SpriteRenderer->CreateAnimation("Jump_Left", "Jump_Left.png", 0, 8, 0.1f, false);
+		SpriteRenderer->CreateAnimation("Jump_Right", "Jump_Right.png", 0, 8, 0.1f, false);
+		SpriteRenderer->CreateAnimation("Fly_Left", "Fly_Left.png", 0, 9, 0.1f, false);
+		SpriteRenderer->CreateAnimation("Fly_Right", "Fly_Right.png", 0, 9, 0.1f, false);
+		SpriteRenderer->CreateAnimation("Flying_Right", "Flying_Right.png", 0, 0, 0.1f);
+		SpriteRenderer->CreateAnimation("Flying_Left", "Flying_Left.png", 0, 0, 0.1f);
+		SpriteRenderer->CreateAnimation("FlyingDown_Left", "FlyingDown_Left.png", 0, 2, 0.1f, false);
+		SpriteRenderer->CreateAnimation("FlyingDown_Right", "FlyingDown_Right.png", 0, 2, 0.1f, false);
+		SpriteRenderer->CreateAnimation("Slide_Left", "Slide_Left.png", 0, 0, 0.5f, false);
+		SpriteRenderer->CreateAnimation("Slide_Right", "Slide_Right.png", 0, 0, 0.5f, false);
+		SpriteRenderer->CreateAnimation("Break_Left", "Break_Left.png", 0, 0, 0.1f, false);
+		SpriteRenderer->CreateAnimation("Break_Right", "Break_Right.png", 0, 0, 0.1f, false);
+		SpriteRenderer->CreateAnimation("Inhale_Left", "Inhale_Left.png", { 4,5,6,7,8,7,8,7,6,9,10,11,12 }, 0.15f);
+		SpriteRenderer->CreateAnimation("Inhale_Right", "Inhale_Right.png", { 4,5,6,7,8,7,8,7,6,9,10,11,12 }, 0.15f);
+		//SpriteRenderer->CreateAnimation("Inhaling_Left", "Inhale_Left.png", { 6,7,8,7 }, { 0.15f }, true);
+		//SpriteRenderer->CreateAnimation("Inhaling_Right", "Inhale_Right.png", { 4,5,6,7,8,7,8,7,6 }, { 0.15f }, true);
+
+		SpriteRenderer->ChangeAnimation("Idle_Right");
+	}
 	{
 		CollisionComponent = CreateDefaultSubObject<U2DCollision>();
-		CollisionComponent->SetComponentLocation({ 200, 0 });
+		CollisionComponent->SetComponentLocation({ 0, 0 });
 		CollisionComponent->SetComponentScale({ 50, 50 });
 		CollisionComponent->SetCollisionGroup(ECollisionGroup::PlayerBody);
 	}
-
 }
 
 APlayer::~APlayer()
@@ -396,6 +394,10 @@ void APlayer::Jump(float _DeltaTime)
 
 	PlayerGroundCheck(GravityForce * _DeltaTime);
 	PlayerFlyCheck( );
+	
+	JumpGravity(_DeltaTime);
+	AddActorLocation(JumpPower * _DeltaTime);
+	
 	FVector2D Vector = FVector2D::ZERO;
 
 	if (true == UEngineInput::GetInst().IsPress(VK_LEFT)) Vector = FVector2D::LEFT;
@@ -406,19 +408,17 @@ void APlayer::Jump(float _DeltaTime)
 	}
 
 	////다음 위치로 갈 수 있다.
-	if (PlayerNextPosCheck(_DeltaTime, Vector))
+	if (true == PlayerNextPosCheck(_DeltaTime, Vector))
 	{
 		AddActorLocation(Vector  * _DeltaTime * 150.0f);
 	}
 	
-	AddActorLocation(JumpPower * _DeltaTime);
 
 	if (true == IsGround)
 	{
 		ChangeState(PlayerState::Idle);
 		return;
 	}
-	JumpGravity(_DeltaTime);
 }
 
 
@@ -487,19 +487,32 @@ void APlayer::Move(float _DeltaTime)
 	}
 
 	
-
 	UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
 	if (Color == UColor::BLACK)
 	{
-		UColor NextColor = ColImage->GetColor(GetActorLocation() + FVector2D::UP , UColor::WHITE);
+		UColor NextColor = ColImage->GetColor(GetActorLocation() + FVector2D::UP, UColor::WHITE);
 		if (NextColor != UColor::BLACK)
 		{
 			AddActorLocation(FVector2D::UP);
-
 		}
-		
+
 	}
-	else { AddActorLocation(Vector * Speed * _DeltaTime); }
+	else AddActorLocation(Vector * Speed * _DeltaTime);
+	Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
+
+
+	while (true)
+	{
+		UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
+		if (Color == UColor::GRAY)
+		{
+			// 나가 땅위로 올라갈때까지 while 계속 올려준다.
+			AddActorLocation(FVector2D::UP);
+		}
+		else {
+			break;
+		}
+	}
 
 }
 
@@ -605,7 +618,7 @@ void APlayer::Dash(float _DeltaTime)
 	}
 
 
-	UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
+	/*UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
 	if (Color == UColor::BLACK)
 	{
 		UColor NextColor = ColImage->GetColor(GetActorLocation() + FVector2D::UP, UColor::WHITE);
@@ -616,7 +629,39 @@ void APlayer::Dash(float _DeltaTime)
 		}
 
 	}
-	else { AddActorLocation(Vector * Speed * _DeltaTime); }
+	else { AddActorLocation(Vector * Speed * _DeltaTime); }*/
+
+	UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
+	if (Color == UColor::BLACK)
+	{
+		UColor NextColor = ColImage->GetColor(GetActorLocation()+FVector2D::UP, UColor::WHITE);
+		if (NextColor != UColor::BLACK)
+		{
+			AddActorLocation(FVector2D::UP);
+		}
+
+	}
+	else AddActorLocation(Vector * Speed * _DeltaTime);
+	Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
+
+
+	while (true)
+	{
+		UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
+		if (Color == UColor::GRAY)
+		{
+			// 나가 땅위로 올라갈때까지 while 계속 올려준다.
+			AddActorLocation(FVector2D::UP);
+		}
+		else {
+			break;
+		}
+	}
+
+
+
+
+
 }
 
 void APlayer::PlayerFlyCheck()
@@ -798,7 +843,7 @@ void APlayer::PlayerGroundCheck(FVector2D _MovePos)
 		{
 			IsGround = false;
 		}
-		else if (Color == UColor::BLACK)
+		else 
 		{
 			IsGround = true;
 		}
@@ -858,3 +903,17 @@ void APlayer::PlayerSlideCheck (float _DeltaTime, FVector2D _Vector)
 	//}
 }
 
+void APlayer::CollisionEnter(AActor* _ColActor)
+{
+	int a = 0;
+}
+
+void APlayer::CollisionStay(AActor* _ColActor)
+{
+	int a = 0;
+}
+
+void APlayer::CollisionEnd(AActor* _ColActor)
+{
+	int  a = 0;
+}

@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "WaddleDee.h"
+#include "Player.h"
 
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/SpriteRenderer.h>
@@ -11,6 +12,7 @@
 #include "ContentsEnum.h"
 AWaddleDee::AWaddleDee()
 {
+	CopyAbilityStatus = ECopyAbilityStatus::UnableCopy;
 	{
 		SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 
@@ -26,6 +28,8 @@ AWaddleDee::AWaddleDee()
 
 		SpriteRenderer->CreateAnimation("Walk_Left", "WaddleDee_Left.png", 0, 4, 0.2f);
 		SpriteRenderer->CreateAnimation("Walk_Right", "WaddleDee_Right.png", 0, 4, 0.2f);
+		SpriteRenderer->CreateAnimation("Attack_Left", "WaddleDee_Left.png", 0, 4, 0.2f);
+		SpriteRenderer->CreateAnimation("Attack_Right", "WaddleDee_Right.png", 0, 4, 0.2f);
 		SpriteRenderer->ChangeAnimation("Walk_Left");
 
 
@@ -46,10 +50,18 @@ AWaddleDee::~AWaddleDee()
 {
 }
 
-void AWaddleDee::MoveStart()
+void AWaddleDee::AttackStart()
 {
-	
-	SpriteRenderer->ChangeAnimation("Walk" + DirString);
+	int a = 0;
+}
+
+void AWaddleDee::Attack(float _DeltaTime)
+{
 	
 }
 
+
+void AWaddleDee::CollisionEnter(AActor* _ColActor)
+{
+	
+}

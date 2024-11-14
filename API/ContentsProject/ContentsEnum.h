@@ -14,4 +14,7 @@ enum class ECollisionGroup
 {
 	PlayerBody,
 	MonsterBody,
+	MonsterAttack,
+	SpawnPoint,
+	Potal,
 };

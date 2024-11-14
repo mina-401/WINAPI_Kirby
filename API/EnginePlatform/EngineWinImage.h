@@ -52,6 +52,12 @@ public:
 		const FTransform& _LTImageTrans,
 		UColor _Color = UColor(255, 0, 255, 0));
 
+	void CopyToAlpha(UEngineWinImage* _TargetImage,
+		const FTransform& _RenderTrans,
+		const FTransform& _LTImageTrans,
+		unsigned char _Alpha);
+
+
 	void Load(UEngineWinImage* _TargetImage, std::string_view _Path);
 
 	// 이미지 크기를 리턴
