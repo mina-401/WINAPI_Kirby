@@ -26,8 +26,10 @@ AWaddleDoo::AWaddleDoo()
 
 		SpriteRenderer->CreateAnimation("Walk_Left", "WaddleDoo_Left.png", 0, 4, 0.2f);
 		SpriteRenderer->CreateAnimation("Walk_Right", "WaddleDoo_Right.png", 0, 4, 0.2f);
-		SpriteRenderer->CreateAnimation("Attack_Left", "WaddleDoo_Left.png", { 5,6,5,6,5,6,7,8,8,8 }, 0.2f, true);
-		SpriteRenderer->CreateAnimation("Attack_Right", "WaddleDoo_Right.png", { 5,6,5,6,5,6,7,8,8,8 }, 0.2f, true);
+		SpriteRenderer->CreateAnimation("Attack_Left", "WaddleDoo_Left.png", { 5,6,5,6,5,6,7,8,8,8,8,8 }, 0.2f, true);
+		SpriteRenderer->CreateAnimation("Attack_Right", "WaddleDoo_Right.png", { 5,6,5,6,5,6,7,8,8,8,8,8 }, 0.2f, true);
+		SpriteRenderer->CreateAnimation("Inhaled_Left", "WaddleDoo_Left.png", 13, 13, 0.2f, true);
+		SpriteRenderer->CreateAnimation("Inhaled_Right", "WaddleDoo_Right.png", 13, 13, 0.2f, true);
 		SpriteRenderer->ChangeAnimation("Walk_Left");
 
 

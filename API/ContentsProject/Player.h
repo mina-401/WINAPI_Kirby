@@ -4,7 +4,7 @@
 
 // 명확히 하라.
 // 점프내부에서는 점프와 관련된 코드만 실행하라.
-enum class PlayerState
+enum class EPlayerState
 {
     Idle,
     Crouch,
@@ -17,11 +17,13 @@ enum class PlayerState
     Slide,
     Attack,
     Inhale,
+    
 };
-enum class PlayerDir
+enum class EPlayerEatState
 {
-    Left,
-    Right,
+    Normal,
+    Eating,
+
 };
 
 class APlayer : public AActor
@@ -58,6 +60,10 @@ public:
     //void SetDebug(bool _debug);
 
 
+     void InhaleCollisionEnter(AActor* _ColActor);
+     void InhaleCollisionStay(AActor* _ColActor);
+     void InhaleCollisionEnd(AActor* _ColActor);
+
     void CollisionEnter(AActor* _ColActor);
     void CollisionStay(AActor* _ColActor);
     void CollisionEnd(AActor* _ColActor);
@@ -69,7 +75,8 @@ private:
     class USpriteRenderer* SpriteRenderer = nullptr;
     class UEngineWinImage* ColImage = nullptr;
 
-    PlayerState CurPlayerState = PlayerState::Idle;
+    EPlayerState CurPlayerState = EPlayerState::Idle;
+    EPlayerEatState CurPlayerEatState = EPlayerEatState::Normal;
 
     std::string DirString = "_Right";
 
@@ -79,7 +86,12 @@ private:
     // 
 
     void DirCheck();
-    void ChangeState(PlayerState CurPlayerState);
+    void ChangeState(EPlayerState CurPlayerState);
+    void EatingIdleStart();
+    void EatingMoveStart();
+    void EatingDashStart();
+    void EatingJumpStart();
+    void EatingAttackStart();
 
     void IdleStart();
     void Idle(float _DeltaTime);
@@ -91,8 +103,7 @@ private:
     void BreakStart();
     void Breaking(float _DeltaTime);
     void Dash(float _DeltaTime);
-    void PlayerDashCheck();
-   // void IsDash(float _DeltaTime);
+   
     void JumpStart();
     void Jump(float _DeltaTime);
 
@@ -106,7 +117,8 @@ private:
 
     void InhaleStart();
     void Inhale(float _DeltaTime);
-    void Inhaling(float _DeltaTime);
+
+    void CheckInhaleMonster();
 
     void PlayerCameraCheck();
     void PlayerGroundCheck(FVector2D _MovePos);
@@ -118,6 +130,7 @@ private:
 
     void PlayerFlyCheck();
     void Accel(float _DeltaTime, FVector2D Vector);
+
     void Gravity(float _DeltaTime)
     {
         if (false == IsGround)
@@ -144,6 +157,7 @@ private:
 
     }
 
+    void InhalingGravity(float _DeltaTime);
     void FlyGravity(float _DeltaTime)
     {
         if (false == IsGround)
@@ -169,6 +183,8 @@ private:
     FVector2D WinSize;
 
     FVector2D GravityForce = FVector2D::ZERO;
+    FVector2D InhalingForce = FVector2D::ZERO;
+    FVector2D InhalingVector = FVector2D::LEFT;
     FVector2D DashVector = FVector2D::RIGHT;
     FVector2D JumpPower = FVector2D(0.0f, -300.0f);
 
@@ -196,6 +212,9 @@ private:
     FVector2D Acc = FVector2D::ZERO;
 
     class U2DCollision* CollisionComponent = nullptr;
+    class U2DCollision* InhaleComponent = nullptr;
     class AKirbyWidget* PlayerHud = nullptr;
+
+    class AMonster* ColMonster = nullptr;
 };
 

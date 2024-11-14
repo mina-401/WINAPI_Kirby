@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "Player.h"
+#include "Monster.h"
 
 #include "KirbyWidget.h"
 #include "ContentsEnum.h"
@@ -25,6 +26,10 @@ APlayer::APlayer()
 		SetName("Kirby");
 		UImageManager::GetInst().CuttingSprite("Idle_Left.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("Idle_Right.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Eating_Left.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Eating_Right.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("EatingMove_Left.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("EatingMove_Right.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("Crouch_Left.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("Crouch_Right.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("Walk_Right.png", { 128, 128 });
@@ -33,6 +38,8 @@ APlayer::APlayer()
 		UImageManager::GetInst().CuttingSprite("Run_Right.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("Jump_Left.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("Jump_Right.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("EatingJump_Left.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("EatingJump_Right.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("Fly_Left.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("Fly_Right.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("Flying_Left.png", { 128, 128 });
@@ -47,14 +54,22 @@ APlayer::APlayer()
 		UImageManager::GetInst().CuttingSprite("Inhale_Right.png", { 128, 128 });
 		SpriteRenderer->CreateAnimation("Idle_Left", "Idle_Left.png", 0, 2, 3.f);
 		SpriteRenderer->CreateAnimation("Idle_Right", "Idle_Right.png", 0, 2, 3.f);
+		SpriteRenderer->CreateAnimation("Eating_Left", "Eating_Left.png", 5, 6, 0.1f,false);
+		SpriteRenderer->CreateAnimation("Eating_Right", "Eating_Right.png", 5, 6, 0.1f);
 		SpriteRenderer->CreateAnimation("Crouch_Left", "Crouch_Left.png", 0, 1, 0.2f, false);
 		SpriteRenderer->CreateAnimation("Crouch_Right", "Crouch_Right.png", 0, 1, 0.2f, false);
 		SpriteRenderer->CreateAnimation("Walk_Left", "Walk_Left.png", 0, 3, 0.25f);
 		SpriteRenderer->CreateAnimation("Walk_Right", "Walk_Right.png", 0, 3, 0.25f);
+		SpriteRenderer->CreateAnimation("EatingWalk_Left", "EatingMove_Left.png", 0, 14, 0.1f);
+		SpriteRenderer->CreateAnimation("EatingWalk_Right", "EatingMove_Right.png", 0, 14, 0.1f);
 		SpriteRenderer->CreateAnimation("Run_Left", "Run_Left.png", 0, 6, 0.1f);
 		SpriteRenderer->CreateAnimation("Run_Right", "Run_Right.png", 0, 6, 0.1f);
+		SpriteRenderer->CreateAnimation("EatingRun_Left", "EatingMove_Left.png", 0, 14, 0.1f);
+		SpriteRenderer->CreateAnimation("EatingRun_Right", "EatingMove_Right.png", 0, 14, 0.1f);
 		SpriteRenderer->CreateAnimation("Jump_Left", "Jump_Left.png", 0, 8, 0.1f, false);
 		SpriteRenderer->CreateAnimation("Jump_Right", "Jump_Right.png", 0, 8, 0.1f, false);
+		SpriteRenderer->CreateAnimation("EatingJump_Left", "EatingJump_Left.png", 0, 8, 0.1f, false);
+		SpriteRenderer->CreateAnimation("EatingJump_Right", "EatingJump_Right.png", 0, 8, 0.1f, false);
 		SpriteRenderer->CreateAnimation("Fly_Left", "Fly_Left.png", 0, 9, 0.1f, false);
 		SpriteRenderer->CreateAnimation("Fly_Right", "Fly_Right.png", 0, 9, 0.1f, false);
 		SpriteRenderer->CreateAnimation("Flying_Right", "Flying_Right.png", 0, 0, 0.1f);
@@ -65,8 +80,8 @@ APlayer::APlayer()
 		SpriteRenderer->CreateAnimation("Slide_Right", "Slide_Right.png", 0, 0, 0.5f, false);
 		SpriteRenderer->CreateAnimation("Break_Left", "Break_Left.png", 0, 0, 0.1f, false);
 		SpriteRenderer->CreateAnimation("Break_Right", "Break_Right.png", 0, 0, 0.1f, false);
-		SpriteRenderer->CreateAnimation("Inhale_Left", "Inhale_Left.png", { 4,5,6,7,8,7,8,7,6,9,10,11,12 }, 0.15f);
-		SpriteRenderer->CreateAnimation("Inhale_Right", "Inhale_Right.png", { 4,5,6,7,8,7,8,7,6,9,10,11,12 }, 0.15f);
+		SpriteRenderer->CreateAnimation("Inhale_Left", "Inhale_Left.png", { 4,5,6,7,8,7,8,7,8,7,8,7,8,7,8,7,6,9,10,11,12 }, 0.1f,false);
+		SpriteRenderer->CreateAnimation("Inhale_Right", "Inhale_Right.png", { 4,5,6,7,8,7,8,7,8,7,8,7,8,7,8,7,6,9,10,11,12 }, 0.1f,false);
 		//SpriteRenderer->CreateAnimation("Inhaling_Left", "Inhale_Left.png", { 6,7,8,7 }, { 0.15f }, true);
 		//SpriteRenderer->CreateAnimation("Inhaling_Right", "Inhale_Right.png", { 4,5,6,7,8,7,8,7,6 }, { 0.15f }, true);
 
@@ -75,8 +90,21 @@ APlayer::APlayer()
 	{
 		CollisionComponent = CreateDefaultSubObject<U2DCollision>();
 		CollisionComponent->SetComponentLocation({ 0, 0 });
-		CollisionComponent->SetComponentScale({ 50, 50 });
+		CollisionComponent->SetComponentScale({ 50, 60 });
 		CollisionComponent->SetCollisionGroup(ECollisionGroup::PlayerBody);
+	}
+	{
+		InhaleComponent = CreateDefaultSubObject<U2DCollision>();
+		InhaleComponent->SetComponentLocation({ 90, -20 });
+		InhaleComponent->SetComponentScale({ 80, 60 });
+		InhaleComponent->SetCollisionGroup(ECollisionGroup::PlayerInhaleRange);
+		InhaleComponent->SetCollisionType(ECollisionType::Rect);
+
+		//InhaleComponent->SetCollisionEnter(std::bind(&APlayer::InhaleCollisionEnter, this, std::placeholders::_1));
+		//InhaleComponent->SetCollisionStay(std::bind(&APlayer::InhaleCollisionStay, this, std::placeholders::_1));
+		//InhaleComponent->SetCollisionEnd(std::bind(&APlayer::InhaleCollisionEnd, this, std::placeholders::_1));
+
+		//
 	}
 }
 
@@ -131,7 +159,7 @@ void APlayer::BeginPlay()
 	PlayerHud = GetWorld()->SpawnActor<AKirbyWidget>();
 
 
-	ChangeState(PlayerState::Idle);
+	ChangeState(EPlayerState::Idle);
 	
 	//키 바인딩
 	//인자를 호출할 때 넣어줌을 명시하는 것이 placeholders
@@ -145,39 +173,82 @@ void APlayer::BeginPlay()
 }
 
 
-void APlayer::ChangeState(PlayerState _CurPlayerState)
+void APlayer::ChangeState(EPlayerState _CurPlayerState)
 {
 	switch (_CurPlayerState)
 	{
-	case PlayerState::Idle:
-		IdleStart();
+	case EPlayerState::Idle:
+		switch (CurPlayerEatState)
+		{
+		case EPlayerEatState::Normal:
+			IdleStart();
+			break;
+		case EPlayerEatState::Eating:
+			EatingIdleStart();
+			break;
+		default:
+			break;
+		}
+		
 		break;
-	case PlayerState::Crouch:
+	case EPlayerState::Crouch:
 		CrouchStart();
 		break;
-	case PlayerState::Move:
-		MoveStart();
+	case EPlayerState::Move:
+		switch (CurPlayerEatState)
+		{
+		case EPlayerEatState::Normal:
+			MoveStart();
+			break;
+		case EPlayerEatState::Eating:
+			EatingMoveStart();
+			break;
+		default:
+			break;
+		}
+		
 		break;
-	case PlayerState::Dash:
-		DashStart();
+	case EPlayerState::Dash:
+		switch (CurPlayerEatState)
+		{
+		case EPlayerEatState::Normal:
+			DashStart();
+			break;
+		case EPlayerEatState::Eating:
+			EatingDashStart();
+			break;
+		default:
+			break;
+		}
 		break;
-	case PlayerState::Break:
+	case EPlayerState::Break:
 		BreakStart();
 		break;
-	case PlayerState::Jump:
-		JumpStart();
+	case EPlayerState::Jump:
+		switch (CurPlayerEatState)
+		{
+		case EPlayerEatState::Normal:
+			JumpStart();
+			break;
+		case EPlayerEatState::Eating:
+			EatingJumpStart();
+			break;
+		default:
+			break;
+		}
+		
 		break;
-	case PlayerState::Fly:
+	case EPlayerState::Fly:
 		FlyStart();
 		break;
-	case PlayerState::FlyDown:
+	case EPlayerState::FlyDown:
 		FlyDownStart();
 		break;
-	case PlayerState::Slide:
+	case EPlayerState::Slide:
 		SlideStart();
 		//
 		break;
-	case PlayerState::Inhale:
+	case EPlayerState::Inhale:
 		InhaleStart();
 		//
 		break;
@@ -208,36 +279,35 @@ void APlayer::Tick(float _DeltaTime)
 	
 	switch (CurPlayerState)
 	{
-	case PlayerState::Idle:
+	case EPlayerState::Idle:
 		Idle(_DeltaTime);
 		break;
-	case PlayerState::Crouch:
+	case EPlayerState::Crouch:
 		Crouch(_DeltaTime);
 		break;
-	case PlayerState::Move:
+	case EPlayerState::Move:
 		Move(_DeltaTime);
 		break;
-	case PlayerState::Dash:
+	case EPlayerState::Dash:
 		Dash(_DeltaTime);
 		break;
-	case PlayerState::Break:
+	case EPlayerState::Break:
 		Breaking(_DeltaTime);
 		break;
-	case PlayerState::Jump:
+	case EPlayerState::Jump:
 		Jump(_DeltaTime);
 		break;
-	case PlayerState::Fly:
+	case EPlayerState::Fly:
 		Fly(_DeltaTime);
 		break;
-	case PlayerState::FlyDown:
+	case EPlayerState::FlyDown:
 		FlyDown(_DeltaTime);
 		break;
-	case PlayerState::Slide:
+	case EPlayerState::Slide:
 		Slide(_DeltaTime);
 		break;
-	case PlayerState::Inhale:
+	case EPlayerState::Inhale:
 		Inhale(_DeltaTime);
-		//
 		break;
 	default:
 		break;
@@ -249,8 +319,8 @@ void APlayer::DirCheck()
 {
 
 	if (true == UEngineInput::GetInst().IsPress(VK_LEFT) && true == UEngineInput::GetInst().IsPress(VK_RIGHT)) { 
-		if (CurPlayerState == PlayerState::Dash) {
-			ChangeState(PlayerState::Break);
+		if (CurPlayerState == EPlayerState::Dash) {
+			ChangeState(EPlayerState::Break);
 			return; 
 		}
 		
@@ -284,7 +354,12 @@ void APlayer::IdleStart()
 	SpriteRenderer->ChangeAnimation("Idle" + DirString);
 
 }
+void APlayer::EatingIdleStart()
+{
+	Speed = 300.0f;
+	SpriteRenderer->ChangeAnimation("Eating" + DirString);
 
+}
 void APlayer::Idle(float _DeltaTime)
 {
 	PlayerGroundCheck(GravityForce);
@@ -296,21 +371,15 @@ void APlayer::Idle(float _DeltaTime)
 
 	{ 
 
-		ChangeState(PlayerState::Move);
+		ChangeState(EPlayerState::Move);
 
 
 	}
 
-	if (true == UEngineInput::GetInst().IsDoubleClick(VK_RIGHT, 0.5f))
+	if (true == UEngineInput::GetInst().IsDoubleClick(VK_RIGHT, 0.5f)|| true == UEngineInput::GetInst().IsDoubleClick(VK_LEFT, 0.5f))
 	{
 
-		ChangeState(PlayerState::Dash);
-		return;
-	}
-	if (true == UEngineInput::GetInst().IsDoubleClick(VK_LEFT, 0.5f))
-	{
-
-		ChangeState(PlayerState::Dash);
+		ChangeState(EPlayerState::Dash);
 		return;
 	}
 
@@ -318,22 +387,47 @@ void APlayer::Idle(float _DeltaTime)
 
 	if (true == UEngineInput::GetInst().IsPress('Z'))
 	{
-		ChangeState(PlayerState::Jump);
+		ChangeState(EPlayerState::Jump);
 		return;
 	}
 	if (true == UEngineInput::GetInst().IsPress('S'))
 	{
-		ChangeState(PlayerState::Fly);
+		ChangeState(EPlayerState::Fly);
 		return;
 	}
-	if (true == UEngineInput::GetInst().IsPress('X'))
+	if (true == UEngineInput::GetInst().IsDown('X'))
 	{
-		ChangeState(PlayerState::Inhale);
+		switch (CurPlayerEatState)
+		{
+		case EPlayerEatState::Normal:
+			ChangeState(EPlayerState::Inhale);
+			break;
+		case EPlayerEatState::Eating:
+			CurPlayerEatState = EPlayerEatState::Normal;
+			//ChangeState(EPlayerState::Idle);
+			break;
+		default:
+			break;
+		}
+		
 		return;
 	}
 	if (true == UEngineInput::GetInst().IsPress(VK_DOWN))
 	{
-		ChangeState(PlayerState::Crouch);
+		switch (CurPlayerEatState)
+		{
+		case EPlayerEatState::Normal:
+			ChangeState(EPlayerState::Crouch);
+			break;
+		case EPlayerEatState::Eating:
+			CurPlayerEatState = EPlayerEatState::Normal;
+			ChangeState(EPlayerState::Idle);
+			break;
+		default:
+			break;
+		}
+		
+		
 		return;
 	}
 }
@@ -351,12 +445,12 @@ void APlayer::Crouch(float _DeltaTime)
 
 	if (true == UEngineInput::GetInst().IsPress('Z'))
 	{
-		ChangeState(PlayerState::Slide);
+		ChangeState(EPlayerState::Slide);
 		return;
 	}
 	if (true == UEngineInput::GetInst().IsUp(VK_DOWN))
 	{
-		ChangeState(PlayerState::Idle);
+		ChangeState(EPlayerState::Idle);
 		return;
 	}
 }
@@ -372,8 +466,6 @@ bool APlayer::PlayerNextPosCheck(float _DeltaTime, FVector2D _Vector)
 			AddActorLocation(_Vector);
 			return false;
 		}
-
-
 	}
 	else
 	{
@@ -383,7 +475,11 @@ bool APlayer::PlayerNextPosCheck(float _DeltaTime, FVector2D _Vector)
 
 }
 
-
+void APlayer::EatingJumpStart()
+{
+	Speed = 150.0f;
+	SpriteRenderer->ChangeAnimation("EatingJump" + DirString);
+}
 void APlayer::JumpStart()
 {
 	Speed = 300.0f;
@@ -391,7 +487,11 @@ void APlayer::JumpStart()
 }
 void APlayer::Jump(float _DeltaTime)
 {
-
+	if (true == IsGround)
+	{
+		ChangeState(EPlayerState::Idle);
+		return;
+	}
 	PlayerGroundCheck(GravityForce * _DeltaTime);
 	PlayerFlyCheck( );
 	
@@ -403,7 +503,20 @@ void APlayer::Jump(float _DeltaTime)
 	if (true == UEngineInput::GetInst().IsPress(VK_LEFT)) Vector = FVector2D::LEFT;
 	if (true == UEngineInput::GetInst().IsPress(VK_RIGHT))  Vector = FVector2D::RIGHT;
 	if (true == UEngineInput::GetInst().IsPress('Z') && true == IsFly) {
-		ChangeState(PlayerState::Fly);
+
+		switch (CurPlayerEatState)
+		{
+		case EPlayerEatState::Normal:
+			ChangeState(EPlayerState::Fly);
+			break;
+		case EPlayerEatState::Eating:
+			
+			break;
+		default:
+			break;
+		}
+
+		//ChangeState(EPlayerState::Fly);
 		return;
 	}
 
@@ -413,12 +526,6 @@ void APlayer::Jump(float _DeltaTime)
 		AddActorLocation(Vector  * _DeltaTime * 150.0f);
 	}
 	
-
-	if (true == IsGround)
-	{
-		ChangeState(PlayerState::Idle);
-		return;
-	}
 }
 
 
@@ -428,11 +535,21 @@ void APlayer::MoveStart()
 	SpriteRenderer->ChangeAnimation("Walk" + DirString);
 
 }
+void APlayer::EatingMoveStart()
+{
+	Speed = 150.0f;
+	SpriteRenderer->ChangeAnimation("EatingWalk" + DirString);
+}
+
+
+void APlayer::EatingAttackStart()
+{
+	int a = 0;
+}
 void APlayer::Move(float _DeltaTime)
 {
 	DirCheck();
 	PlayerGroundCheck(GravityForce);
-	PlayerDashCheck();
 	Gravity(_DeltaTime);
 	
 	FVector2D Vector = FVector2D::ZERO;
@@ -453,28 +570,28 @@ void APlayer::Move(float _DeltaTime)
 	}
 	 if (true == UEngineInput::GetInst().IsDown('Z') && true == UEngineInput::GetInst().IsPress(VK_DOWN))
 	{
-		ChangeState(PlayerState::Slide);
+		ChangeState(EPlayerState::Slide);
 		return;
 	}
 	 if (true == UEngineInput::GetInst().IsPress('Z'))
 	{
-		ChangeState(PlayerState::Jump);
+		ChangeState(EPlayerState::Jump);
 		return;
 	}
 	 if (true == UEngineInput::GetInst().IsPress('X'))
 	 {
-		 ChangeState(PlayerState::Inhale);
+		 ChangeState(EPlayerState::Inhale);
 		 return;
 	 }
 	 if (true == UEngineInput::GetInst().IsPress(VK_DOWN))
 	{
-		ChangeState(PlayerState::Crouch);
+		ChangeState(EPlayerState::Crouch);
 		return;
 	}
 	 if (true == UEngineInput::GetInst().IsDoubleClick(VK_RIGHT, 0.5f))
 	{
 
-		ChangeState(PlayerState::Dash);
+		ChangeState(EPlayerState::Dash);
 		return;
 	}
 	
@@ -482,7 +599,7 @@ void APlayer::Move(float _DeltaTime)
 		false == UEngineInput::GetInst().IsPress(VK_RIGHT) &&
 		false == UEngineInput::GetInst().IsPress(VK_DOWN))
 	{
-		ChangeState(PlayerState::Idle);
+		ChangeState(EPlayerState::Idle);
 		return;
 	}
 
@@ -516,13 +633,12 @@ void APlayer::Move(float _DeltaTime)
 
 }
 
-
-void APlayer::PlayerDashCheck()
+void APlayer::EatingDashStart()
 {
-
-
-
+	Speed = 300.0f;
+	SpriteRenderer->ChangeAnimation("EatingRun" + DirString);
 }
+
 void APlayer::DashStart()
 {
 	SpriteRenderer->ChangeAnimation("Run" + DirString);
@@ -557,7 +673,7 @@ void APlayer::Breaking(float _DeltaTime)
 	if (true == SpriteRenderer->IsCurAnimationEnd())
 	{
 
-		ChangeState(PlayerState::Idle);
+		ChangeState(EPlayerState::Idle);
 		return;
 	}
 }
@@ -588,22 +704,33 @@ void APlayer::Dash(float _DeltaTime)
 
 	if (true == UEngineInput::GetInst().IsDown('Z') && true == UEngineInput::GetInst().IsPress(VK_DOWN))
 	{
-		ChangeState(PlayerState::Slide);
+		ChangeState(EPlayerState::Slide);
 		return;
 	}
 	if (true == UEngineInput::GetInst().IsPress('Z'))
 	{
-		ChangeState(PlayerState::Jump);
+		ChangeState(EPlayerState::Jump);
 		return;
 	}
 	if (true == UEngineInput::GetInst().IsPress('X'))
 	{
-		ChangeState(PlayerState::Inhale);
+		ChangeState(EPlayerState::Inhale);
 		return;
 	}
 	if (true == UEngineInput::GetInst().IsPress(VK_DOWN))
 	{
-		ChangeState(PlayerState::Crouch);
+		switch (CurPlayerEatState)
+		{
+		case EPlayerEatState::Normal:
+			ChangeState(EPlayerState::Crouch);
+			break;
+		case EPlayerEatState::Eating:
+			CurPlayerEatState = EPlayerEatState::Normal;
+			//ChangeState(EPlayerState::Idle);
+			break;
+		default:
+			break;
+		}
 		return;
 	}
 
@@ -613,7 +740,7 @@ void APlayer::Dash(float _DeltaTime)
 		false == UEngineInput::GetInst().IsPress(VK_RIGHT) &&
 		false == UEngineInput::GetInst().IsPress(VK_DOWN)) 
 	{
-		ChangeState(PlayerState::Idle);
+		ChangeState(EPlayerState::Idle);
 		return;
 	}
 
@@ -702,7 +829,7 @@ void APlayer::Slide(float _DeltaTime)
 	if (CurrSlideTime >SlideTime)
 	{
 		CurrSlideTime = 0;
-		ChangeState(PlayerState::Idle);
+		ChangeState(EPlayerState::Idle);
 		
 	}
 	CurrSlideTime += 0.2f;
@@ -753,7 +880,7 @@ void APlayer::Fly(float _DeltaTime)
 	if (true == UEngineInput::GetInst().IsDown('X'))
 	{
 		IsFly = false;
-		ChangeState(PlayerState::FlyDown);
+		ChangeState(EPlayerState::FlyDown);
 		return;
 
 	}if (true == UEngineInput::GetInst().IsPress('Z'))
@@ -779,7 +906,7 @@ void APlayer::FlyDown(float _DeltaTime)
 	FlyDownStart();
 
 	if (true == IsGround) {
-		ChangeState(PlayerState::Idle);
+		ChangeState(EPlayerState::Idle);
 		return;
 	}
 
@@ -812,16 +939,48 @@ void APlayer::InhaleStart()
 
 void APlayer::Inhale(float _DeltaTime)
 {
+
 	if (true == UEngineInput::GetInst().IsUp('X'))
 	{
-		ChangeState(PlayerState::Idle);
+		ColMonster = nullptr;
+		ChangeState(EPlayerState::Idle);
 		return;
 	}
+
+	AActor* ColActor = InhaleComponent->CollisionOnce(ECollisionGroup::MonsterBody);
+	if (ColActor != nullptr) {
+
+		ColMonster = dynamic_cast<AMonster*>(ColActor);
+		if (ColMonster->CurMonsterState != EMonsterState::Inhaled) {
+			ColMonster->ChangeState(EMonsterState::Inhaled);
+		}
+		InhalingGravity(_DeltaTime);
+
+	}
+	ColActor = nullptr;
+	ColActor = CollisionComponent->CollisionOnce(ECollisionGroup::MonsterBody);
+	if (ColActor != nullptr)
+	{
+		ColActor->Destroy();
+		CurPlayerEatState=EPlayerEatState::Eating;
+		// 몬스터 흡입한 상태 커비 애니메이션
+		ChangeState(EPlayerState::Idle);
+		return;
+
+	}
+
+
+}
+void APlayer::CheckInhaleMonster() {
+	//if(ColMonster !=nullptr)
+
+}
+void APlayer::InhalingGravity(float _DeltaTime)
+{
+	InhalingForce = InhalingVector * _DeltaTime * 150.0f;
+	ColMonster->AddActorLocation(InhalingForce);
 }
 
-void APlayer::Inhaling(float _DeltaTime)
-{
-}
 
 void APlayer::PlayerCameraCheck()
 {
@@ -901,6 +1060,21 @@ void APlayer::PlayerSlideCheck (float _DeltaTime, FVector2D _Vector)
 	//	else break;
 
 	//}
+}
+void APlayer::InhaleCollisionEnter(AActor* _ColActor)
+{
+	int a = 0;
+
+}
+void APlayer::InhaleCollisionStay(AActor* _ColActor)
+{
+	ColMonster = dynamic_cast<AMonster*>(_ColActor);
+
+	//
+}
+void APlayer::InhaleCollisionEnd(AActor* _ColActor)
+{
+
 }
 
 void APlayer::CollisionEnter(AActor* _ColActor)

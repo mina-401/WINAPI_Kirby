@@ -69,6 +69,7 @@ void KirbyContentsCore::BeginPlay()
 
 	ULevel::CollisionGroupLink(ECollisionGroup::MonsterAttack, ECollisionGroup::PlayerBody);
 	ULevel::CollisionGroupLink(ECollisionGroup::MonsterBody, ECollisionGroup::PlayerBody);
+	ULevel::CollisionGroupLink(ECollisionGroup::MonsterBody, ECollisionGroup::PlayerInhaleRange);
 
 
 	UEngineAPICore::GetCore()->OpenLevel("Stage1_1");

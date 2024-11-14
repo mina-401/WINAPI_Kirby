@@ -13,6 +13,7 @@ enum class ERenderOrder
 enum class ECollisionGroup
 {
 	PlayerBody,
+	PlayerInhaleRange,
 	MonsterBody,
 	MonsterAttack,
 	SpawnPoint,

@@ -55,6 +55,9 @@ void AMonster::ChangeState(EMonsterState _CurMonsterState)
 		this->AttackStart();
 
 		break;
+	case EMonsterState::Inhaled:
+		InhaledStart();
+		break;
 	default:
 		break;
 	}
@@ -63,7 +66,15 @@ void AMonster::ChangeState(EMonsterState _CurMonsterState)
 }
 
 
-
+void AMonster::InhaledStart()
+{
+	DirCheck();
+	SpriteRenderer->ChangeAnimation("Inhaled" + DirString);
+}
+void AMonster::Inhaled(float _DeltaTime)
+{
+	int a = 0;
+}
 void AMonster::ChangeMonsterDir(float _DeltaTime)
 {
 	if (false == MonsterNextPosCheck(_DeltaTime, MoveVector))
@@ -145,6 +156,9 @@ void AMonster::Tick(float _DeltaTime)
 		break;
 	case EMonsterState::Attack:
 		this->Attack(_DeltaTime);
+		break;
+	case EMonsterState::Inhaled:
+		Inhaled(_DeltaTime);
 		break;
 	default:
 		break;

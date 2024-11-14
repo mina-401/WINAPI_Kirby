@@ -28,6 +28,8 @@ ASparky::ASparky()
 		SpriteRenderer->CreateAnimation("Walk_Right", "Sparky_Right.png", 0, 2, 0.2f);
 		SpriteRenderer->CreateAnimation("Attack_Left", "Sparky_Left.png", {4,5,4,5,4,5,4,5,4,5,6,7}, 0.2f, true);
 		SpriteRenderer->CreateAnimation("Attack_Right", "Sparky_Right.png", { 4,5,4,5,4,5,4,5,4,5,6,7 }, 0.2f, true);
+		SpriteRenderer->CreateAnimation("Inhaled_Left", "Sparky_Left.png", 7, 7, 0.2f, true);
+		SpriteRenderer->CreateAnimation("Inhaled_Right", "Sparky_Right.png", 7, 7, 0.2f, true);
 		SpriteRenderer->ChangeAnimation("Walk_Left");
 	}
 	{
@@ -71,11 +73,8 @@ void ASparky::Attack(float _DeltaTime)
 
 void ASparky::CollisionEnter(AActor* _ColActor)
 {
-
 	//플레이어에게 공격한다.
 	ChangeState(EMonsterState::Attack);
-	
-	//플레이어와 충돌
 }
 
 void ASparky::CollisionStay(AActor* _ColActor)

@@ -30,6 +30,8 @@ AWaddleDee::AWaddleDee()
 		SpriteRenderer->CreateAnimation("Walk_Right", "WaddleDee_Right.png", 0, 4, 0.2f);
 		SpriteRenderer->CreateAnimation("Attack_Left", "WaddleDee_Left.png", 0, 4, 0.2f);
 		SpriteRenderer->CreateAnimation("Attack_Right", "WaddleDee_Right.png", 0, 4, 0.2f);
+		SpriteRenderer->CreateAnimation("Inhaled_Left", "WaddleDee_Left.png", 9, 9, 0.2f,true);
+		SpriteRenderer->CreateAnimation("Inhaled_Right", "WaddleDee_Right.png", 9, 9, 0.2f,true);
 		SpriteRenderer->ChangeAnimation("Walk_Left");
 
 
@@ -37,7 +39,7 @@ AWaddleDee::AWaddleDee()
 
 	{
 		U2DCollision* CollisionComponent = CreateDefaultSubObject<U2DCollision>();
-		CollisionComponent->SetComponentLocation({ 0, 0 });
+		CollisionComponent->SetComponentLocation({ 0, -20 });
 		CollisionComponent->SetComponentScale({ 50, 50 });
 		CollisionComponent->SetCollisionGroup(ECollisionGroup::MonsterBody);
 		CollisionComponent->SetCollisionType(ECollisionType::CirCle);

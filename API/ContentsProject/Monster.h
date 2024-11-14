@@ -9,6 +9,7 @@ enum class EMonsterState
 	Move,
 	Chase,
 	Attack,  
+	Inhaled, 
 };
 
 enum class ECopyAbilityStatus
@@ -45,8 +46,13 @@ public:
 	virtual void Chase(float _DeltaTime);
 	virtual void AttackStart();
 	virtual void Attack(float _DeltaTime);
+	virtual void InhaledStart();
+	virtual void Inhaled(float _DeltaTime);
 
+	void ChangeState(EMonsterState _CurMonsterState);
+	
 	class U2DCollision* AttackColComponent = nullptr;
+	EMonsterState CurMonsterState = EMonsterState::Move;
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -59,11 +65,9 @@ protected:
 	virtual void CollisionStay(AActor* _ColActor) {};
 	virtual void CollisionEnd(AActor* _ColActor) {};
 
-	void ChangeState(EMonsterState _CurMonsterState);
 	
 
 	std::string DirString = "_Left";
-	EMonsterState CurMonsterState = EMonsterState::Move;
 
 	class UEngineWinImage* ColImage = nullptr;
 	class USpriteRenderer* SpriteRenderer = nullptr;
