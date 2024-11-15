@@ -13,6 +13,7 @@
 
 AMonster::AMonster()
 {
+	
 }
 
 AMonster::~AMonster()
@@ -110,15 +111,15 @@ void AMonster::MonsterGroundCheck(FVector2D _MovePos)
 }
 bool AMonster::MonsterNextPosCheck(float _DeltaTime, FVector2D _Vector)
 {
-	FVector2D NextPos = GetActorLocation()+ _Vector* _DeltaTime*Speed;
-	UColor Color = ColImage->GetColor(NextPos, UColor::WHITE);
-	if (Color == UColor::WHITE)
+	UColor Color = ColImage->GetColor(GetActorLocation() + _Vector * _DeltaTime * Speed, UColor::WHITE);
+	if (Color == UColor::BLACK)
 	{
-
-		return true;
-
+		return false;
 	}
-	return false;
+	else
+	{
+		return true;
+	}
 }
 void AMonster::MonsterDirCheck()
 {
@@ -181,18 +182,23 @@ void AMonster::Move(float _DeltaTime)
 
 	Gravity(_DeltaTime);
 	MonsterGroundCheck(GravityForce);
-	UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
-	if (Color == UColor::BLACK)
+	if (true == MonsterNextPosCheck(_DeltaTime, MoveVector))
 	{
-		//경사면, 그라운드에 서있다.
-		UColor NextColor = ColImage->GetColor(GetActorLocation() + FVector2D::UP, UColor::WHITE);
-		if (NextColor != UColor::BLACK)
-		{
-			AddActorLocation(FVector2D::UP);
-		}
-
+		AddActorLocation(MoveVector * Speed * _DeltaTime);
 	}
-	else AddActorLocation(MoveVector * Speed * _DeltaTime);
+	else {
+		UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
+		if (Color == UColor::BLACK)
+		{
+			UColor NextColor = ColImage->GetColor(GetActorLocation() + FVector2D::UP, UColor::WHITE);
+			if (NextColor != UColor::BLACK)
+			{
+				AddActorLocation(FVector2D::UP);
+			}
+
+		}
+		else AddActorLocation(MoveVector * Speed * _DeltaTime);
+	}
 
 
 	MonsterClimbingUphill();

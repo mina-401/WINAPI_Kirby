@@ -1,9 +1,8 @@
 #pragma once
 #include <EngineCore/Actor.h>
 #include <EngineCore/ImageManager.h>
+#include <EnginePlatform/EngineSound.h>
 
-// 명확히 하라.
-// 점프내부에서는 점프와 관련된 코드만 실행하라.
 enum class EPlayerState
 {
     Idle,
@@ -18,6 +17,14 @@ enum class EPlayerState
     Attack,
     Inhale,
     
+};
+
+enum class EPlayerCopyState
+{
+    Normal,
+    Spark,
+    Beam,
+    Fire,
 };
 enum class EPlayerEatState
 {
@@ -77,6 +84,7 @@ private:
 
     EPlayerState CurPlayerState = EPlayerState::Idle;
     EPlayerEatState CurPlayerEatState = EPlayerEatState::Normal;
+    EPlayerCopyState CurPlayerCopyState = EPlayerCopyState::Normal;
 
     std::string DirString = "_Right";
 
@@ -92,6 +100,17 @@ private:
     void EatingDashStart();
     void EatingJumpStart();
     void EatingAttackStart();
+
+    void FireIdleStart();
+    void FireMoveStart();
+    void FireDashStart();
+    void FireCrouchStart();
+    void FireBreakStart();
+    void FireJumpStart();
+    void FireSlideStart();
+    void FireFlyingStart();
+    void FireFlyDownStart();
+
 
     void IdleStart();
     void Idle(float _DeltaTime);
@@ -110,6 +129,7 @@ private:
     void SlideStart();
     void Slide(float _DeltaTime);
     void FlyStart();
+    void FireFlyStart();
     void FlyingStart();
     void Fly(float _DeltaTime);
     void FlyDownStart();
@@ -135,8 +155,8 @@ private:
     {
         if (false == IsGround)
         {
-            GravityForce += FVector2D::DOWN * _DeltaTime;
-            AddActorLocation(GravityForce);
+            GravityForce += FVector2D::DOWN * _DeltaTime*200.0f;
+            AddActorLocation(GravityForce*_DeltaTime);
         }
         else {
             GravityForce = FVector2D::ZERO;
@@ -157,16 +177,17 @@ private:
 
     }
 
-    void InhalingGravity(float _DeltaTime);
+    void InhalingGravity(float _DeltaTime, FVector2D FVector);
     void FlyGravity(float _DeltaTime)
     {
         if (false == IsGround)
         {
-            GravityForce += FVector2D::DOWN * _DeltaTime*100.0f;
+            GravityForce += FVector2D::DOWN * _DeltaTime*50.0f;
             AddActorLocation(GravityForce* _DeltaTime);
         }
         else {
             GravityForce = FVector2D::ZERO;
+
         }
 
         // 상시 
@@ -184,7 +205,6 @@ private:
 
     FVector2D GravityForce = FVector2D::ZERO;
     FVector2D InhalingForce = FVector2D::ZERO;
-    FVector2D InhalingVector = FVector2D::LEFT;
     FVector2D DashVector = FVector2D::RIGHT;
     FVector2D JumpPower = FVector2D(0.0f, -300.0f);
 
@@ -212,9 +232,13 @@ private:
     FVector2D Acc = FVector2D::ZERO;
 
     class U2DCollision* CollisionComponent = nullptr;
-    class U2DCollision* InhaleComponent = nullptr;
+    class U2DCollision* InhaleRightComponent = nullptr;
+    class U2DCollision* InhaleLeftComponent = nullptr;
     class AKirbyWidget* PlayerHud = nullptr;
 
     class AMonster* ColMonster = nullptr;
+
+    USoundPlayer BGMPlayLevelPrismPlayer;
+    USoundPlayer BGMVictoryPlayer;
 };
 

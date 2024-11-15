@@ -151,6 +151,14 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\EnginePlatform\ThirdParty\FMOD\Inc\fmod.h" />
+    <ClInclude Include="..\EnginePlatform\ThirdParty\FMOD\Inc\fmod.hpp" />
+    <ClInclude Include="..\EnginePlatform\ThirdParty\FMOD\Inc\fmod_codec.h" />
+    <ClInclude Include="..\EnginePlatform\ThirdParty\FMOD\Inc\fmod_common.h" />
+    <ClInclude Include="..\EnginePlatform\ThirdParty\FMOD\Inc\fmod_dsp.h" />
+    <ClInclude Include="..\EnginePlatform\ThirdParty\FMOD\Inc\fmod_dsp_effects.h" />
+    <ClInclude Include="..\EnginePlatform\ThirdParty\FMOD\Inc\fmod_errors.h" />
+    <ClInclude Include="..\EnginePlatform\ThirdParty\FMOD\Inc\fmod_output.h" />
     <ClInclude Include="KirbyWidget.h">
       <SubType>
       </SubType>
@@ -378,6 +386,22 @@
       <SubType>
       </SubType>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\EnginePlatform\ThirdParty\FMOD\bin\Debug\fmodL.dll">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\EnginePlatform\ThirdParty\FMOD\bin\Release\fmod.dll">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\EnginePlatform\ThirdParty\FMOD\bin\Debug\fmodL_vc.lib">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="..\EnginePlatform\ThirdParty\FMOD\bin\Release\fmod_vc.lib">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

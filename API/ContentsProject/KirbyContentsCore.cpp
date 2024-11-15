@@ -5,6 +5,7 @@
 #include <EngineBase/EngineFile.h>
 #include <EngineBase/EngineDirectory.h>
 #include <EngineCore/ImageManager.h>
+#include <EnginePlatform/EngineSound.h>
 
 #include "PlayGameMode.h"
 #include "Stage1_1GameMode.h"
@@ -27,33 +28,42 @@ KirbyContentsCore::~KirbyContentsCore()
 // 엔진이 실행되고 단 1번 실행된다.
 void KirbyContentsCore::BeginPlay()
 {
-	UEngineDirectory Dir;
-
-	if (false == Dir.MoveParentToDirectory("Resource"))
+	// 이미지로드
 	{
-		MSGASSERT("리소스 폴더를 찾지 못했습니다.");
-		return;
+		UEngineDirectory Dir;
+		if (false == Dir.MoveParentToDirectory("Resource"))
+		{
+			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+			return;
+		}
+		Dir.Append("Image");
+		std::vector<UEngineFile> ImageFiles = Dir.GetAllFile();
+		for (size_t i = 0; i < ImageFiles.size(); i++)
+		{
+			std::string FilePath = ImageFiles[i].GetPathToString();
+			UImageManager::GetInst().Load(FilePath);
+		}
 	}
 
-	std::vector<UEngineFile> ImageFiles = Dir.GetAllFile();
+	/*{
+		UEngineDirectory Dir;
+		if (false == Dir.MoveParentToDirectory("Resource"))
+		{
+			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+			return;
+		}
+		Dir.Append("Sound");
+		std::vector<UEngineFile> SoundFiles = Dir.GetAllFile();
+		for (size_t i = 0; i < SoundFiles.size(); i++)
+		{
+			std::string FilePath = SoundFiles[i].GetPathToString();
+			UEngineSound::Load(FilePath);
+		}
+	}*/
+
+	//UImageManager::GetInst().CuttingSprite("KirbyDance.png", { 128, 128 });
 
 
-	for (size_t i = 0; i < ImageFiles.size(); i++)
-	{
-		std::string FilePath = ImageFiles[i].GetPathToString();
-		UImageManager::GetInst().Load(FilePath);
-	}
-
-	UImageManager::GetInst().CuttingSprite("KirbyDance.png", { 128, 128 });
-
-	{
-
-		UEngineDirectory KirbyDir;
-		KirbyDir.MoveParentToDirectory("Resource");
-		KirbyDir.Append("PlayLevel");
-		KirbyDir.Append("Kirby");
- 		UImageManager::GetInst().LoadFolder(KirbyDir.GetPathToString());
-	}
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("WinAPI_Kirby");
 	// main window의 backbuffer
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowPosAndScale({ 0, 0 }, { 640, 440 });
@@ -70,6 +80,7 @@ void KirbyContentsCore::BeginPlay()
 	ULevel::CollisionGroupLink(ECollisionGroup::MonsterAttack, ECollisionGroup::PlayerBody);
 	ULevel::CollisionGroupLink(ECollisionGroup::MonsterBody, ECollisionGroup::PlayerBody);
 	ULevel::CollisionGroupLink(ECollisionGroup::MonsterBody, ECollisionGroup::PlayerInhaleRange);
+	ULevel::CollisionGroupLink(ECollisionGroup::Potal, ECollisionGroup::PlayerBody);
 
 
 	UEngineAPICore::GetCore()->OpenLevel("Stage1_1");

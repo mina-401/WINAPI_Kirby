@@ -151,6 +151,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\EnginePlatform\EngineSound.h" />
     <ClInclude Include="2DCollision.h" />
     <ClInclude Include="Actor.h">
       <SubType>
@@ -177,6 +178,7 @@
     <ClInclude Include="SpriteRenderer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\EnginePlatform\EngineSound.cpp" />
     <ClCompile Include="2DCollision.cpp" />
     <ClCompile Include="Actor.cpp">
       <SubType>

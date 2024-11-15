@@ -83,6 +83,8 @@ protected:
 	float MonsterToPlayerRange = 150.0f;
 
 	ECopyAbilityStatus CopyAbilityStatus = ECopyAbilityStatus::UnableCopy;
+	class U2DCollision* SpawnColComponent = nullptr;
+
 
 private:
 	void MonsterClimbingUphill();

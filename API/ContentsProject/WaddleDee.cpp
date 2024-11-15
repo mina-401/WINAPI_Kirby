@@ -36,7 +36,16 @@ AWaddleDee::AWaddleDee()
 
 
 	}
+	{
 
+		SpawnColComponent = CreateDefaultSubObject<U2DCollision>();
+		SpawnColComponent->SetComponentLocation({ 740,360});
+		SpawnColComponent->SetComponentScale({ 20, 40 });
+		SpawnColComponent->SetCollisionGroup(ECollisionGroup::Potal);
+		SpawnColComponent->SetCollisionType(ECollisionType::Rect);
+
+		SpawnColComponent->SetCollisionEnter(std::bind(&AWaddleDee::SpawnCollisionEnter, this, std::placeholders::_1));
+	}
 	{
 		U2DCollision* CollisionComponent = CreateDefaultSubObject<U2DCollision>();
 		CollisionComponent->SetComponentLocation({ 0, -20 });
@@ -45,6 +54,9 @@ AWaddleDee::AWaddleDee()
 		CollisionComponent->SetCollisionType(ECollisionType::CirCle);
 
 		DebugOn();
+
+		//SpriteRenderer->SetActive(false);
+		//CollisionComponent->SetActive(false);
 	}
 }
 
@@ -63,7 +75,7 @@ void AWaddleDee::Attack(float _DeltaTime)
 }
 
 
-void AWaddleDee::CollisionEnter(AActor* _ColActor)
+void AWaddleDee::SpawnCollisionEnter(AActor* _ColActor)
 {
-	
+	int a = 0;
 }

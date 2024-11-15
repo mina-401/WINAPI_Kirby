@@ -33,7 +33,6 @@ AStage1_1Map::AStage1_1Map()
 	}
 	{
 
-		GetWorld()->CollisionGroupLink(ECollisionGroup::Potal, ECollisionGroup::PlayerBody);
 
 
 		PotalColComponent = CreateDefaultSubObject<U2DCollision>();
@@ -45,6 +44,8 @@ AStage1_1Map::AStage1_1Map()
 		PotalColComponent->SetCollisionEnter(std::bind(&AStage1_1Map::CollisionEnter, this, std::placeholders::_1));
 		PotalColComponent->SetCollisionStay(std::bind(&AStage1_1Map::CollisionStay, this, std::placeholders::_1));
 		PotalColComponent->SetCollisionEnd(std::bind(&AStage1_1Map::CollisionEnd, this, std::placeholders::_1));
+
+
 
 		DebugOn();
 	}
