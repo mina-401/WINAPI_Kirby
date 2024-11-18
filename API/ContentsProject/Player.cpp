@@ -755,6 +755,8 @@ void APlayer::Idle(float _DeltaTime)
 		true == UEngineInput::GetInst().IsPress(VK_RIGHT))
 
 	{ 
+		//GravityForce = FVector2D::ZERO;
+		//AddActorLocation()
 		ChangeState(EPlayerState::Move);
 	}
 
