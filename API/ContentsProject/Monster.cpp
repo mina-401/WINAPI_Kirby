@@ -59,6 +59,9 @@ void AMonster::ChangeState(EMonsterState _CurMonsterState)
 	case EMonsterState::Inhaled:
 		InhaledStart();
 		break;
+	case EMonsterState::Hurt:
+		DamagedStart();
+		break;
 	default:
 		break;
 	}
@@ -74,7 +77,24 @@ void AMonster::InhaledStart()
 }
 void AMonster::Inhaled(float _DeltaTime)
 {
-	int a = 0;
+}
+void AMonster::DamagedStart()
+{
+	DirCheck();
+	//AddActorLocation({ 0,-100 });
+	SpriteRenderer->ChangeAnimation("Damaged" + DirString);
+	Destroy(1.0);
+
+}
+void AMonster::Damaged(float _DeltaTime)
+{
+	
+}
+void AMonster::DestroyStart()
+{
+	
+	
+	SpriteRenderer->ChangeAnimation("Damaged" + DirString);
 }
 void AMonster::ChangeMonsterDir(float _DeltaTime)
 {
@@ -160,6 +180,10 @@ void AMonster::Tick(float _DeltaTime)
 		break;
 	case EMonsterState::Inhaled:
 		Inhaled(_DeltaTime);
+		break;
+
+	case EMonsterState::Hurt:
+		Damaged(_DeltaTime);
 		break;
 	default:
 		break;

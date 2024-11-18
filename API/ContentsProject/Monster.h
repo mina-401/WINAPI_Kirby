@@ -10,6 +10,7 @@ enum class EMonsterState
 	Chase,
 	Attack,  
 	Inhaled, 
+	Hurt,
 };
 
 enum class ECopyAbilityStatus
@@ -48,11 +49,24 @@ public:
 	virtual void Attack(float _DeltaTime);
 	virtual void InhaledStart();
 	virtual void Inhaled(float _DeltaTime);
+	virtual void DamagedStart();
+	virtual void Damaged(float _DeltaTime);
+
+	void DestroyStart();
 
 	void ChangeState(EMonsterState _CurMonsterState);
 	
 	class U2DCollision* AttackColComponent = nullptr;
-	EMonsterState CurMonsterState = EMonsterState::Move;
+
+	EMonsterState GetCurMonsterState() const
+	{
+		return CurMonsterState;
+	}
+	ECopyAbilityStatus GetCopyAbilityStatus() const
+	{
+		return CopyAbilityStatus;
+	}
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -76,6 +90,7 @@ protected:
 	float Speed = 100.0f;
 
 	FVector2D GravityForce = FVector2D::ZERO;
+	float DamageForce = 10.0f;
 	FVector2D MoveVector = FVector2D::LEFT;
 	FVector2D TargetPosVector = FVector2D::ZERO;
 
@@ -83,6 +98,7 @@ protected:
 	float MonsterToPlayerRange = 150.0f;
 
 	ECopyAbilityStatus CopyAbilityStatus = ECopyAbilityStatus::UnableCopy;
+	EMonsterState CurMonsterState = EMonsterState::Move;
 	class U2DCollision* SpawnColComponent = nullptr;
 
 
@@ -94,6 +110,17 @@ private:
 	void MonsterDirCheck();
 	void DirCheck();
 	void MoveDirCheck(FVector2D _Pos);
+	void JumpGravity(float _DeltaTime)
+	{
+		if (false == IsGround)
+		{
+			AddActorLocation(GravityForce * _DeltaTime);
+			GravityForce += FVector2D::DOWN * _DeltaTime * 500.0f;
+		}
+		else {
+			GravityForce = FVector2D::ZERO;
+		}
+	} 
 	void Gravity(float _DeltaTime)
 	{
 		if (false == IsGround)
@@ -110,7 +137,8 @@ private:
 
 private:
 
-
+	float DamagedTime = 30.0f;
+	float CurDamagedTime = 0.0f;
 	
 
 };

@@ -16,6 +16,7 @@ enum class EPlayerState
     Slide,
     Attack,
     Inhale,
+    Exhale,
     
 };
 
@@ -99,7 +100,8 @@ private:
     void EatingMoveStart();
     void EatingDashStart();
     void EatingJumpStart();
-    void EatingAttackStart();
+
+    void ChangeMoveStateByCopy(int _KeyIndex);
 
     void FireIdleStart();
     void FireMoveStart();
@@ -107,6 +109,7 @@ private:
     void FireCrouchStart();
     void FireBreakStart();
     void FireJumpStart();
+    void ChangeJumpStateByEat(int _KeyIndx, bool _IsFly);
     void FireSlideStart();
     void FireFlyingStart();
     void FireFlyDownStart();
@@ -114,14 +117,20 @@ private:
 
     void IdleStart();
     void Idle(float _DeltaTime);
+    void ChangeIdleStateByCopy(int _KeyIndex);
     void CrouchStart();
     void Crouch(float _DeltaTime);
     void MoveStart();
     void Move(float _DeltaTime);
     void DashStart();
+    void ChangeDashStateByCopy(int _KeyIndex);
     void BreakStart();
     void Breaking(float _DeltaTime);
     void Dash(float _DeltaTime);
+    void AttackStart();
+    void Attack(float _DeltaTime);
+
+    void ChangeDashStateByEat(int _KeyIndex);
    
     void JumpStart();
     void Jump(float _DeltaTime);
@@ -132,13 +141,17 @@ private:
     void FireFlyStart();
     void FlyingStart();
     void Fly(float _DeltaTime);
+    void FlyStartAnim();
+    void FlyDownAnim();
     void FlyDownStart();
     void FlyDown(float _DeltaTime);
 
+    void ExhaleStart();
+
+    void Exhale(float _DeltaTime);
+
     void InhaleStart();
     void Inhale(float _DeltaTime);
-
-    void CheckInhaleMonster();
 
     void PlayerCameraCheck();
     void PlayerGroundCheck(FVector2D _MovePos);
@@ -151,11 +164,23 @@ private:
     void PlayerFlyCheck();
     void Accel(float _DeltaTime, FVector2D Vector);
 
+    void DownHillGravity(float _DeltaTime) {
+
+        if (false == IsGround)
+        {
+            
+            DownHillGravityForce += FVector2D::DOWN;
+            AddActorLocation(DownHillGravityForce * _DeltaTime);
+        }
+        else {
+            DownHillGravityForce = FVector2D::ZERO;
+        }
+    }
     void Gravity(float _DeltaTime)
     {
         if (false == IsGround)
         {
-            GravityForce += FVector2D::DOWN * _DeltaTime*200.0f;
+            GravityForce += FVector2D::DOWN * _DeltaTime*500.0f;
             AddActorLocation(GravityForce*_DeltaTime);
         }
         else {
@@ -178,6 +203,7 @@ private:
     }
 
     void InhalingGravity(float _DeltaTime, FVector2D FVector);
+    void DamageMonster(float _DeltaTime, FVector2D _Vector);
     void FlyGravity(float _DeltaTime)
     {
         if (false == IsGround)
@@ -204,7 +230,9 @@ private:
     FVector2D WinSize;
 
     FVector2D GravityForce = FVector2D::ZERO;
+    FVector2D DownHillGravityForce = FVector2D::ZERO;
     FVector2D InhalingForce = FVector2D::ZERO;
+    FVector2D DamageForce = FVector2D::ZERO;
     FVector2D DashVector = FVector2D::RIGHT;
     FVector2D JumpPower = FVector2D(0.0f, -300.0f);
 

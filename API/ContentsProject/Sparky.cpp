@@ -30,6 +30,8 @@ ASparky::ASparky()
 		SpriteRenderer->CreateAnimation("Attack_Right", "Sparky_Right.png", { 4,5,4,5,4,5,4,5,4,5,6,7 }, 0.2f, true);
 		SpriteRenderer->CreateAnimation("Inhaled_Left", "Sparky_Left.png", 7, 7, 0.2f, true);
 		SpriteRenderer->CreateAnimation("Inhaled_Right", "Sparky_Right.png", 7, 7, 0.2f, true);
+		SpriteRenderer->CreateAnimation("Damaged_Left", "Sparky_Right.png", 7, 7, 0.2f, true);
+		SpriteRenderer->CreateAnimation("Damaged_Right", "Sparky_Right.png", 7, 7, 0.2f, true);
 		SpriteRenderer->ChangeAnimation("Walk_Left");
 	}
 	{

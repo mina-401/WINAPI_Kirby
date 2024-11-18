@@ -78,6 +78,8 @@ APlayer::APlayer()
 		UImageManager::GetInst().CuttingSprite("FireAttack_Right.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("FireExhale_Right.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("FireExhale_Left.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("FireDash_Left.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("FireDash_Right.png", { 128, 128 });
 
 
 
@@ -102,6 +104,8 @@ APlayer::APlayer()
 		SpriteRenderer->CreateAnimation("Slide_Right", "Slide_Right.png", 0, 0, 0.5f, false);
 		SpriteRenderer->CreateAnimation("Break_Left", "Break_Left.png", 0, 0, 0.1f, false);
 		SpriteRenderer->CreateAnimation("Break_Right", "Break_Right.png", 0, 0, 0.1f, false);
+		SpriteRenderer->CreateAnimation("Exhale_Left", "Inhale_Left.png", 5, 5, 0.1f, false);
+		SpriteRenderer->CreateAnimation("Exhale_Right", "Inhale_Right.png", 5, 5, 0.1f, false);
 		SpriteRenderer->CreateAnimation("Inhale_Left", "Inhale_Left.png", { 4,5,6,7,8,7,8,7,8,7,8,7,8,7,8,7,6,9,10,11,12 }, 0.1f,false);
 		SpriteRenderer->CreateAnimation("Inhale_Right", "Inhale_Right.png", { 4,5,6,7,8,7,8,7,8,7,8,7,8,7,8,7,6,9,10,11,12 }, 0.1f,false);
 
@@ -116,28 +120,11 @@ APlayer::APlayer()
 		SpriteRenderer->CreateAnimation("EatingJump_Left", "EatingJump_Left.png", 0, 8, 0.1f, false);
 		SpriteRenderer->CreateAnimation("EatingJump_Right", "EatingJump_Right.png", 0, 8, 0.1f, false);
 
-
-		/*{
-			UEngineDirectory Dir;
-			if (false == Dir.MoveParentToDirectory("Resource"))
-			{
-				MSGASSERT("리소스 폴더를 찾지 못했습니다.");
-				return;
-			}
-			Dir.Append("Image//PlayLevel//Kirby//FireKirby");
-			std::vector<UEngineFile> ImageFiles = Dir.GetAllFile();
-			for (size_t i = 0; i < ImageFiles.size(); i++)
-			{
-				std::string FilePath = ImageFiles[i].GetPathToString();
-				UImageManager::GetInst().Load(FilePath);
-			}
-		}*/
-
 		//Fire
 		SpriteRenderer->CreateAnimation("FireIdle_Left", "FireIdle_Left.png", 0, 7, 0.2f);
 		SpriteRenderer->CreateAnimation("FireIdle_Right", "FireIdle_Right.png", 0, 2, 0.2f);
-		SpriteRenderer->CreateAnimation("FireRun_Left", "FireRun_Left.png", 0, 7, 0.1f);
-		SpriteRenderer->CreateAnimation("FireRun_Right", "FireRun_Right.png", 0, 7, 0.1f);
+		SpriteRenderer->CreateAnimation("FireRun_Left", "FireDash_Left.png", 0, 8, 0.1f);
+		SpriteRenderer->CreateAnimation("FireRun_Right", "FireDash_Right.png", 0, 8, 0.1f);
 		SpriteRenderer->CreateAnimation("FireWalk_Left", "FireMove_Left.png", 0, 19, 0.05f);
 		SpriteRenderer->CreateAnimation("FireWalk_Right", "FireMove_Right.png", 0, 19, 0.05f);
 		SpriteRenderer->CreateAnimation("FireCrouch_Left", "FireCrouch_Left.png", 0, 7, 0.2f, false);
@@ -146,18 +133,20 @@ APlayer::APlayer()
 		SpriteRenderer->CreateAnimation("FireJump_Right", "FireJump_Right.png", 0, 9, 0.1f, false);
 		SpriteRenderer->CreateAnimation("FireFly_Left", "FireFlying_Left.png", 0, 14, 0.1f, false);
 		SpriteRenderer->CreateAnimation("FireFly_Right", "FireFlying_Right.png", 0, 14, 0.1f, false);
-		SpriteRenderer->CreateAnimation("FireFlying_Left", "FireFlying_Left.png", 0, 14, 0.1f);
-		SpriteRenderer->CreateAnimation("FireFlying_Right", "FireFlying_Right.png", 0, 14, 0.1f);
-		SpriteRenderer->CreateAnimation("FireFlyingDown_Left", "FireFlying_Left.png", 0, 14, 0.1f, false);
-		SpriteRenderer->CreateAnimation("FireFlyingDown_Right", "FireFlying_Right.png", 0, 14, 0.1f, false);
+		SpriteRenderer->CreateAnimation("FireFlying_Left", "FireFlying_Left.png", 0, 14, 0.05f);
+		SpriteRenderer->CreateAnimation("FireFlying_Right", "FireFlying_Right.png", 0, 14, 0.05f);
+		SpriteRenderer->CreateAnimation("FireFlyingDown_Left", "FireJump_Left.png", 8, 9, 0.1f, false);
+		SpriteRenderer->CreateAnimation("FireFlyingDown_Right", "FireJump_Right.png", 8, 9, 0.1f, false);
 		SpriteRenderer->CreateAnimation("FireSlide_Left", "FireSlide_Left.png", 0, 4, 0.5f, false);
 		SpriteRenderer->CreateAnimation("FireSlide_Right", "FireSlide_Right.png", 0, 4, 0.5f, false);
 		SpriteRenderer->CreateAnimation("FireBreak_Left", "FireBreak_Left.png", 0, 1, 0.1f, false);
 		SpriteRenderer->CreateAnimation("FireBreak_Right", "FireBreak_Right.png", 0, 1, 0.1f, false);
-		SpriteRenderer->CreateAnimation("FireAttack_Left", "FireAttack_Left.png", 0, 3, 0.1f, false);
-		SpriteRenderer->CreateAnimation("FireAttack_Right", "FireAttack_Right.png", 0, 3, 0.1f, false);
+		SpriteRenderer->CreateAnimation("FireAttack_Left", "FireAttack_Left.png", { 0,1,2,3,1,2,3 }, 0.1f, true);
+		SpriteRenderer->CreateAnimation("FireAttack_Right", "FireAttack_Right.png", { 0,1,2,3,1,2,3 }, 0.1f, true);
 		SpriteRenderer->CreateAnimation("FireExhale_Left", "FireExhale_Left.png", 0, 2, 0.1f, false);
 		SpriteRenderer->CreateAnimation("FireExhale_Right", "FireExhale_Right.png", 0, 2, 0.1f, false);
+		SpriteRenderer->CreateAnimation("FireDash_Left", "FireDash_Left.png", 0, 0, 0.1f);
+		SpriteRenderer->CreateAnimation("FireDash_Right", "FireDash_Right.png", 0, 0, 0.1f);
 
 
 
@@ -537,12 +526,21 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 		}
 
 		break;
-
+	case EPlayerState::Exhale:
+		ExhaleStart();
+		break;
+	//copy 상태일 때만 상태 변경
+	case EPlayerState::Attack:
+		AttackStart();
+		break;
 
 
 	default:
 		break;
 	}
+
+
+
 
 	CurPlayerState = _CurPlayerState;
 
@@ -610,6 +608,12 @@ void APlayer::Tick(float _DeltaTime)
 	case EPlayerState::Inhale:
 		Inhale(_DeltaTime);
 		break;
+	case EPlayerState::Exhale:
+		Exhale(_DeltaTime);
+		break;
+	case EPlayerState::Attack:
+		Attack(_DeltaTime);
+		break;
 	default:
 		break;
 	}
@@ -649,6 +653,78 @@ void APlayer::LevelChangeEnd()
 
 
 }
+void APlayer::DamageMonster(float _DeltaTime, FVector2D _Vector)
+{
+	FVector2D Pos = _Vector * _DeltaTime * 150.0f;
+
+	ColMonster->AddActorLocation(Pos);
+}
+
+void APlayer::AttackStart()
+{
+	Speed = 300.0f;
+	SpriteRenderer->ChangeAnimation("FireAttack" + DirString);
+}
+void APlayer::Attack(float _DeltaTime)
+{
+	DirCheck();
+	AttackStart();
+
+	if (true == SpriteRenderer->IsCurAnimationEnd())
+	{
+		ChangeState(EPlayerState::Idle);
+		return;
+	}
+
+	FVector2D Vector = FVector2D::ZERO;
+	if (true == UEngineInput::GetInst().IsUp('X'))
+	{
+		ColMonster = nullptr;
+		InhaleRightComponent->SetActive(false);
+		InhaleLeftComponent->SetActive(false);
+
+		ChangeState(EPlayerState::Idle);
+		return;
+	}
+	AActor* ColActor = nullptr;
+	if (DirString == "_Right")
+	{
+		InhaleRightComponent->SetActive(true);
+		ColActor = InhaleRightComponent->CollisionOnce(ECollisionGroup::MonsterBody);
+		Vector = FVector2D::RIGHT;
+	}
+	else if (DirString == "_Left")
+	{
+		InhaleLeftComponent->SetActive(true);
+		ColActor = InhaleLeftComponent->CollisionOnce(ECollisionGroup::MonsterBody);
+		Vector = FVector2D::LEFT;
+	}
+
+	if (ColActor != nullptr) {
+
+		ColMonster = dynamic_cast<AMonster*>(ColActor);
+		ColMonster->ChangeState(EMonsterState::Hurt);
+	
+		
+
+	}
+	ColActor = nullptr;
+	//ColActor = CollisionComponent->CollisionOnce(ECollisionGroup::MonsterBody);
+	//if (ColActor != nullptr)
+	//{
+	//	ColActor->Destroy();
+	//	ColMonster = nullptr;
+	//	InhaleRightComponent->SetActive(false);
+	//	InhaleLeftComponent->SetActive(false);
+
+	//	CurPlayerEatState = EPlayerEatState::Eating;
+	//	// 몬스터 흡입한 상태 커비 애니메이션
+	//	ChangeState(EPlayerState::Idle);
+	//	return;
+
+	//}
+	int a = 0;
+}
 void APlayer::IdleStart()
 {
 	Speed = 300.0f;
@@ -659,6 +735,8 @@ void APlayer::FireIdleStart()
 {
 	Speed = 300.0f;
 	SpriteRenderer->ChangeAnimation("FireIdle" + DirString);
+	SpriteRenderer->SetComponentScale({ 270,270 });
+
 }
 void APlayer::EatingIdleStart()
 {
@@ -670,6 +748,7 @@ void APlayer::Idle(float _DeltaTime)
 {
 	PlayerGroundCheck(GravityForce);
 	Gravity(_DeltaTime);
+	DownHillGravity(_DeltaTime);
 
 
 	if (true == UEngineInput::GetInst().IsPress(VK_LEFT) ||
@@ -701,58 +780,22 @@ void APlayer::Idle(float _DeltaTime)
 	}
 	if (true == UEngineInput::GetInst().IsDown('X'))
 	{
-		switch (CurPlayerCopyState)
-		{
-		case EPlayerCopyState::Normal:
-			switch (CurPlayerEatState)
-			{
-			case EPlayerEatState::Normal:
-				ChangeState(EPlayerState::Inhale);
-				break;
-			case EPlayerEatState::Eating:
-				CurPlayerEatState = EPlayerEatState::Normal;
-				ChangeState(EPlayerState::Idle);
-				break;
-			default:
-				break;
-			}
-			break;
-		case EPlayerCopyState::Spark:
-			break;
-		case EPlayerCopyState::Beam:
-			break;
-		case EPlayerCopyState::Fire:
-			//Attack
-			break;
-		default:
-			break;
-		}
-
-		
-		
+		ChangeIdleStateByCopy('X');		
+		return;
+	}
+	if (true == UEngineInput::GetInst().IsDown('A'))
+	{
+		ChangeIdleStateByCopy('A');
 		return;
 	}
 	if (true == UEngineInput::GetInst().IsPress(VK_DOWN))
 	{
-		switch (CurPlayerEatState)
-		{
-		case EPlayerEatState::Normal:
-			ChangeState(EPlayerState::Crouch);
-			break;
-		case EPlayerEatState::Eating:
-			CurPlayerEatState = EPlayerEatState::Normal;
-			CurPlayerCopyState = EPlayerCopyState::Fire;
-			
-			ChangeState(EPlayerState::Idle);
-			break;
-		default:
-			break;
-		}
-		
-		
+		ChangeIdleStateByCopy(VK_DOWN);
 		return;
 	}
 }
+
+
 
 void APlayer::CrouchStart()
 {
@@ -762,6 +805,7 @@ void APlayer::CrouchStart()
 void APlayer::FireCrouchStart()
 {
 	Speed = 300.0f;
+	SpriteRenderer->SetComponentScale({ 270,270 });
 	SpriteRenderer->ChangeAnimation("FireCrouch" + DirString);
 }
 
@@ -826,9 +870,34 @@ void APlayer::JumpStart()
 void APlayer::FireJumpStart()
 {
 	Speed = 300.0f;
+	SpriteRenderer->SetComponentScale({ 270,270 });
 	SpriteRenderer->ChangeAnimation("FireJump" + DirString);
 }
+void APlayer::ChangeJumpStateByEat(int _KeyIndx,bool _IsFly) {
 
+	if (true == _IsFly) {
+		switch (_KeyIndx)
+		{
+		case 'Z':
+			switch (CurPlayerEatState)
+			{
+			case EPlayerEatState::Normal:
+				ChangeState(EPlayerState::Fly);
+				break;
+			case EPlayerEatState::Eating:
+
+				break;
+			default:
+				break;
+			}
+			break;
+
+		default:
+			break;
+		}
+	}
+	
+}
 void APlayer::Jump(float _DeltaTime)
 {
 
@@ -844,19 +913,7 @@ void APlayer::Jump(float _DeltaTime)
 	if (true == UEngineInput::GetInst().IsPress(VK_RIGHT))  Vector = FVector2D::RIGHT;
 	if (true == UEngineInput::GetInst().IsPress('Z') && true == IsFly) {
 
-		switch (CurPlayerEatState)
-		{
-		case EPlayerEatState::Normal:
-			ChangeState(EPlayerState::Fly);
-			break;
-		case EPlayerEatState::Eating:
-			
-			break;
-		default:
-			break;
-		}
-
-		//ChangeState(EPlayerState::Fly);
+		ChangeJumpStateByEat('Z', IsFly);
 		return;
 	}
 
@@ -882,6 +939,7 @@ void APlayer::MoveStart()
 void APlayer::FireMoveStart()
 {
 	Speed = 300.0f;
+	SpriteRenderer->SetComponentScale({ 270,270 });
 	SpriteRenderer->ChangeAnimation("FireWalk" + DirString);
 }
 
@@ -893,15 +951,68 @@ void APlayer::EatingMoveStart()
 }
 
 
-void APlayer::EatingAttackStart()
-{
-	int a = 0;
-}
 
+void APlayer::ChangeMoveStateByCopy(int _KeyIndex)
+{
+	switch (_KeyIndex)
+	{
+	case 'X':
+		switch (CurPlayerCopyState)
+		{
+		case EPlayerCopyState::Normal:
+			switch (CurPlayerEatState)
+			{
+			case EPlayerEatState::Normal:
+				ChangeState(EPlayerState::Inhale);
+				break;
+			case EPlayerEatState::Eating:
+				CurPlayerEatState = EPlayerEatState::Normal;
+				ChangeState(EPlayerState::Exhale);
+				break;
+			default:
+				break;
+			}
+			break;
+		case EPlayerCopyState::Spark:
+			break;
+		case EPlayerCopyState::Beam:
+			break;
+		case EPlayerCopyState::Fire:
+			CurPlayerCopyState = EPlayerCopyState::Normal;
+			ChangeState(EPlayerState::Idle);
+			
+			break;
+		default:
+			break;
+		}
+		break;
+	case 'A':
+		switch (CurPlayerCopyState)
+		{
+		case EPlayerCopyState::Normal:
+			break;
+		case EPlayerCopyState::Spark:
+			break;
+		case EPlayerCopyState::Beam:
+			break;
+		case EPlayerCopyState::Fire:
+			CurPlayerCopyState = EPlayerCopyState::Normal;
+			ChangeState(EPlayerState::Idle);
+			break;
+		default:
+			break;
+		}
+		break;
+
+	default:
+		break;
+	}
+}
 void APlayer::Move(float _DeltaTime)
 {
 	DirCheck();
 	PlayerGroundCheck(GravityForce * _DeltaTime);
+	DownHillGravity(_DeltaTime);
 	Gravity(_DeltaTime);
 	
 	FVector2D Vector = FVector2D::ZERO;
@@ -930,7 +1041,12 @@ void APlayer::Move(float _DeltaTime)
 	}
 	 if (true == UEngineInput::GetInst().IsPress('X'))
 	 {
-		 ChangeState(EPlayerState::Inhale);
+		 ChangeMoveStateByCopy('X');
+		 return;
+	 }
+	 if (true == UEngineInput::GetInst().IsDown('A'))
+	 {
+		 ChangeMoveStateByCopy('A');
 		 return;
 	 }
 	if (true == UEngineInput::GetInst().IsPress(VK_DOWN))
@@ -999,6 +1115,7 @@ void APlayer::BreakStart()
 }
 void APlayer::FireBreakStart()
 {
+	SpriteRenderer->SetComponentScale({ 270,270 });
 	SpriteRenderer->ChangeAnimation("FireBreak" + DirString);
 }
 void APlayer::Breaking(float _DeltaTime)
@@ -1033,6 +1150,7 @@ void APlayer::EatingDashStart()
 }
 void APlayer::FireDashStart()
 {
+	SpriteRenderer->SetComponentScale({ 270,270 });
 	SpriteRenderer->ChangeAnimation("FireRun" + DirString);
 	Speed = 500.0f;
 }
@@ -1041,14 +1159,62 @@ void APlayer::DashStart()
 {
 	SpriteRenderer->ChangeAnimation("Run" + DirString);
 	Speed = 500.0f;
-}
 
+	
+	//SpriteRenderer->SetSpriteScale(0.1f);
+
+}
+void APlayer::ChangeDashStateByCopy(int _KeyIndex)
+{
+	switch (_KeyIndex)
+	{
+	case 'X':
+		switch (CurPlayerCopyState)
+		{
+		case EPlayerCopyState::Normal:
+			switch (CurPlayerEatState)
+			{
+			case EPlayerEatState::Normal:
+				ChangeState(EPlayerState::Inhale);
+				break;
+			case EPlayerEatState::Eating:
+				CurPlayerEatState = EPlayerEatState::Normal;
+				ChangeState(EPlayerState::Exhale);
+				break;
+			default:
+				break;
+			}
+			break;
+		case EPlayerCopyState::Spark:
+			ChangeState(EPlayerState::Attack);
+
+			break;
+		case EPlayerCopyState::Beam:
+			ChangeState(EPlayerState::Attack);
+
+			break;
+		case EPlayerCopyState::Fire:
+			ChangeState(EPlayerState::Attack);
+			break;
+		default:
+			break;
+		}
+		break;
+	default:
+		break;
+	}
+}
 void APlayer::Dash(float _DeltaTime)
 {
 	DirCheck();
 	PlayerGroundCheck(GravityForce * _DeltaTime);
+	DownHillGravity(_DeltaTime);
 	Gravity(_DeltaTime);
+	if (CurPlayerCopyState == EPlayerCopyState::Fire)
+	{
+		SpriteRenderer->SetComponentScale({180,180});
 
+	}
 	FVector2D Vector = FVector2D::ZERO;
 
 	if (true == UEngineInput::GetInst().IsPress(VK_DOWN))
@@ -1077,26 +1243,14 @@ void APlayer::Dash(float _DeltaTime)
 		ChangeState(EPlayerState::Jump);
 		return;
 	}
-	if (true == UEngineInput::GetInst().IsPress('X'))
+	if (true == UEngineInput::GetInst().IsDown('X'))
 	{
-		ChangeState(EPlayerState::Inhale);
+		ChangeDashStateByCopy('X');
 		return;
 	}
 	if (true == UEngineInput::GetInst().IsPress(VK_DOWN))
 	{
-		switch (CurPlayerEatState)
-		{
-		case EPlayerEatState::Normal:
-			ChangeState(EPlayerState::Crouch);
-			break;
-		case EPlayerEatState::Eating:
-			CurPlayerEatState = EPlayerEatState::Normal;
-			
-			ChangeState(EPlayerState::Idle);
-			break;
-		default:
-			break;
-		}
+		ChangeDashStateByEat(VK_DOWN);
 		return;
 	}
 
@@ -1111,31 +1265,19 @@ void APlayer::Dash(float _DeltaTime)
 	}
 
 
-	/*UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
-	if (Color == UColor::BLACK)
-	{
-		UColor NextColor = ColImage->GetColor(GetActorLocation() + FVector2D::UP, UColor::WHITE);
-		if (NextColor != UColor::BLACK)
-		{
-			AddActorLocation(FVector2D::UP);
-
-		}
-
-	}
-	else { AddActorLocation(Vector * Speed * _DeltaTime); }*/
-
 	UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
 	if (Color == UColor::BLACK)
 	{
-		UColor NextColor = ColImage->GetColor(GetActorLocation()+FVector2D::UP, UColor::WHITE);
+		//절벽을 만났는지
+		UColor NextColor = ColImage->GetColor(GetActorLocation() + FVector2D::UP, UColor::WHITE);
 		if (NextColor != UColor::BLACK)
 		{
+			//경사이다.
 			AddActorLocation(FVector2D::UP);
 		}
 
 	}
 	else AddActorLocation(Vector * Speed * _DeltaTime);
-	Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
 
 
 	while (true)
@@ -1150,11 +1292,31 @@ void APlayer::Dash(float _DeltaTime)
 			break;
 		}
 	}
+}
 
+void APlayer::ChangeDashStateByEat(int _KeyIndex)
+{
+	switch (_KeyIndex)
+	{
+	case VK_DOWN:
+		switch (CurPlayerEatState)
+		{
+		case EPlayerEatState::Normal:
+			ChangeState(EPlayerState::Crouch);
+			break;
+		case EPlayerEatState::Eating:
+			CurPlayerEatState = EPlayerEatState::Normal;
 
-
-
-
+			ChangeState(EPlayerState::Idle);
+			break;
+		default:
+			break;
+		}
+		break;
+	default:
+		break;
+	}
+	
 }
 
 void APlayer::PlayerFlyCheck()
@@ -1245,22 +1407,7 @@ void APlayer::FlyingStart()
 void APlayer::Fly(float _DeltaTime)
 {
 	DirCheck();
-
-	switch (CurPlayerCopyState)
-	{
-	case EPlayerCopyState::Normal:
-		FlyingStart();
-		break;
-	case EPlayerCopyState::Spark:
-		break;
-	case EPlayerCopyState::Beam:
-		break;
-	case EPlayerCopyState::Fire:
-		FireFlyingStart();
-		break;
-	default:
-		break;
-	}
+	FlyStartAnim();
 
 	PlayerGroundCheck(GravityForce * _DeltaTime);
 	Gravity(_DeltaTime);
@@ -1282,6 +1429,8 @@ void APlayer::Fly(float _DeltaTime)
 
 	}if (true == UEngineInput::GetInst().IsPress('Z'))
 	{
+
+		GravityForce = FVector2D::ZERO;
 		Vector += FVector2D::UP;
 	}
 
@@ -1290,6 +1439,42 @@ void APlayer::Fly(float _DeltaTime)
 		AddActorLocation(Vector * Speed * _DeltaTime);
 	}
 
+}
+void APlayer::FlyStartAnim()
+{
+	switch (CurPlayerCopyState)
+	{
+	case EPlayerCopyState::Normal:
+		FlyingStart();
+		break;
+	case EPlayerCopyState::Spark:
+		break;
+	case EPlayerCopyState::Beam:
+		break;
+	case EPlayerCopyState::Fire:
+		FireFlyingStart();
+		break;
+	default:
+		break;
+	}
+}
+void APlayer::FlyDownAnim()
+{
+	switch (CurPlayerCopyState)
+	{
+	case EPlayerCopyState::Normal:
+		FlyDownStart();
+		break;
+	case EPlayerCopyState::Spark:
+		break;
+	case EPlayerCopyState::Beam:
+		break;
+	case EPlayerCopyState::Fire:
+		FireFlyDownStart();
+		break;
+	default:
+		break;
+	}
 }
 void APlayer::FlyDownStart()
 {
@@ -1303,14 +1488,12 @@ void APlayer::FireFlyDownStart()
 void APlayer::FlyDown(float _DeltaTime)
 {
 	DirCheck();
-	FlyDownStart();
+	FlyDownAnim();
 
 	if (true == IsGround) {
 		ChangeState(EPlayerState::Idle);
 		return;
 	}
-
-
 
 	FVector2D Vector = FVector2D::ZERO;
 	PlayerGroundCheck(FVector2D::DOWN);
@@ -1331,7 +1514,22 @@ void APlayer::FlyDown(float _DeltaTime)
 	}
 	AddActorLocation(Vector * _DeltaTime * Speed);
 }
+void APlayer::ExhaleStart()
+{
+	SpriteRenderer->ChangeAnimation("Exhale" + DirString);
+}
+void APlayer::Exhale(float _DeltaTime)
+{
+	DirCheck();
 
+
+	if (true == SpriteRenderer->IsCurAnimationEnd())
+	{
+		ChangeState(EPlayerState::Idle);
+		return;
+	}
+
+}
 void APlayer::InhaleStart()
 {
 	SpriteRenderer->ChangeAnimation("Inhale" + DirString);
@@ -1368,7 +1566,7 @@ void APlayer::Inhale(float _DeltaTime)
 	if (ColActor != nullptr) {
 
 		ColMonster = dynamic_cast<AMonster*>(ColActor);
-		if (ColMonster->CurMonsterState != EMonsterState::Inhaled) {
+		if (ColMonster->GetCurMonsterState() != EMonsterState::Inhaled) {
 			ColMonster->ChangeState(EMonsterState::Inhaled);
 		}
 		InhalingGravity(_DeltaTime,Vector);
@@ -1392,10 +1590,7 @@ void APlayer::Inhale(float _DeltaTime)
 
 
 }
-void APlayer::CheckInhaleMonster() {
-	//if(ColMonster !=nullptr)
 
-}
 void APlayer::InhalingGravity(float _DeltaTime,FVector2D _Vector)
 {
 	InhalingForce = _Vector * _DeltaTime * 150.0f;
@@ -1511,4 +1706,79 @@ void APlayer::CollisionStay(AActor* _ColActor)
 void APlayer::CollisionEnd(AActor* _ColActor)
 {
 	int  a = 0;
+}
+void APlayer::ChangeIdleStateByCopy(int _KeyIndex)
+{
+
+	switch (_KeyIndex)
+	{
+	case VK_DOWN:
+		switch (CurPlayerEatState)
+		{
+		case EPlayerEatState::Normal:
+			ChangeState(EPlayerState::Crouch);
+			break;
+		case EPlayerEatState::Eating:
+			CurPlayerEatState = EPlayerEatState::Normal;
+			CurPlayerCopyState = EPlayerCopyState::Fire;
+
+			ChangeState(EPlayerState::Idle);
+			break;
+		default:
+			break;
+		}
+		break;
+
+	case 'X':
+		switch (CurPlayerCopyState)
+		{
+		case EPlayerCopyState::Normal:
+			switch (CurPlayerEatState)
+			{
+			case EPlayerEatState::Normal:
+				ChangeState(EPlayerState::Inhale);
+				break;
+			case EPlayerEatState::Eating:
+				CurPlayerEatState = EPlayerEatState::Normal;
+				ChangeState(EPlayerState::Exhale);
+				break;
+			default:
+				break;
+			}
+			break;
+		case EPlayerCopyState::Spark:
+			break;
+		case EPlayerCopyState::Beam:
+			break;
+		case EPlayerCopyState::Fire:
+			ChangeState(EPlayerState::Attack);
+			break;
+		default:
+			break;
+		}
+		break;
+	case 'A':
+		switch (CurPlayerCopyState)
+		{
+		case EPlayerCopyState::Normal:
+			break;
+		case EPlayerCopyState::Spark:
+			CurPlayerCopyState = EPlayerCopyState::Normal;
+			break;
+		case EPlayerCopyState::Beam:
+			CurPlayerCopyState = EPlayerCopyState::Normal;
+			break;
+		case EPlayerCopyState::Fire:
+			CurPlayerCopyState = EPlayerCopyState::Normal;
+			ChangeState(EPlayerState::Idle);
+			//능력뱉기
+			break;
+		default:
+			break;
+		}
+		break;
+	default:
+		break;
+	}
+
 }
