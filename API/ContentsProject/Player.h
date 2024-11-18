@@ -75,6 +75,12 @@ public:
     void CollisionEnter(AActor* _ColActor);
     void CollisionStay(AActor* _ColActor);
     void CollisionEnd(AActor* _ColActor);
+   
+public:    
+    class U2DCollision* CollisionComponent = nullptr;
+
+
+
 protected:
 
 private:
@@ -169,8 +175,8 @@ private:
         if (false == IsGround)
         {
             
-            DownHillGravityForce += FVector2D::DOWN;
-            AddActorLocation(DownHillGravityForce * _DeltaTime);
+            DownHillGravityForce += FVector2D::DOWN* _DeltaTime*500.0f;
+            AddActorLocation(DownHillGravityForce);
         }
         else {
             DownHillGravityForce = FVector2D::ZERO;
@@ -180,8 +186,8 @@ private:
     {
         if (false == IsGround)
         {
-            GravityForce += FVector2D::DOWN * _DeltaTime*500.0f;
-            AddActorLocation(GravityForce*_DeltaTime);
+            GravityForce += FVector2D::DOWN * _DeltaTime*300.0f;
+            AddActorLocation(GravityForce);
         }
         else {
             GravityForce = FVector2D::ZERO;
@@ -193,8 +199,8 @@ private:
     {
         if (false == IsGround)
         {
-            AddActorLocation(GravityForce * _DeltaTime );
-            GravityForce += FVector2D::DOWN * _DeltaTime * 500.0f;
+            GravityForce += FVector2D::DOWN * _DeltaTime * 100.0f;
+            AddActorLocation(GravityForce);
         }
         else {
             GravityForce = FVector2D::ZERO;
@@ -202,6 +208,22 @@ private:
 
     }
 
+    void SlideFriction(float _DeltaTime, FVector2D _Vector)
+    {
+        
+
+        if (false == IsGround)
+        {
+            FrictionForce += (_Vector*(-1.0f) * _DeltaTime*0.1f);
+            AddActorLocation(FrictionForce);
+        }
+        else
+        {
+            FrictionForce = FVector2D::ZERO;
+        }
+
+        // »ó½Ã 
+    }
     void InhalingGravity(float _DeltaTime, FVector2D FVector);
     void DamageMonster(float _DeltaTime, FVector2D _Vector);
     void FlyGravity(float _DeltaTime)
@@ -229,12 +251,17 @@ private:
 private:
     FVector2D WinSize;
 
+    FVector2D FrictionForce = FVector2D::ZERO;
     FVector2D GravityForce = FVector2D::ZERO;
     FVector2D DownHillGravityForce = FVector2D::ZERO;
     FVector2D InhalingForce = FVector2D::ZERO;
     FVector2D DamageForce = FVector2D::ZERO;
     FVector2D DashVector = FVector2D::RIGHT;
     FVector2D JumpPower = FVector2D(0.0f, -300.0f);
+
+    FVector2D SlidePower = FVector2D(300.0f, 0.0f);
+    FVector2D CurRSlidePower = FVector2D(300.0f, 0.0f);
+    FVector2D CurSlidePower = FVector2D(300.0f, 0.0f);
 
     float BreakTime = 100.0f;
 
@@ -259,7 +286,6 @@ private:
 
     FVector2D Acc = FVector2D::ZERO;
 
-    class U2DCollision* CollisionComponent = nullptr;
     class U2DCollision* InhaleRightComponent = nullptr;
     class U2DCollision* InhaleLeftComponent = nullptr;
     class AKirbyWidget* PlayerHud = nullptr;

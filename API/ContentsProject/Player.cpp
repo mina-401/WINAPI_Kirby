@@ -55,9 +55,6 @@ APlayer::APlayer()
 		UImageManager::GetInst().CuttingSprite("EatingMove_Left.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("EatingMove_Right.png", { 128, 128 });
 
-		//attack
-		//exhale
-	
 		UImageManager::GetInst().CuttingSprite("FireIdle_Left.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("FireIdle_Right.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("FireRun_Left.png", { 128, 128 });
@@ -157,8 +154,14 @@ APlayer::APlayer()
 	{
 		CollisionComponent = CreateDefaultSubObject<U2DCollision>();
 		CollisionComponent->SetComponentLocation({ 0, 0 });
-		CollisionComponent->SetComponentScale({ 50, 60 });
+		CollisionComponent->SetComponentScale({ 50, 50 });
 		CollisionComponent->SetCollisionGroup(ECollisionGroup::PlayerBody);
+		CollisionComponent->SetCollisionType(ECollisionType::CirCle);
+
+		CollisionComponent->SetCollisionEnter(std::bind(&APlayer::CollisionEnter, this, std::placeholders::_1));
+		//CollisionComponent->SetCollisionStay(std::bind(&APlayer::CollisionStay, this, std::placeholders::_1));
+		//CollisionComponent->SetCollisionEnd(std::bind(&APlayer::CollisionEnd, this, std::placeholders::_1));
+		
 	}
 	{
 		InhaleRightComponent = CreateDefaultSubObject<U2DCollision>();
@@ -231,6 +234,7 @@ void APlayer::BeginPlay()
 		//BGMPlayer = UEngineSound::Play("05. Victory Star.mp3");
 
 	}
+
 	Size = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 	GetWorld()->SetCameraPivot(Size.Half() * -1.0f);
 	GetWorld()->SetCameraToMainPawn(false);
@@ -746,9 +750,9 @@ void APlayer::EatingIdleStart()
 }
 void APlayer::Idle(float _DeltaTime)
 {
-	PlayerGroundCheck(GravityForce);
+	PlayerGroundCheck(GravityForce*_DeltaTime);
 	Gravity(_DeltaTime);
-	DownHillGravity(_DeltaTime);
+	//DownHillGravity(_DeltaTime);
 
 
 	if (true == UEngineInput::GetInst().IsPress(VK_LEFT) ||
@@ -762,6 +766,7 @@ void APlayer::Idle(float _DeltaTime)
 
 	if (true == UEngineInput::GetInst().IsDoubleClick(VK_RIGHT, 0.5f)|| true == UEngineInput::GetInst().IsDoubleClick(VK_LEFT, 0.5f))
 	{
+		//GravityForce = FVector2D::ZERO;
 
 		ChangeState(EPlayerState::Dash);
 		return;
@@ -771,17 +776,14 @@ void APlayer::Idle(float _DeltaTime)
 
 	if (true == UEngineInput::GetInst().IsPress('Z'))
 	{
-		GravityForce = FVector2D::ZERO;
+		//GravityForce = FVector2D::ZERO;
 		ChangeState(EPlayerState::Jump);
 		return;
 	}
-	if (true == UEngineInput::GetInst().IsPress('S'))
-	{
-		ChangeState(EPlayerState::Fly);
-		return;
-	}
+
 	if (true == UEngineInput::GetInst().IsDown('X'))
 	{
+
 		ChangeIdleStateByCopy('X');		
 		return;
 	}
@@ -904,10 +906,9 @@ void APlayer::Jump(float _DeltaTime)
 {
 
 	PlayerGroundCheck(GravityForce * _DeltaTime);
-	PlayerFlyCheck( );
 	
-	JumpGravity(_DeltaTime);
 	AddActorLocation(JumpPower * _DeltaTime);
+	JumpGravity(_DeltaTime);
 	
 	FVector2D Vector = FVector2D::ZERO;
 
@@ -929,6 +930,7 @@ void APlayer::Jump(float _DeltaTime)
 		ChangeState(EPlayerState::Idle);
 		return;
 	}
+	PlayerFlyCheck();
 }
 
 
@@ -1014,7 +1016,7 @@ void APlayer::Move(float _DeltaTime)
 {
 	DirCheck();
 	PlayerGroundCheck(GravityForce * _DeltaTime);
-	DownHillGravity(_DeltaTime);
+	//DownHillGravity(_DeltaTime);
 	Gravity(_DeltaTime);
 	
 	FVector2D Vector = FVector2D::ZERO;
@@ -1210,7 +1212,7 @@ void APlayer::Dash(float _DeltaTime)
 {
 	DirCheck();
 	PlayerGroundCheck(GravityForce * _DeltaTime);
-	DownHillGravity(_DeltaTime);
+	//DownHillGravity(_DeltaTime);
 	Gravity(_DeltaTime);
 	if (CurPlayerCopyState == EPlayerCopyState::Fire)
 	{
@@ -1350,6 +1352,17 @@ void APlayer::SlideStart()
 {
 	SpriteRenderer->ChangeAnimation("Slide" + DirString);
 
+	if (DirString == "_Right")
+	{
+		CurSlidePower = SlidePower;
+		CurRSlidePower = -SlidePower;
+	}else if (DirString == "_Left")
+	{
+		CurSlidePower = -SlidePower;
+		CurRSlidePower = SlidePower;
+	}
+	
+
 }
 
 void APlayer::FireSlideStart()
@@ -1361,26 +1374,24 @@ void APlayer::FireSlideStart()
 
 void APlayer::Slide(float _DeltaTime)
 {
-	if (CurrSlideTime >SlideTime)
+	FVector2D NextPos = GetActorLocation() + CurSlidePower * _DeltaTime ;
+
+	UColor Color = ColImage->GetColor(NextPos, UColor::WHITE);
+	if (Color != UColor::WHITE)
 	{
-		CurrSlideTime = 0;
 		ChangeState(EPlayerState::Idle);
-		
+		return;
 	}
-	CurrSlideTime += 0.2f;
-	FVector2D Vector = FVector2D::ZERO;
+	CurSlidePower += CurRSlidePower * _DeltaTime;
 
-	if (true == UEngineInput::GetInst().IsPress(VK_LEFT))
+	if (5 >= CurSlidePower.Length())
 	{
-		Vector += FVector2D::LEFT;
+		ChangeState(EPlayerState::Idle);
+		return;
+	}
 
-	}
-	if (true == UEngineInput::GetInst().IsPress(VK_RIGHT))
-	{
-		Vector += FVector2D::RIGHT;
-	}
-	PlayerSlideCheck(_DeltaTime, Vector);
-	
+	AddActorLocation(CurSlidePower * _DeltaTime);
+
 }
 void APlayer::FlyStart()
 {
@@ -1398,12 +1409,14 @@ void APlayer::FireFlyStart()
 void APlayer::FireFlyingStart()
 {
 	Speed = 300.0f;
+	//GravityForce = FVector2D::ZERO;
 	SpriteRenderer->ChangeAnimation("FireFlying" + DirString);
 }
 
 void APlayer::FlyingStart()
 {
 	Speed = 300.0f;
+	//GravityForce = FVector2D::ZERO;
 	SpriteRenderer->ChangeAnimation("Flying" + DirString);
 }
 void APlayer::Fly(float _DeltaTime)
@@ -1411,6 +1424,7 @@ void APlayer::Fly(float _DeltaTime)
 	DirCheck();
 	FlyStartAnim();
 
+	
 	PlayerGroundCheck(GravityForce * _DeltaTime);
 	Gravity(_DeltaTime);
 
@@ -1431,8 +1445,6 @@ void APlayer::Fly(float _DeltaTime)
 
 	}if (true == UEngineInput::GetInst().IsPress('Z'))
 	{
-
-		GravityForce = FVector2D::ZERO;
 		Vector += FVector2D::UP;
 	}
 
@@ -1656,28 +1668,6 @@ void APlayer::PlayerSlideCheck (float _DeltaTime, FVector2D _Vector)
 		AddActorLocation(_Vector * _DeltaTime * Speed);
 
 	}
-	//FTransform PlayerTransformNext = GetTransform();
-	//PlayerTransformNext.Location += FVector2D(30, 0) - GetWorld()->GetCameraPos();
-	//PlayerTransformNext.Scale = { 6,6 };
-	//UEngineDebug::CoreDebugRender(PlayerTransformNext, UEngineDebug::EDebugPosType::Circle);
-
-	//FTransform PlayerTransformDown = GetTransform();
-	//PlayerTransformDown.Location += FVector2D(30, 30) - GetWorld()->GetCameraPos();
-	//PlayerTransformDown.Scale = { 6,6 };
-	//UEngineDebug::CoreDebugRender(PlayerTransformDown, UEngineDebug::EDebugPosType::Circle);
-	//while (false == IsGround)
-	//{
-
-	//	// 내 앞이 white, 아래가 black 이면 
-	//	UColor ColorNext = ColImage->GetColor(PlayerTransformNext.Location, UColor::WHITE);
-	//	UColor ColorDown = ColImage->GetColor(PlayerTransformDown.Location, UColor::WHITE);
-	//	if (ColorNext == UColor::WHITE && ColorDown == UColor::BLACK) AddActorLocation(FVector2D::DOWN * 5);
-
-	//	UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
-	//	if (Color == UColor::BLACK) break;
-	//	else break;
-
-	//}
 }
 void APlayer::InhaleCollisionEnter(AActor* _ColActor)
 {
@@ -1698,6 +1688,10 @@ void APlayer::InhaleCollisionEnd(AActor* _ColActor)
 void APlayer::CollisionEnter(AActor* _ColActor)
 {
 	int a = 0;
+
+	//AMonster* Monster = dynamic_cast<AMonster*>(_ColActor);
+	//if (nullptr == Monster) return;
+
 }
 
 void APlayer::CollisionStay(AActor* _ColActor)

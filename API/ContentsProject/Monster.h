@@ -75,7 +75,7 @@ protected:
 
 	
 
-	virtual void CollisionEnter(AActor* _ColActor) {};
+	virtual void CollisionEnter(AActor* _ColActor);
 	virtual void CollisionStay(AActor* _ColActor) {};
 	virtual void CollisionEnd(AActor* _ColActor) {};
 
@@ -101,6 +101,7 @@ protected:
 	EMonsterState CurMonsterState = EMonsterState::Move;
 	class U2DCollision* SpawnColComponent = nullptr;
 
+	int Hp = 0;
 
 private:
 	void MonsterClimbingUphill();
@@ -134,8 +135,10 @@ private:
 
 		// »ó½Ã 
 	}
+	
 
 private:
+	
 
 	float DamagedTime = 30.0f;
 	float CurDamagedTime = 0.0f;

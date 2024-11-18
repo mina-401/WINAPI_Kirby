@@ -18,6 +18,7 @@ public:
 	void Attack(float _DeltaTime) override;
 
 	void SpawnCollisionEnter(AActor* _ColActor);
+	//void CollisionEnter(AActor* _ColActor);
 	//void CollisionStay(AActor* _ColActor)override;
 	//void CollisionEnd(AActor* _ColActor)override;
 protected:

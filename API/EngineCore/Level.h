@@ -129,7 +129,7 @@ public:
 		for (size_t i = 0; i < CollisionLink.size(); i++)
 		{
 			// 조금 추하지만 vector
-			if (CollisionLink[i].Key == _Right)
+			if (CollisionLink[i].Key == LinkData.Key)
 			{
 				return;
 			}

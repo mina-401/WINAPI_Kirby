@@ -13,7 +13,20 @@
 
 AMonster::AMonster()
 {
-	
+	Hp = 2;
+
+	{
+		U2DCollision* CollisionComponent = CreateDefaultSubObject<U2DCollision>();
+		CollisionComponent->SetComponentLocation({ 0, -20 });
+		CollisionComponent->SetComponentScale({ 50, 50 });
+		CollisionComponent->SetCollisionGroup(ECollisionGroup::MonsterBody);
+		CollisionComponent->SetCollisionType(ECollisionType::CirCle);
+
+		CollisionComponent->SetCollisionEnter(std::bind(&AMonster::CollisionEnter, this, std::placeholders::_1));
+
+		DebugOn();
+
+	}
 }
 
 AMonster::~AMonster()
@@ -274,20 +287,14 @@ void AMonster::Chase(float _DeltaTime)
 
 	}
 	else {
-		//  if(CurrPos)
 
-		//FVector2D Pos = TargetPos;
-		TargetPosVector.Normalize();
+		//TargetPosVector.Normalize();
 		MoveDirCheck(TargetPosVector); //현재 가고 있는 단위 벡터 방향
 
 		FVector2D NextPos = MoveVector * _DeltaTime * Speed;
 		AddActorLocation(NextPos);
 	}
 
-	/*if (TargetPos == GetActorLocation())
-	{
-		int a = 0;
-	}*/
 	MonsterClimbingUphill();
 
 
@@ -335,6 +342,19 @@ void AMonster::CheckPlayerPos()
 		return;
 	}
 	
+}
+void AMonster::CollisionEnter(AActor* _ColActor)
+{
+	//Hp =- 1;
+	//if (Hp <= 0) {
+	//	//effect
+	//	Destroy(0.5f);
+	//}
+	//else if (Hp == 1)
+	//{
+	//	//
+	//}
+
 }
 void AMonster::BlockMonsterPos(FVector2D _MapScale)
 {
