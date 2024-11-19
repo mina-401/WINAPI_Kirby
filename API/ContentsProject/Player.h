@@ -195,11 +195,24 @@ private:
 
         // 상시 
     }
+    void FlyGravity(float _DeltaTime)
+    {
+        if (false == IsGround)
+        {
+            GravityForce += FVector2D::DOWN * _DeltaTime * 0.2f;
+            AddActorLocation(GravityForce);
+        }
+        else {
+            GravityForce = FVector2D::ZERO;
+        }
+
+        // 상시 
+    }
     void JumpGravity(float _DeltaTime)
     {
         if (false == IsGround)
         {
-            GravityForce += FVector2D::DOWN * _DeltaTime * 100.0f;
+            GravityForce += FVector2D::DOWN * _DeltaTime * 0.5f;
             AddActorLocation(GravityForce);
         }
         else {
@@ -226,20 +239,7 @@ private:
     }
     void InhalingGravity(float _DeltaTime, FVector2D FVector);
     void DamageMonster(float _DeltaTime, FVector2D _Vector);
-    void FlyGravity(float _DeltaTime)
-    {
-        if (false == IsGround)
-        {
-            GravityForce += FVector2D::DOWN * _DeltaTime*50.0f;
-            AddActorLocation(GravityForce* _DeltaTime);
-        }
-        else {
-            GravityForce = FVector2D::ZERO;
-
-        }
-
-        // 상시 
-    }
+ 
     void DeAccel(float _DeltaTime, FVector2D Vector)
     {
         // 입력 방향으로 가속한다

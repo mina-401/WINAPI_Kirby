@@ -750,7 +750,8 @@ void APlayer::EatingIdleStart()
 }
 void APlayer::Idle(float _DeltaTime)
 {
-	PlayerGroundCheck(GravityForce*_DeltaTime);
+	//PlayerGroundCheck(GravityForce * _DeltaTime);
+	PlayerGroundCheck(GravityForce);
 	Gravity(_DeltaTime);
 	//DownHillGravity(_DeltaTime);
 
@@ -868,11 +869,14 @@ void APlayer::EatingJumpStart()
 }
 void APlayer::JumpStart()
 {
+	GravityForce = FVector2D::ZERO;
 	Speed = 300.0f;
+
 	SpriteRenderer->ChangeAnimation("Jump"+DirString);
 }
 void APlayer::FireJumpStart()
 {
+	GravityForce = FVector2D::ZERO;
 	Speed = 300.0f;
 	SpriteRenderer->SetComponentScale({ 270,270 });
 	SpriteRenderer->ChangeAnimation("FireJump" + DirString);
@@ -905,15 +909,15 @@ void APlayer::ChangeJumpStateByEat(int _KeyIndx,bool _IsFly) {
 void APlayer::Jump(float _DeltaTime)
 {
 
-	PlayerGroundCheck(GravityForce * _DeltaTime);
-	
-	AddActorLocation(JumpPower * _DeltaTime);
+	PlayerGroundCheck(GravityForce );
 	JumpGravity(_DeltaTime);
+	AddActorLocation(JumpPower*_DeltaTime);
+
 	
 	FVector2D Vector = FVector2D::ZERO;
 
-	if (true == UEngineInput::GetInst().IsPress(VK_LEFT)) Vector = FVector2D::LEFT;
-	if (true == UEngineInput::GetInst().IsPress(VK_RIGHT))  Vector = FVector2D::RIGHT;
+	if (true == UEngineInput::GetInst().IsPress(VK_LEFT)) Vector += FVector2D::LEFT;
+	if (true == UEngineInput::GetInst().IsPress(VK_RIGHT))  Vector += FVector2D::RIGHT;
 	if (true == UEngineInput::GetInst().IsPress('Z') && true == IsFly) {
 
 		ChangeJumpStateByEat('Z', IsFly);
@@ -925,12 +929,23 @@ void APlayer::Jump(float _DeltaTime)
 	{
 		AddActorLocation(Vector  * _DeltaTime * 150.0f);
 	}
+
+	/*UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
+	if (Color == UColor::BLACK)
+	{
+		UColor NextColor = ColImage->GetColor(GetActorLocation() + FVector2D::UP, UColor::WHITE);
+		if (NextColor != UColor::BLACK)
+		{
+			AddActorLocation(FVector2D::UP);
+		}
+
+	}*/
+	PlayerFlyCheck();
 	if (true == IsGround)
 	{
 		ChangeState(EPlayerState::Idle);
 		return;
 	}
-	PlayerFlyCheck();
 }
 
 
@@ -1015,7 +1030,7 @@ void APlayer::ChangeMoveStateByCopy(int _KeyIndex)
 void APlayer::Move(float _DeltaTime)
 {
 	DirCheck();
-	PlayerGroundCheck(GravityForce * _DeltaTime);
+	PlayerGroundCheck(GravityForce);
 	//DownHillGravity(_DeltaTime);
 	Gravity(_DeltaTime);
 	
@@ -1124,7 +1139,7 @@ void APlayer::FireBreakStart()
 }
 void APlayer::Breaking(float _DeltaTime)
 {
-	PlayerGroundCheck(GravityForce * _DeltaTime);
+	PlayerGroundCheck(GravityForce );
 	Gravity(_DeltaTime);
 	FVector2D Vector = FVector2D::ZERO;
 
@@ -1211,7 +1226,7 @@ void APlayer::ChangeDashStateByCopy(int _KeyIndex)
 void APlayer::Dash(float _DeltaTime)
 {
 	DirCheck();
-	PlayerGroundCheck(GravityForce * _DeltaTime);
+	PlayerGroundCheck(GravityForce );
 	//DownHillGravity(_DeltaTime);
 	Gravity(_DeltaTime);
 	if (CurPlayerCopyState == EPlayerCopyState::Fire)
@@ -1424,9 +1439,9 @@ void APlayer::Fly(float _DeltaTime)
 	DirCheck();
 	FlyStartAnim();
 
-	
-	PlayerGroundCheck(GravityForce * _DeltaTime);
-	Gravity(_DeltaTime);
+	PlayerGroundCheck(GravityForce);
+
+	FlyGravity(_DeltaTime);
 
 	FVector2D Vector = FVector2D::ZERO;
 	if (true == UEngineInput::GetInst().IsPress(VK_RIGHT))
@@ -1445,6 +1460,7 @@ void APlayer::Fly(float _DeltaTime)
 
 	}if (true == UEngineInput::GetInst().IsPress('Z'))
 	{
+		GravityForce = FVector2D::ZERO;
 		Vector += FVector2D::UP;
 	}
 
