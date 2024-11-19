@@ -12,7 +12,7 @@
 #include "ContentsEnum.h"
 AWaddleDee::AWaddleDee()
 {
-	CopyAbilityStatus = ECopyAbilityStatus::UnableCopy;
+	//CopyAbilityStatus = ECopyAbilityState::Normal;
 	{
 		SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 
@@ -55,6 +55,12 @@ AWaddleDee::~AWaddleDee()
 {
 }
 
+void AWaddleDee::BeginPlay()
+{
+	AMonster::BeginPlay();
+	SetCopyAbilityState(ECopyAbilityState::Fire);
+}
+
 void AWaddleDee::AttackStart()
 {
 	int a = 0;
@@ -66,6 +72,18 @@ void AWaddleDee::Attack(float _DeltaTime)
 }
 
 void AWaddleDee::SpawnCollisionEnter(AActor* _ColActor)
+{
+	int a = 0;
+}
+
+void AWaddleDee::CollisionEnter(AActor* _ColActor)
+{
+	AMonster::CollisionEnter(_ColActor);
+
+	int a = 0;
+}
+
+void AWaddleDee::CollisionEnd(AActor* _ColActor)
 {
 	int a = 0;
 }

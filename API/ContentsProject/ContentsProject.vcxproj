@@ -159,6 +159,7 @@
     <ClInclude Include="..\EnginePlatform\ThirdParty\FMOD\Inc\fmod_dsp_effects.h" />
     <ClInclude Include="..\EnginePlatform\ThirdParty\FMOD\Inc\fmod_errors.h" />
     <ClInclude Include="..\EnginePlatform\ThirdParty\FMOD\Inc\fmod_output.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="KirbyWidget.h">
       <SubType>
       </SubType>
@@ -167,6 +168,11 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="MonsterWidget.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Score.h" />
     <ClInclude Include="Sparky.h">
       <SubType>
       </SubType>
@@ -272,6 +278,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="KirbyWidget.cpp">
       <SubType>
       </SubType>
@@ -280,6 +287,11 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="MonsterWidget.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Score.cpp" />
     <ClCompile Include="Sparky.cpp">
       <SubType>
       </SubType>

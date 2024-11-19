@@ -19,3 +19,42 @@ enum class ECollisionGroup
 	SpawnPoint,
 	Potal,
 };
+enum class EPlayerState
+{
+	Idle,
+	Crouch,
+	Move,
+	Dash,
+	Break,
+	Jump,
+	Fly,
+	FlyDown,
+	Slide,
+	Attack,
+	Inhale,
+	Exhale,
+
+};
+
+enum class EPlayerEatState
+{
+	Normal,
+	Eating,
+
+};
+enum class EMonsterState
+{
+	Move,
+	Chase,
+	Attack,
+	Inhaled,
+	Hurt,
+};
+
+enum class ECopyAbilityState
+{
+	Normal,
+	Fire,
+	Spark,
+	Beam,
+};

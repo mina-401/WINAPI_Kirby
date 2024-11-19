@@ -24,6 +24,7 @@ AKirbyWidget::AKirbyWidget()
 		
 		{
 			Icon = CreateDefaultSubObject<USpriteRenderer>();
+			Icon->SetCameraEffect(false);
 			Icon->SetOrder(ERenderOrder::UI);
 
 			Icon->SetSprite("LifeIcon.png");
@@ -35,6 +36,7 @@ AKirbyWidget::AKirbyWidget()
 
 		{
 			Life = CreateDefaultSubObject<USpriteRenderer>();
+			Life->SetCameraEffect(false);
 			Life->SetOrder(ERenderOrder::UI);
 
 			Life->SetSprite("Font2.png");
@@ -45,6 +47,7 @@ AKirbyWidget::AKirbyWidget()
 		} 
 		{
 			HpBarCase = CreateDefaultSubObject<USpriteRenderer>();
+			HpBarCase->SetCameraEffect(false);
 			HpBarCase->SetOrder(ERenderOrder::UI);
 
 			HpBarCase->SetSprite("KirbyHpBarCase.png");
@@ -54,6 +57,7 @@ AKirbyWidget::AKirbyWidget()
 		}
 		{
 			HpBar = CreateDefaultSubObject<USpriteRenderer>();
+			HpBar->SetCameraEffect(false);
 			HpBar->SetOrder(ERenderOrder::UI);
 
 			HpBar->SetSprite("KirbyHp.png");
@@ -63,6 +67,7 @@ AKirbyWidget::AKirbyWidget()
 		}
 		{
 			NameTag = CreateDefaultSubObject<USpriteRenderer>();
+			NameTag->SetCameraEffect(false);
 			NameTag->SetOrder(ERenderOrder::UI);
 
 			NameTag->SetSprite("nametag_normal.png");
@@ -70,6 +75,9 @@ AKirbyWidget::AKirbyWidget()
 			WinSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 			
 			MapScale = NameTag->SetSpriteScale(1.0f);
+		}
+		{
+			
 		}
 	}
 }
@@ -82,19 +90,26 @@ void AKirbyWidget::Tick(float _deltaTime)
 {
 	Super::Tick(_deltaTime);
 
-	FVector2D CamPos = GetWorld()->GetCameraPos();
-	SetActorLocation({ CamPos.X ,CamPos.Y  });
-	Icon->SetComponentLocation({ WinSize.Half().X-150,WinSize.Y-60 });
-	Life->SetComponentLocation({ WinSize.Half().X-90,WinSize.Y-57 });
-	HpBarCase->SetComponentLocation({WinSize.Half().X-100,WinSize.Y-20 });
-	HpBar->SetComponentLocation({WinSize.Half().X-100,WinSize.Y-20 });
-	NameTag->SetComponentLocation({(float) 0,WinSize.Y-5 });
+	
 
 }
 
 void AKirbyWidget::BeginPlay()
 {
 	Super::BeginPlay();
+	/*{
+		Score = GetWorld()->SpawnActor<AScore>();
+		Score->SetActorLocation({300, 300});
+		Score->SetTextSpriteName("Text.bmp");
+		Score->SetOrder(ERenderOrder::UI);
+		Score->SetTextScale({50, 100});
+		Score->SetValue(45362784);
+	}*/
 
+	Icon->SetComponentLocation({ WinSize.Half().X - 150,WinSize.Y - 60 });
+	Life->SetComponentLocation({ WinSize.Half().X - 90,WinSize.Y - 57 });
+	HpBarCase->SetComponentLocation({ WinSize.Half().X - 100,WinSize.Y - 20 });
+	HpBar->SetComponentLocation({ WinSize.Half().X - 100,WinSize.Y - 20 });
+	NameTag->SetComponentLocation({ (float)0,WinSize.Y - 5 });
 }
 

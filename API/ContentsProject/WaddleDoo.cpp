@@ -72,6 +72,12 @@ void AWaddleDoo::Attack(float _DeltaTime)
 	AMonster::Attack(_DeltaTime);
 }
 
+void AWaddleDoo::BeginPlay()
+{
+	AMonster::BeginPlay();
+	SetCopyAbilityState(ECopyAbilityState::Beam);
+}
+
 
 void AWaddleDoo::CollisionEnter(AActor* _ColActor)
 {

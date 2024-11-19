@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "Monster.h"
 #include "Player.h"
+#include "MonsterWidget.h"
 
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/SpriteRenderer.h>
@@ -23,6 +24,7 @@ AMonster::AMonster()
 		CollisionComponent->SetCollisionType(ECollisionType::CirCle);
 
 		CollisionComponent->SetCollisionEnter(std::bind(&AMonster::CollisionEnter, this, std::placeholders::_1));
+		//CollisionComponent->SetCollisionEnter(std::bind(&AMonster::CollisionEnd, this, std::placeholders::_1));
 
 		DebugOn();
 
@@ -32,7 +34,11 @@ AMonster::AMonster()
 AMonster::~AMonster()
 {
 }
-
+void AMonster::InhalingGravity(float _DeltaTime, FVector2D _Vector)
+{
+	InhalingForce = _Vector * _DeltaTime * 150.0f;
+	AddActorLocation(InhalingForce);
+}
 void AMonster::DirCheck()
 {
 	if (MoveVector == FVector2D::RIGHT) {
@@ -171,6 +177,8 @@ void AMonster::SetColImage(std::string_view _ColImageName)
 void AMonster::BeginPlay()
 {
 	Super::BeginPlay();
+	MonWidget = GetWorld()->SpawnActor<AMonsterWidget>();
+	MonWidget->SetActive(false);
 }
 
 void AMonster::Tick(float _DeltaTime)
@@ -179,6 +187,19 @@ void AMonster::Tick(float _DeltaTime)
 
 	//플레이어와 일정거리에 있으면 따라간다.
 	// target - me
+	/*if (true == IsColEnd)
+	{
+		if (CurHpbarTime >= 100.0f)
+		{
+			CurHpbarTime = 0.0f;
+			IsColEnd = false;
+			MonWidget->SetActive(false);
+
+		}
+		else {
+			CurHpbarTime += 0.2f;
+		}
+	}*/
 
 	switch (CurMonsterState)
 	{
@@ -345,15 +366,19 @@ void AMonster::CheckPlayerPos()
 }
 void AMonster::CollisionEnter(AActor* _ColActor)
 {
-	//Hp =- 1;
-	//if (Hp <= 0) {
-	//	//effect
-	//	Destroy(0.5f);
-	//}
-	//else if (Hp == 1)
-	//{
-	//	//
-	//}
+	int a = 0;
+	//MonWidget->SetActive(true);
+	//IsColEnd = true;
+
+
+}
+void AMonster::CollisionStay(AActor* _ColActor)
+{
+	//IsColEnd = true;
+}
+void AMonster::CollisionEnd(AActor* _ColActor)
+{
+	
 
 }
 void AMonster::BlockMonsterPos(FVector2D _MapScale)

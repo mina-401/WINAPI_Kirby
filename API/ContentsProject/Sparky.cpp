@@ -11,7 +11,7 @@
 #include "ContentsEnum.h"
 ASparky::ASparky()
 {
-	CopyAbilityStatus = ECopyAbilityStatus::AbleCopy;
+	//CopyAbilityStatus = ECopyAbilityState::Spark;
 	{
 		SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 		SetName("Sparky");
@@ -71,6 +71,12 @@ void ASparky::AttackStart()
 void ASparky::Attack(float _DeltaTime)
 {
 	AMonster::Attack(_DeltaTime);
+}
+
+void ASparky::BeginPlay()
+{
+	AMonster::BeginPlay();
+	SetCopyAbilityState(ECopyAbilityState::Spark);
 }
 
 void ASparky::CollisionEnter(AActor* _ColActor)

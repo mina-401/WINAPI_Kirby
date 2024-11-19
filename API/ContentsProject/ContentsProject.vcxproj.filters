@@ -113,6 +113,15 @@
     <ClInclude Include="..\EnginePlatform\ThirdParty\FMOD\Inc\fmod_output.h">
       <Filter>ThridParty\FMOD\Inc</Filter>
     </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>ContentsObject\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterWidget.h">
+      <Filter>ContentsObject\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>ContentsObject\Kirby</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -202,6 +211,15 @@
     </ClCompile>
     <ClCompile Include="SpawnManager.cpp">
       <Filter>ContentsObject\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Score.cpp">
+      <Filter>ContentsObject\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterWidget.cpp">
+      <Filter>ContentsObject\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>ContentsObject\Kirby</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

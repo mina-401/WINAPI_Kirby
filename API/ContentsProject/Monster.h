@@ -1,24 +1,11 @@
 #pragma once
 #include <EngineCore/Actor.h>
 #include <EngineCore/SpriteRenderer.h>
+#include "ContentsEnum.h"
 
 // Ό³Έν :
 
-enum class EMonsterState
-{
-	Move,
-	Chase,
-	Attack,  
-	Inhaled, 
-	Hurt,
-};
 
-enum class ECopyAbilityStatus
-{
-	AbleCopy,
-	UnableCopy,
-
-};
 class AMonster : public AActor
 {
 public:
@@ -28,6 +15,7 @@ public:
 
 	AMonster();
 	~AMonster();
+
 
 	// delete Function
 	AMonster(const AMonster& _Other) = delete;
@@ -57,15 +45,23 @@ public:
 	void ChangeState(EMonsterState _CurMonsterState);
 	
 	class U2DCollision* AttackColComponent = nullptr;
+	class AMonsterWidget* MonWidget = nullptr;
 
 	EMonsterState GetCurMonsterState() const
 	{
 		return CurMonsterState;
 	}
-	ECopyAbilityStatus GetCopyAbilityStatus() const
+	ECopyAbilityState GetCopyAbilityState() const
 	{
 		return CopyAbilityStatus;
 	}
+
+	void SetCopyAbilityState(ECopyAbilityState _copy) 
+	{
+		CopyAbilityStatus = _copy;
+	}
+	void InhalingGravity(float _DeltaTime, FVector2D _Vector);
+
 
 protected:
 	void BeginPlay() override;
@@ -76,8 +72,8 @@ protected:
 	
 
 	virtual void CollisionEnter(AActor* _ColActor);
-	virtual void CollisionStay(AActor* _ColActor) {};
-	virtual void CollisionEnd(AActor* _ColActor) {};
+	virtual void CollisionStay(AActor* _ColActor);
+	virtual void CollisionEnd(AActor* _ColActor);
 
 	
 
@@ -91,17 +87,22 @@ protected:
 
 	FVector2D GravityForce = FVector2D::ZERO;
 	float DamageForce = 10.0f;
+	FVector2D InhalingForce = FVector2D::ZERO;
 	FVector2D MoveVector = FVector2D::LEFT;
 	FVector2D TargetPosVector = FVector2D::ZERO;
 
 	FVector2D CurrPos = FVector2D::ZERO;
 	float MonsterToPlayerRange = 150.0f;
 
-	ECopyAbilityStatus CopyAbilityStatus = ECopyAbilityStatus::UnableCopy;
+	ECopyAbilityState CopyAbilityStatus = ECopyAbilityState::Normal;
 	EMonsterState CurMonsterState = EMonsterState::Move;
+
+
 	class U2DCollision* SpawnColComponent = nullptr;
 
 	int Hp = 0;
+	float CurHpbarTime = 0.0f;
+	bool IsColEnd = false;
 
 private:
 	void MonsterClimbingUphill();
@@ -138,7 +139,6 @@ private:
 	
 
 private:
-	
 
 	float DamagedTime = 30.0f;
 	float CurDamagedTime = 0.0f;

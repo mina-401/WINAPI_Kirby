@@ -2,37 +2,8 @@
 #include <EngineCore/Actor.h>
 #include <EngineCore/ImageManager.h>
 #include <EnginePlatform/EngineSound.h>
+#include "ContentsEnum.h"
 
-enum class EPlayerState
-{
-    Idle,
-    Crouch,
-    Move,
-    Dash,
-    Break,
-    Jump,
-    Fly,
-    FlyDown,
-    Slide,
-    Attack,
-    Inhale,
-    Exhale,
-    
-};
-
-enum class EPlayerCopyState
-{
-    Normal,
-    Spark,
-    Beam,
-    Fire,
-};
-enum class EPlayerEatState
-{
-    Normal,
-    Eating,
-
-};
 
 class APlayer : public AActor
 {
@@ -91,7 +62,7 @@ private:
 
     EPlayerState CurPlayerState = EPlayerState::Idle;
     EPlayerEatState CurPlayerEatState = EPlayerEatState::Normal;
-    EPlayerCopyState CurPlayerCopyState = EPlayerCopyState::Normal;
+    ECopyAbilityState CurPlayerCopyState = ECopyAbilityState::Normal;
 
     std::string DirString = "_Right";
 
@@ -103,6 +74,7 @@ private:
     void DirCheck();
     void ChangeState(EPlayerState CurPlayerState);
     void EatingIdleStart();
+    void SparkIdleStart();
     void EatingMoveStart();
     void EatingDashStart();
     void EatingJumpStart();
@@ -115,36 +87,50 @@ private:
     void FireCrouchStart();
     void FireBreakStart();
     void FireJumpStart();
-    void ChangeJumpStateByEat(int _KeyIndx, bool _IsFly);
     void FireSlideStart();
+    void CheckSlideDir();
+    void SparkSlideStart();
     void FireFlyingStart();
     void FireFlyDownStart();
 
+    void SparkMoveStart();
+    void SparkDashStart();
+    void SparkCrouchStart();
+    void SparkFlyingStart();
+    void SparkFlyDownStart();
+
+    void ChangeJumpStateByEat(int _KeyIndx, bool _IsFly);
+    void ChangeIdleStateByCopy(int _KeyIndex);
+    void ChangeDashStateByEat(int _KeyIndex);
+    void ChangeDashStateByCopy(int _KeyIndex);
 
     void IdleStart();
     void Idle(float _DeltaTime);
-    void ChangeIdleStateByCopy(int _KeyIndex);
     void CrouchStart();
     void Crouch(float _DeltaTime);
+    void CrouchStartAnim();
     void MoveStart();
     void Move(float _DeltaTime);
     void DashStart();
-    void ChangeDashStateByCopy(int _KeyIndex);
     void BreakStart();
     void Breaking(float _DeltaTime);
     void Dash(float _DeltaTime);
-    void AttackStart();
+    void FireAttackStart();
+    void SparkAttackStart();
     void Attack(float _DeltaTime);
 
-    void ChangeDashStateByEat(int _KeyIndex);
+    void AttackStartAnim();
+
    
     void JumpStart();
+    void SparkJumpStart();
     void Jump(float _DeltaTime);
 
     void SlideStart();
     void Slide(float _DeltaTime);
     void FlyStart();
     void FireFlyStart();
+    void SparkFlyStart();
     void FlyingStart();
     void Fly(float _DeltaTime);
     void FlyStartAnim();
@@ -212,7 +198,7 @@ private:
     {
         if (false == IsGround)
         {
-            GravityForce += FVector2D::DOWN * _DeltaTime * 0.5f;
+            GravityForce += FVector2D::DOWN * _DeltaTime * 0.4f;
             AddActorLocation(GravityForce);
         }
         else {
@@ -237,7 +223,6 @@ private:
 
         // »ó½Ã 
     }
-    void InhalingGravity(float _DeltaTime, FVector2D FVector);
     void DamageMonster(float _DeltaTime, FVector2D _Vector);
  
     void DeAccel(float _DeltaTime, FVector2D Vector)
@@ -254,7 +239,6 @@ private:
     FVector2D FrictionForce = FVector2D::ZERO;
     FVector2D GravityForce = FVector2D::ZERO;
     FVector2D DownHillGravityForce = FVector2D::ZERO;
-    FVector2D InhalingForce = FVector2D::ZERO;
     FVector2D DamageForce = FVector2D::ZERO;
     FVector2D DashVector = FVector2D::RIGHT;
     FVector2D JumpPower = FVector2D(0.0f, -300.0f);

@@ -78,6 +78,11 @@ APlayer::APlayer()
 		UImageManager::GetInst().CuttingSprite("FireDash_Left.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("FireDash_Right.png", { 128, 128 });
 
+		UImageManager::GetInst().CuttingSprite("AllSparkKirby_Left.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("AllSparkKirby_Right.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("AttackKirby_Right.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("AttackKirby_Left.png", { 128, 128 });
+
 
 
 
@@ -145,6 +150,31 @@ APlayer::APlayer()
 		SpriteRenderer->CreateAnimation("FireDash_Left", "FireDash_Left.png", 0, 0, 0.1f);
 		SpriteRenderer->CreateAnimation("FireDash_Right", "FireDash_Right.png", 0, 0, 0.1f);
 
+		//spark
+		SpriteRenderer->CreateAnimation("SparkIdle_Left", "AllSparkKirby_Left.png", 0, 7, 0.2f);
+		SpriteRenderer->CreateAnimation("SparkIdle_Right", "AllSparkKirby_Right.png", 0, 7, 0.2f);
+		SpriteRenderer->CreateAnimation("SparkRun_Left", "AllSparkKirby_Left.png", 114,119, 0.1f,true);
+		SpriteRenderer->CreateAnimation("SparkRun_Right", "AllSparkKirby_Right.png", 114,119, 0.1f, true);
+		SpriteRenderer->CreateAnimation("SparkWalk_Left", "AllSparkKirby_Left.png", 96, 112, 0.05f);
+		SpriteRenderer->CreateAnimation("SparkWalk_Right", "AllSparkKirby_Right.png", 96, 112, 0.05f);
+		SpriteRenderer->CreateAnimation("SparkCrouch_Left", "AllSparkKirby_Left.png", 7, 14, 0.2f, false);
+		SpriteRenderer->CreateAnimation("SparkCrouch_Right", "AllSparkKirby_Right.png", 7, 14, 0.2f, false);
+		SpriteRenderer->CreateAnimation("SparkJump_Left", "AllSparkKirby_Left.png", 85, 94, 0.1f, false);
+		SpriteRenderer->CreateAnimation("SparkJump_Right", "AllSparkKirby_Right.png", 85, 94, 0.1f, false);
+		SpriteRenderer->CreateAnimation("SparkFly_Left", "AllSparkKirby_Left.png", 134, 143, 0.1f, false);
+		SpriteRenderer->CreateAnimation("SparkFly_Right", "AllSparkKirby_Right.png", 134, 143, 0.1f, false);
+		SpriteRenderer->CreateAnimation("SparkFlying_Left", "AllSparkKirby_Left.png", 136, 160, 0.05f);
+		SpriteRenderer->CreateAnimation("SparkFlying_Right", "AllSparkKirby_Right.png", 136, 160, 0.05f);
+		SpriteRenderer->CreateAnimation("SparkFlyingDown_Left", "AllSparkKirby_Left.png", 171, 179, 0.1f, false);
+		SpriteRenderer->CreateAnimation("SparkFlyingDown_Right", "AllSparkKirby_Right.png", 171, 179, 0.1f, false);
+		SpriteRenderer->CreateAnimation("SparkSlide_Left", "AllSparkKirby_Left.png", 80, 84, 0.5f, false);
+		SpriteRenderer->CreateAnimation("SparkSlide_Right", "AllSparkKirby_Right.png", 80, 84, 0.5f, false);
+		//SpriteRenderer->CreateAnimation("SparkBreak_Left", "AllSparkKirby_Left.png", 0, 1, 0.1f, false);
+		//SpriteRenderer->CreateAnimation("SparkBreak_Right", "AllSparkKirby_Right.png", 0, 1, 0.1f, false);
+		SpriteRenderer->CreateAnimation("SparkAttack_Left", "AttackKirby_Left.png", 0,6, 0.2f, true);
+		SpriteRenderer->CreateAnimation("SparkAttack_Right", "AttackKirby_Right.png", 0,6, 0.2f, true);
+		//SpriteRenderer->CreateAnimation("SparkExhale_Left", "AllSparkKirby_Left.png", 0, 2, 0.1f, false);
+		//SpriteRenderer->CreateAnimation("SparkExhale_Right", "AllSparkKirby_Right.png", 0, 2, 0.1f, false);
 
 
 		SpriteRenderer->ChangeAnimation("Idle_Right");
@@ -265,7 +295,7 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 
 		switch (CurPlayerCopyState)
 		{
-		case EPlayerCopyState::Normal:
+		case ECopyAbilityState::Normal:
 			switch (CurPlayerEatState)
 			{
 			case EPlayerEatState::Normal:
@@ -278,11 +308,12 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 				break;
 			}
 			break;
-		case EPlayerCopyState::Spark:
+		case ECopyAbilityState::Spark:
+			SparkIdleStart();
 			break;
-		case EPlayerCopyState::Beam:
+		case ECopyAbilityState::Beam:
 			break;
-		case EPlayerCopyState::Fire:
+		case ECopyAbilityState::Fire:
 			FireIdleStart();
 			break;
 		default:
@@ -298,14 +329,15 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 	case EPlayerState::Crouch:
 		switch (CurPlayerCopyState)
 		{
-		case EPlayerCopyState::Normal:
+		case ECopyAbilityState::Normal:
 			CrouchStart();
 			break;
-		case EPlayerCopyState::Spark:
+		case ECopyAbilityState::Spark:
+			SparkCrouchStart();
 			break;
-		case EPlayerCopyState::Beam:
+		case ECopyAbilityState::Beam:
 			break;
-		case EPlayerCopyState::Fire:
+		case ECopyAbilityState::Fire:
 			FireCrouchStart();
 			break;
 		default:
@@ -316,11 +348,11 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 
 
 
-	case EPlayerState::Move:
 
+	case EPlayerState::Move:
 		switch (CurPlayerCopyState)
 		{
-		case EPlayerCopyState::Normal:
+		case ECopyAbilityState::Normal:
 			switch (CurPlayerEatState)
 			{
 			case EPlayerEatState::Normal:
@@ -333,11 +365,12 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 				break;
 			}
 			break;
-		case EPlayerCopyState::Spark:
+		case ECopyAbilityState::Spark:
+			SparkMoveStart();
 			break;
-		case EPlayerCopyState::Beam:
+		case ECopyAbilityState::Beam:
 			break;
-		case EPlayerCopyState::Fire:
+		case ECopyAbilityState::Fire:
 			FireMoveStart();
 			break;
 		default:
@@ -352,7 +385,7 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 
 		switch (CurPlayerCopyState)
 		{
-		case EPlayerCopyState::Normal:
+		case ECopyAbilityState::Normal:
 			
 			switch (CurPlayerEatState)
 			{
@@ -367,13 +400,14 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 			}
 			break;
 
-		case EPlayerCopyState::Spark:
+		case ECopyAbilityState::Spark:
+			SparkDashStart();
 			break;
 
-		case EPlayerCopyState::Beam:
+		case ECopyAbilityState::Beam:
 			break;
 
-		case EPlayerCopyState::Fire:
+		case ECopyAbilityState::Fire:
 			FireDashStart();
 			break;
 
@@ -389,14 +423,14 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 
 		switch (CurPlayerCopyState)
 		{
-		case EPlayerCopyState::Normal:
+		case ECopyAbilityState::Normal:
 			BreakStart();
 			break;
-		case EPlayerCopyState::Spark:
+		case ECopyAbilityState::Spark:
 			break;
-		case EPlayerCopyState::Beam:
+		case ECopyAbilityState::Beam:
 			break;
-		case EPlayerCopyState::Fire:
+		case ECopyAbilityState::Fire:
 			FireBreakStart();
 			break;
 		default:
@@ -409,7 +443,7 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 	case EPlayerState::Jump:
 		switch (CurPlayerCopyState)
 		{
-		case EPlayerCopyState::Normal:
+		case ECopyAbilityState::Normal:
 			switch (CurPlayerEatState)
 			{
 			case EPlayerEatState::Normal:
@@ -423,11 +457,12 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 			}
 			break;
 
-		case EPlayerCopyState::Spark:
+		case ECopyAbilityState::Spark:
+			SparkJumpStart();
 			break;
-		case EPlayerCopyState::Beam:
+		case ECopyAbilityState::Beam:
 			break;
-		case EPlayerCopyState::Fire:
+		case ECopyAbilityState::Fire:
 			FireJumpStart();
 			break;
 		default:
@@ -443,15 +478,16 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 
 		switch (CurPlayerCopyState)
 		{
-		case EPlayerCopyState::Normal:
+		case ECopyAbilityState::Normal:
 			FlyStart();
 
 			break;
-		case EPlayerCopyState::Spark:
+		case ECopyAbilityState::Spark:
+			SparkFlyStart();
 			break;
-		case EPlayerCopyState::Beam:
+		case ECopyAbilityState::Beam:
 			break;
-		case EPlayerCopyState::Fire:
+		case ECopyAbilityState::Fire:
 			FireFlyStart();
 			break;
 		default:
@@ -466,15 +502,15 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 
 		switch (CurPlayerCopyState)
 		{
-		case EPlayerCopyState::Normal:
+		case ECopyAbilityState::Normal:
 			FlyDownStart();
-
 			break;
-		case EPlayerCopyState::Spark:
+		case ECopyAbilityState::Spark:
+			SparkFlyDownStart();
 			break;
-		case EPlayerCopyState::Beam:
+		case ECopyAbilityState::Beam:
 			break;
-		case EPlayerCopyState::Fire:
+		case ECopyAbilityState::Fire:
 			FireFlyDownStart();
 			break;
 		default:
@@ -490,15 +526,15 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 
 		switch (CurPlayerCopyState)
 		{
-		case EPlayerCopyState::Normal:
+		case ECopyAbilityState::Normal:
 			SlideStart();
-
 			break;
-		case EPlayerCopyState::Spark:
+		case ECopyAbilityState::Spark:
+			SparkSlideStart();
 			break;
-		case EPlayerCopyState::Beam:
+		case ECopyAbilityState::Beam:
 			break;
-		case EPlayerCopyState::Fire:
+		case ECopyAbilityState::Fire:
 			FireSlideStart();
 			break;
 		default:
@@ -515,14 +551,15 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 
 		switch (CurPlayerCopyState)
 		{
-		case EPlayerCopyState::Normal:
+		case ECopyAbilityState::Normal:
 			InhaleStart();
 			break;
-		case EPlayerCopyState::Spark:
+		case ECopyAbilityState::Spark:
+
 			break;
-		case EPlayerCopyState::Beam:
+		case ECopyAbilityState::Beam:
 			break;
-		case EPlayerCopyState::Fire:
+		case ECopyAbilityState::Fire:
 			
 			break;
 		default:
@@ -535,7 +572,22 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 		break;
 	//copy 상태일 때만 상태 변경
 	case EPlayerState::Attack:
-		AttackStart();
+		switch (CurPlayerCopyState)
+		{
+		case ECopyAbilityState::Normal:
+			break;
+		case ECopyAbilityState::Fire:
+			FireAttackStart();
+
+			break;
+		case ECopyAbilityState::Spark:
+			SparkAttackStart();
+			break;
+		case ECopyAbilityState::Beam:
+			break;
+		default:
+			break;
+		}
 		break;
 
 
@@ -654,8 +706,6 @@ void APlayer::LevelChangeStart()
 void APlayer::LevelChangeEnd()
 {
 	Super::LevelChangeEnd();
-
-
 }
 void APlayer::DamageMonster(float _DeltaTime, FVector2D _Vector)
 {
@@ -664,16 +714,41 @@ void APlayer::DamageMonster(float _DeltaTime, FVector2D _Vector)
 	ColMonster->AddActorLocation(Pos);
 }
 
-void APlayer::AttackStart()
+void APlayer::FireAttackStart()
 {
 	Speed = 300.0f;
 	SpriteRenderer->ChangeAnimation("FireAttack" + DirString);
+	{
+		InhaleRightComponent->SetComponentLocation({ 90, -20 });
+		InhaleRightComponent->SetComponentScale({ 80, 60 });
+		InhaleRightComponent->SetCollisionType(ECollisionType::Rect);
+	}
+	{
+		InhaleLeftComponent->SetComponentLocation({ -90, -20 });
+		InhaleLeftComponent->SetComponentScale({ 80, 60 });
+		InhaleLeftComponent->SetCollisionType(ECollisionType::Rect);
+	}
+}
+void APlayer::SparkAttackStart()
+{
+	Speed = 300.0f;
+	SpriteRenderer->ChangeAnimation("SparkAttack" + DirString);
+	{
+		InhaleRightComponent->SetComponentLocation({ 0, 0 });
+		InhaleRightComponent->SetComponentScale({ 100, 100 });
+		InhaleRightComponent->SetCollisionType(ECollisionType::CirCle);
+	}
+	{
+		InhaleLeftComponent->SetComponentLocation({ 0, 0 });
+		InhaleLeftComponent->SetComponentScale({ 100, 100 });
+		InhaleLeftComponent->SetCollisionType(ECollisionType::CirCle);
+	}
 }
 void APlayer::Attack(float _DeltaTime)
 {
 	DirCheck();
-	AttackStart();
 
+	
 	if (true == SpriteRenderer->IsCurAnimationEnd())
 	{
 		ChangeState(EPlayerState::Idle);
@@ -706,13 +781,10 @@ void APlayer::Attack(float _DeltaTime)
 
 	if (ColActor != nullptr) {
 
-		ColMonster = dynamic_cast<AMonster*>(ColActor);
-		ColMonster->ChangeState(EMonsterState::Hurt);
-	
-		
+		AMonster* Monster = dynamic_cast<AMonster*>(ColActor);
+		Monster->ChangeState(EMonsterState::Hurt);
 
 	}
-	ColActor = nullptr;
 	//ColActor = CollisionComponent->CollisionOnce(ECollisionGroup::MonsterBody);
 	//if (ColActor != nullptr)
 	//{
@@ -728,6 +800,24 @@ void APlayer::Attack(float _DeltaTime)
 
 	//}
 	int a = 0;
+}
+void APlayer::AttackStartAnim()
+{
+	switch (CurPlayerCopyState)
+	{
+	case ECopyAbilityState::Normal:
+		break;
+	case ECopyAbilityState::Fire:
+		FireAttackStart();
+		break;
+	case ECopyAbilityState::Spark:
+		SparkAttackStart();
+		break;
+	case ECopyAbilityState::Beam:
+		break;
+	default:
+		break;
+	}
 }
 void APlayer::IdleStart()
 {
@@ -748,9 +838,15 @@ void APlayer::EatingIdleStart()
 	SpriteRenderer->ChangeAnimation("Eating" + DirString);
 
 }
+void APlayer::SparkIdleStart()
+{
+	Speed = 300.0f;
+	SpriteRenderer->ChangeAnimation("SparkIdle" + DirString);
+
+}
 void APlayer::Idle(float _DeltaTime)
 {
-	//PlayerGroundCheck(GravityForce * _DeltaTime);
+
 	PlayerGroundCheck(GravityForce);
 	Gravity(_DeltaTime);
 	//DownHillGravity(_DeltaTime);
@@ -758,26 +854,18 @@ void APlayer::Idle(float _DeltaTime)
 
 	if (true == UEngineInput::GetInst().IsPress(VK_LEFT) ||
 		true == UEngineInput::GetInst().IsPress(VK_RIGHT))
-
 	{ 
-		//GravityForce = FVector2D::ZERO;
-		//AddActorLocation()
 		ChangeState(EPlayerState::Move);
 	}
 
 	if (true == UEngineInput::GetInst().IsDoubleClick(VK_RIGHT, 0.5f)|| true == UEngineInput::GetInst().IsDoubleClick(VK_LEFT, 0.5f))
 	{
-		//GravityForce = FVector2D::ZERO;
-
 		ChangeState(EPlayerState::Dash);
 		return;
 	}
 
-	
-
 	if (true == UEngineInput::GetInst().IsPress('Z'))
 	{
-		//GravityForce = FVector2D::ZERO;
 		ChangeState(EPlayerState::Jump);
 		return;
 	}
@@ -813,28 +901,17 @@ void APlayer::FireCrouchStart()
 	SpriteRenderer->SetComponentScale({ 270,270 });
 	SpriteRenderer->ChangeAnimation("FireCrouch" + DirString);
 }
-
+void APlayer::SparkCrouchStart()
+{
+	Speed = 300.0f;
+	SpriteRenderer->ChangeAnimation("SparkCrouch" + DirString);
+}
 
 
 void APlayer::Crouch(float _DeltaTime)
 {
 	DirCheck();
-	switch (CurPlayerCopyState)
-	{
-	case EPlayerCopyState::Normal:
-		CrouchStart();
-
-		break;
-	case EPlayerCopyState::Spark:
-		break;
-	case EPlayerCopyState::Beam:
-		break;
-	case EPlayerCopyState::Fire:
-		FireCrouchStart();
-		break;
-	default:
-		break;
-	}
+	CrouchStartAnim();
 
 	if (true == UEngineInput::GetInst().IsPress('Z'))
 	{
@@ -845,6 +922,27 @@ void APlayer::Crouch(float _DeltaTime)
 	{
 		ChangeState(EPlayerState::Idle);
 		return;
+	}
+}
+
+void APlayer::CrouchStartAnim()
+{
+	switch (CurPlayerCopyState)
+	{
+	case ECopyAbilityState::Normal:
+		CrouchStart();
+
+		break;
+	case ECopyAbilityState::Spark:
+		SparkCrouchStart();
+		break;
+	case ECopyAbilityState::Beam:
+		break;
+	case ECopyAbilityState::Fire:
+		FireCrouchStart();
+		break;
+	default:
+		break;
 	}
 }
 
@@ -864,6 +962,7 @@ bool APlayer::PlayerNextPosCheck(float _DeltaTime, FVector2D _Vector)
 
 void APlayer::EatingJumpStart()
 {
+	GravityForce = FVector2D::ZERO;
 	Speed = 150.0f;
 	SpriteRenderer->ChangeAnimation("EatingJump" + DirString);
 }
@@ -873,6 +972,13 @@ void APlayer::JumpStart()
 	Speed = 300.0f;
 
 	SpriteRenderer->ChangeAnimation("Jump"+DirString);
+}
+void APlayer::SparkJumpStart()
+{
+	GravityForce = FVector2D::ZERO;
+	Speed = 300.0f;
+
+	SpriteRenderer->ChangeAnimation("SparkJump" + DirString);
 }
 void APlayer::FireJumpStart()
 {
@@ -908,6 +1014,8 @@ void APlayer::ChangeJumpStateByEat(int _KeyIndx,bool _IsFly) {
 }
 void APlayer::Jump(float _DeltaTime)
 {
+	DirCheck();
+
 
 	PlayerGroundCheck(GravityForce );
 	JumpGravity(_DeltaTime);
@@ -961,7 +1069,12 @@ void APlayer::FireMoveStart()
 	SpriteRenderer->SetComponentScale({ 270,270 });
 	SpriteRenderer->ChangeAnimation("FireWalk" + DirString);
 }
+void APlayer::SparkMoveStart()
+{
+	Speed = 300.0f;
+	SpriteRenderer->ChangeAnimation("SparkWalk" + DirString);
 
+}
 
 void APlayer::EatingMoveStart()
 {
@@ -978,7 +1091,7 @@ void APlayer::ChangeMoveStateByCopy(int _KeyIndex)
 	case 'X':
 		switch (CurPlayerCopyState)
 		{
-		case EPlayerCopyState::Normal:
+		case ECopyAbilityState::Normal:
 			switch (CurPlayerEatState)
 			{
 			case EPlayerEatState::Normal:
@@ -992,13 +1105,17 @@ void APlayer::ChangeMoveStateByCopy(int _KeyIndex)
 				break;
 			}
 			break;
-		case EPlayerCopyState::Spark:
+		case ECopyAbilityState::Spark:
+			ChangeState(EPlayerState::Attack);
+
 			break;
-		case EPlayerCopyState::Beam:
+		case ECopyAbilityState::Beam:
 			break;
-		case EPlayerCopyState::Fire:
-			CurPlayerCopyState = EPlayerCopyState::Normal;
-			ChangeState(EPlayerState::Idle);
+		case ECopyAbilityState::Fire:
+			ChangeState(EPlayerState::Attack);
+
+			//CurPlayerCopyState = ECopyAbilityState::Normal;
+			//ChangeState(EPlayerState::Idle);
 			
 			break;
 		default:
@@ -1008,14 +1125,14 @@ void APlayer::ChangeMoveStateByCopy(int _KeyIndex)
 	case 'A':
 		switch (CurPlayerCopyState)
 		{
-		case EPlayerCopyState::Normal:
+		case ECopyAbilityState::Normal:
 			break;
-		case EPlayerCopyState::Spark:
+		case ECopyAbilityState::Spark:
 			break;
-		case EPlayerCopyState::Beam:
+		case ECopyAbilityState::Beam:
 			break;
-		case EPlayerCopyState::Fire:
-			CurPlayerCopyState = EPlayerCopyState::Normal;
+		case ECopyAbilityState::Fire:
+			CurPlayerCopyState = ECopyAbilityState::Normal;
 			ChangeState(EPlayerState::Idle);
 			break;
 		default:
@@ -1173,7 +1290,11 @@ void APlayer::FireDashStart()
 	SpriteRenderer->ChangeAnimation("FireRun" + DirString);
 	Speed = 500.0f;
 }
-
+void APlayer::SparkDashStart()
+{
+	SpriteRenderer->ChangeAnimation("SparkRun" + DirString);
+	Speed = 500.0f;
+}
 void APlayer::DashStart()
 {
 	SpriteRenderer->ChangeAnimation("Run" + DirString);
@@ -1190,7 +1311,7 @@ void APlayer::ChangeDashStateByCopy(int _KeyIndex)
 	case 'X':
 		switch (CurPlayerCopyState)
 		{
-		case EPlayerCopyState::Normal:
+		case ECopyAbilityState::Normal:
 			switch (CurPlayerEatState)
 			{
 			case EPlayerEatState::Normal:
@@ -1204,15 +1325,15 @@ void APlayer::ChangeDashStateByCopy(int _KeyIndex)
 				break;
 			}
 			break;
-		case EPlayerCopyState::Spark:
+		case ECopyAbilityState::Spark:
 			ChangeState(EPlayerState::Attack);
 
 			break;
-		case EPlayerCopyState::Beam:
+		case ECopyAbilityState::Beam:
 			ChangeState(EPlayerState::Attack);
 
 			break;
-		case EPlayerCopyState::Fire:
+		case ECopyAbilityState::Fire:
 			ChangeState(EPlayerState::Attack);
 			break;
 		default:
@@ -1226,48 +1347,49 @@ void APlayer::ChangeDashStateByCopy(int _KeyIndex)
 void APlayer::Dash(float _DeltaTime)
 {
 	DirCheck();
-	PlayerGroundCheck(GravityForce );
-	//DownHillGravity(_DeltaTime);
+	PlayerGroundCheck(GravityForce);
+
 	Gravity(_DeltaTime);
-	if (CurPlayerCopyState == EPlayerCopyState::Fire)
+
+	if (CurPlayerCopyState == ECopyAbilityState::Fire)
 	{
 		SpriteRenderer->SetComponentScale({180,180});
 
 	}
 	FVector2D Vector = FVector2D::ZERO;
-
-	if (true == UEngineInput::GetInst().IsPress(VK_DOWN))
-	{
-		Vector += FVector2D::DOWN;
-	}
-	if (true == UEngineInput::GetInst().IsPress(VK_LEFT))
-	{
-
-		Vector += FVector2D::LEFT;
-
-	}
-	if (true == UEngineInput::GetInst().IsPress(VK_RIGHT))
-	{
-
-		Vector += FVector2D::RIGHT;
-	}
-
 	if (true == UEngineInput::GetInst().IsDown('Z') && true == UEngineInput::GetInst().IsPress(VK_DOWN))
 	{
 		ChangeState(EPlayerState::Slide);
 		return;
 	}
-	if (true == UEngineInput::GetInst().IsPress('Z'))
+	 if (true == UEngineInput::GetInst().IsPress(VK_DOWN))
+	{
+		Vector += FVector2D::DOWN;
+	}
+	 if (true == UEngineInput::GetInst().IsPress(VK_LEFT))
+	{
+
+		Vector += FVector2D::LEFT;
+
+	}
+	 if (true == UEngineInput::GetInst().IsPress(VK_RIGHT))
+	{
+
+		Vector += FVector2D::RIGHT;
+	}
+
+	
+	 if (true == UEngineInput::GetInst().IsPress('Z'))
 	{
 		ChangeState(EPlayerState::Jump);
 		return;
 	}
-	if (true == UEngineInput::GetInst().IsDown('X'))
+	 if (true == UEngineInput::GetInst().IsDown('X'))
 	{
 		ChangeDashStateByCopy('X');
 		return;
 	}
-	if (true == UEngineInput::GetInst().IsPress(VK_DOWN))
+	 if (true == UEngineInput::GetInst().IsPress(VK_DOWN))
 	{
 		ChangeDashStateByEat(VK_DOWN);
 		return;
@@ -1367,16 +1489,7 @@ void APlayer::SlideStart()
 {
 	SpriteRenderer->ChangeAnimation("Slide" + DirString);
 
-	if (DirString == "_Right")
-	{
-		CurSlidePower = SlidePower;
-		CurRSlidePower = -SlidePower;
-	}else if (DirString == "_Left")
-	{
-		CurSlidePower = -SlidePower;
-		CurRSlidePower = SlidePower;
-	}
-	
+	CheckSlideDir();
 
 }
 
@@ -1384,8 +1497,31 @@ void APlayer::FireSlideStart()
 {
 	SpriteRenderer->ChangeAnimation("FireSlide" + DirString);
 
+	CheckSlideDir();
+
 }
 
+void APlayer::CheckSlideDir()
+{
+	if (DirString == "_Right")
+	{
+		CurSlidePower = SlidePower;
+		CurRSlidePower = -SlidePower;
+	}
+	else if (DirString == "_Left")
+	{
+		CurSlidePower = -SlidePower;
+		CurRSlidePower = SlidePower;
+	}
+}
+
+void APlayer::SparkSlideStart()
+{
+	SpriteRenderer->ChangeAnimation("SparkSlide" + DirString);
+
+	CheckSlideDir();
+
+}
 
 void APlayer::Slide(float _DeltaTime)
 {
@@ -1407,6 +1543,13 @@ void APlayer::Slide(float _DeltaTime)
 
 	AddActorLocation(CurSlidePower * _DeltaTime);
 
+	// Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
+	//if (Color == UColor::WHITE)
+	//{
+	//	// 나가 땅위로 올라갈때까지 while 계속 올려준다.
+	//	AddActorLocation(FVector2D::DOWN);
+	//}
+	
 }
 void APlayer::FlyStart()
 {
@@ -1420,6 +1563,12 @@ void APlayer::FireFlyStart()
 	Speed = 300.0f;
 	SpriteRenderer->ChangeAnimation("FireFly" + DirString);
 }
+void APlayer::SparkFlyStart()
+{
+	GravityForce = FVector2D::ZERO;
+	Speed = 300.0f;
+	SpriteRenderer->ChangeAnimation("SparkFly" + DirString);
+}
 
 void APlayer::FireFlyingStart()
 {
@@ -1427,7 +1576,12 @@ void APlayer::FireFlyingStart()
 	//GravityForce = FVector2D::ZERO;
 	SpriteRenderer->ChangeAnimation("FireFlying" + DirString);
 }
-
+void APlayer::SparkFlyingStart()
+{
+	Speed = 300.0f;
+	//GravityForce = FVector2D::ZERO;
+	SpriteRenderer->ChangeAnimation("SparkFlying" + DirString);
+}
 void APlayer::FlyingStart()
 {
 	Speed = 300.0f;
@@ -1474,14 +1628,15 @@ void APlayer::FlyStartAnim()
 {
 	switch (CurPlayerCopyState)
 	{
-	case EPlayerCopyState::Normal:
+	case ECopyAbilityState::Normal:
 		FlyingStart();
 		break;
-	case EPlayerCopyState::Spark:
+	case ECopyAbilityState::Spark:
+		SparkFlyingStart();
 		break;
-	case EPlayerCopyState::Beam:
+	case ECopyAbilityState::Beam:
 		break;
-	case EPlayerCopyState::Fire:
+	case ECopyAbilityState::Fire:
 		FireFlyingStart();
 		break;
 	default:
@@ -1492,14 +1647,15 @@ void APlayer::FlyDownAnim()
 {
 	switch (CurPlayerCopyState)
 	{
-	case EPlayerCopyState::Normal:
+	case ECopyAbilityState::Normal:
 		FlyDownStart();
 		break;
-	case EPlayerCopyState::Spark:
+	case ECopyAbilityState::Spark:
+		SparkFlyDownStart();
 		break;
-	case EPlayerCopyState::Beam:
+	case ECopyAbilityState::Beam:
 		break;
-	case EPlayerCopyState::Fire:
+	case ECopyAbilityState::Fire:
 		FireFlyDownStart();
 		break;
 	default:
@@ -1513,6 +1669,11 @@ void APlayer::FlyDownStart()
 void APlayer::FireFlyDownStart()
 {
 	SpriteRenderer->ChangeAnimation("FireFlyingDown" + DirString);
+
+}
+void APlayer::SparkFlyDownStart()
+{
+	SpriteRenderer->ChangeAnimation("SparkFlyingDown" + DirString);
 
 }
 void APlayer::FlyDown(float _DeltaTime)
@@ -1569,10 +1730,11 @@ void APlayer::Inhale(float _DeltaTime)
 {
 	//DirCheck();
 
+	AMonster* Monster = nullptr;
 	FVector2D Vector = FVector2D::ZERO;
 	if (true == UEngineInput::GetInst().IsUp('X'))
 	{
-		ColMonster = nullptr;
+		//ColMonster = nullptr;
 		InhaleRightComponent->SetActive(false);
 		InhaleLeftComponent->SetActive(false);
 		
@@ -1595,23 +1757,26 @@ void APlayer::Inhale(float _DeltaTime)
 	
 	if (ColActor != nullptr) {
 
-		ColMonster = dynamic_cast<AMonster*>(ColActor);
-		if (ColMonster->GetCurMonsterState() != EMonsterState::Inhaled) {
-			ColMonster->ChangeState(EMonsterState::Inhaled);
+		Monster = dynamic_cast<AMonster*>(ColActor);
+		if (Monster->GetCurMonsterState() != EMonsterState::Inhaled) {
+			Monster->ChangeState(EMonsterState::Inhaled);
 		}
-		InhalingGravity(_DeltaTime,Vector);
+		Monster->InhalingGravity(_DeltaTime,Vector);
 
 	}
 	ColActor = nullptr;
 	ColActor = CollisionComponent->CollisionOnce(ECollisionGroup::MonsterBody);
 	if (ColActor != nullptr)
 	{
-		ColActor->Destroy();
-		ColMonster = nullptr;
+		ColMonster= dynamic_cast<AMonster*>(ColActor);
+		if (ColMonster == nullptr)return;
+
+		CurPlayerEatState = EPlayerEatState::Eating;
+		ColActor->SetActive(false);
+		//ColMonster = nullptr;
 		InhaleRightComponent->SetActive(false);
 		InhaleLeftComponent->SetActive(false);
 
-		CurPlayerEatState=EPlayerEatState::Eating;
 		// 몬스터 흡입한 상태 커비 애니메이션
 		ChangeState(EPlayerState::Idle);
 		return;
@@ -1621,11 +1786,7 @@ void APlayer::Inhale(float _DeltaTime)
 
 }
 
-void APlayer::InhalingGravity(float _DeltaTime,FVector2D _Vector)
-{
-	InhalingForce = _Vector * _DeltaTime * 150.0f;
-	ColMonster->AddActorLocation(InhalingForce);
-}
+
 
 
 void APlayer::PlayerCameraCheck()
@@ -1705,6 +1866,7 @@ void APlayer::CollisionEnter(AActor* _ColActor)
 {
 	int a = 0;
 
+	
 	//AMonster* Monster = dynamic_cast<AMonster*>(_ColActor);
 	//if (nullptr == Monster) return;
 
@@ -1725,26 +1887,44 @@ void APlayer::ChangeIdleStateByCopy(int _KeyIndex)
 	switch (_KeyIndex)
 	{
 	case VK_DOWN:
-		switch (CurPlayerEatState)
+
+		switch (CurPlayerCopyState)
 		{
-		case EPlayerEatState::Normal:
+		case ECopyAbilityState::Normal:
+			switch (CurPlayerEatState)
+			{
+			case EPlayerEatState::Normal:
+				ChangeState(EPlayerState::Crouch);
+				break;
+			case EPlayerEatState::Eating:
+				CurPlayerEatState = EPlayerEatState::Normal;
+				CurPlayerCopyState = ColMonster->GetCopyAbilityState();
+				ChangeState(EPlayerState::Idle);
+				break;
+			default:
+				break;
+			}
+			break;
+			break;
+		case ECopyAbilityState::Fire:
 			ChangeState(EPlayerState::Crouch);
 			break;
-		case EPlayerEatState::Eating:
-			CurPlayerEatState = EPlayerEatState::Normal;
-			CurPlayerCopyState = EPlayerCopyState::Fire;
-
-			ChangeState(EPlayerState::Idle);
+		case ECopyAbilityState::Spark:
+			ChangeState(EPlayerState::Crouch);
+			break;
+		case ECopyAbilityState::Beam:
+			ChangeState(EPlayerState::Crouch);
 			break;
 		default:
 			break;
 		}
-		break;
+
+	break;
 
 	case 'X':
 		switch (CurPlayerCopyState)
 		{
-		case EPlayerCopyState::Normal:
+		case ECopyAbilityState::Normal:
 			switch (CurPlayerEatState)
 			{
 			case EPlayerEatState::Normal:
@@ -1758,11 +1938,13 @@ void APlayer::ChangeIdleStateByCopy(int _KeyIndex)
 				break;
 			}
 			break;
-		case EPlayerCopyState::Spark:
+		case ECopyAbilityState::Spark:
+			ChangeState(EPlayerState::Attack);
+
 			break;
-		case EPlayerCopyState::Beam:
+		case ECopyAbilityState::Beam:
 			break;
-		case EPlayerCopyState::Fire:
+		case ECopyAbilityState::Fire:
 			ChangeState(EPlayerState::Attack);
 			break;
 		default:
@@ -1772,16 +1954,19 @@ void APlayer::ChangeIdleStateByCopy(int _KeyIndex)
 	case 'A':
 		switch (CurPlayerCopyState)
 		{
-		case EPlayerCopyState::Normal:
+		case ECopyAbilityState::Normal:
+			ChangeState(EPlayerState::Idle);
 			break;
-		case EPlayerCopyState::Spark:
-			CurPlayerCopyState = EPlayerCopyState::Normal;
+		case ECopyAbilityState::Spark:
+			CurPlayerCopyState = ECopyAbilityState::Normal;
+			ChangeState(EPlayerState::Idle);
 			break;
-		case EPlayerCopyState::Beam:
-			CurPlayerCopyState = EPlayerCopyState::Normal;
+		case ECopyAbilityState::Beam:
+			CurPlayerCopyState = ECopyAbilityState::Normal;
+			ChangeState(EPlayerState::Idle);
 			break;
-		case EPlayerCopyState::Fire:
-			CurPlayerCopyState = EPlayerCopyState::Normal;
+		case ECopyAbilityState::Fire:
+			CurPlayerCopyState = ECopyAbilityState::Normal;
 			ChangeState(EPlayerState::Idle);
 			//능력뱉기
 			break;

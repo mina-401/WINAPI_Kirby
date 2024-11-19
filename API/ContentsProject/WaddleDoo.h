@@ -17,6 +17,8 @@ public:
 	void AttackStart() override;
 	void Attack(float _DeltaTime) override;
 
+	void BeginPlay() override;
+
 protected:
 
 private:
