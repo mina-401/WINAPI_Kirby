@@ -13,6 +13,7 @@ enum class ERenderOrder
 enum class ECollisionGroup
 {
 	PlayerBody,
+	PlayerInvincible,
 	PlayerInhaleRange,
 	MonsterBody,
 	MonsterAttack,
@@ -33,7 +34,8 @@ enum class EPlayerState
 	Attack,
 	Inhale,
 	Exhale,
-
+	KnockBack,
+	Die,
 };
 
 enum class EPlayerEatState
@@ -49,6 +51,8 @@ enum class EMonsterState
 	Attack,
 	Inhaled,
 	Hurt,
+	KnockBack,
+	Die,
 };
 
 enum class ECopyAbilityState

@@ -43,9 +43,9 @@ AWaddleDoo::AWaddleDoo()
 		AttackColComponent->SetCollisionGroup(ECollisionGroup::MonsterAttack);
 		AttackColComponent->SetCollisionType(ECollisionType::CirCle);
 
-		AttackColComponent->SetCollisionEnter(std::bind(&AWaddleDoo::CollisionEnter, this, std::placeholders::_1));
-		AttackColComponent->SetCollisionStay(std::bind(&AWaddleDoo::CollisionStay, this, std::placeholders::_1));
-		AttackColComponent->SetCollisionEnd(std::bind(&AWaddleDoo::CollisionEnd, this, std::placeholders::_1));
+		AttackColComponent->SetCollisionEnter(std::bind(&AWaddleDoo::AttackCollisionEnter, this, std::placeholders::_1));
+		AttackColComponent->SetCollisionStay(std::bind(&AWaddleDoo::AttackCollisionStay, this, std::placeholders::_1));
+		AttackColComponent->SetCollisionEnd(std::bind(&AWaddleDoo::AttackCollisionEnd, this, std::placeholders::_1));
 	}
 	{
 		U2DCollision* CollisionComponent = CreateDefaultSubObject<U2DCollision>();
@@ -79,7 +79,7 @@ void AWaddleDoo::BeginPlay()
 }
 
 
-void AWaddleDoo::CollisionEnter(AActor* _ColActor)
+void AWaddleDoo::AttackCollisionEnter(AActor* _ColActor)
 {
 
 	//플레이어에게 공격한다.
@@ -88,11 +88,18 @@ void AWaddleDoo::CollisionEnter(AActor* _ColActor)
 	//플레이어와 충돌
 }
 
-void AWaddleDoo::CollisionStay(AActor* _ColActor)
+void AWaddleDoo::AttackCollisionStay(AActor* _ColActor)
 {
 }
 
-void AWaddleDoo::CollisionEnd(AActor* _ColActor)
+void AWaddleDoo::AttackCollisionEnd(AActor* _ColActor)
 {
 
+}
+
+void AWaddleDoo::CollisionEnter(AActor* _ColActor)
+{
+	AMonster::CollisionEnter(_ColActor);
+
+	int a = 0;
 }

@@ -38,7 +38,28 @@ void USpriteRenderer::Render(float _DeltaTime)
 		Trans.Location = Trans.Location - (Level->CameraPos * CameraEffectScale);
 	}
 
-	Trans.Location += Pivot;
+	// 100, 100 랜더링 한다고 치겠습니다.
+
+	// 0.5f, 0.5f PivotRealScale = 0, 0이 나와야 한다.;
+
+
+	// Trans.Scale;
+	// 100, 100 
+
+	// 0.5f, 0.5f 일때 
+	// 0, 0
+	// 0.0f, 0.5f 일때 
+	// -50, 0.0f
+
+
+	// 이미지 크기에 기반한 어떤 값이 될수밖에 없다.
+	FVector2D PivotRealScale;
+
+	//                 소수점 버림
+	PivotRealScale.X = std::floorf((0.5f - Pivot.X) * Trans.Scale.X);
+	PivotRealScale.Y = std::floorf((0.5f - Pivot.Y) * Trans.Scale.Y);
+
+	Trans.Location += PivotRealScale;
 
 
 	if (Alpha == 255)
@@ -62,7 +83,7 @@ void USpriteRenderer::BeginPlay()
 	AActor* Actor = GetActor();
 	ULevel* Level = Actor->GetWorld();
 
-	Level->PushRenderer(this);
+	Level->ChangeRenderOrder(this, this->GetOrder());
 }
 
 void USpriteRenderer::ComponentTick(float _DeltaTime)
@@ -79,7 +100,7 @@ void USpriteRenderer::ComponentTick(float _DeltaTime)
 		Sprite = CurAnimation->Sprite;
 
 
-		CurAnimation->CurTime += _DeltaTime;
+		CurAnimation->CurTime += _DeltaTime * CurAnimationSpeed;
 
 		float CurFrameTime = Times[CurAnimation->CurIndex];
 
@@ -100,6 +121,10 @@ void USpriteRenderer::ComponentTick(float _DeltaTime)
 			{
 				CurAnimation->IsEnd = true;
 			}
+			else {
+				CurAnimation->IsEnd = false;
+			}
+
 
 			if (CurAnimation->CurIndex >= Indexs.size())
 			{
@@ -191,12 +216,6 @@ FVector2D USpriteRenderer::SetSpriteScale(float _Ratio /*= 1.0f*/, int _CurIndex
 
 void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, int _Start, int _End, float Time /*= 0.1f*/, bool _Loop /*= true*/)
 {
-	if (_Start > _End)
-	{
-		MSGASSERT("애니메이션에서 Start가 End보다 클수는 없습니다. " + std::string(_AnimationName));
-		return;
-	}
-
 	int Inter = 0;
 
 	std::vector<int> Indexs;
@@ -358,19 +377,33 @@ void USpriteRenderer::SetPivotType(PivotType _Type)
 		return;
 	}
 
-	UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
+	// UEngineSprite::USpriteData CurData = Sprite->GetSpriteData(CurIndex);
 
 	switch (_Type)
 	{
+	case PivotType::Center:
+		Pivot.X = 0.5f;
+		Pivot.Y = 0.5f;
+		break;
 	case PivotType::Bot:
-		Pivot.X = 0.0f;
-		Pivot.Y -= CurData.Transform.Scale.Y * 0.5f;
+		Pivot.X = 0.5f;
+		Pivot.Y = 1.0f;
 		break;
 	case PivotType::Top:
+		Pivot.X = 0.5f;
+		Pivot.Y = 0.0f;
+		break;
+	case PivotType::LeftTop:
 		Pivot.X = 0.0f;
-		Pivot.Y += CurData.Transform.Scale.Y * 0.5f;
+		Pivot.Y = 0.0f;
 		break;
 	default:
 		break;
 	}
+}
+
+
+void USpriteRenderer::SetPivotValue(FVector2D _Value)
+{
+	Pivot = _Value;
 }

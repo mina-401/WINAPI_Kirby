@@ -41,9 +41,9 @@ ASparky::ASparky()
 		AttackColComponent->SetCollisionGroup(ECollisionGroup::MonsterAttack);
 		AttackColComponent->SetCollisionType(ECollisionType::CirCle);
 
-		AttackColComponent->SetCollisionEnter(std::bind(&ASparky::CollisionEnter, this, std::placeholders::_1));
-		AttackColComponent->SetCollisionStay(std::bind(&ASparky::CollisionStay, this, std::placeholders::_1));
-		AttackColComponent->SetCollisionEnd(std::bind(&ASparky::CollisionEnd, this, std::placeholders::_1));
+		AttackColComponent->SetCollisionEnter(std::bind(&ASparky::AttackCollisionEnter, this, std::placeholders::_1));
+		AttackColComponent->SetCollisionStay(std::bind(&ASparky::AttackCollisionStay, this, std::placeholders::_1));
+		AttackColComponent->SetCollisionEnd(std::bind(&ASparky::AttackCollisionEnd, this, std::placeholders::_1));
 	}
 
 	{
@@ -79,17 +79,17 @@ void ASparky::BeginPlay()
 	SetCopyAbilityState(ECopyAbilityState::Spark);
 }
 
-void ASparky::CollisionEnter(AActor* _ColActor)
+void ASparky::AttackCollisionEnter(AActor* _ColActor)
 {
 	//플레이어에게 공격한다.
 	ChangeState(EMonsterState::Attack);
 }
 
-void ASparky::CollisionStay(AActor* _ColActor)
+void ASparky::AttackCollisionStay(AActor* _ColActor)
 {
 }
 
-void ASparky::CollisionEnd(AActor* _ColActor)
+void ASparky::AttackCollisionEnd(AActor* _ColActor)
 {
 
 }

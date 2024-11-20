@@ -49,6 +49,8 @@ APlayer::APlayer()
 		UImageManager::GetInst().CuttingSprite("Break_Right.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("Inhale_Left.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("Inhale_Right.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Damaged_Left.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Damaged_Right.png", { 128, 128 });
 
 		UImageManager::GetInst().CuttingSprite("Eating_Left.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("Eating_Right.png", { 128, 128 });
@@ -96,6 +98,8 @@ APlayer::APlayer()
 		SpriteRenderer->CreateAnimation("Run_Right", "Run_Right.png", 0, 6, 0.1f);
 		SpriteRenderer->CreateAnimation("Jump_Left", "Jump_Left.png", 0, 8, 0.1f, false);
 		SpriteRenderer->CreateAnimation("Jump_Right", "Jump_Right.png", 0, 8, 0.1f, false);
+		SpriteRenderer->CreateAnimation("Damaged_Left", "Damaged_Left.png", 0, 7, 0.1f, false);
+		SpriteRenderer->CreateAnimation("Damaged_Right", "Damaged_Right.png", 0, 7, 0.1f, false);
 		SpriteRenderer->CreateAnimation("Fly_Left", "Fly_Left.png", 0, 9, 0.1f, false);
 		SpriteRenderer->CreateAnimation("Fly_Right", "Fly_Right.png", 0, 9, 0.1f, false);
 		SpriteRenderer->CreateAnimation("Flying_Right", "Flying_Right.png", 0, 0, 0.1f);
@@ -270,6 +274,7 @@ void APlayer::BeginPlay()
 	GetWorld()->SetCameraToMainPawn(false);
 
 	PlayerHud = GetWorld()->SpawnActor<AKirbyWidget>();
+	PlayerHud->SetOwner(this);
 
 
 	ChangeState(EPlayerState::Idle);
@@ -345,10 +350,6 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 		}
 		break;
 
-
-
-
-
 	case EPlayerState::Move:
 		switch (CurPlayerCopyState)
 		{
@@ -377,9 +378,6 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 			break;
 		}
 		break;
-
-
-
 
 	case EPlayerState::Dash:
 
@@ -590,7 +588,28 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 		}
 		break;
 
+	case EPlayerState::KnockBack:
+		switch (CurPlayerCopyState)
+		{
+		case ECopyAbilityState::Normal:
+			KnockBackStart();
+			break;
+		case ECopyAbilityState::Fire:
+			//FireKnockBackStart();
 
+			break;
+		case ECopyAbilityState::Spark:
+			//SparkKnockBackStart();
+			break;
+		case ECopyAbilityState::Beam:
+			break;
+		default:
+			break;
+		}
+		break;
+	case EPlayerState::Die:
+		DieStart();
+		break;
 	default:
 		break;
 	}
@@ -604,6 +623,19 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 void APlayer::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
+
+	if (CurPlayerColl == ECollisionGroup::PlayerInvincible)
+	{
+		if (CurColTime > ColTime)
+		{
+			CurColTime = 0.0f;
+			SetPlayerColl(ECollisionGroup::PlayerBody);
+			CollisionComponent->SetCollisionGroup(ECollisionGroup::PlayerBody);
+		}
+		CurColTime += 0.2f;
+
+	}
+
 	if (true == UEngineInput::GetInst().IsDown(VK_F2))
 	{
 		UEngineDebug::SwitchIsDebug();
@@ -670,6 +702,12 @@ void APlayer::Tick(float _DeltaTime)
 	case EPlayerState::Attack:
 		Attack(_DeltaTime);
 		break;
+	case EPlayerState::KnockBack:
+		KnockBack(_DeltaTime);
+		break;
+	case EPlayerState::Die:
+		Die(_DeltaTime);
+		break;
 	default:
 		break;
 	}
@@ -707,13 +745,42 @@ void APlayer::LevelChangeEnd()
 {
 	Super::LevelChangeEnd();
 }
-void APlayer::DamageMonster(float _DeltaTime, FVector2D _Vector)
+
+void APlayer::KnockBackStart()
 {
-	FVector2D Pos = _Vector * _DeltaTime * 150.0f;
+	DirCheck();
+	SpriteRenderer->ChangeAnimation("Damaged" + DirString);
 
-	ColMonster->AddActorLocation(Pos);
 }
+void APlayer::KnockBack(float _DeltaTime)
+{
+	if (true == SpriteRenderer->IsCurAnimationEnd() && GetCurHp()>0)
+	{
+		ChangeState(EPlayerState::Idle);
+		return;
+	}
+	if (GetCurHp() <= 0)
+	{
+		ChangeState(EPlayerState::Die);
+		return;
+	}
+	if (true == PlayerNextPosCheck(_DeltaTime, KnockBackVec))
+	{
+		AddActorLocation(KnockBackVec * 60.0f * _DeltaTime);
 
+	}
+	//FVector2D Vector = FVector2D::ZERO;
+	
+	//AddActorLocation(Vector*_DeltaTime * Speed);
+}
+void APlayer::DieStart()
+{
+	//UEngineAPICore::GetCore()->ResetLevel("")
+}
+void APlayer::Die(float _DeltaTime)
+{
+	
+}
 void APlayer::FireAttackStart()
 {
 	Speed = 300.0f;
@@ -785,21 +852,6 @@ void APlayer::Attack(float _DeltaTime)
 		Monster->ChangeState(EMonsterState::Hurt);
 
 	}
-	//ColActor = CollisionComponent->CollisionOnce(ECollisionGroup::MonsterBody);
-	//if (ColActor != nullptr)
-	//{
-	//	ColActor->Destroy();
-	//	ColMonster = nullptr;
-	//	InhaleRightComponent->SetActive(false);
-	//	InhaleLeftComponent->SetActive(false);
-
-	//	CurPlayerEatState = EPlayerEatState::Eating;
-	//	// 몬스터 흡입한 상태 커비 애니메이션
-	//	ChangeState(EPlayerState::Idle);
-	//	return;
-
-	//}
-	int a = 0;
 }
 void APlayer::AttackStartAnim()
 {
@@ -949,7 +1001,7 @@ void APlayer::CrouchStartAnim()
 bool APlayer::PlayerNextPosCheck(float _DeltaTime, FVector2D _Vector)
 {
 	UColor Color = ColImage->GetColor(GetActorLocation() + _Vector * _DeltaTime*Speed, UColor::WHITE);
-	if (Color == UColor::BLACK)
+	if (Color != UColor::WHITE)
 	{
 		return false;
 	}
@@ -1746,13 +1798,13 @@ void APlayer::Inhale(float _DeltaTime)
 	{
 		InhaleRightComponent->SetActive(true);
 		ColActor = InhaleRightComponent->CollisionOnce(ECollisionGroup::MonsterBody);
-		Vector = FVector2D::LEFT;
+		//Vector = FVector2D::LEFT;
 	}
 	else if (DirString == "_Left")
 	{
 		InhaleLeftComponent->SetActive(true);
 		ColActor = InhaleLeftComponent->CollisionOnce(ECollisionGroup::MonsterBody);
-		Vector = FVector2D::RIGHT;
+		//Vector = FVector2D::RIGHT;
 	}
 	
 	if (ColActor != nullptr) {
@@ -1761,6 +1813,8 @@ void APlayer::Inhale(float _DeltaTime)
 		if (Monster->GetCurMonsterState() != EMonsterState::Inhaled) {
 			Monster->ChangeState(EMonsterState::Inhaled);
 		}
+		Vector=GetActorLocation() - Monster->GetActorLocation();
+		Vector.Normalize();
 		Monster->InhalingGravity(_DeltaTime,Vector);
 
 	}
@@ -1848,6 +1902,7 @@ void APlayer::PlayerSlideCheck (float _DeltaTime, FVector2D _Vector)
 }
 void APlayer::InhaleCollisionEnter(AActor* _ColActor)
 {
+	
 	int a = 0;
 
 }
@@ -1867,10 +1922,25 @@ void APlayer::CollisionEnter(AActor* _ColActor)
 	int a = 0;
 
 	
-	//AMonster* Monster = dynamic_cast<AMonster*>(_ColActor);
-	//if (nullptr == Monster) return;
+	AMonster* Target = dynamic_cast<AMonster*>(_ColActor);
+	if (nullptr == Target) return;
+
+	this-> ColKnockBackEnter(_ColActor);
+	
+	Target->ColKnockBackEnter(this);
 
 }
+
+void APlayer::ColKnockBackEnter(AActor* _ColActor)
+{
+	FVector2D Vector = GetActorLocation()- _ColActor->GetActorLocation();
+	Vector.Normalize();
+	SetKnockBackForce(Vector);
+
+	SetIsDamagedState(true);
+	ChangeState(EPlayerState::KnockBack);
+}
+
 
 void APlayer::CollisionStay(AActor* _ColActor)
 {

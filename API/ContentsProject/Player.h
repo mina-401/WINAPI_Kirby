@@ -44,18 +44,54 @@ public:
      void InhaleCollisionEnd(AActor* _ColActor);
 
     void CollisionEnter(AActor* _ColActor);
+    void ColKnockBackEnter(AActor* _ColActor);
     void CollisionStay(AActor* _ColActor);
     void CollisionEnd(AActor* _ColActor);
    
 public:    
     class U2DCollision* CollisionComponent = nullptr;
 
+    float GetMaxHp() const
+    {
+        return MaxHp;
+    }
 
+    
+    float GetCurHp() const
+    {
+        return CurHp;
+    }
+    void SetCurHP(float _Hp)
+    {
+        CurHp = _Hp;
+    }
+    bool GetIsDamagedState()
+    {
+        return IsDamage;
+    }
+    void SetIsDamagedState(bool _IsDamage)
+    {
+        IsDamage = _IsDamage;
+    }
+    void SetPlayerColl(ECollisionGroup  _CurPlayerColl)
+    {
+        CurPlayerColl = _CurPlayerColl;
+    }
+    EPlayerState GetCurPlayerState() const
+    {
+        return CurPlayerState;
+    }
+    void SetKnockBackForce(FVector2D _Vector) {
+        KnockBackVec = _Vector;
 
+    }
 protected:
 
 private:
     FVector2D Size = { 0,0 };
+    FVector2D KnockBackVec = FVector2D::ZERO;
+    const float MaxHp = 100.0f;
+    float CurHp = 100.0f;
 
     class USpriteRenderer* SpriteRenderer = nullptr;
     class UEngineWinImage* ColImage = nullptr;
@@ -63,6 +99,10 @@ private:
     EPlayerState CurPlayerState = EPlayerState::Idle;
     EPlayerEatState CurPlayerEatState = EPlayerEatState::Normal;
     ECopyAbilityState CurPlayerCopyState = ECopyAbilityState::Normal;
+    ECollisionGroup CurPlayerColl = ECollisionGroup::PlayerBody;
+
+    float CurColTime = 0.0f;
+    float ColTime = 50.0f;
 
     std::string DirString = "_Right";
 
@@ -71,15 +111,16 @@ private:
     // 점프공격
     // 
 
-    void DirCheck();
-    void ChangeState(EPlayerState CurPlayerState);
+    
+
+
     void EatingIdleStart();
-    void SparkIdleStart();
     void EatingMoveStart();
     void EatingDashStart();
     void EatingJumpStart();
 
-    void ChangeMoveStateByCopy(int _KeyIndex);
+    
+    void CheckSlideDir();
 
     void FireIdleStart();
     void FireMoveStart();
@@ -88,17 +129,23 @@ private:
     void FireBreakStart();
     void FireJumpStart();
     void FireSlideStart();
-    void CheckSlideDir();
-    void SparkSlideStart();
     void FireFlyingStart();
     void FireFlyDownStart();
+    void FireAttackStart();
 
+    void SparkIdleStart();
+    void SparkSlideStart();
+    void SparkAttackStart();
     void SparkMoveStart();
     void SparkDashStart();
     void SparkCrouchStart();
     void SparkFlyingStart();
     void SparkFlyDownStart();
+    void SparkJumpStart();
 
+    void DirCheck();
+    void ChangeState(EPlayerState CurPlayerState);
+    void ChangeMoveStateByCopy(int _KeyIndex);
     void ChangeJumpStateByEat(int _KeyIndx, bool _IsFly);
     void ChangeIdleStateByCopy(int _KeyIndex);
     void ChangeDashStateByEat(int _KeyIndex);
@@ -115,15 +162,17 @@ private:
     void BreakStart();
     void Breaking(float _DeltaTime);
     void Dash(float _DeltaTime);
-    void FireAttackStart();
-    void SparkAttackStart();
     void Attack(float _DeltaTime);
+    void KnockBackStart();
+    void KnockBack(float _DeltaTime);
+
+    void DieStart();
+    void Die(float _DeltaTime);
 
     void AttackStartAnim();
 
    
     void JumpStart();
-    void SparkJumpStart();
     void Jump(float _DeltaTime);
 
     void SlideStart();
@@ -137,20 +186,16 @@ private:
     void FlyDownAnim();
     void FlyDownStart();
     void FlyDown(float _DeltaTime);
-
     void ExhaleStart();
-
     void Exhale(float _DeltaTime);
-
     void InhaleStart();
     void Inhale(float _DeltaTime);
 
     void PlayerCameraCheck();
     void PlayerGroundCheck(FVector2D _MovePos);
     void PlayerSlideCheck(float _DeltaTime, FVector2D _Vector);
-    bool PlayerNextPosCheck(float _DeltaTime, FVector2D _Vector);
 
-    //void Attack(float _DeltaTime);
+    bool PlayerNextPosCheck(float _DeltaTime, FVector2D _Vector);
 
 
     void PlayerFlyCheck();
@@ -223,7 +268,8 @@ private:
 
         // 상시 
     }
-    void DamageMonster(float _DeltaTime, FVector2D _Vector);
+
+
  
     void DeAccel(float _DeltaTime, FVector2D Vector)
     {
@@ -233,6 +279,8 @@ private:
     }
 
     void BlockPlayerPos(FVector2D _MapScale);
+
+  
 private:
     FVector2D WinSize;
 
@@ -267,6 +315,8 @@ private:
     bool IsJump = false;
     bool IsDash = false;
     bool IsFly = false;
+
+    bool IsDamage = false;
 
     FVector2D Acc = FVector2D::ZERO;
 

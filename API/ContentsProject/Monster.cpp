@@ -14,7 +14,6 @@
 
 AMonster::AMonster()
 {
-	Hp = 2;
 
 	{
 		U2DCollision* CollisionComponent = CreateDefaultSubObject<U2DCollision>();
@@ -36,6 +35,7 @@ AMonster::~AMonster()
 }
 void AMonster::InhalingGravity(float _DeltaTime, FVector2D _Vector)
 {
+
 	InhalingForce = _Vector * _DeltaTime * 150.0f;
 	AddActorLocation(InhalingForce);
 }
@@ -78,8 +78,14 @@ void AMonster::ChangeState(EMonsterState _CurMonsterState)
 	case EMonsterState::Inhaled:
 		InhaledStart();
 		break;
-	case EMonsterState::Hurt:
-		DamagedStart();
+	//case EMonsterState::Hurt:
+		//DamagedStart();
+		//break;
+	case EMonsterState::Die:
+		DieStart();
+		break;
+	case EMonsterState::KnockBack:
+		KnockBackStart();
 		break;
 	default:
 		break;
@@ -97,24 +103,40 @@ void AMonster::InhaledStart()
 void AMonster::Inhaled(float _DeltaTime)
 {
 }
-void AMonster::DamagedStart()
+void AMonster::DieStart()
+{
+	SetActive(false);
+	MonWidget->SetActive(false);
+}
+
+void AMonster::Die(float _DeltaTime)
+{
+	int a = 0;
+}
+
+
+void AMonster::KnockBackStart()
 {
 	DirCheck();
 	//AddActorLocation({ 0,-100 });
 	SpriteRenderer->ChangeAnimation("Damaged" + DirString);
-	Destroy(1.0);
+	//Destroy(1.0);
 
 }
-void AMonster::Damaged(float _DeltaTime)
+void AMonster::KnockBack(float _DeltaTime)
 {
-	
+	if (true == MonsterNextPosCheck(_DeltaTime, KnockBackVec))
+	{
+		AddActorLocation(KnockBackVec * 60.0f * _DeltaTime);
+
+	}
+
+	if (GetCurHp() <= 0)
+	{
+		ChangeState(EMonsterState::Die);
+	}
 }
-void AMonster::DestroyStart()
-{
-	
-	
-	SpriteRenderer->ChangeAnimation("Damaged" + DirString);
-}
+
 void AMonster::ChangeMonsterDir(float _DeltaTime)
 {
 	if (false == MonsterNextPosCheck(_DeltaTime, MoveVector))
@@ -178,6 +200,7 @@ void AMonster::BeginPlay()
 {
 	Super::BeginPlay();
 	MonWidget = GetWorld()->SpawnActor<AMonsterWidget>();
+	MonWidget->SetOwner(this);
 	MonWidget->SetActive(false);
 }
 
@@ -216,8 +239,14 @@ void AMonster::Tick(float _DeltaTime)
 		Inhaled(_DeltaTime);
 		break;
 
-	case EMonsterState::Hurt:
-		Damaged(_DeltaTime);
+	//case EMonsterState::Hurt:
+		//Damaged(_DeltaTime);
+		//break;
+	case EMonsterState::Die:
+		Die(_DeltaTime);
+		break;
+	case EMonsterState::KnockBack:
+		KnockBack(_DeltaTime);
 		break;
 	default:
 		break;
@@ -310,7 +339,7 @@ void AMonster::Chase(float _DeltaTime)
 	else {
 
 		//TargetPosVector.Normalize();
-		MoveDirCheck(TargetPosVector); //현재 가고 있는 단위 벡터 방향
+		MoveDirCheck(TargetPosVector); 
 
 		FVector2D NextPos = MoveVector * _DeltaTime * Speed;
 		AddActorLocation(NextPos);
@@ -366,11 +395,34 @@ void AMonster::CheckPlayerPos()
 }
 void AMonster::CollisionEnter(AActor* _ColActor)
 {
-	int a = 0;
-	//MonWidget->SetActive(true);
-	//IsColEnd = true;
+
+	APlayer* Player = dynamic_cast<APlayer*>(_ColActor);
+	if (nullptr != Player)
+	{
+		if (EPlayerState::Inhale == Player->GetCurPlayerState()) return;
+
+		Player->SetIsDamagedState(true);
+		SetIsDamagedState(true);
+		ChangeState(EMonsterState::KnockBack);
+		MonWidget->SetActive(true);
+	}
 
 
+}
+void AMonster::ColKnockBackEnter(AActor* _ColActor)
+{
+	// 밀려나갈 방향
+	FVector2D Vector = GetActorLocation()- _ColActor->GetActorLocation() ;
+	Vector.Normalize();
+	SetKnockBackForce(Vector);
+
+	MonWidget->SetActive(true);
+	
+	//데미지 받았다 
+	SetIsDamagedState(true);
+	
+	//넉백 상태로
+	ChangeState(EMonsterState::KnockBack);
 }
 void AMonster::CollisionStay(AActor* _ColActor)
 {

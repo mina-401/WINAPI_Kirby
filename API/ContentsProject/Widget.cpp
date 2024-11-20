@@ -1,11 +1,11 @@
 #include "PreCompile.h"
 #include "Widget.h"
 
-Widget::Widget()
+AWidget::AWidget()
 {
 }
 
-Widget::~Widget()
+AWidget::~AWidget()
 {
 }
 

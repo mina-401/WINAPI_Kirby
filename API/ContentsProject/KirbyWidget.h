@@ -1,7 +1,7 @@
 #pragma once
 #include "Widget.h"
 // Ό³Έν :
-class AKirbyWidget : public Widget
+class AKirbyWidget : public AWidget
 {
 public:
 	// constrcuter destructer
@@ -16,6 +16,11 @@ public:
 
 	void Tick(float _deltaTime) override;
 	void BeginPlay() override;
+
+	void SetOwner(class APlayer* _Player)
+	{
+		Owner = _Player;
+	}
 protected:
 	
 private:
@@ -26,5 +31,10 @@ private:
 	class USpriteRenderer* NameTag = nullptr;
 	FVector2D MapScale;
 	FVector2D WinSize;
+	FVector2D HpBarScale = { 183.0f,21.0f };
+
+	class APlayer* Owner = nullptr;
+
+	
 };
 

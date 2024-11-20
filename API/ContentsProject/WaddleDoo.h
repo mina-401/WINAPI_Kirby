@@ -23,10 +23,12 @@ protected:
 
 private:
 	
-
+	void AttackCollisionEnter(AActor* _ColActor) ;
+	void AttackCollisionStay(AActor* _ColActor);
+	void AttackCollisionEnd(AActor* _ColActor);
 	void CollisionEnter(AActor* _ColActor) override;
-	void CollisionStay(AActor* _ColActor)override;
-	void CollisionEnd(AActor* _ColActor)override;
+	//void CollisionStay(AActor* _ColActor)override;
+	//void CollisionEnd(AActor* _ColActor)override;
 
 	//class USpriteRenderer* SpriteRenderer = nullptr;
 };
