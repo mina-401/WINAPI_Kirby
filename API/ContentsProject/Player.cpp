@@ -26,6 +26,7 @@
 #include "Bullet.h"
 #include "FireBullet.h"
 #include "FireBullet2.h"
+#include "JumpStar.h"
 
 
 
@@ -295,9 +296,17 @@ void APlayer::BeginPlay()
 	GetWorld()->SetCameraPivot(Size.Half() * -1.0f);
 	GetWorld()->SetCameraToMainPawn(false);
 
+
+	//저장되어 있는 커비 스탯 가져오기
+	CurPlayerCopyState = PlayerStatsManager::GetInst().GetCopyAbilityState();
+	Life = PlayerStatsManager::GetInst().GetLife();
+	CurHp = PlayerStatsManager::GetInst().GetHp();
+
+	//커비 UI 띄우기
 	PlayerHud = GetWorld()->SpawnActor<AKirbyWidget>();
 	PlayerHud->SetOwner(this);
 
+	
 
 	ChangeState(EPlayerState::Idle);
 	
@@ -634,9 +643,12 @@ void APlayer::Tick(float _DeltaTime)
 	//int CurLife= PlayerStatsManager::GetInst().GetLife();
 
 	
+	if (Life <= 0 && GetCurHp() <= 0)
+	{
+		
+	}
 
-
-	if (GetCurHp() <= 0)
+	else if (GetCurHp() <= 0 )
 	{
 		if (CurPlayerState != EPlayerState::Die)
 		{
@@ -657,6 +669,22 @@ void APlayer::Tick(float _DeltaTime)
 		CurColTime += 0.2f;
 
 	}
+
+	if (CurPlayerCopyState != PlayerStatsManager::GetInst().GetCopyAbilityState())
+	{
+		PlayerStatsManager::GetInst().SetCopyAbilityState(CurPlayerCopyState);
+	}
+
+	if (Life != PlayerStatsManager::GetInst().GetLife())
+	{
+		PlayerStatsManager::GetInst().SetLife(Life);
+	}
+	if (CurHp != PlayerStatsManager::GetInst().GetHp())
+	{
+		PlayerStatsManager::GetInst().SetHp(CurHp);
+	}
+
+
 
 	if (true == UEngineInput::GetInst().IsDown(VK_F2))
 	{
@@ -684,8 +712,14 @@ void APlayer::Tick(float _DeltaTime)
 	PlayerTransform.Scale = { 6,6 };
 	UEngineDebug::CoreDebugRender(PlayerTransform, UEngineDebug::EDebugPosType::Circle);*/
 
+
+
+
+
 	DirCheck();
 	
+	
+
 	switch (CurPlayerState)
 	{
 	case EPlayerState::Idle:
@@ -775,19 +809,20 @@ void APlayer::KnockBackStart()
 
 	SpriteRenderer->SetComponentScale({ 270,270 });
 	SpriteRenderer->ChangeAnimation("Damaged" + DirString);
-
+	CollisionComponent->SetActive(false);
 }
 
 void APlayer::KnockBack(float _DeltaTime)
 {
 	if (true == SpriteRenderer->IsCurAnimationEnd() && GetCurHp()>0 )
 	{
-		/*while ( true == PlayerNextPosCheck(_DeltaTime, FVector2D::DOWN))
+		while ( true == PlayerNextPosCheck(_DeltaTime, FVector2D::DOWN))
 		{
 			AddActorLocation( FVector2D::DOWN * Speed * _DeltaTime);
 
-		}*/
-		
+		}
+		CollisionComponent->SetActive(true);
+
 		ChangeState(EPlayerState::Idle);
 		return;
 	}
@@ -805,21 +840,26 @@ void APlayer::KnockBack(float _DeltaTime)
 }
 void APlayer::DieStart()
 {
+	Life -= 1;
 
-	int CurLife= PlayerStatsManager::GetInst().GetMinusLife(1);
-	if (0 >= CurLife)
-	{
+	if (0 >= Life) {
 		GravityForce = FVector2D::ZERO;
 		SpriteRenderer->ChangeAnimation("Die");
-		
 	}
-
+	if (0 < Life)
+	{
+		CurHp = GetMaxHp(); // 생명이 남아 있다. 다시 풀피도 채운다.
+	}
 	
 }
 void APlayer::Die(float _DeltaTime)
 {
+	
+	// 리셋 레벨은 hp가 0보다 작을때 실행된다.
 	if (true == SpriteRenderer->IsCurAnimationEnd())
 	{
+		CollisionComponent->SetActive(true);
+
 		AGameMode* gm = GetWorld()->GetGameMode<AGameMode>();
 		if (gm == nullptr) return;
 
@@ -835,14 +875,11 @@ void APlayer::Die(float _DeltaTime)
 
 			UEngineAPICore::GetCore()->ResetLevel<AStage1_3GameMode, APlayer>(gm->GetName());
 		}
-		else if ("Stage1_4" == gm->GetName()) {
+		/*else if ("Stage1_4" == gm->GetName()) {
 
 			UEngineAPICore::GetCore()->ResetLevel<AStage1_4GameMode, APlayer>(gm->GetName());
-		}
-		else if ("Stage1_4" == gm->GetName()) {
+		}*/
 
-			UEngineAPICore::GetCore()->ResetLevel<AStage1_4GameMode, APlayer>(gm->GetName());
-		}
 		else if ("ItemRoomBeforeBoss" == gm->GetName()) {
 
 			UEngineAPICore::GetCore()->ResetLevel<AItemRoomBeforeBossGameMode, APlayer>(gm->GetName());
@@ -853,9 +890,7 @@ void APlayer::Die(float _DeltaTime)
 		}
 	}
 	
-	if (0 <  PlayerStatsManager::GetInst().GetLife()) {
-		return;
-	}
+	
 	JumpGravity(_DeltaTime);
 	AddActorLocation(JumpPower*_DeltaTime);
 		
@@ -1276,23 +1311,39 @@ void APlayer::ChangeMoveStateByCopy(int _KeyIndex)
 		switch (CurPlayerCopyState)
 		{
 		case ECopyAbilityState::Normal:
+			ChangeState(EPlayerState::Idle);
 			break;
 		case ECopyAbilityState::Spark:
-			break;
-		case ECopyAbilityState::Beam:
-			break;
-		case ECopyAbilityState::Fire:
+			
+			
 			CurPlayerCopyState = ECopyAbilityState::Normal;
 			ChangeState(EPlayerState::Idle);
+			break;
+		case ECopyAbilityState::Beam:
+			CurPlayerCopyState = ECopyAbilityState::Normal;
+			ChangeState(EPlayerState::Idle);
+			break;
+		case ECopyAbilityState::Fire:
+
+			CreateJumpStar();
+			CurPlayerCopyState = ECopyAbilityState::Normal;
+			ChangeState(EPlayerState::Idle);
+			//능력뱉기
 			break;
 		default:
 			break;
 		}
-		break;
+
+	break;
 
 	default:
 		break;
 	}
+}
+void APlayer::CreateJumpStar()
+{
+	AJumpStar* Star = GetWorld()->SpawnActor<AJumpStar>();
+	Star->SetActorLocation(GetActorLocation());
 }
 void APlayer::Move(float _DeltaTime)
 {
@@ -1436,7 +1487,8 @@ void APlayer::EatingDashStart()
 }
 void APlayer::FireDashStart()
 {
-	SpriteRenderer->SetComponentScale({ 270,270 });
+	SpriteRenderer->SetComponentScale({ 180,180 });
+
 	SpriteRenderer->ChangeAnimation("FireRun" + DirString);
 	Speed = 500.0f;
 }
@@ -1501,11 +1553,30 @@ void APlayer::Dash(float _DeltaTime)
 
 	Gravity(_DeltaTime);
 
-	if (CurPlayerCopyState == ECopyAbilityState::Fire)
+
+	AActor* _ColActor = CollisionComponent->CollisionOnce(ECollisionGroup::MonsterBody);
+	if (_ColActor != nullptr)
 	{
-		SpriteRenderer->SetComponentScale({180,180});
+		AMonster* Target = dynamic_cast<AMonster*>(_ColActor);
+		if (nullptr != Target) {
+			//this->ColKnockBackEnter(_ColActor);
+			if (CurPlayerCopyState == ECopyAbilityState::Fire)
+			{
+				Target->ColKnockBackEnter(this);
+
+			}
+			else {
+				Target->ColKnockBackEnter(this);
+				this->ColKnockBackEnter(Target);
+			}
+		}
 
 	}
+	
+
+	
+
+
 	FVector2D Vector = FVector2D::ZERO;
 	if (true == UEngineInput::GetInst().IsDown('Z') && true == UEngineInput::GetInst().IsPress(VK_DOWN))
 	{
@@ -1877,10 +1948,10 @@ void APlayer::ExhaleStart()
 		Bullet->SetColImage("foreground1-3_col.png");
 
 	}
-	else if ("Stage1_4" == gm->GetName()) {
+	/*else if ("Stage1_4" == gm->GetName()) {
 		Bullet->SetColImage("foreground1-4_col.png");
 
-	}
+	}*/
 	else if ("ItemRoomBeforeBoss" == gm->GetName()) {
 		Bullet->SetColImage("StageBossKingDedede.png");
 	}
@@ -2065,12 +2136,7 @@ void APlayer::CollisionEnter(AActor* _ColActor)
 	int a = 0;
 
 	
-	AMonster* Target = dynamic_cast<AMonster*>(_ColActor);
-	if (nullptr == Target) return;
 
-	this-> ColKnockBackEnter(_ColActor);
-	
-	Target->ColKnockBackEnter(this);
 
 }
 
@@ -2170,17 +2236,21 @@ void APlayer::ChangeIdleStateByCopy(int _KeyIndex)
 		switch (CurPlayerCopyState)
 		{
 		case ECopyAbilityState::Normal:
+			CreateJumpStar();
 			ChangeState(EPlayerState::Idle);
 			break;
 		case ECopyAbilityState::Spark:
+			CreateJumpStar();
 			CurPlayerCopyState = ECopyAbilityState::Normal;
 			ChangeState(EPlayerState::Idle);
 			break;
 		case ECopyAbilityState::Beam:
+			CreateJumpStar();
 			CurPlayerCopyState = ECopyAbilityState::Normal;
 			ChangeState(EPlayerState::Idle);
 			break;
 		case ECopyAbilityState::Fire:
+			CreateJumpStar();
 			CurPlayerCopyState = ECopyAbilityState::Normal;
 			ChangeState(EPlayerState::Idle);
 			//능력뱉기

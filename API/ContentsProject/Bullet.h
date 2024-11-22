@@ -37,7 +37,7 @@ private:
 	void DirCheck();
 	void BulletStart();
 
-	bool PlayerNextPosCheck(float _DeltaTime, FVector2D _Vector);
+	bool BulletNextPosCheck(float _DeltaTime, FVector2D _Vector);
 
 	class UEngineWinImage* ColImage = nullptr;
 	class USpriteRenderer* SpriteRenderer = nullptr;

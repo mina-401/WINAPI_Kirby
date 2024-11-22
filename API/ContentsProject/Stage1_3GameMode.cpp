@@ -30,7 +30,7 @@ void AStage1_3GameMode::Tick(float _DeltaTime)
 
 	if (true == UEngineInput::GetInst().IsDown('P'))
 	{
-		UEngineAPICore::GetCore()->OpenLevel("Stage1_4");
+		UEngineAPICore::GetCore()->OpenLevel("ItemRoomBeforeBoss");
 	}
 
 }

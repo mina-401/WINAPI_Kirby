@@ -134,6 +134,9 @@
     <ClInclude Include="FireBullet2.h">
       <Filter>ContentsObject\Kirby</Filter>
     </ClInclude>
+    <ClInclude Include="JumpStar.h">
+      <Filter>ContentsObject\Kirby</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -243,6 +246,9 @@
       <Filter>ContentsObject\Kirby</Filter>
     </ClCompile>
     <ClCompile Include="FireBullet2.cpp">
+      <Filter>ContentsObject\Kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpStar.cpp">
       <Filter>ContentsObject\Kirby</Filter>
     </ClCompile>
   </ItemGroup>

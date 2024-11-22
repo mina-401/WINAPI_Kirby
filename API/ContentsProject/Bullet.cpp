@@ -33,7 +33,6 @@ ABullet::ABullet()
 		SpriteRenderer->ChangeAnimation("StarBulletIdle_Left");
 	}
 	DebugOn();
-
 	Destroy(3.0f);
 
 }
@@ -68,7 +67,7 @@ void ABullet::CollisionEnter(AActor* _ColActor)
 
 	}
 }
-bool ABullet::PlayerNextPosCheck(float _DeltaTime, FVector2D _Vector)
+bool ABullet::BulletNextPosCheck(float _DeltaTime, FVector2D _Vector)
 {
 	UColor Color = ColImage->GetColor(GetActorLocation() + _Vector * _DeltaTime * Speed, UColor::WHITE);
 	if (Color != UColor::WHITE)
@@ -86,7 +85,7 @@ void ABullet::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
-	if(false ==PlayerNextPosCheck(_DeltaTime, Vector))
+	if(false == BulletNextPosCheck(_DeltaTime, Vector))
 	{
 		// 
 		SetActive(false);

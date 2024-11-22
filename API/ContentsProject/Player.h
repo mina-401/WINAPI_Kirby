@@ -7,6 +7,12 @@
 #include "ContentsEnum.h"
 #include "ActorVector.h"
 
+class PlayerStats
+{
+public:
+
+
+};
 
 
 class APlayer : public AActor
@@ -66,6 +72,16 @@ public:
     {
         CurHp = _Hp;
     }
+
+    int GetCurLife() const
+    {
+        return Life;
+    }
+    void SetCurLife(int _Life)
+    {
+        Life = _Life;
+    }
+
     bool GetIsDamagedState()
     {
         return IsDamage;
@@ -91,7 +107,10 @@ public:
         return BulletVector;
     }
 
-
+    ECopyAbilityState GetCurPlayerCopyState() const
+    {
+        return CurPlayerCopyState;
+    }
 
 public:
     
@@ -102,13 +121,11 @@ protected:
 
 private:
    
-    int Life = 0;
-
     FVector2D Size = { 0,0 };
     FVector2D KnockBackVec = FVector2D::ZERO;
     const float MaxHp = 100.0f;
-    float CurHp = 100.0f;
-
+    float CurHp = 0;
+    int Life = 0;
 
     class USpriteRenderer* SpriteRenderer = nullptr;
     class UEngineWinImage* ColImage = nullptr;
@@ -164,6 +181,7 @@ private:
     void DirCheck();
     void ChangeState(EPlayerState CurPlayerState);
     void ChangeMoveStateByCopy(int _KeyIndex);
+    void CreateJumpStar();
     void ChangeJumpStateByEat(int _KeyIndx, bool _IsFly);
     void ChangeIdleStateByCopy(int _KeyIndex);
     void ChangeDashStateByEat(int _KeyIndex);

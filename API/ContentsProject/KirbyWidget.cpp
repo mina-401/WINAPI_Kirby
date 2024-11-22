@@ -8,6 +8,7 @@
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/ImageManager.h>
 
+
 #include "PlayerStatsManager.h"
 
 AKirbyWidget::AKirbyWidget()
@@ -24,6 +25,9 @@ AKirbyWidget::AKirbyWidget()
 		UImageManager::GetInst().CuttingSprite("KirbyHpBarCase.png", { 215, 30 });
 		UImageManager::GetInst().CuttingSprite("HpBar.png", { 1, 21 });
 		UImageManager::GetInst().CuttingSprite("nametag_normal.png", { 214, 190 });
+		//UImageManager::GetInst().CuttingSprite("nametag_beam.png", { 214, 190 });
+		UImageManager::GetInst().CuttingSprite("nametag_fire.png", { 214, 190 });
+		UImageManager::GetInst().CuttingSprite("nametag_spark.png", { 214, 190 });
 		
 		WinSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 		{
@@ -77,9 +81,28 @@ AKirbyWidget::~AKirbyWidget()
 void AKirbyWidget::Tick(float _deltaTime)
 {
 	Super::Tick(_deltaTime);
-
+	int CurLife = Owner->GetCurLife();
+	ECopyAbilityState Copy = Owner->GetCurPlayerCopyState();
 	{
-		int CurLife = PlayerStatsManager::GetInst().GetLife();
+		
+
+		switch (Copy)
+		{
+		case ECopyAbilityState::Normal:
+			NameTag->SetSprite("nametag_normal.png");
+			break;
+		case ECopyAbilityState::Fire:
+			NameTag->SetSprite("nametag_fire.png");
+			break;
+		case ECopyAbilityState::Spark:
+			NameTag->SetSprite("nametag_spark.png");
+			break;
+		case ECopyAbilityState::Beam:
+			NameTag->SetSprite("nametag_beam.png");
+			break;
+		default:
+			break;
+		}
 
 		switch (CurLife)
 		{
@@ -100,38 +123,56 @@ void AKirbyWidget::Tick(float _deltaTime)
 			break;
 		}
 	}
+	{
 
+	}
 	{
 	
 		float hp = Owner->GetCurHp();
+		float HpRatio = hp / Owner->GetMaxHp();
+		HpBar->SetComponentScale({ HpBarScale.X * HpRatio,HpBarScale.Y });
 
 
 		bool IsDamaged = Owner->GetIsDamagedState();
-		TotalDamage += 0.1f;
 
-		 hp = Owner->GetCurHp() - 0.1f;
-		if (hp <= 0)
+		
+
+		if (true == IsDamaged)
 		{
 			
-			Owner->SetCurHP(hp);
-			IsDamaged = false;
-			
+
+			TotalDamage += 0.1f;
+			hp = Owner->GetCurHp() - 0.1f;
+			if (hp <= 0)
+			{
+				
+
+				IsDamaged = false;
+
+			}
+			if (TotalDamage >= DamagePower)
+			{
+				IsDamaged = false;
+			}
+
 		}
-		if (TotalDamage >= DamagePower)
-		{
-			IsDamaged = false;
-		} 
+
 		if (false == IsDamaged)
 		{
 			Owner->SetIsDamagedState(false);
 			TotalDamage = 0;
-			return;
-		}
-		float HpRatio = hp / Owner->GetMaxHp();
 
-		HpBar->SetComponentScale({ HpBarScale.X * HpRatio,HpBarScale.Y });
+		}
+		
 		Owner->SetCurHP(hp);
 
+		
+		
+		/*if (0 < CurLife &&  0 >= hp)
+		{
+			Owner->SetCurHP(Owner->GetMaxHp());
+			Owner->SetCurLife(Owner->GetCurLife() - 1);
+		}*/
 		
 	}
 	

@@ -1,4 +1,5 @@
 #pragma once
+#include "ContentsEnum.h"
 
 // Ό³Έν :
 class PlayerStatsManager
@@ -25,6 +26,12 @@ public:
 	{
 		return Life;
 	}
+
+	void SetLife(int Count)
+	{
+		Life = Count;
+	}
+
 	int GetAddLife(int _Count)
 	{
 		Life += _Count;
@@ -35,12 +42,33 @@ public:
 		Life -= _Count;
 		return Life;
 	}
+
+	ECopyAbilityState GetCopyAbilityState()
+	{
+		return PlayerStats;
+	}
+
+	void SetCopyAbilityState(ECopyAbilityState _Copy)
+	{
+		PlayerStats = _Copy;
+	}
+
+	float GetHp() const
+	{
+		return Hp;
+	}
+	void SetHp(float _hp)
+	{
+		Hp = _hp;
+	}
+
 protected:
 
 private:
 	PlayerStatsManager();
 
 	int Life;
-
+	float Hp;
+	ECopyAbilityState PlayerStats;
 };
 
