@@ -8,6 +8,7 @@
 
 AItemRoomBeforeBossGameMode::AItemRoomBeforeBossGameMode()
 {
+	SetName("ItemRoomBeforeBoss");
 }
 
 AItemRoomBeforeBossGameMode::~AItemRoomBeforeBossGameMode()

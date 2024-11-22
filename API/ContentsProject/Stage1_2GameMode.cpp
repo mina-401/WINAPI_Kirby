@@ -9,6 +9,7 @@
 
 AStage1_2GameMode::AStage1_2GameMode()
 {
+	SetName("Stage1_2");
 }
 
 AStage1_2GameMode::~AStage1_2GameMode()

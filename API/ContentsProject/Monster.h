@@ -43,6 +43,8 @@ public:
 	//virtual void Damaged(float _DeltaTime);
 	virtual void KnockBackStart();
 
+	
+
 	virtual void KnockBack(float _DeltaTime);
 
 	void ChangeState(EMonsterState _CurMonsterState);

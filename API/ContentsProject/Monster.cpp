@@ -123,6 +123,7 @@ void AMonster::KnockBackStart()
 	//Destroy(1.0);
 
 }
+
 void AMonster::KnockBack(float _DeltaTime)
 {
 	if (true == MonsterNextPosCheck(_DeltaTime, KnockBackVec))
@@ -396,16 +397,7 @@ void AMonster::CheckPlayerPos()
 void AMonster::CollisionEnter(AActor* _ColActor)
 {
 
-	APlayer* Player = dynamic_cast<APlayer*>(_ColActor);
-	if (nullptr != Player)
-	{
-		if (EPlayerState::Inhale == Player->GetCurPlayerState()) return;
-
-		Player->SetIsDamagedState(true);
-		SetIsDamagedState(true);
-		ChangeState(EMonsterState::KnockBack);
-		MonWidget->SetActive(true);
-	}
+	
 
 
 }

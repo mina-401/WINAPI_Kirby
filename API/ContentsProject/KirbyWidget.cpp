@@ -8,6 +8,8 @@
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/ImageManager.h>
 
+#include "PlayerStatsManager.h"
+
 AKirbyWidget::AKirbyWidget()
 {
 	DebugOn();
@@ -15,9 +17,10 @@ AKirbyWidget::AKirbyWidget()
 		SetName("MainHud");
 		
 		UImageManager::GetInst().CuttingSprite("LifeIcon.png", { 55, 30 });
-		UImageManager::GetInst().CuttingSprite("Font1.png", { 42, 26 });
+		UImageManager::GetInst().CuttingSprite("Font0.png", { 43, 26 });
+		UImageManager::GetInst().CuttingSprite("Font1.png", { 41, 26 });
 		UImageManager::GetInst().CuttingSprite("Font2.png", { 45, 26 });
-		UImageManager::GetInst().CuttingSprite("Font3.png", { 44, 26 });
+	//	UImageManager::GetInst().CuttingSprite("Font3.png", { 44, 26 });
 		UImageManager::GetInst().CuttingSprite("KirbyHpBarCase.png", { 215, 30 });
 		UImageManager::GetInst().CuttingSprite("HpBar.png", { 1, 21 });
 		UImageManager::GetInst().CuttingSprite("nametag_normal.png", { 214, 190 });
@@ -75,18 +78,44 @@ void AKirbyWidget::Tick(float _deltaTime)
 {
 	Super::Tick(_deltaTime);
 
+	{
+		int CurLife = PlayerStatsManager::GetInst().GetLife();
 
+		switch (CurLife)
+		{
+		case 3:
+			Life->SetSprite("Font2.png");
+			break;
+		case 4:
+			//Life->SetSprite("Font3.png");
+			break;
+		case 2:
+			Life->SetSprite("Font1.png");
+			break;
+		case 1:
+			Life->SetSprite("Font0.png");
+			break;
+		default:
+			Life->SetSprite("Font0.png");
+			break;
+		}
+	}
 
 	{
-		
+	
+		float hp = Owner->GetCurHp();
+
+
 		bool IsDamaged = Owner->GetIsDamagedState();
 		TotalDamage += 0.1f;
 
-		float hp = Owner->GetCurHp() - 0.1f;
+		 hp = Owner->GetCurHp() - 0.1f;
 		if (hp <= 0)
 		{
+			
+			Owner->SetCurHP(hp);
 			IsDamaged = false;
-			//UEngineAPICore::GetCore()->ResetLevel<, ANewPlayer>("Play");
+			
 		}
 		if (TotalDamage >= DamagePower)
 		{
@@ -106,6 +135,9 @@ void AKirbyWidget::Tick(float _deltaTime)
 		
 	}
 	
+	{
+
+	}
 
 }
 

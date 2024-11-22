@@ -159,6 +159,19 @@
     <ClInclude Include="..\EnginePlatform\ThirdParty\FMOD\Inc\fmod_dsp_effects.h" />
     <ClInclude Include="..\EnginePlatform\ThirdParty\FMOD\Inc\fmod_errors.h" />
     <ClInclude Include="..\EnginePlatform\ThirdParty\FMOD\Inc\fmod_output.h" />
+    <ClInclude Include="ActorVector.h" />
+    <ClInclude Include="FireBullet.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="FireBullet2.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PlayerStatsManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="KirbyWidget.h">
       <SubType>
@@ -278,6 +291,19 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ActorVector.cpp" />
+    <ClCompile Include="FireBullet.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="FireBullet2.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="PlayerStatsManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="KirbyWidget.cpp">
       <SubType>

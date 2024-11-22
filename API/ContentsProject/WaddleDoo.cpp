@@ -75,7 +75,7 @@ void AWaddleDoo::Attack(float _DeltaTime)
 void AWaddleDoo::BeginPlay()
 {
 	AMonster::BeginPlay();
-	SetCopyAbilityState(ECopyAbilityState::Beam);
+	SetCopyAbilityState(ECopyAbilityState::Normal);
 }
 
 

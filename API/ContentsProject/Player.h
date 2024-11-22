@@ -2,7 +2,11 @@
 #include <EngineCore/Actor.h>
 #include <EngineCore/ImageManager.h>
 #include <EnginePlatform/EngineSound.h>
+#include <EngineBase/EngineString.h>    
+
 #include "ContentsEnum.h"
+#include "ActorVector.h"
+
 
 
 class APlayer : public AActor
@@ -24,12 +28,9 @@ public:
 
 
 
-    /*void LeftMove();
-    void RightMove();
-    void UpMove();
-    void DownMove();*/
-
     //void RunSoundPlay();
+
+
 
     void LevelChangeStart() override;
     void LevelChangeEnd() override;
@@ -43,8 +44,8 @@ public:
      void InhaleCollisionStay(AActor* _ColActor);
      void InhaleCollisionEnd(AActor* _ColActor);
 
-    void CollisionEnter(AActor* _ColActor);
     void ColKnockBackEnter(AActor* _ColActor);
+    void CollisionEnter(AActor* _ColActor);
     void CollisionStay(AActor* _ColActor);
     void CollisionEnd(AActor* _ColActor);
    
@@ -85,13 +86,29 @@ public:
         KnockBackVec = _Vector;
 
     }
+    const ActorVector& GetBulletVector()
+    {
+        return BulletVector;
+    }
+
+
+
+public:
+    
+    std::string DirString = "_Right";
+   
+
 protected:
 
 private:
+   
+    int Life = 0;
+
     FVector2D Size = { 0,0 };
     FVector2D KnockBackVec = FVector2D::ZERO;
     const float MaxHp = 100.0f;
     float CurHp = 100.0f;
+
 
     class USpriteRenderer* SpriteRenderer = nullptr;
     class UEngineWinImage* ColImage = nullptr;
@@ -104,7 +121,6 @@ private:
     float CurColTime = 0.0f;
     float ColTime = 50.0f;
 
-    std::string DirString = "_Right";
 
     // 점프
     // 공격
@@ -132,6 +148,7 @@ private:
     void FireFlyingStart();
     void FireFlyDownStart();
     void FireAttackStart();
+    void FireKnockBackStart();
 
     void SparkIdleStart();
     void SparkSlideStart();
@@ -141,7 +158,8 @@ private:
     void SparkCrouchStart();
     void SparkFlyingStart();
     void SparkFlyDownStart();
-    void SparkJumpStart();
+    void SparkJumpStart();  
+    void SparkKnockBackStart();
 
     void DirCheck();
     void ChangeState(EPlayerState CurPlayerState);
@@ -297,6 +315,9 @@ private:
 
     float BreakTime = 100.0f;
 
+    float CurDieTime = 0.0f;
+    float DieTime = 100.0f;
+
     float DashTime = 70.0f;
     float CurrDashTime = 0;
 
@@ -328,5 +349,7 @@ private:
 
     USoundPlayer BGMPlayLevelPrismPlayer;
     USoundPlayer BGMVictoryPlayer;
+
+    ActorVector BulletVector;
 };
 

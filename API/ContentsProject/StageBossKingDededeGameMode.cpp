@@ -6,6 +6,8 @@
 #include <EngineCore/EngineAPICore.h>
 AStageBossKingDededeGameMode::AStageBossKingDededeGameMode()
 {
+	SetName("StageBossKingDedede");
+
 }
 
 AStageBossKingDededeGameMode::~AStageBossKingDededeGameMode()

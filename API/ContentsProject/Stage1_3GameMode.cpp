@@ -7,6 +7,7 @@
 #include <EngineCore/EngineAPICore.h>
 AStage1_3GameMode::AStage1_3GameMode()
 {
+	SetName("Stage1_3");
 }
 
 AStage1_3GameMode::~AStage1_3GameMode()

@@ -15,6 +15,19 @@
 #include <EnginePlatform/EngineSound.h>
 #include <EngineBase/EngineDirectory.h>
 #include <EngineBase/EngineFile.h>
+#include "Stage1_1GameMode.h"
+#include "Stage1_2GameMode.h"
+#include "Stage1_4GameMode.h"
+#include "Stage1_3GameMode.h"
+#include "ItemRoomBeforeBossGameMode.h"
+#include "StageBossKingDededeGameMode.h"
+
+#include "PlayerStatsManager.h"
+#include "Bullet.h"
+#include "FireBullet.h"
+#include "FireBullet2.h"
+
+
 
 APlayer::APlayer()
 {
@@ -25,6 +38,9 @@ APlayer::APlayer()
 		SpriteRenderer->SetComponentScale({ 270, 270 });
 
 		SetName("Kirby");
+
+
+		UImageManager::GetInst().CuttingSprite("Die.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("Idle_Left.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("Idle_Right.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("Crouch_Left.png", { 128, 128 });
@@ -114,6 +130,7 @@ APlayer::APlayer()
 		SpriteRenderer->CreateAnimation("Exhale_Right", "Inhale_Right.png", 5, 5, 0.1f, false);
 		SpriteRenderer->CreateAnimation("Inhale_Left", "Inhale_Left.png", { 4,5,6,7,8,7,8,7,8,7,8,7,8,7,8,7,6,9,10,11,12 }, 0.1f,false);
 		SpriteRenderer->CreateAnimation("Inhale_Right", "Inhale_Right.png", { 4,5,6,7,8,7,8,7,8,7,8,7,8,7,8,7,6,9,10,11,12 }, 0.1f,false);
+		SpriteRenderer->CreateAnimation("Die", "Die.png", 0,15, 0.1f,false);
 
 
 		//Eating 
@@ -187,7 +204,7 @@ APlayer::APlayer()
 	}
 	{
 		CollisionComponent = CreateDefaultSubObject<U2DCollision>();
-		CollisionComponent->SetComponentLocation({ 0, 0 });
+		CollisionComponent->SetComponentLocation({ 0, -20 });
 		CollisionComponent->SetComponentScale({ 50, 50 });
 		CollisionComponent->SetCollisionGroup(ECollisionGroup::PlayerBody);
 		CollisionComponent->SetCollisionType(ECollisionType::CirCle);
@@ -268,6 +285,11 @@ void APlayer::BeginPlay()
 		//BGMPlayer = UEngineSound::Play("05. Victory Star.mp3");
 
 	}
+
+
+	//ABullet* Bullet = GetWorld()->SpawnActor<ABullet>();
+
+
 
 	Size = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 	GetWorld()->SetCameraPivot(Size.Half() * -1.0f);
@@ -589,24 +611,9 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 		break;
 
 	case EPlayerState::KnockBack:
-		switch (CurPlayerCopyState)
-		{
-		case ECopyAbilityState::Normal:
-			KnockBackStart();
-			break;
-		case ECopyAbilityState::Fire:
-			//FireKnockBackStart();
-
-			break;
-		case ECopyAbilityState::Spark:
-			//SparkKnockBackStart();
-			break;
-		case ECopyAbilityState::Beam:
-			break;
-		default:
-			break;
-		}
+		KnockBackStart();
 		break;
+
 	case EPlayerState::Die:
 		DieStart();
 		break;
@@ -623,6 +630,21 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 void APlayer::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
+
+	//int CurLife= PlayerStatsManager::GetInst().GetLife();
+
+	
+
+
+	if (GetCurHp() <= 0)
+	{
+		if (CurPlayerState != EPlayerState::Die)
+		{
+			ChangeState(EPlayerState::Die);
+
+		}//return;
+	}
+
 
 	if (CurPlayerColl == ECollisionGroup::PlayerInvincible)
 	{
@@ -749,9 +771,13 @@ void APlayer::LevelChangeEnd()
 void APlayer::KnockBackStart()
 {
 	DirCheck();
+	CurPlayerCopyState = ECopyAbilityState::Normal;
+
+	SpriteRenderer->SetComponentScale({ 270,270 });
 	SpriteRenderer->ChangeAnimation("Damaged" + DirString);
 
 }
+
 void APlayer::KnockBack(float _DeltaTime)
 {
 	if (true == SpriteRenderer->IsCurAnimationEnd() && GetCurHp()>0)
@@ -759,7 +785,7 @@ void APlayer::KnockBack(float _DeltaTime)
 		ChangeState(EPlayerState::Idle);
 		return;
 	}
-	if (GetCurHp() <= 0)
+	if (0>=GetCurHp() && true==SpriteRenderer->IsCurAnimationEnd())
 	{
 		ChangeState(EPlayerState::Die);
 		return;
@@ -769,21 +795,70 @@ void APlayer::KnockBack(float _DeltaTime)
 		AddActorLocation(KnockBackVec * 60.0f * _DeltaTime);
 
 	}
-	//FVector2D Vector = FVector2D::ZERO;
-	
-	//AddActorLocation(Vector*_DeltaTime * Speed);
 }
 void APlayer::DieStart()
 {
-	//UEngineAPICore::GetCore()->ResetLevel("")
+
+	int CurLife= PlayerStatsManager::GetInst().GetMinusLife(1);
+	if (0 >= CurLife)
+	{
+		JumpPower = { 0.0f,-300.0f };
+		GravityForce = FVector2D::ZERO;
+		SpriteRenderer->ChangeAnimation("Die");
+		
+	}
+
+	
 }
 void APlayer::Die(float _DeltaTime)
 {
+	if (true == SpriteRenderer->IsCurAnimationEnd())
+	{
+		AGameMode* gm = GetWorld()->GetGameMode<AGameMode>();
+		if (gm == nullptr) return;
+
+		if ("Stage1_1" == gm->GetName()) {
+
+			UEngineAPICore::GetCore()->ResetLevel<AStage1_1GameMode, APlayer>(gm->GetName());
+		}
+		else if ("Stage1_2" == gm->GetName()) {
+
+			UEngineAPICore::GetCore()->ResetLevel<AStage1_2GameMode, APlayer>(gm->GetName());
+		}
+		else if ("Stage1_3" == gm->GetName()) {
+
+			UEngineAPICore::GetCore()->ResetLevel<AStage1_3GameMode, APlayer>(gm->GetName());
+		}
+		else if ("Stage1_4" == gm->GetName()) {
+
+			UEngineAPICore::GetCore()->ResetLevel<AStage1_4GameMode, APlayer>(gm->GetName());
+		}
+		else if ("Stage1_4" == gm->GetName()) {
+
+			UEngineAPICore::GetCore()->ResetLevel<AStage1_4GameMode, APlayer>(gm->GetName());
+		}
+		else if ("ItemRoomBeforeBoss" == gm->GetName()) {
+
+			UEngineAPICore::GetCore()->ResetLevel<AItemRoomBeforeBossGameMode, APlayer>(gm->GetName());
+		}
+		else if ("StageBossKingDedede" == gm->GetName()) {
+
+			UEngineAPICore::GetCore()->ResetLevel<AStageBossKingDededeGameMode, APlayer>(gm->GetName());
+		}
+	}
+	
+	if (0 <  PlayerStatsManager::GetInst().GetLife()) {
+		return;
+	}
+	JumpGravity(_DeltaTime);
+	AddActorLocation(JumpPower*_DeltaTime);
+		
 	
 }
 void APlayer::FireAttackStart()
 {
 	Speed = 300.0f;
+	SpriteRenderer->SetComponentScale({ 270,270 });
 	SpriteRenderer->ChangeAnimation("FireAttack" + DirString);
 	{
 		InhaleRightComponent->SetComponentLocation({ 90, -20 });
@@ -794,6 +869,12 @@ void APlayer::FireAttackStart()
 		InhaleLeftComponent->SetComponentLocation({ -90, -20 });
 		InhaleLeftComponent->SetComponentScale({ 80, 60 });
 		InhaleLeftComponent->SetCollisionType(ECollisionType::Rect);
+	}
+	{
+		AFireBullet* Bullet = GetWorld()->SpawnActor<AFireBullet>();
+		//AFireBullet2* Bullet = GetWorld()->SpawnActor<AFireBullet2>();
+		Bullet->SetActorLocation(GetActorLocation());
+		Bullet->SetMainPawn(this);
 	}
 }
 void APlayer::SparkAttackStart()
@@ -810,6 +891,8 @@ void APlayer::SparkAttackStart()
 		InhaleLeftComponent->SetComponentScale({ 100, 100 });
 		InhaleLeftComponent->SetCollisionType(ECollisionType::CirCle);
 	}
+
+	
 }
 void APlayer::Attack(float _DeltaTime)
 {
@@ -818,6 +901,9 @@ void APlayer::Attack(float _DeltaTime)
 	
 	if (true == SpriteRenderer->IsCurAnimationEnd())
 	{
+		ColMonster = nullptr;
+		InhaleRightComponent->SetActive(false);
+		InhaleLeftComponent->SetActive(false);
 		ChangeState(EPlayerState::Idle);
 		return;
 	}
@@ -848,8 +934,14 @@ void APlayer::Attack(float _DeltaTime)
 
 	if (ColActor != nullptr) {
 
-		AMonster* Monster = dynamic_cast<AMonster*>(ColActor);
-		Monster->ChangeState(EMonsterState::Hurt);
+		AMonster* Target = dynamic_cast<AMonster*>(ColActor);
+
+		Target->ColKnockBackEnter(this);
+
+		//AFireBullet* NewFireBullet = GetWorld()->SpawnActor<AFireBullet>();
+		//BulletVector.push_back(NewFireBullet);
+
+		//Monster->ChangeState(EMonsterState::KnockBack);
 
 	}
 }
@@ -1760,11 +1852,56 @@ void APlayer::FlyDown(float _DeltaTime)
 void APlayer::ExhaleStart()
 {
 	SpriteRenderer->ChangeAnimation("Exhale" + DirString);
+
+
+	ABullet* Bullet = GetWorld()->SpawnActor<ABullet>();
+	Bullet->SetMainPawn(this);
+
+	AGameMode* gm = GetWorld()->GetGameMode<AGameMode>();
+	if (gm == nullptr) return;
+
+	if ("Stage1_1" == gm->GetName()) {
+		Bullet->SetColImage("foreground1-1_col.png");
+	}
+	else if ("Stage1_2" == gm->GetName()) {
+		Bullet->SetColImage("foreground1-2_col.png");
+
+	}
+	else if ("Stage1_3" == gm->GetName()) {
+		Bullet->SetColImage("foreground1-3_col.png");
+
+	}
+	else if ("Stage1_4" == gm->GetName()) {
+		Bullet->SetColImage("foreground1-4_col.png");
+
+	}
+	else if ("ItemRoomBeforeBoss" == gm->GetName()) {
+		Bullet->SetColImage("StageBossKingDedede.png");
+	}
+	else if ("StageBossKingDedede" == gm->GetName()) {
+		Bullet->SetColImage("foregroundKingDedede1-1_col.png");
+	}
+
+
+	FVector2D Vector = FVector2D::ZERO;
+	if (DirString == "_Left")
+	{
+		Bullet->SetActorLocation({ GetActorLocation().X - 30,GetActorLocation().Y - 23 });
+
+	}
+	else {
+		Bullet->SetActorLocation({ GetActorLocation().X + 30,GetActorLocation().Y - 23 });
+
+	}
+
+
+	
+
 }
 void APlayer::Exhale(float _DeltaTime)
 {
-	DirCheck();
-
+	//DirCheck();
+	//ExhaleStart();
 
 	if (true == SpriteRenderer->IsCurAnimationEnd())
 	{
@@ -1780,7 +1917,7 @@ void APlayer::InhaleStart()
 
 void APlayer::Inhale(float _DeltaTime)
 {
-	//DirCheck();
+	DirCheck();
 
 	AMonster* Monster = nullptr;
 	FVector2D Vector = FVector2D::ZERO;
@@ -1935,6 +2072,7 @@ void APlayer::ColKnockBackEnter(AActor* _ColActor)
 {
 	FVector2D Vector = GetActorLocation()- _ColActor->GetActorLocation();
 	Vector.Normalize();
+	
 	SetKnockBackForce(Vector);
 
 	SetIsDamagedState(true);
@@ -1986,6 +2124,7 @@ void APlayer::ChangeIdleStateByCopy(int _KeyIndex)
 			ChangeState(EPlayerState::Crouch);
 			break;
 		default:
+			ChangeState(EPlayerState::Crouch);
 			break;
 		}
 

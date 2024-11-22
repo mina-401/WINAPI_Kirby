@@ -71,9 +71,6 @@
     <ClInclude Include="KirbyWidget.h">
       <Filter>ContentsObject\HUD</Filter>
     </ClInclude>
-    <ClInclude Include="Monster.h">
-      <Filter>ContentsObject\Monster</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>ContentsObject\Kirby</Filter>
     </ClInclude>
@@ -120,6 +117,21 @@
       <Filter>ContentsObject\HUD</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
+      <Filter>ContentsObject\Kirby</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStatsManager.h">
+      <Filter>ContentsObject\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>ContentsObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBullet.h">
+      <Filter>ContentsObject\Kirby</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorVector.h">
+      <Filter>ContentsObject\Kirby</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBullet2.h">
       <Filter>ContentsObject\Kirby</Filter>
     </ClInclude>
   </ItemGroup>
@@ -221,6 +233,18 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>ContentsObject\Kirby</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerStatsManager.cpp">
+      <Filter>ContentsObject\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBullet.cpp">
+      <Filter>ContentsObject\Kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorVector.cpp">
+      <Filter>ContentsObject\Kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBullet2.cpp">
+      <Filter>ContentsObject\Kirby</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -240,9 +264,6 @@
     </Filter>
     <Filter Include="ContentsObject\Title">
       <UniqueIdentifier>{cca73199-5896-44f3-9efd-4e859017b9f0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="KirbyContents">
-      <UniqueIdentifier>{9d67429e-8506-4dc5-81cf-84ef29f5fc32}</UniqueIdentifier>
     </Filter>
     <Filter Include="ContentsObject\GameMap">
       <UniqueIdentifier>{9930e700-f278-4e51-a8a2-33e1a9b3153f}</UniqueIdentifier>

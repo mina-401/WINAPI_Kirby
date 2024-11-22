@@ -19,6 +19,7 @@ enum class ECollisionGroup
 	MonsterAttack,
 	SpawnPoint,
 	Potal,
+	Block,
 };
 enum class EPlayerState
 {

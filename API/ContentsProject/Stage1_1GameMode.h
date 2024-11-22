@@ -22,5 +22,7 @@ public:
 	class AMonster* MonsterWaddleDee = nullptr;
 	class AMonster* MonsterWaddleDoo = nullptr;
 	class AMonster* MonsterSparky = nullptr;
+
+	
 };
 

@@ -78,7 +78,8 @@ void KirbyContentsCore::BeginPlay()
 	UEngineAPICore::GetCore()->CreateLevel<AStageBossKingDededeGameMode, APlayer>("StageBossKingDedede");
 
 	ULevel::CollisionGroupLink(ECollisionGroup::MonsterAttack, ECollisionGroup::PlayerBody);
-	ULevel::CollisionGroupLink(ECollisionGroup::MonsterBody, ECollisionGroup::PlayerBody);
+	//ULevel::CollisionGroupLink(ECollisionGroup::MonsterBody, ECollisionGroup::PlayerBody);
+	ULevel::CollisionGroupLink(ECollisionGroup::Block, ECollisionGroup::MonsterBody);
 	ULevel::CollisionGroupLink(ECollisionGroup::PlayerBody, ECollisionGroup::MonsterBody);
 	ULevel::CollisionGroupLink(ECollisionGroup::MonsterBody, ECollisionGroup::PlayerInhaleRange);
 	ULevel::CollisionGroupLink(ECollisionGroup::Potal, ECollisionGroup::PlayerBody);
