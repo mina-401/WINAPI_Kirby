@@ -28,6 +28,24 @@ KirbyContentsCore::~KirbyContentsCore()
 // 엔진이 실행되고 단 1번 실행된다.
 void KirbyContentsCore::BeginPlay()
 {
+
+	{
+		// Init Window Pos, Scale
+		int width = GetSystemMetrics(SM_CXSCREEN);
+		int height = GetSystemMetrics(SM_CYSCREEN);
+		//UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("VVVVVV");
+		FVector2D WindowResolution = FVector2D(width, height);
+		FVector2D InitWindowScale = FVector2D(640, 440);//{ 640, 440 }
+		UEngineAPICore::GetCore()->GetMainWindow().SetWindowPosAndScale(WindowResolution.Half() - InitWindowScale.Half(), InitWindowScale);
+
+		// Debug Pen, Brush Setting : Black Solid Pen, Hollow Brush
+		UEngineWinImage* BackBufferImage = UEngineAPICore::GetCore()->GetMainWindow().GetBackBuffer();
+		HBRUSH OldBrush = static_cast<HBRUSH>(SelectObject(BackBufferImage->GetDC(), GetStockObject(NULL_BRUSH)));
+		HPEN OldPen = static_cast<HPEN>(SelectObject(BackBufferImage->GetDC(), GetStockObject(BLACK_PEN)));
+		DeleteObject(OldBrush);
+		DeleteObject(OldPen);
+	}
+
 	// 이미지로드
 	{
 		UEngineDirectory Dir;
@@ -65,8 +83,6 @@ void KirbyContentsCore::BeginPlay()
 
 
 	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("WinAPI_Kirby");
-	// main window의 backbuffer
-	UEngineAPICore::GetCore()->GetMainWindow().SetWindowPosAndScale({ 0, 0 }, { 640, 440 });
 
 	UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, AActor>("Title"); 
 

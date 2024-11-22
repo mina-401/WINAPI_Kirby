@@ -780,8 +780,14 @@ void APlayer::KnockBackStart()
 
 void APlayer::KnockBack(float _DeltaTime)
 {
-	if (true == SpriteRenderer->IsCurAnimationEnd() && GetCurHp()>0)
+	if (true == SpriteRenderer->IsCurAnimationEnd() && GetCurHp()>0 )
 	{
+		/*while ( true == PlayerNextPosCheck(_DeltaTime, FVector2D::DOWN))
+		{
+			AddActorLocation( FVector2D::DOWN * Speed * _DeltaTime);
+
+		}*/
+		
 		ChangeState(EPlayerState::Idle);
 		return;
 	}
@@ -792,7 +798,8 @@ void APlayer::KnockBack(float _DeltaTime)
 	}
 	if (true == PlayerNextPosCheck(_DeltaTime, KnockBackVec))
 	{
-		AddActorLocation(KnockBackVec * 60.0f * _DeltaTime);
+		AddActorLocation((KnockBackVec+FVector2D::DOWN) * 60.0f * _DeltaTime);
+
 
 	}
 }
@@ -802,7 +809,6 @@ void APlayer::DieStart()
 	int CurLife= PlayerStatsManager::GetInst().GetMinusLife(1);
 	if (0 >= CurLife)
 	{
-		JumpPower = { 0.0f,-300.0f };
 		GravityForce = FVector2D::ZERO;
 		SpriteRenderer->ChangeAnimation("Die");
 		
