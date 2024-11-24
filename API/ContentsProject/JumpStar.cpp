@@ -4,7 +4,7 @@
 #include "ContentsEnum.h"
 #include <EngineCore/SpriteRenderer.h>
 #include <EngineCore/ImageManager.h>
-#include "Monster.h"
+#include "Player.h"
 
 
 AJumpStar::AJumpStar()
@@ -49,17 +49,19 @@ void AJumpStar::SetColImage(std::string_view _ColImageName)
 
 void AJumpStar::Tick(float _DeltaTime)
 {
-	JumpGravity(_DeltaTime);
-	AddActorLocation(JumpPower * _DeltaTime);
+	if (Ishaling == false) {
+		JumpGravity(_DeltaTime);
+		AddActorLocation(JumpPower * _DeltaTime);
 
-	FVector2D NextPos = GetActorLocation()+ JumpPower * _DeltaTime;
-	//AddActorLocation(NextPos);
-	//ector2D NextPos = GravityForce ;
-	if (false == StarNextPosCheck(_DeltaTime, NextPos))
-	{
-		GravityForce = FVector2D::ZERO;
+		FVector2D NextPos = GetActorLocation() + JumpPower * _DeltaTime;
+		//AddActorLocation(NextPos);
+		//ector2D NextPos = GravityForce ;
+		if (false == StarNextPosCheck(_DeltaTime, NextPos))
+		{
+			GravityForce = FVector2D::ZERO;
+		}
 	}
-	
+
 }
 
 void AJumpStar::BeginPlay()
@@ -67,6 +69,13 @@ void AJumpStar::BeginPlay()
 
 	SetForegroundColImage();
 
+	if (MainPawn->DirString == "_Left") {
+		JumpPower.X = JumpPower.X * -100.0f;
+	}
+	else {
+		JumpPower.X = JumpPower.X * 100.0f;
+
+	}
 }
 void AJumpStar::SetForegroundColImage()
 {

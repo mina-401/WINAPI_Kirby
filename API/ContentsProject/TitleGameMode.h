@@ -1,5 +1,6 @@
 #pragma once
-
+#include <EnginePlatform/EngineSound.h>
+#include <EngineCore/GameMode.h>
 // Ό³Έν :
 class ATitleGameMode : public AGameMode
 {
@@ -19,5 +20,6 @@ public:
 protected:
 
 private:
+	USoundPlayer BGMPlayer;
 };
 

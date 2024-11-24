@@ -942,7 +942,7 @@ void APlayer::Attack(float _DeltaTime)
 	
 	if (true == SpriteRenderer->IsCurAnimationEnd())
 	{
-		ColMonster = nullptr;
+		//ColMonster = nullptr;
 		InhaleRightComponent->SetActive(false);
 		InhaleLeftComponent->SetActive(false);
 		ChangeState(EPlayerState::Idle);
@@ -952,7 +952,7 @@ void APlayer::Attack(float _DeltaTime)
 	FVector2D Vector = FVector2D::ZERO;
 	if (true == UEngineInput::GetInst().IsUp('X'))
 	{
-		ColMonster = nullptr;
+		//ColMonster = nullptr;
 		InhaleRightComponent->SetActive(false);
 		InhaleLeftComponent->SetActive(false);
 
@@ -1035,7 +1035,17 @@ void APlayer::Idle(float _DeltaTime)
 	PlayerGroundCheck(GravityForce);
 	Gravity(_DeltaTime);
 	//DownHillGravity(_DeltaTime);
+	AActor* _ColActor = CollisionComponent->CollisionOnce(ECollisionGroup::MonsterBody);
+	if (_ColActor != nullptr)
+	{
+		AMonster* Target = dynamic_cast<AMonster*>(_ColActor);
+		if (nullptr != Target) {
+				Target->ColKnockBackEnter(this);
+				this->ColKnockBackEnter(Target);
 
+		}
+
+	}
 
 	if (true == UEngineInput::GetInst().IsPress(VK_LEFT) ||
 		true == UEngineInput::GetInst().IsPress(VK_RIGHT))
@@ -1202,7 +1212,7 @@ void APlayer::Jump(float _DeltaTime)
 	DirCheck();
 
 
-	PlayerGroundCheck(GravityForce );
+	PlayerGroundCheck(GravityForce);
 	JumpGravity(_DeltaTime);
 	AddActorLocation(JumpPower*_DeltaTime);
 
@@ -1344,6 +1354,7 @@ void APlayer::CreateJumpStar()
 {
 	AJumpStar* Star = GetWorld()->SpawnActor<AJumpStar>();
 	Star->SetActorLocation(GetActorLocation());
+	Star->SetMainPawn(this);
 }
 void APlayer::Move(float _DeltaTime)
 {
@@ -1352,6 +1363,19 @@ void APlayer::Move(float _DeltaTime)
 	//DownHillGravity(_DeltaTime);
 	Gravity(_DeltaTime);
 	
+	AActor* _ColActor = CollisionComponent->CollisionOnce(ECollisionGroup::MonsterBody);
+	if (_ColActor != nullptr)
+	{
+		AMonster* Target = dynamic_cast<AMonster*>(_ColActor);
+		if (nullptr != Target) {
+			Target->ColKnockBackEnter(this);
+			this->ColKnockBackEnter(Target);
+
+		}
+
+	}
+
+
 	FVector2D Vector = FVector2D::ZERO;
 	
 	if (true == UEngineInput::GetInst().IsPress(VK_DOWN))
@@ -1437,7 +1461,7 @@ void APlayer::Move(float _DeltaTime)
 			break;
 		}
 	}
-
+	
 	
 }
 
@@ -1995,61 +2019,112 @@ void APlayer::InhaleStart()
 void APlayer::Inhale(float _DeltaTime)
 {
 	DirCheck();
-
+	
 	AMonster* Monster = nullptr;
+	
 	FVector2D Vector = FVector2D::ZERO;
 	if (true == UEngineInput::GetInst().IsUp('X'))
 	{
 		//ColMonster = nullptr;
+
+		if (star != nullptr) {
+			star->SetIshale(false);
+		}
 		InhaleRightComponent->SetActive(false);
 		InhaleLeftComponent->SetActive(false);
-		
+
 		ChangeState(EPlayerState::Idle);
 		return;
 	}
-	AActor* ColActor = nullptr;
+	AActor* ColMon = nullptr;
+	AActor* ColStar = nullptr;
 	if (DirString=="_Right")
 	{
 		InhaleRightComponent->SetActive(true);
-		ColActor = InhaleRightComponent->CollisionOnce(ECollisionGroup::MonsterBody);
+		ColMon = InhaleRightComponent->CollisionOnce(ECollisionGroup::MonsterBody);
+		ColStar = InhaleRightComponent->CollisionOnce(ECollisionGroup::Block);
 		//Vector = FVector2D::LEFT;
 	}
 	else if (DirString == "_Left")
 	{
 		InhaleLeftComponent->SetActive(true);
-		ColActor = InhaleLeftComponent->CollisionOnce(ECollisionGroup::MonsterBody);
+		ColMon = InhaleLeftComponent->CollisionOnce(ECollisionGroup::MonsterBody);
+		ColStar = InhaleLeftComponent->CollisionOnce(ECollisionGroup::Block);
 		//Vector = FVector2D::RIGHT;
 	}
 	
-	if (ColActor != nullptr) {
+	if (ColMon != nullptr) {
+		int a = 0;
+		Monster = dynamic_cast<AMonster*>(ColMon);
 
-		Monster = dynamic_cast<AMonster*>(ColActor);
-		if (Monster->GetCurMonsterState() != EMonsterState::Inhaled) {
-			Monster->ChangeState(EMonsterState::Inhaled);
+		if (nullptr != Monster) {
+			if (Monster->GetCurMonsterState() != EMonsterState::Inhaled) {
+				Monster->ChangeState(EMonsterState::Inhaled);
+
+			}
+			Vector = GetActorLocation() - Monster->GetActorLocation();
+			Vector.Normalize();
+			Monster->InhalingGravity(_DeltaTime, Vector);
 		}
-		Vector=GetActorLocation() - Monster->GetActorLocation();
-		Vector.Normalize();
-		Monster->InhalingGravity(_DeltaTime,Vector);
+	
+	}
+
+
+	if (ColStar != nullptr) {
+
+			star = dynamic_cast<AJumpStar*>(ColStar);
+
+			if (nullptr != star)
+			{
+				Vector = GetActorLocation() - star->GetActorLocation();
+				Vector.Normalize();
+				star->SetIshale(true);
+				star->InhalingGravity(_DeltaTime, Vector);
+			}
+			
+		
+	}
+
+	ColMon = nullptr;
+	ColMon = CollisionComponent->CollisionOnce(ECollisionGroup::MonsterBody);
+	if (ColMon != nullptr)
+	{
+		ColMonster= dynamic_cast<AMonster*>(ColMon);
+		if (ColMonster != nullptr) {
+			CurPlayerEatState = EPlayerEatState::Eating;
+			ColMon->SetActive(false);
+			InhaleRightComponent->SetActive(false);
+			InhaleLeftComponent->SetActive(false);
+
+			
+			// 몬스터 흡입한 상태 커비 애니메이션
+			ChangeState(EPlayerState::Idle);
+
+			if (star != nullptr) {
+				star->SetIshale(false);
+			}
+		
+		}
+		return;
+		
 
 	}
-	ColActor = nullptr;
-	ColActor = CollisionComponent->CollisionOnce(ECollisionGroup::MonsterBody);
-	if (ColActor != nullptr)
-	{
-		ColMonster= dynamic_cast<AMonster*>(ColActor);
-		if (ColMonster == nullptr)return;
 
+	ColStar = CollisionComponent->CollisionOnce(ECollisionGroup::Block);
+	AJumpStar* Jumpstar = dynamic_cast<AJumpStar*>(ColStar);
+
+	if (Jumpstar != nullptr)
+	{
 		CurPlayerEatState = EPlayerEatState::Eating;
-		ColActor->SetActive(false);
-		//ColMonster = nullptr;
+		ColStar->SetActive(false);
 		InhaleRightComponent->SetActive(false);
 		InhaleLeftComponent->SetActive(false);
 
-		// 몬스터 흡입한 상태 커비 애니메이션
 		ChangeState(EPlayerState::Idle);
 		return;
-
 	}
+
+	
 
 
 }
@@ -2236,7 +2311,6 @@ void APlayer::ChangeIdleStateByCopy(int _KeyIndex)
 		switch (CurPlayerCopyState)
 		{
 		case ECopyAbilityState::Normal:
-			CreateJumpStar();
 			ChangeState(EPlayerState::Idle);
 			break;
 		case ECopyAbilityState::Spark:

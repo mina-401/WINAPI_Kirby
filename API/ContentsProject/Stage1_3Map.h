@@ -29,6 +29,7 @@ private:
 	FVector2D WinSize;
 	FVector2D MapScale;
 	class USpriteRenderer* SpriteRenderer = nullptr;
+	class USpriteRenderer* StarSpriteRenderer = nullptr;
 	class USpriteRenderer* ColSpriteRenderer = nullptr;
 
 	class U2DCollision* PotalColComponent = nullptr;

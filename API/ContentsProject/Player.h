@@ -369,5 +369,6 @@ private:
     USoundPlayer BGMVictoryPlayer;
 
     ActorVector BulletVector;
+    class AJumpStar* star = nullptr;
 };
 

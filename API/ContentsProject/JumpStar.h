@@ -28,6 +28,23 @@ public:
 		}
 
 	}
+	void InhalingGravity(float _DeltaTime, FVector2D _Vector)
+	{
+
+		FVector2D NextPos =_Vector * _DeltaTime * 150.0f;
+		AddActorLocation(NextPos);
+	}
+	void SetIshale(bool _Value)
+	{
+		Ishaling = _Value;
+	}
+
+
+	void SetMainPawn(class APlayer* _MainPawn)
+	{
+		MainPawn = _MainPawn;
+	}
+
 protected:
 	void Tick(float _DeltaTime) override;
 	void BeginPlay() override;
@@ -35,12 +52,15 @@ protected:
 	bool StarNextPosCheck(float _DeltaTime, FVector2D _Vector);
 private:
 	FVector2D Vector = FVector2D::RIGHT;
-	FVector2D JumpPower = { 0.0f,-300.0f };
+	FVector2D JumpPower = { 1.0f,-300.0f };
 	FVector2D GravityForce = FVector2D::ZERO;
 	float Speed = 300.0f;
 	class UEngineWinImage* ColImage = nullptr;
 	class USpriteRenderer* SpriteRenderer = nullptr;
 	bool IsGround = false;
+	bool Ishaling = false;
+
+	class APlayer* MainPawn = nullptr;
 	
 };
 

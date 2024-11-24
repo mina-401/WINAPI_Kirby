@@ -12,6 +12,9 @@ AStage1_3Map::AStage1_3Map()
 {
 	PngSize = { (float)136 ,(float)164.5 };
 	WinSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
+
+	UImageManager::GetInst().CuttingSprite("StarBulletIdle_Left.png", { 128, 128 });
+	UImageManager::GetInst().CuttingSprite("StarBulletIdle_Right.png", { 128, 128 });
 	{
 		SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 		SpriteRenderer->SetOrder(ERenderOrder::FOREGROUND);
@@ -44,6 +47,18 @@ AStage1_3Map::AStage1_3Map()
 		PotalColComponent->SetCollisionStay(std::bind(&AStage1_3Map::CollisionStay, this, std::placeholders::_1));
 		PotalColComponent->SetCollisionEnd(std::bind(&AStage1_3Map::CollisionEnd, this, std::placeholders::_1));
 		DebugOn();
+	}
+	{
+		StarSpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
+		StarSpriteRenderer->SetSprite("StarBulletIdle_Left.png");
+		StarSpriteRenderer->SetOrder(ERenderOrder::PLAYER);
+		FVector2D StarScale= StarSpriteRenderer->SetSpriteScale(1.0f);
+		StarSpriteRenderer->SetComponentScale({ 250, 250 });
+		StarSpriteRenderer->SetComponentLocation({ (float)MapScale.X - 100,(float)20 });
+
+		StarSpriteRenderer->CreateAnimation("StarBulletIdle_Left", "StarBulletIdle_Left.png", 0, 1, 0.1f, true);
+		StarSpriteRenderer->CreateAnimation("StarBulletIdle_Right", "StarBulletIdle_Right.png", 0, 1, 0.1f, true);
+		StarSpriteRenderer->ChangeAnimation("StarBulletIdle_Left");
 	}
 }
 
@@ -80,9 +95,18 @@ void AStage1_3Map::Tick(float _deltaTime)
 {
 	Super::Tick(_deltaTime);
 	if (true == UEngineInput::GetInst().IsPress(VK_UP) && IsPlayerStayPotal) {
-		UEngineAPICore::GetCore()->OpenLevel("Stage1_4");
+		UEngineAPICore::GetCore()->OpenLevel("ItemRoomBeforeBoss");
 	}
 	APlayer* player = GetWorld()->GetPawn<APlayer>();
 	player->BlockCameraPos(MapScale, WinSize);
+
+	EPlayerState PlayerState= player->GetCurPlayerState();
+	if (PlayerState == EPlayerState::Fly || PlayerState == EPlayerState::Jump) {
+		ColSpriteRenderer->SetSprite("foreground1-3_noncol.png");
+		int a = 0;
+	}
+	else {
+		ColSpriteRenderer->SetSprite("foreground1-3_col.png");
+	}
 }
 

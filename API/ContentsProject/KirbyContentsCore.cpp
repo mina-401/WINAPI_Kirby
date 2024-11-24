@@ -63,7 +63,7 @@ void KirbyContentsCore::BeginPlay()
 		}
 	}
 
-	/*{
+/*	{
 		UEngineDirectory Dir;
 		if (false == Dir.MoveParentToDirectory("Resource"))
 		{
@@ -77,7 +77,7 @@ void KirbyContentsCore::BeginPlay()
 			std::string FilePath = SoundFiles[i].GetPathToString();
 			UEngineSound::Load(FilePath);
 		}
-	}*/
+	*/}
 
 	//UImageManager::GetInst().CuttingSprite("KirbyDance.png", { 128, 128 });
 
@@ -101,7 +101,7 @@ void KirbyContentsCore::BeginPlay()
 	ULevel::CollisionGroupLink(ECollisionGroup::Potal, ECollisionGroup::PlayerBody);
 
 
-	UEngineAPICore::GetCore()->OpenLevel("Stage1_1");
+	UEngineAPICore::GetCore()->OpenLevel("Title");
 
 }
 
