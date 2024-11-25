@@ -69,8 +69,15 @@ void AItemRoomBeforeBossMap::Tick(float _deltaTime)
 	APlayer* player = GetWorld()->GetPawn<APlayer>();
 	player->BlockCameraPos(MapScale, WinSize);
 
-	FVector2D  CurCameraPos = GetWorld()->GetCameraPos();
+	EPlayerState PlayerState = player->GetCurPlayerState();
+	if (PlayerState == EPlayerState::Fly || PlayerState == EPlayerState::Jump) {
+		player->SetColImage("stageBeforeBoss_noncol.png");
 
+	}
+	else {
+		player->SetColImage("stageBeforeBoss_col.png");
+
+	}
 }
 
 void AItemRoomBeforeBossMap::CollisionEnter(AActor* _ColActor)

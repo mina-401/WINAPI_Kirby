@@ -47,5 +47,5 @@ void AStageKingDededeMap::Tick(float _deltaTime)
 	APlayer* player = GetWorld()->GetPawn<APlayer>();
 	player->BlockCameraPos(MapScale, WinSize);
 	FVector2D  CurCameraPos = GetWorld()->GetCameraPos();
-	//GetWorld()->SetCameraPos({ CurCameraPos.X,CurCameraPos.Y + 70 });
+
 }

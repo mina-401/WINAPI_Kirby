@@ -102,11 +102,12 @@ void AStage1_3Map::Tick(float _deltaTime)
 
 	EPlayerState PlayerState= player->GetCurPlayerState();
 	if (PlayerState == EPlayerState::Fly || PlayerState == EPlayerState::Jump) {
-		ColSpriteRenderer->SetSprite("foreground1-3_noncol.png");
-		int a = 0;
+		player->SetColImage("foreground1-3_noncol.png");
+		
 	}
 	else {
-		ColSpriteRenderer->SetSprite("foreground1-3_col.png");
+		player->SetColImage("foreground1-3_col.png");
+
 	}
 }
 
