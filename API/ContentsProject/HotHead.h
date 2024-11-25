@@ -19,12 +19,16 @@ public:
 
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
-	void AttackCollisionEnter(AActor* _ColActor);
+	//void AttackCollisionEnter(AActor* _ColActor);
 	void AttackBoomeCollisionEnter(AActor* _ColActor);
-	void SetIsBoome(bool _Is);
+	//void SetIsBoome(bool _Is);
 protected:
 
 private:
 	bool IsBoome = false;
+	bool Attackable = true;
+
+	float CurBulletTime = 0.0f;
+	float BulletTime = 50.0f;
 };
 

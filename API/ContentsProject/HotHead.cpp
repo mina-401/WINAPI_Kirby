@@ -39,7 +39,7 @@ AHotHead::AHotHead()
 	{
 		AttackColComponent = CreateDefaultSubObject<U2DCollision>();
 		AttackColComponent->SetComponentLocation({ 0, 0 });
-		AttackColComponent->SetComponentScale({ 300, 300 });
+		AttackColComponent->SetComponentScale({ 250, 250   });
 		AttackColComponent->SetCollisionGroup(ECollisionGroup::MonsterAttack);
 		AttackColComponent->SetCollisionType(ECollisionType::CirCle);
 
@@ -49,26 +49,18 @@ AHotHead::AHotHead()
 	}
 
 	{
-		AttackColComponent = CreateDefaultSubObject<U2DCollision>();
+		/*AttackColComponent = CreateDefaultSubObject<U2DCollision>();
 		AttackColComponent->SetComponentLocation({ 0, 0 });
 		AttackColComponent->SetComponentScale({ 200, 200 });
 		AttackColComponent->SetCollisionGroup(ECollisionGroup::MonsterAttack);
 		AttackColComponent->SetCollisionType(ECollisionType::CirCle);
 
-		AttackColComponent->SetCollisionEnter(std::bind(&AHotHead::AttackCollisionEnter, this, std::placeholders::_1));
+		AttackColComponent->SetCollisionEnter(std::bind(&AHotHead::AttackCollisionEnter, this, std::placeholders::_1));*/
 		//AttackColComponent->SetCollisionStay(std::bind(&ASparky::AttackCollisionStay, this, std::placeholders::_1));
 		//AttackColComponent->SetCollisionEnd(std::bind(&ASparky::AttackCollisionEnd, this, std::placeholders::_1));
 	}
 
-	{
-		CollisionComponent = CreateDefaultSubObject<U2DCollision>();
-		CollisionComponent->SetComponentLocation({ 0, 0 });
-		CollisionComponent->SetComponentScale({ 50, 50 });
-		CollisionComponent->SetCollisionGroup(ECollisionGroup::MonsterBody);
-		CollisionComponent->SetCollisionType(ECollisionType::CirCle);
-
-		DebugOn();
-	}
+	
 }
 
 AHotHead::~AHotHead()
@@ -94,21 +86,36 @@ void AHotHead::Attack(float _DeltaTime)
 void AHotHead::BeginPlay()
 {
 	AMonster::BeginPlay();
-
+	SetCopyAbilityState(ECopyAbilityState::Fire);
 }
 
 void AHotHead::Tick(float _DeltaTime)
 {
 	AMonster::Tick(_DeltaTime);
+
+	if (BulletTime < CurBulletTime)
+	{
+
+		Attackable = true;
+	}
+	
+	CurBulletTime += 0.02f;
+
 }
 
-void AHotHead::AttackCollisionEnter(AActor* _ColActor)
-{
-	IsBoome = false;
-	ChangeState(EMonsterState::Attack);
-}
+//void AHotHead::AttackCollisionEnter(AActor* _ColActor)
+//{
+//	IsBoome = false;
+//	ChangeState(EMonsterState::Attack);
+//}
 void AHotHead::AttackBoomeCollisionEnter(AActor* _ColActor)
 {
-	IsBoome = true;
-	ChangeState(EMonsterState::Attack);
+	if (Attackable == false) return;
+	if (CurMonsterState != EMonsterState::Inhaled) {
+		IsBoome = true;
+		Attackable = false;
+		CurBulletTime = 0.0f;
+		ChangeState(EMonsterState::Attack);
+	}
+	
 }

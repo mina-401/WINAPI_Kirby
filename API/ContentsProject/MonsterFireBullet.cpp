@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "MonsterFireBullet.h"
 
+#include <EngineCore/2DCollision.h>
 #include "Player.h"
 #include "HotHead.h"
 #include "ContentsEnum.h"
@@ -27,7 +28,15 @@ AMonsterFireBullet::AMonsterFireBullet()
 		SpriteRenderer->CreateAnimation("FireboomerangIdle_Right", "HotHead_Right.png", 8,13, 0.05f,true);
 		SpriteRenderer->ChangeAnimation("FireboomerangIdle_Right");
 	}
+	{
+		U2DCollision* CollisionComponent = CreateDefaultSubObject<U2DCollision>();
+		CollisionComponent->SetComponentLocation({ 0, -25 });
+		CollisionComponent->SetComponentScale({ 50, 50 });
+		CollisionComponent->SetCollisionGroup(ECollisionGroup::Block);
+		CollisionComponent->SetCollisionType(ECollisionType::CirCle);
 
+		DebugOn();
+	}
 	DebugOn();
 
 	Destroy(10.0f);
@@ -64,7 +73,11 @@ void AMonsterFireBullet::BeginPlay()
 	//SetMainPawn();
 	APlayer* Player = GetWorld()->GetPawn<APlayer>();
 
+	if (Player == nullptr) return;
+
 	PlayerDir = Player->GetActorLocation() - MainPawn->GetActorLocation();
+
+
 	PlayerDir.Normalize();
 
 	if (0 <= PlayerDir.X)

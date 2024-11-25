@@ -27,6 +27,7 @@
 #include "FireBullet.h"
 #include "FireBullet2.h"
 #include "JumpStar.h"
+#include "MonsterFireBullet.h"
 
 
 
@@ -96,6 +97,8 @@ APlayer::APlayer()
 		UImageManager::GetInst().CuttingSprite("FireExhale_Left.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("FireDash_Left.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("FireDash_Right.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("FireDamaged_Left.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("FireDamaged_Right.png", { 128, 128 });
 
 		UImageManager::GetInst().CuttingSprite("AllSparkKirby_Left.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("AllSparkKirby_Right.png", { 128, 128 });
@@ -171,6 +174,8 @@ APlayer::APlayer()
 		SpriteRenderer->CreateAnimation("FireExhale_Right", "FireExhale_Right.png", 0, 2, 0.1f, false);
 		SpriteRenderer->CreateAnimation("FireDash_Left", "FireDash_Left.png", 0, 0, 0.1f);
 		SpriteRenderer->CreateAnimation("FireDash_Right", "FireDash_Right.png", 0, 0, 0.1f);
+		SpriteRenderer->CreateAnimation("FireDamaged_Left", "FireDamaged_Left.png", 0, 7, 0.1f, false);
+		SpriteRenderer->CreateAnimation("FireDamaged_Right", "FireDamaged_Right.png", 0, 7, 0.1f, false);
 
 		//spark
 		SpriteRenderer->CreateAnimation("SparkIdle_Left", "AllSparkKirby_Left.png", 0, 7, 0.2f);
@@ -620,7 +625,10 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 		break;
 
 	case EPlayerState::KnockBack:
-		KnockBackStart();
+
+			KnockBackStart();
+
+
 		break;
 
 	case EPlayerState::Die:
@@ -759,6 +767,8 @@ void APlayer::Tick(float _DeltaTime)
 		Attack(_DeltaTime);
 		break;
 	case EPlayerState::KnockBack:
+
+
 		KnockBack(_DeltaTime);
 		break;
 	case EPlayerState::Die:
@@ -804,6 +814,12 @@ void APlayer::LevelChangeEnd()
 
 void APlayer::KnockBackStart()
 {
+	if (nullptr != ColBullet)
+	{
+		FireKnockBackStart();
+		ColBullet = nullptr;
+		return;
+	}
 	DirCheck();
 	CurPlayerCopyState = ECopyAbilityState::Normal;
 
@@ -811,7 +827,15 @@ void APlayer::KnockBackStart()
 	SpriteRenderer->ChangeAnimation("Damaged" + DirString);
 	CollisionComponent->SetActive(false);
 }
+void APlayer::FireKnockBackStart()
+{
+	DirCheck();
+	CurPlayerCopyState = ECopyAbilityState::Normal;
 
+	SpriteRenderer->SetComponentScale({ 270,270 });
+	SpriteRenderer->ChangeAnimation("FireDamaged" + DirString);
+	CollisionComponent->SetActive(false);
+}
 void APlayer::KnockBack(float _DeltaTime)
 {
 	if (true == SpriteRenderer->IsCurAnimationEnd() && GetCurHp()>0 )
@@ -1439,10 +1463,10 @@ void APlayer::Move(float _DeltaTime)
 		UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
 		if (Color == UColor::BLACK)
 		{
-			UColor NextColor = ColImage->GetColor(GetActorLocation() + FVector2D::UP, UColor::WHITE);
+			UColor NextColor = ColImage->GetColor(GetActorLocation() + FVector2D::UP * Speed * _DeltaTime, UColor::WHITE);
 			if (NextColor != UColor::BLACK)
 			{
-				AddActorLocation(FVector2D::UP);
+				AddActorLocation(FVector2D::UP * Speed * _DeltaTime);
 			}
 
 		}
@@ -1457,7 +1481,7 @@ void APlayer::Move(float _DeltaTime)
 		if (Color == UColor::GRAY)
 		{
 			// 나가 땅위로 올라갈때까지 while 계속 올려준다.
-			AddActorLocation(FVector2D::UP);
+			AddActorLocation(FVector2D::UP*Speed * _DeltaTime);
 		}
 		else {
 			break;
@@ -1653,19 +1677,20 @@ void APlayer::Dash(float _DeltaTime)
 	}
 
 
-	UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
-	if (Color == UColor::BLACK)
-	{
-		//절벽을 만났는지
-		UColor NextColor = ColImage->GetColor(GetActorLocation() + FVector2D::UP, UColor::WHITE);
-		if (NextColor != UColor::BLACK)
+	
+		UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
+		if (Color == UColor::BLACK)
 		{
-			//경사이다.
-			AddActorLocation(FVector2D::UP);
-		}
+			UColor NextColor = ColImage->GetColor(GetActorLocation() + FVector2D::UP * Speed * _DeltaTime, UColor::WHITE);
+			if (NextColor != UColor::BLACK)
+			{
+				AddActorLocation(FVector2D::UP * Speed * _DeltaTime);
+			}
 
-	}
-	else AddActorLocation(Vector * Speed * _DeltaTime);
+		}
+		else AddActorLocation(Vector * Speed * _DeltaTime);
+	
+
 
 
 	while (true)
@@ -1674,7 +1699,7 @@ void APlayer::Dash(float _DeltaTime)
 		if (Color == UColor::GRAY)
 		{
 			// 나가 땅위로 올라갈때까지 while 계속 올려준다.
-			AddActorLocation(FVector2D::UP);
+			AddActorLocation(FVector2D::UP * Speed * _DeltaTime);
 		}
 		else {
 			break;
@@ -2212,7 +2237,17 @@ void APlayer::CollisionEnter(AActor* _ColActor)
 {
 	int a = 0;
 
-	
+	ColBullet = dynamic_cast<AMonsterFireBullet*>(_ColActor);
+	if (nullptr != ColBullet)
+	{
+		FVector2D Vector = GetActorLocation() - _ColActor->GetActorLocation();
+		Vector.Normalize();
+
+		SetKnockBackForce(Vector);
+
+		SetIsDamagedState(true);
+		ChangeState(EPlayerState::KnockBack);
+	}
 
 
 }

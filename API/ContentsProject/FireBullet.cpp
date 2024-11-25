@@ -4,6 +4,7 @@
 #include "ContentsEnum.h"
 #include <EngineCore/SpriteRenderer.h>
 #include <EngineCore/ImageManager.h>
+#include <EngineCore/2DCollision.h>
 
 AFireBullet::AFireBullet()
 {
@@ -20,8 +21,16 @@ AFireBullet::AFireBullet()
 		SpriteRenderer->CreateAnimation("FireBulletIdle_Left", "FireBulletIdle_Left.png", 0,6, 0.08f, true);
 		SpriteRenderer->CreateAnimation("FireBulletIdle_Right", "FireBulletIdle_Right.png", 0,6, 0.08f, true);
 		SpriteRenderer->ChangeAnimation("FireBulletIdle_Right");
-	}
+	} 
+	{
+		U2DCollision* CollisionComponent = CreateDefaultSubObject<U2DCollision>();
+		CollisionComponent->SetComponentLocation({ 0, 0 });
+		CollisionComponent->SetComponentScale({ 50, 50 });
+		CollisionComponent->SetCollisionGroup(ECollisionGroup::MonsterBody);
+		CollisionComponent->SetCollisionType(ECollisionType::CirCle);
 
+	
+	}
 	DebugOn();
 
 	Destroy(5.0f);

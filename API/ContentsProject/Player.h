@@ -364,6 +364,7 @@ private:
     class AKirbyWidget* PlayerHud = nullptr;
 
     class AMonster* ColMonster = nullptr;
+    class AMonsterFireBullet* ColBullet = nullptr;
 
     USoundPlayer BGMPlayLevelPrismPlayer;
     USoundPlayer BGMVictoryPlayer;
