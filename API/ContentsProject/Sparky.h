@@ -18,6 +18,8 @@ public:
 	void Attack(float _DeltaTime) override;
 
 	void BeginPlay() override;
+	void Tick(float _DeltaTime) override;
+
 	void AttackCollisionEnter(AActor* _ColActor);
 //	void AttackCollisionStay(AActor* _ColActor);
 	//void AttackCollisionEnd(AActor* _ColActor);
@@ -29,7 +31,11 @@ protected:
 	//void CollisionStay(AActor* _ColActor)override;
 	//void CollisionEnd(AActor* _ColActor)override;
 private:
+	bool IsBoome = false;
+	bool Attackable = true;
 
+	float CurBulletTime = 0.0f;
+	float BulletTime = 50.0f;
 
 };
 

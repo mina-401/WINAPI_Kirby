@@ -98,9 +98,7 @@ void AHotHead::Tick(float _DeltaTime)
 
 		Attackable = true;
 	}
-	
 	CurBulletTime += 0.02f;
-
 }
 
 //void AHotHead::AttackCollisionEnter(AActor* _ColActor)

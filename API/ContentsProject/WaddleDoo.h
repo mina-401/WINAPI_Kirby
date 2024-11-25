@@ -37,4 +37,10 @@ private:
 	class USpriteRenderer* BeamSpriteRenderer4 = nullptr;
 
 	int R = 100;
+
+	bool IsBoome = false;
+	bool Attackable = true;
+
+	float CurBulletTime = 0.0f;
+	float BulletTime = 50.0f;
 };

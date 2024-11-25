@@ -128,7 +128,7 @@ void AMonster::KnockBack(float _DeltaTime)
 {
 	if (true == MonsterNextPosCheck(_DeltaTime, KnockBackVec))
 	{
-		AddActorLocation(KnockBackVec * 60.0f * _DeltaTime);
+		AddActorLocation(KnockBackVec * 100.0f * _DeltaTime);
 
 	}
 

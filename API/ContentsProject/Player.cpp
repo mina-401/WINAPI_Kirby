@@ -838,13 +838,14 @@ void APlayer::FireKnockBackStart()
 }
 void APlayer::KnockBack(float _DeltaTime)
 {
+	//Gravity(_DeltaTime);
 	if (true == SpriteRenderer->IsCurAnimationEnd() && GetCurHp()>0 )
 	{
-		while ( true == PlayerNextPosCheck(_DeltaTime, FVector2D::DOWN))
+		/*while ( true == PlayerNextPosCheck(_DeltaTime, FVector2D::DOWN))
 		{
 			AddActorLocation( FVector2D::DOWN * Speed * _DeltaTime);
 
-		}
+		}*/
 		CollisionComponent->SetActive(true);
 
 		ChangeState(EPlayerState::Idle);
@@ -857,7 +858,8 @@ void APlayer::KnockBack(float _DeltaTime)
 	}
 	if (true == PlayerNextPosCheck(_DeltaTime, KnockBackVec))
 	{
-		AddActorLocation((KnockBackVec+FVector2D::DOWN) * 60.0f * _DeltaTime);
+		AddActorLocation((KnockBackVec) * 50.0f * _DeltaTime);
+		//AddActorLocation(FVector2D::DOWN * 50.0f * _DeltaTime);
 
 
 	}
@@ -1069,6 +1071,7 @@ void APlayer::Idle(float _DeltaTime)
 				Target->ColKnockBackEnter(this);
 				this->ColKnockBackEnter(Target);
 
+				return;
 		}
 
 	}
@@ -1889,7 +1892,25 @@ void APlayer::Fly(float _DeltaTime)
 		GravityForce = FVector2D::ZERO;
 		Vector += FVector2D::UP;
 	}
+	AActor* _ColActor = CollisionComponent->CollisionOnce(ECollisionGroup::MonsterBody);
+	if (_ColActor != nullptr)
+	{
+		AMonster* Target = dynamic_cast<AMonster*>(_ColActor);
+		if (nullptr != Target) {
+			//this->ColKnockBackEnter(_ColActor);
+			if (CurPlayerCopyState == ECopyAbilityState::Fire)
+			{
+				Target->ColKnockBackEnter(this);
 
+			}
+			else {
+				Target->ColKnockBackEnter(this);
+				this->ColKnockBackEnter(Target);
+			}
+			return;
+		}
+
+	}
 	if (true ==PlayerNextPosCheck(_DeltaTime, Vector))
 	{
 		AddActorLocation(Vector * Speed * _DeltaTime);

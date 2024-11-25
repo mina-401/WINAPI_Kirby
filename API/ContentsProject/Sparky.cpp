@@ -94,10 +94,31 @@ void ASparky::BeginPlay()
 	SetCopyAbilityState(ECopyAbilityState::Spark);
 }
 
+void ASparky::Tick(float _DeltaTime)
+{
+	AMonster::Tick(_DeltaTime);
+
+	if (BulletTime < CurBulletTime)
+	{
+
+		Attackable = true;
+	}
+
+	CurBulletTime += 0.02f;
+}
+
 void ASparky::AttackCollisionEnter(AActor* _ColActor)
 {
-	//플레이어에게 공격한다.
-	ChangeState(EMonsterState::Attack);
+	
+		if (Attackable == false) return;
+		if (CurMonsterState != EMonsterState::Inhaled) {
+		
+			Attackable = false;
+			CurBulletTime = 0.0f;
+			ChangeState(EMonsterState::Attack);
+		}
+
+	
 }
 
 //void ASparky::AttackCollisionStay(AActor* _ColActor)

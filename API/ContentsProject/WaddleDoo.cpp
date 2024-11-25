@@ -168,16 +168,29 @@ void AWaddleDoo::Tick(float _DeltaTime)
 
 
 	AttackColComponent->SetComponentLocation(StarPos1);
+
+
+
+		if (BulletTime < CurBulletTime)
+		{
+
+			Attackable = true;
+		}
+		CurBulletTime += 0.02f;
+	
 }
 
 
 void AWaddleDoo::AttackCollisionEnter(AActor* _ColActor)
 {
+	if (Attackable == false) return;
+	if (CurMonsterState != EMonsterState::Inhaled) {
 
-	//플레이어에게 공격한다.
-	ChangeState(EMonsterState::Attack);
+		Attackable = false;
+		CurBulletTime = 0.0f;
+		ChangeState(EMonsterState::Attack);
+	}
 
-	//플레이어와 충돌
 }
 
 void AWaddleDoo::AttackCollisionStay(AActor* _ColActor)
