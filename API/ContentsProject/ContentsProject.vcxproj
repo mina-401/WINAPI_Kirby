@@ -168,7 +168,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="HotHead.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="JumpStar.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="MonsterFireBullet.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -304,7 +312,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="HotHead.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="JumpStar.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="MonsterFireBullet.cpp">
       <SubType>
       </SubType>
     </ClCompile>

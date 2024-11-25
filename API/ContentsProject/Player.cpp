@@ -290,7 +290,7 @@ void APlayer::BeginPlay()
 
 	//ABullet* Bullet = GetWorld()->SpawnActor<ABullet>();
 
-
+	//CollisionComponent->SetActive(true);
 
 	Size = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 	GetWorld()->SetCameraPivot(Size.Half() * -1.0f);
@@ -1008,6 +1008,8 @@ void APlayer::IdleStart()
 {
 	Speed = 300.0f;
 	SpriteRenderer->ChangeAnimation("Idle" + DirString);
+
+	
 
 }
 void APlayer::FireIdleStart()

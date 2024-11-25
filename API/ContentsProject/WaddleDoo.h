@@ -18,6 +18,7 @@ public:
 	void Attack(float _DeltaTime) override;
 
 	void BeginPlay() override;
+	void Tick(float _DeltaTime) override;
 
 protected:
 
@@ -30,5 +31,10 @@ private:
 	//void CollisionStay(AActor* _ColActor)override;
 	//void CollisionEnd(AActor* _ColActor)override;
 
-	//class USpriteRenderer* SpriteRenderer = nullptr;
+	class USpriteRenderer* BeamSpriteRenderer1 = nullptr;
+	class USpriteRenderer* BeamSpriteRenderer2 = nullptr;
+	class USpriteRenderer* BeamSpriteRenderer3= nullptr;
+	class USpriteRenderer* BeamSpriteRenderer4 = nullptr;
+
+	int R = 100;
 };

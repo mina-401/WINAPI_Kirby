@@ -100,6 +100,20 @@ public:
 	}
 	void ColKnockBackEnter(AActor* _ColActor);
 
+	void SetMainPawn(class APlayer* _pawn)
+	{
+		MainPawn = _pawn;
+	}
+
+	APlayer* GetMainPawn()
+	{
+		return MainPawn;
+	}
+	
+public:
+	std::string DirString = "_Left";
+
+
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -114,7 +128,6 @@ protected:
 
 	
 
-	std::string DirString = "_Left";
 
 	class UEngineWinImage* ColImage = nullptr;
 	class USpriteRenderer* SpriteRenderer = nullptr;
@@ -136,6 +149,7 @@ protected:
 
 
 	class U2DCollision* SpawnColComponent = nullptr;
+	class U2DCollision* CollisionComponent = nullptr;
 
 private:
 	void MonsterClimbingUphill();
@@ -180,5 +194,7 @@ private:
 	float CurDamagedTime = 0.0f;
 	
 	FVector2D KnockBackVec = FVector2D::ZERO;
+
+	class APlayer* MainPawn = nullptr;
 };
 

@@ -19,8 +19,8 @@ public:
 
 	void BeginPlay() override;
 	void AttackCollisionEnter(AActor* _ColActor);
-	void AttackCollisionStay(AActor* _ColActor);
-	void AttackCollisionEnd(AActor* _ColActor);
+//	void AttackCollisionStay(AActor* _ColActor);
+	//void AttackCollisionEnd(AActor* _ColActor);
 protected:
 	//void Move(float _deltaTime) override;
 	//void Chase(float _DeltaTime) override;

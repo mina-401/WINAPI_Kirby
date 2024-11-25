@@ -77,32 +77,35 @@ void KirbyContentsCore::BeginPlay()
 			std::string FilePath = SoundFiles[i].GetPathToString();
 			UEngineSound::Load(FilePath);
 		}
-	*/}
+		}
+	*/
 
 	//UImageManager::GetInst().CuttingSprite("KirbyDance.png", { 128, 128 });
 
-
-	UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("WinAPI_Kirby");
-
-	UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, AActor>("Title"); 
-
-	UEngineAPICore::GetCore()->CreateLevel<AStage1_1GameMode, APlayer>("Stage1_1");
-	UEngineAPICore::GetCore()->CreateLevel<AStage1_2GameMode, APlayer>("Stage1_2");
-	UEngineAPICore::GetCore()->CreateLevel<AStage1_3GameMode, APlayer>("Stage1_3");
-	//UEngineAPICore::GetCore()->CreateLevel<AStage1_4GameMode, APlayer>("Stage1_4");
-	UEngineAPICore::GetCore()->CreateLevel<AItemRoomBeforeBossGameMode, APlayer>("ItemRoomBeforeBoss");
-	UEngineAPICore::GetCore()->CreateLevel<AStageBossKingDededeGameMode, APlayer>("StageBossKingDedede");
-
-	ULevel::CollisionGroupLink(ECollisionGroup::MonsterAttack, ECollisionGroup::PlayerBody);
-	//ULevel::CollisionGroupLink(ECollisionGroup::MonsterBody, ECollisionGroup::PlayerBody);
-	ULevel::CollisionGroupLink(ECollisionGroup::Block, ECollisionGroup::MonsterBody);
-	ULevel::CollisionGroupLink(ECollisionGroup::PlayerBody, ECollisionGroup::MonsterBody);
-	ULevel::CollisionGroupLink(ECollisionGroup::MonsterBody, ECollisionGroup::PlayerInhaleRange);
-	ULevel::CollisionGroupLink(ECollisionGroup::Potal, ECollisionGroup::PlayerBody);
+	{
 
 
-	UEngineAPICore::GetCore()->OpenLevel("Title");
+		UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("WinAPI_Kirby");
 
+		UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, AActor>("Title");
+
+		UEngineAPICore::GetCore()->CreateLevel<AStage1_1GameMode, APlayer>("Stage1_1");
+		UEngineAPICore::GetCore()->CreateLevel<AStage1_2GameMode, APlayer>("Stage1_2");
+		UEngineAPICore::GetCore()->CreateLevel<AStage1_3GameMode, APlayer>("Stage1_3");
+		//UEngineAPICore::GetCore()->CreateLevel<AStage1_4GameMode, APlayer>("Stage1_4");
+		UEngineAPICore::GetCore()->CreateLevel<AItemRoomBeforeBossGameMode, APlayer>("ItemRoomBeforeBoss");
+		UEngineAPICore::GetCore()->CreateLevel<AStageBossKingDededeGameMode, APlayer>("StageBossKingDedede");
+
+		ULevel::CollisionGroupLink(ECollisionGroup::MonsterAttack, ECollisionGroup::PlayerBody);
+		//ULevel::CollisionGroupLink(ECollisionGroup::MonsterBody, ECollisionGroup::PlayerBody);
+		ULevel::CollisionGroupLink(ECollisionGroup::Block, ECollisionGroup::MonsterBody);
+		ULevel::CollisionGroupLink(ECollisionGroup::PlayerBody, ECollisionGroup::MonsterBody);
+		ULevel::CollisionGroupLink(ECollisionGroup::MonsterBody, ECollisionGroup::PlayerInhaleRange);
+		ULevel::CollisionGroupLink(ECollisionGroup::Potal, ECollisionGroup::PlayerBody);
+
+
+		UEngineAPICore::GetCore()->OpenLevel("Title");
+	}
 }
 
 void KirbyContentsCore::Tick()

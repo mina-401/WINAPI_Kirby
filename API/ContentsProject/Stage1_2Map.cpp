@@ -6,6 +6,8 @@
 #include <EngineCore/2DCollision.h>
 #include "ContentsEnum.h"
 #include "Player.h"
+#include "Stage1_2GameMode.h"
+#include "Monster.h"
 AStage1_2Map::AStage1_2Map()
 {
 
@@ -70,6 +72,9 @@ void AStage1_2Map::BeginPlay()
 	player->SetActorLocation({ 100,300});
 	//player->SetActorLocation({ (float)MapScale.X - 80,(float)WinSize.Half().Y });
 
+
+	
+
 }
 
 void AStage1_2Map::Tick(float _deltaTime)
@@ -84,5 +89,12 @@ void AStage1_2Map::Tick(float _deltaTime)
 	if (true == UEngineInput::GetInst().IsPress(VK_UP) && IsPlayerStayPotal) {
 		UEngineAPICore::GetCore()->OpenLevel("Stage1_3");
 	}
+
+	AStage1_2GameMode* GameMode = GetWorld()->GetGameMode<AStage1_2GameMode>();
+	AMonster* HotHead = GameMode->MonsterHotHead;
+	//HotHead->SetMainPawn(this);
+	HotHead->BlockMonsterPos(MapScale);
 }
+
+
 

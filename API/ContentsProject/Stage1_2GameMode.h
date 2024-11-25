@@ -16,9 +16,9 @@ public:
 
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
+	class AMonster* MonsterHotHead = nullptr;
 protected:
 
 private:
-
 };
 

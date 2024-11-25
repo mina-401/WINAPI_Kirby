@@ -137,6 +137,12 @@
     <ClInclude Include="JumpStar.h">
       <Filter>ContentsObject\Kirby</Filter>
     </ClInclude>
+    <ClInclude Include="HotHead.h">
+      <Filter>ContentsObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterFireBullet.h">
+      <Filter>ContentsObject\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -250,6 +256,12 @@
     </ClCompile>
     <ClCompile Include="JumpStar.cpp">
       <Filter>ContentsObject\Kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="HotHead.cpp">
+      <Filter>ContentsObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterFireBullet.cpp">
+      <Filter>ContentsObject\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

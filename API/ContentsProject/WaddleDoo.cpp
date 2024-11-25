@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "WaddleDoo.h"
+#include "Player.h"
 
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/SpriteRenderer.h>
@@ -37,16 +38,73 @@ AWaddleDoo::AWaddleDoo()
 
 	}
 	{
+		UImageManager::GetInst().CuttingSprite("WaddleDoo_Beam.png", { 128, 128 });
+		BeamSpriteRenderer1 = CreateDefaultSubObject<USpriteRenderer>();
+
+		BeamSpriteRenderer1->SetComponentScale({ 200, 200 });
+		BeamSpriteRenderer1->SetComponentLocation({ 0, 0 });
+		BeamSpriteRenderer1->SetOrder(ERenderOrder::MONSTER);
+
+		BeamSpriteRenderer1->CreateAnimation("WaddleDoo_Beam", "WaddleDoo_Beam.png", 0, 1, 0.2f, true);
+		BeamSpriteRenderer1->ChangeAnimation("WaddleDoo_Beam");  
+
+
+	}
+	{
+		BeamSpriteRenderer2 = CreateDefaultSubObject<USpriteRenderer>();
+
+		BeamSpriteRenderer2->SetComponentScale({ 200, 200 });
+		BeamSpriteRenderer2->SetComponentLocation({ 0, 0 });
+		BeamSpriteRenderer2->SetOrder(ERenderOrder::MONSTER);
+						 
+		BeamSpriteRenderer2->CreateAnimation("WaddleDoo_Beam", "WaddleDoo_Beam.png", 0, 1, 0.2f, true);
+		BeamSpriteRenderer2->ChangeAnimation("WaddleDoo_Beam");
+
+
+	}
+	{
+		BeamSpriteRenderer3 = CreateDefaultSubObject<USpriteRenderer>();
+						 
+		BeamSpriteRenderer3->SetComponentScale({ 200, 200 });
+		BeamSpriteRenderer3->SetComponentLocation({ 0, 0 });
+		BeamSpriteRenderer3->SetOrder(ERenderOrder::MONSTER);
+						  
+		BeamSpriteRenderer3->CreateAnimation("WaddleDoo_Beam", "WaddleDoo_Beam.png", 0, 1, 0.2f, true);
+		BeamSpriteRenderer3->ChangeAnimation("WaddleDoo_Beam");
+
+
+	}
+	{
+		BeamSpriteRenderer4 = CreateDefaultSubObject<USpriteRenderer>();
+						  
+		BeamSpriteRenderer4->SetComponentScale({ 200, 200 });
+		BeamSpriteRenderer4->SetComponentLocation({ 0, 0 });
+		BeamSpriteRenderer4->SetOrder(ERenderOrder::MONSTER);
+						  
+		BeamSpriteRenderer4->CreateAnimation("WaddleDoo_Beam", "WaddleDoo_Beam.png", 0, 1, 0.2f, true);
+		BeamSpriteRenderer4->ChangeAnimation("WaddleDoo_Beam");
+
+
+	}
+	{
 		AttackColComponent = CreateDefaultSubObject<U2DCollision>();
 		AttackColComponent->SetComponentLocation({ 0, 0 });
-		AttackColComponent->SetComponentScale({ 150, 100 });
+		AttackColComponent->SetComponentScale({ 50, 50 });
 		AttackColComponent->SetCollisionGroup(ECollisionGroup::MonsterAttack);
 		AttackColComponent->SetCollisionType(ECollisionType::CirCle);
 
 		AttackColComponent->SetCollisionEnter(std::bind(&AWaddleDoo::AttackCollisionEnter, this, std::placeholders::_1));
-		AttackColComponent->SetCollisionStay(std::bind(&AWaddleDoo::AttackCollisionStay, this, std::placeholders::_1));
-		AttackColComponent->SetCollisionEnd(std::bind(&AWaddleDoo::AttackCollisionEnd, this, std::placeholders::_1));
 	}
+	/*{
+		AttackColComponent = CreateDefaultSubObject<U2DCollision>();
+		AttackColComponent->SetComponentLocation({ 0, 0 });
+		AttackColComponent->SetComponentScale({ 50, 50 });
+		AttackColComponent->SetCollisionGroup(ECollisionGroup::MonsterAttack);
+		AttackColComponent->SetCollisionType(ECollisionType::CirCle);
+
+		AttackColComponent->SetCollisionEnter(std::bind(&AWaddleDoo::AttackCollisionEnter, this, std::placeholders::_1));
+	}*/
+
 	{
 		U2DCollision* CollisionComponent = CreateDefaultSubObject<U2DCollision>();
 		CollisionComponent->SetComponentLocation({ 0, 0 });
@@ -54,8 +112,8 @@ AWaddleDoo::AWaddleDoo()
 		CollisionComponent->SetCollisionGroup(ECollisionGroup::MonsterBody);
 		CollisionComponent->SetCollisionType(ECollisionType::CirCle);
 
-		DebugOn();
 	}
+		DebugOn();
 }
 
 AWaddleDoo::~AWaddleDoo()
@@ -65,6 +123,17 @@ AWaddleDoo::~AWaddleDoo()
 void AWaddleDoo::AttackStart()
 {
 	AMonster::AttackStart();
+	//SpriteRenderer->
+	if (nullptr != AttackColComponent) {
+		AActor* ColActor = AttackColComponent->CollisionOnce(ECollisionGroup::PlayerBody);
+		if (nullptr != ColActor)
+		{
+			APlayer* Target = dynamic_cast<APlayer*>(ColActor);
+			if (nullptr != Target) {
+				Target->ColKnockBackEnter(this);
+			}
+		}
+	}
 }
 
 void AWaddleDoo::Attack(float _DeltaTime)
@@ -76,6 +145,29 @@ void AWaddleDoo::BeginPlay()
 {
 	AMonster::BeginPlay();
 	SetCopyAbilityState(ECopyAbilityState::Normal);
+	SetMainPawn(dynamic_cast<APlayer*>(GetWorld()->GetPawn()));
+
+}
+
+void AWaddleDoo::Tick(float _DeltaTime)
+{
+	AMonster::Tick(_DeltaTime);
+
+	FVector2D Pos = GetMainPawn()->GetActorLocation()- GetActorLocation() ;
+	Pos.Normalize();
+	FVector2D StarPos1 =  Pos * 100;
+	FVector2D StarPos2 =  Pos * 80;
+	FVector2D StarPos3 =  Pos * 60;
+	FVector2D StarPos4 =  Pos * 40;
+	//if( Pos.Length())
+	BeamSpriteRenderer1->SetComponentLocation(StarPos1);
+	BeamSpriteRenderer2->SetComponentLocation(StarPos2);
+	BeamSpriteRenderer3->SetComponentLocation(StarPos3);
+	BeamSpriteRenderer3->SetComponentLocation(StarPos4);
+
+
+
+	AttackColComponent->SetComponentLocation(StarPos1);
 }
 
 

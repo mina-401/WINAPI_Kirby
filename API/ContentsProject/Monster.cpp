@@ -365,7 +365,6 @@ void AMonster::AttackStart()
 {
 	DirCheck();
 	SpriteRenderer->ChangeAnimation("Attack" + DirString);
-	//SpriteRenderer->
 	
 }
 
@@ -375,6 +374,9 @@ void AMonster::Attack(float _DeltaTime)
 		ChangeState(EMonsterState::Move);
 		return;
 	}
+
+	
+	
 }
 
 void AMonster::CheckPlayerPos()

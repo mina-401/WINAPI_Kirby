@@ -17,8 +17,8 @@ AFireBullet::AFireBullet()
 		SpriteRenderer->SetOrder(ERenderOrder::PLAYER);
 		SpriteRenderer->SetComponentScale({ 300, 300 });
 
-		SpriteRenderer->CreateAnimation("FireBulletIdle_Left", "FireBulletIdle_Left.png", 0,6, 0.08f, false);
-		SpriteRenderer->CreateAnimation("FireBulletIdle_Right", "FireBulletIdle_Right.png", 0,6, 0.08f, false);
+		SpriteRenderer->CreateAnimation("FireBulletIdle_Left", "FireBulletIdle_Left.png", 0,6, 0.08f, true);
+		SpriteRenderer->CreateAnimation("FireBulletIdle_Right", "FireBulletIdle_Right.png", 0,6, 0.08f, true);
 		SpriteRenderer->ChangeAnimation("FireBulletIdle_Right");
 	}
 

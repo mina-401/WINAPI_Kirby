@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "Sparky.h"
+#include "Player.h"
 
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/SpriteRenderer.h>
@@ -42,12 +43,12 @@ ASparky::ASparky()
 		AttackColComponent->SetCollisionType(ECollisionType::CirCle);
 
 		AttackColComponent->SetCollisionEnter(std::bind(&ASparky::AttackCollisionEnter, this, std::placeholders::_1));
-		AttackColComponent->SetCollisionStay(std::bind(&ASparky::AttackCollisionStay, this, std::placeholders::_1));
-		AttackColComponent->SetCollisionEnd(std::bind(&ASparky::AttackCollisionEnd, this, std::placeholders::_1));
+		//AttackColComponent->SetCollisionStay(std::bind(&ASparky::AttackCollisionStay, this, std::placeholders::_1));
+		//AttackColComponent->SetCollisionEnd(std::bind(&ASparky::AttackCollisionEnd, this, std::placeholders::_1));
 	}
 
 	{
-		U2DCollision* CollisionComponent = CreateDefaultSubObject<U2DCollision>();
+		CollisionComponent = CreateDefaultSubObject<U2DCollision>();
 		CollisionComponent->SetComponentLocation({ 0, 0 });
 		CollisionComponent->SetComponentScale({ 50, 50 });
 		CollisionComponent->SetCollisionGroup(ECollisionGroup::MonsterBody);
@@ -65,12 +66,26 @@ ASparky::~ASparky()
 void ASparky::AttackStart()
 {
 	AMonster::AttackStart();
+
+	//SpriteRenderer->
+	if (nullptr != AttackColComponent) {
+		AActor* ColActor = AttackColComponent->CollisionOnce(ECollisionGroup::PlayerBody);
+		if (nullptr != ColActor)
+		{
+			APlayer* Target = dynamic_cast<APlayer*>(ColActor);
+			if (nullptr != Target) {
+				Target->ColKnockBackEnter(this);
+			}
+		}
+	}
 	int a = 0;
 }
 //
 void ASparky::Attack(float _DeltaTime)
 {
 	AMonster::Attack(_DeltaTime);
+	
+	
 }
 
 void ASparky::BeginPlay()
@@ -85,12 +100,12 @@ void ASparky::AttackCollisionEnter(AActor* _ColActor)
 	ChangeState(EMonsterState::Attack);
 }
 
-void ASparky::AttackCollisionStay(AActor* _ColActor)
-{
-}
-
-void ASparky::AttackCollisionEnd(AActor* _ColActor)
-{
-
-}
+//void ASparky::AttackCollisionStay(AActor* _ColActor)
+//{
+//}
+//
+//void ASparky::AttackCollisionEnd(AActor* _ColActor)
+//{
+//
+//}
 
