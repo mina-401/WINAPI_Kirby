@@ -41,7 +41,7 @@ AWaddleDoo::AWaddleDoo()
 		UImageManager::GetInst().CuttingSprite("WaddleDoo_Beam.png", { 128, 128 });
 		BeamSpriteRenderer1 = CreateDefaultSubObject<USpriteRenderer>();
 
-		BeamSpriteRenderer1->SetComponentScale({ 200, 200 });
+		BeamSpriteRenderer1->SetComponentScale({ 250, 250 });
 		BeamSpriteRenderer1->SetComponentLocation({ 0, 0 });
 		BeamSpriteRenderer1->SetOrder(ERenderOrder::MONSTER);
 
@@ -53,7 +53,7 @@ AWaddleDoo::AWaddleDoo()
 	{
 		BeamSpriteRenderer2 = CreateDefaultSubObject<USpriteRenderer>();
 
-		BeamSpriteRenderer2->SetComponentScale({ 200, 200 });
+		BeamSpriteRenderer2->SetComponentScale({ 250, 250 });
 		BeamSpriteRenderer2->SetComponentLocation({ 0, 0 });
 		BeamSpriteRenderer2->SetOrder(ERenderOrder::MONSTER);
 						 
@@ -65,7 +65,7 @@ AWaddleDoo::AWaddleDoo()
 	{
 		BeamSpriteRenderer3 = CreateDefaultSubObject<USpriteRenderer>();
 						 
-		BeamSpriteRenderer3->SetComponentScale({ 200, 200 });
+		BeamSpriteRenderer3->SetComponentScale({ 250, 250 });
 		BeamSpriteRenderer3->SetComponentLocation({ 0, 0 });
 		BeamSpriteRenderer3->SetOrder(ERenderOrder::MONSTER);
 						  
@@ -77,7 +77,7 @@ AWaddleDoo::AWaddleDoo()
 	{
 		BeamSpriteRenderer4 = CreateDefaultSubObject<USpriteRenderer>();
 						  
-		BeamSpriteRenderer4->SetComponentScale({ 200, 200 });
+		BeamSpriteRenderer4->SetComponentScale({ 250, 250 });
 		BeamSpriteRenderer4->SetComponentLocation({ 0, 0 });
 		BeamSpriteRenderer4->SetOrder(ERenderOrder::MONSTER);
 						  
@@ -89,7 +89,7 @@ AWaddleDoo::AWaddleDoo()
 	{
 		AttackColComponent = CreateDefaultSubObject<U2DCollision>();
 		AttackColComponent->SetComponentLocation({ 0, 0 });
-		AttackColComponent->SetComponentScale({ 50, 50 });
+		AttackColComponent->SetComponentScale({ 30, 30 });
 		AttackColComponent->SetCollisionGroup(ECollisionGroup::MonsterAttack);
 		AttackColComponent->SetCollisionType(ECollisionType::CirCle);
 
@@ -153,19 +153,26 @@ void AWaddleDoo::Tick(float _DeltaTime)
 {
 	AMonster::Tick(_DeltaTime);
 
-	FVector2D Pos = GetMainPawn()->GetActorLocation()- GetActorLocation() ;
+	FVector2D Pos;
+
+	Angle -= _DeltaTime * 90;
+
+	Pos.X = cosf(Angle *  3.14f / 180);
+	Pos.Y = sinf(Angle * 3.14f / 180);
+
+
 	Pos.Normalize();
 	FVector2D StarPos1 =  Pos * 100;
 	FVector2D StarPos2 =  Pos * 80;
-	FVector2D StarPos3 =  Pos * 60;
-	FVector2D StarPos4 =  Pos * 40;
+	FVector2D StarPos3 =  Pos * 70;
+	FVector2D StarPos4 =  Pos * 50;
 	//if( Pos.Length())
 	BeamSpriteRenderer1->SetComponentLocation(StarPos1);
 	BeamSpriteRenderer2->SetComponentLocation(StarPos2);
 	BeamSpriteRenderer3->SetComponentLocation(StarPos3);
 	BeamSpriteRenderer3->SetComponentLocation(StarPos4);
 
-
+	//TimeEventer
 
 	AttackColComponent->SetComponentLocation(StarPos1);
 

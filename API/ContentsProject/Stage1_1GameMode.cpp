@@ -38,7 +38,8 @@ void AStage1_1GameMode::BeginPlay()
 
 	MonsterWaddleDee->SetActorLocation({ 1500, 300 });
 	mon->SetActorLocation({ 1000, 300 });
-	MonsterWaddleDoo->SetActorLocation({ 3050, 50 });
+	//MonsterWaddleDoo->SetActorLocation({ 3050, 50 });
+	MonsterWaddleDoo->SetActorLocation({ 1000, 50 });
 	MonsterSparky->SetActorLocation({ 3400, 200 });
 
 	/*MonsterWaddleDee->SetActive(false);

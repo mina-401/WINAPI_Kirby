@@ -43,4 +43,7 @@ private:
 
 	float CurBulletTime = 0.0f;
 	float BulletTime = 50.0f;
+	float Angle = -90.0f;
+	float PlusAngle = 120.0f;
+	float CurPlusAngle = 0.0f;
 };
