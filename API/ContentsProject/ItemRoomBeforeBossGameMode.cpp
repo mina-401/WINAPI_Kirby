@@ -10,6 +10,9 @@
 AItemRoomBeforeBossGameMode::AItemRoomBeforeBossGameMode()
 {
 	SetName("ItemRoomBeforeBoss");
+
+	//AEatItem* FireItem = CreateDefaultSubObject<AEatItem>();
+	//int a = 0;
 }
 
 AItemRoomBeforeBossGameMode::~AItemRoomBeforeBossGameMode()
@@ -25,6 +28,8 @@ void AItemRoomBeforeBossGameMode::BeginPlay()
 
 	AEatItem* NewEatItem = GetWorld()->SpawnActor<AEatItem>();
 	NewEatItem->SetActorLocation({200.0f,190.0f});
+
+
 
 }
 

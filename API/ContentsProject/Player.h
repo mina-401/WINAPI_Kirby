@@ -98,6 +98,10 @@ public:
     {
         return CurPlayerState;
     }
+    void SetCurPlayerCopyState(ECopyAbilityState _copy)
+    {
+        CurPlayerCopyState = _copy;
+    }
     void SetKnockBackForce(FVector2D _Vector) {
         KnockBackVec = _Vector;
 
