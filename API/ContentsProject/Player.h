@@ -236,6 +236,8 @@ private:
 
     bool PlayerNextPosCheck(float _DeltaTime, FVector2D _Vector);
 
+    bool PlayerKnockBackNextPosCheck(float _DeltaTime, FVector2D _Vector);
+
 
     void PlayerFlyCheck();
     void Accel(float _DeltaTime, FVector2D Vector);
@@ -365,6 +367,8 @@ private:
     bool IsFireDashState = false;
 
     FVector2D Acc = FVector2D::ZERO;
+
+    FVector2D Force = FVector2D::ZERO;
 
     class U2DCollision* InhaleRightComponent = nullptr;
     class U2DCollision* InhaleLeftComponent = nullptr;

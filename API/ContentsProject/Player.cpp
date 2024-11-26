@@ -786,6 +786,14 @@ void APlayer::Tick(float _DeltaTime)
 		break;
 	}
 	
+	//AddActorLocation(Force);
+
+	if (true)
+	{
+		// Force -= -Force*
+	}
+	//;
+
 }
 
 void APlayer::DirCheck()
@@ -849,8 +857,10 @@ void APlayer::FireKnockBackStart()
 }
 void APlayer::KnockBack(float _DeltaTime)
 {
-
 	AlphaTime -= _DeltaTime;
+
+	// Gravity(_DeltaTime);
+
 
 	if (AlphaTime > 0.f)
 	{
@@ -871,12 +881,12 @@ void APlayer::KnockBack(float _DeltaTime)
 		ChangeState(EPlayerState::Die);
 		return;
 	}
-	if (true == PlayerNextPosCheck(_DeltaTime, KnockBackVec))
+	if (true == PlayerKnockBackNextPosCheck(_DeltaTime, KnockBackVec))
 	{
-		AddActorLocation((KnockBackVec) * 100.0f * _DeltaTime);
-
-
+		AddActorLocation(KnockBackVec * _DeltaTime);
+		
 	}
+
 }
 void APlayer::DieStart()
 {
@@ -1198,6 +1208,20 @@ void APlayer::CrouchStartAnim()
 bool APlayer::PlayerNextPosCheck(float _DeltaTime, FVector2D _Vector)
 {
 	UColor Color = ColImage->GetColor(GetActorLocation() + _Vector * _DeltaTime*Speed, UColor::WHITE);
+	if (Color != UColor::WHITE)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+
+}
+
+bool APlayer::PlayerKnockBackNextPosCheck(float _DeltaTime, FVector2D _Vector)
+{
+	UColor Color = ColImage->GetColor(GetActorLocation() + _Vector * _DeltaTime , UColor::WHITE);
 	if (Color != UColor::WHITE)
 	{
 		return false;
@@ -1767,7 +1791,7 @@ void APlayer::ColKnockBackEnter(FVector2D _Vector)
 	_Vector = _Vector * (-1.0f);
 
 	_Vector.Normalize();
-	SetKnockBackForce(_Vector);
+	SetKnockBackForce(_Vector*150.f);
 
 	IsFireDashState = false;
 	//³Ë¹é »óÅÂ·Î
@@ -2327,7 +2351,7 @@ void APlayer::CollisionEnter(AActor* _ColActor)
 		FVector2D Vector = GetActorLocation() - _ColActor->GetActorLocation();
 		Vector.Normalize();
 
-		SetKnockBackForce(Vector);
+		SetKnockBackForce(Vector*150.0f);
 
 		SetIsDamagedState(true);
 		ChangeState(EPlayerState::KnockBack);
@@ -2340,11 +2364,11 @@ void APlayer::ColKnockBackEnter(AActor* _ColActor)
 {
 	FVector2D Vector = GetActorLocation()- _ColActor->GetActorLocation();
 	Vector.Normalize();
-	Vector.Y = 0;
+	//Vector.Y = 0.0f;
 
-	SetKnockBackForce(Vector);
-
+	SetKnockBackForce(Vector*150.0f);
 	SetIsDamagedState(true);
+
 	 //GetWorld()->SpawnActor<AJumpStar*>();
 	ChangeState(EPlayerState::KnockBack);
 }

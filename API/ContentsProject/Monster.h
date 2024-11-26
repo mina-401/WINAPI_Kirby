@@ -156,6 +156,7 @@ private:
 	void ChangeMonsterDir(float _DeltaTime);
 	void MonsterGroundCheck(FVector2D _MovePos);
 	bool MonsterNextPosCheck(float _DeltaTime, FVector2D _Vector);
+	bool MonsterKnockBackNextPosCheck(float _DeltaTime, FVector2D _Vector);
 	void MonsterDirCheck();
 	void DirCheck();
 	void MoveDirCheck(FVector2D _Pos);

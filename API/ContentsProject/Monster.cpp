@@ -126,9 +126,9 @@ void AMonster::KnockBackStart()
 
 void AMonster::KnockBack(float _DeltaTime)
 {
-	if (true == MonsterNextPosCheck(_DeltaTime, KnockBackVec))
+	if (true == MonsterKnockBackNextPosCheck(_DeltaTime, KnockBackVec))
 	{
-		AddActorLocation(KnockBackVec * 100.0f * _DeltaTime);
+		AddActorLocation(KnockBackVec  * _DeltaTime);
 
 	}
 
@@ -174,6 +174,18 @@ void AMonster::MonsterGroundCheck(FVector2D _MovePos)
 bool AMonster::MonsterNextPosCheck(float _DeltaTime, FVector2D _Vector)
 {
 	UColor Color = ColImage->GetColor(GetActorLocation() + _Vector * _DeltaTime * Speed, UColor::WHITE);
+	if (Color == UColor::BLACK)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+bool AMonster::MonsterKnockBackNextPosCheck(float _DeltaTime, FVector2D _Vector)
+{
+	UColor Color = ColImage->GetColor(GetActorLocation() + _Vector * _DeltaTime, UColor::WHITE);
 	if (Color == UColor::BLACK)
 	{
 		return false;
@@ -408,7 +420,7 @@ void AMonster::ColKnockBackEnter(AActor* _ColActor)
 	// 밀려나갈 방향
 	FVector2D Vector = GetActorLocation()- _ColActor->GetActorLocation() ;
 	Vector.Normalize();
-	SetKnockBackForce(Vector);
+	SetKnockBackForce(Vector*150.0f);
 
 	MonWidget->SetActive(true);
 	
