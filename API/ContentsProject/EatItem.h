@@ -1,21 +1,21 @@
 #pragma once
 #include <EngineCore/Actor.h>
 
-class EatItem : public AActor
+class AEatItem : public AActor
 {
 public:
 	// constrcuter destructer
-	EatItem();
-	~EatItem();
+	AEatItem();
+	~AEatItem();
 
 	// delete Function
-	EatItem(const EatItem& _Other) = delete;
-	EatItem(EatItem&& _Other) noexcept = delete;
-	EatItem& operator=(const EatItem& _Other) = delete;
-	EatItem& operator=(EatItem&& _Other) noexcept = delete;
+	AEatItem(const AEatItem& _Other) = delete;
+	AEatItem(AEatItem&& _Other) noexcept = delete;
+	AEatItem& operator=(const AEatItem& _Other) = delete;
+	AEatItem& operator=(AEatItem&& _Other) noexcept = delete;
 
-	void BeginPlay() override;
-	void Tick(float _DeltaTime) override;
+	//void BeginPlay() override;
+	//void Tick(float _DeltaTime) override;
 
 protected:
 	class USpriteRenderer* SpriteRenderer = nullptr;

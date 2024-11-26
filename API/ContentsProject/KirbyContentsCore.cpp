@@ -99,6 +99,7 @@ void KirbyContentsCore::BeginPlay()
 		ULevel::CollisionGroupLink(ECollisionGroup::MonsterAttack, ECollisionGroup::PlayerBody);
 		//ULevel::CollisionGroupLink(ECollisionGroup::MonsterBody, ECollisionGroup::PlayerBody);
 		ULevel::CollisionGroupLink(ECollisionGroup::Block, ECollisionGroup::MonsterBody);
+		ULevel::CollisionGroupLink(ECollisionGroup::Block, ECollisionGroup::PlayerBody);
 		ULevel::CollisionGroupLink(ECollisionGroup::PlayerBody, ECollisionGroup::MonsterBody);
 		ULevel::CollisionGroupLink(ECollisionGroup::PlayerBody, ECollisionGroup::Block);
 		ULevel::CollisionGroupLink(ECollisionGroup::MonsterBody, ECollisionGroup::PlayerInhaleRange);

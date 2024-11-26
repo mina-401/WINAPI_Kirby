@@ -23,7 +23,8 @@ void AItemRoomBeforeBossGameMode::BeginPlay()
 	player->SetColImage("stageBeforeBoss_col.png");
 	AItemRoomBeforeBossMap* NewMap = GetWorld()->SpawnActor<AItemRoomBeforeBossMap>();
 
-	//AEatItem* NewEatItem = GetWorld()->SpawnActor<AEatItem>();
+	AEatItem* NewEatItem = GetWorld()->SpawnActor<AEatItem>();
+	NewEatItem->SetActorLocation({200.0f,190.0f});
 
 }
 

@@ -6,22 +6,22 @@
 #include <EngineCore/2DCollision.h>
 #include "ContentsEnum.h"
 
-EatItem::EatItem()
+AEatItem::AEatItem()
 {
 	SetName("Item");
 	{
 
 		SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 
-		//SpriteRenderer->SetSprite("Sparky_Left.png");
-		SpriteRenderer->SetComponentScale({ 270, 270 });
+		SpriteRenderer->SetSprite("Item_FireCopy.png");
+		SpriteRenderer->SetComponentScale({ 60, 60 });
 
 		SpriteRenderer->SetOrder(ERenderOrder::MONSTER);
 
-		UImageManager::GetInst().CuttingSprite("Item_FireCopy_ani.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("Item_FireCopy.png", { 60, 59 });
 
-		SpriteRenderer->CreateAnimation("Move", "Item_FireCopy_ani.png", 0,4, 0.2f);
-		SpriteRenderer->ChangeAnimation("Move");
+		//SpriteRenderer->CreateAnimation("Move", "Item_FireCopy_ani.png", { 3, 4 }, 0.5f);
+		//SpriteRenderer->ChangeAnimation("Move");
 	}
 
 
@@ -36,7 +36,7 @@ EatItem::EatItem()
 	}
 }
 
-EatItem::~EatItem()
+AEatItem::~AEatItem()
 {
 }
 
