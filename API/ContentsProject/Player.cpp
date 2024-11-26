@@ -883,9 +883,24 @@ void APlayer::KnockBack(float _DeltaTime)
 	}
 	if (true == PlayerKnockBackNextPosCheck(_DeltaTime, KnockBackVec))
 	{
+
 		AddActorLocation(KnockBackVec * _DeltaTime);
-		
+
+
+
 	}
+	//while (true)
+	//{
+	//	UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
+	//	if (Color == UColor::GRAY)
+	//	{
+	//		// 나가 땅위로 올라갈때까지 while 계속 올려준다.
+	//		AddActorLocation(FVector2D::UP * Speed * _DeltaTime);
+	//	}
+	//	else {
+	//		break;
+	//	}
+	//}
 
 }
 void APlayer::DieStart()
@@ -1221,7 +1236,10 @@ bool APlayer::PlayerNextPosCheck(float _DeltaTime, FVector2D _Vector)
 
 bool APlayer::PlayerKnockBackNextPosCheck(float _DeltaTime, FVector2D _Vector)
 {
-	UColor Color = ColImage->GetColor(GetActorLocation() + _Vector * _DeltaTime , UColor::WHITE);
+	FVector2D Vector = { 0,-1 };
+
+
+	UColor Color = ColImage->GetColor(GetActorLocation() + _Vector * _DeltaTime + Vector, UColor::WHITE);
 	if (Color != UColor::WHITE)
 	{
 		return false;
