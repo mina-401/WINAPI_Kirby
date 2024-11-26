@@ -2350,16 +2350,14 @@ void APlayer::CollisionEnter(AActor* _ColActor)
 	{
 		FVector2D Vector = GetActorLocation() - _ColActor->GetActorLocation();
 		Vector.Normalize();
-		Vector.Y= 0.0f;
-		SetKnockBackForce(Vector*150.0f);
+		Vector.Y = 0.0f;
+		SetKnockBackForce(Vector * 150.0f);
 
 		SetIsDamagedState(true);
 		ChangeState(EPlayerState::KnockBack);
 	}
-
-
 }
-
+	
 void APlayer::ColKnockBackEnter(AActor* _ColActor)
 {
 	FVector2D Vector = GetActorLocation()- _ColActor->GetActorLocation();

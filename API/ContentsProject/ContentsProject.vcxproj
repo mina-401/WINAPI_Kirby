@@ -160,6 +160,10 @@
     <ClInclude Include="..\EnginePlatform\ThirdParty\FMOD\Inc\fmod_errors.h" />
     <ClInclude Include="..\EnginePlatform\ThirdParty\FMOD\Inc\fmod_output.h" />
     <ClInclude Include="ActorVector.h" />
+    <ClInclude Include="EatItem.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="FireBullet.h">
       <SubType>
       </SubType>
@@ -308,6 +312,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActorVector.cpp" />
+    <ClCompile Include="EatItem.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="FireBullet.cpp">
       <SubType>
       </SubType>

@@ -146,6 +146,9 @@
     <ClInclude Include="KingDedede.h">
       <Filter>ContentsObject\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="EatItem.h">
+      <Filter>ContentsObject\Kirby\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -269,6 +272,9 @@
     <ClCompile Include="KingDedede.cpp">
       <Filter>ContentsObject\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="EatItem.cpp">
+      <Filter>ContentsObject\Kirby\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -324,6 +330,9 @@
     </Filter>
     <Filter Include="ContentsObject\Kirby\Bullet">
       <UniqueIdentifier>{5158bce5-56e7-49c7-9ebb-977f074e4c84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Kirby\Item">
+      <UniqueIdentifier>{21b1109a-4827-497f-b652-925f9da5adc9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
