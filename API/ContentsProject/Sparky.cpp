@@ -25,14 +25,14 @@ ASparky::ASparky()
 		UImageManager::GetInst().CuttingSprite("Sparky_Left.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("Sparky_Right.png", { 128, 128 });
 
-		SpriteRenderer->CreateAnimation("Walk_Left", "Sparky_Left.png", 0, 2, 0.2f);
-		SpriteRenderer->CreateAnimation("Walk_Right", "Sparky_Right.png", 0, 2, 0.2f);
-		SpriteRenderer->CreateAnimation("Attack_Left", "Sparky_Left.png", {4,5,4,5,4,5,4,5,4,5,6,7}, 0.2f, true);
-		SpriteRenderer->CreateAnimation("Attack_Right", "Sparky_Right.png", { 4,5,4,5,4,5,4,5,4,5,6,7 }, 0.2f, true);
-		SpriteRenderer->CreateAnimation("Inhaled_Left", "Sparky_Left.png", 7, 7, 0.2f, true);
-		SpriteRenderer->CreateAnimation("Inhaled_Right", "Sparky_Right.png", 7, 7, 0.2f, true);
-		SpriteRenderer->CreateAnimation("Damaged_Left", "Sparky_Right.png", 7, 7, 0.2f, true);
-		SpriteRenderer->CreateAnimation("Damaged_Right", "Sparky_Right.png", 7, 7, 0.2f, true);
+		SpriteRenderer->CreateAnimation("Walk_Left", "Sparky_Left.png", { 0, 2,4,5 }, 0.2f);
+		SpriteRenderer->CreateAnimation("Walk_Right", "Sparky_Right.png", { 0, 2,4,5 }, 0.2f);
+		SpriteRenderer->CreateAnimation("Attack_Left", "Sparky_Left.png", {1,1,1,3,6,7,6,7,6,7,6,7,6,7,8}, 0.2f, true);
+		SpriteRenderer->CreateAnimation("Attack_Right", "Sparky_Right.png", { 1,1,1,3,6,7,6,7,6,7,6,7,6,7,8 }, 0.2f, true);
+		SpriteRenderer->CreateAnimation("Inhaled_Left", "Sparky_Left.png", 9, 9, 0.2f, true);
+		SpriteRenderer->CreateAnimation("Inhaled_Right", "Sparky_Right.png", 9, 9, 0.2f, true);
+		SpriteRenderer->CreateAnimation("Damaged_Left", "Sparky_Right.png", 9, 9, 0.2f, true);
+		SpriteRenderer->CreateAnimation("Damaged_Right", "Sparky_Right.png", 9, 9, 0.2f, true);
 		SpriteRenderer->ChangeAnimation("Walk_Left");
 	}
 	{
@@ -76,7 +76,7 @@ void ASparky::Attack(float _DeltaTime)
 {
 	AMonster::Attack(_DeltaTime);
 
-	if (2 >= SpriteRenderer->GetFrameIndex())
+	if (7 >= SpriteRenderer->GetFrameIndex())
 	{
 		return;
 	}
