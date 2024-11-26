@@ -116,31 +116,34 @@
     <ClInclude Include="MonsterWidget.h">
       <Filter>ContentsObject\HUD</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>ContentsObject\Kirby</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerStatsManager.h">
       <Filter>ContentsObject\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Monster.h">
       <Filter>ContentsObject\Monster</Filter>
     </ClInclude>
-    <ClInclude Include="FireBullet.h">
-      <Filter>ContentsObject\Kirby</Filter>
-    </ClInclude>
-    <ClInclude Include="ActorVector.h">
-      <Filter>ContentsObject\Kirby</Filter>
-    </ClInclude>
-    <ClInclude Include="FireBullet2.h">
-      <Filter>ContentsObject\Kirby</Filter>
-    </ClInclude>
-    <ClInclude Include="JumpStar.h">
-      <Filter>ContentsObject\Kirby</Filter>
-    </ClInclude>
     <ClInclude Include="HotHead.h">
       <Filter>ContentsObject\Monster</Filter>
     </ClInclude>
     <ClInclude Include="MonsterFireBullet.h">
+      <Filter>ContentsObject\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="ActorVector.h">
+      <Filter>ContentsObject\Kirby\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>ContentsObject\Kirby\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBullet.h">
+      <Filter>ContentsObject\Kirby\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBullet2.h">
+      <Filter>ContentsObject\Kirby\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpStar.h">
+      <Filter>ContentsObject\Kirby\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="KingDedede.h">
       <Filter>ContentsObject\Monster</Filter>
     </ClInclude>
   </ItemGroup>
@@ -239,28 +242,31 @@
     <ClCompile Include="MonsterWidget.cpp">
       <Filter>ContentsObject\HUD</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>ContentsObject\Kirby</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerStatsManager.cpp">
       <Filter>ContentsObject\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="FireBullet.cpp">
-      <Filter>ContentsObject\Kirby</Filter>
-    </ClCompile>
-    <ClCompile Include="ActorVector.cpp">
-      <Filter>ContentsObject\Kirby</Filter>
-    </ClCompile>
-    <ClCompile Include="FireBullet2.cpp">
-      <Filter>ContentsObject\Kirby</Filter>
-    </ClCompile>
-    <ClCompile Include="JumpStar.cpp">
-      <Filter>ContentsObject\Kirby</Filter>
     </ClCompile>
     <ClCompile Include="HotHead.cpp">
       <Filter>ContentsObject\Monster</Filter>
     </ClCompile>
     <ClCompile Include="MonsterFireBullet.cpp">
+      <Filter>ContentsObject\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="ActorVector.cpp">
+      <Filter>ContentsObject\Kirby\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>ContentsObject\Kirby\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBullet.cpp">
+      <Filter>ContentsObject\Kirby\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBullet2.cpp">
+      <Filter>ContentsObject\Kirby\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpStar.cpp">
+      <Filter>ContentsObject\Kirby\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="KingDedede.cpp">
       <Filter>ContentsObject\Monster</Filter>
     </ClCompile>
   </ItemGroup>
@@ -315,6 +321,9 @@
     </Filter>
     <Filter Include="ThridParty\FMOD\Bin\Release">
       <UniqueIdentifier>{0d424e26-737e-4617-bba2-5ade2a07e31f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Kirby\Bullet">
+      <UniqueIdentifier>{5158bce5-56e7-49c7-9ebb-977f074e4c84}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

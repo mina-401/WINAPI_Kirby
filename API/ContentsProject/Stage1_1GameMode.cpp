@@ -32,14 +32,14 @@ void AStage1_1GameMode::BeginPlay()
 	APlayer* Player = GetWorld()->GetPawn<APlayer>();
 	
 	MonsterWaddleDee = GetWorld()->SpawnActor<AWaddleDee>();
-	AMonster* mon = GetWorld()->SpawnActor<AWaddleDee>();
+	//AMonster* mon = GetWorld()->SpawnActor<AWaddleDee>();
 	MonsterWaddleDoo = GetWorld()->SpawnActor<AWaddleDoo>();
 	MonsterSparky = GetWorld()->SpawnActor<ASparky>();
 
 	MonsterWaddleDee->SetActorLocation({ 1500, 300 });
-	mon->SetActorLocation({ 1000, 300 });
-	//MonsterWaddleDoo->SetActorLocation({ 3050, 50 });
-	MonsterWaddleDoo->SetActorLocation({ 1000, 50 });
+	//mon->SetActorLocation({ 1000, 300 });
+	MonsterWaddleDoo->SetActorLocation({ 3050, 50 });
+	//MonsterWaddleDoo->SetActorLocation({ 1000, 50 });
 	MonsterSparky->SetActorLocation({ 3400, 200 });
 
 	/*MonsterWaddleDee->SetActive(false);
@@ -49,7 +49,7 @@ void AStage1_1GameMode::BeginPlay()
 	Player->SetColImage("foreground1-1_col.png");
 
 	MonsterWaddleDee->SetColImage("foreground1-1_col.png");
-	mon->SetColImage("foreground1-1_col.png");
+	//mon->SetColImage("foreground1-1_col.png");
 	MonsterWaddleDoo->SetColImage("foreground1-1_col.png");
 	MonsterSparky->SetColImage("foreground1-1_col.png");
 

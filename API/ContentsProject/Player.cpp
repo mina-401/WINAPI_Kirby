@@ -74,6 +74,8 @@ APlayer::APlayer()
 		UImageManager::GetInst().CuttingSprite("Eating_Right.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("EatingMove_Left.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("EatingMove_Right.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("EatingCrouch_Right.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("EatingCrouch_Left.png", { 128, 128 });
 
 		UImageManager::GetInst().CuttingSprite("FireIdle_Left.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("FireIdle_Right.png", { 128, 128 });
@@ -146,6 +148,8 @@ APlayer::APlayer()
 		SpriteRenderer->CreateAnimation("EatingWalk_Right", "EatingMove_Right.png", 0, 14, 0.1f);
 		SpriteRenderer->CreateAnimation("EatingJump_Left", "EatingJump_Left.png", 0, 8, 0.1f, false);
 		SpriteRenderer->CreateAnimation("EatingJump_Right", "EatingJump_Right.png", 0, 8, 0.1f, false);
+		SpriteRenderer->CreateAnimation("EatingCrouch_Left", "EatingCrouch_Left.png", 0, 4, 0.2f, false);
+		SpriteRenderer->CreateAnimation("EatingCrouch_Right", "EatingCrouch_Right.png", 0, 4, 0.2f, false);
 
 		//Fire
 		SpriteRenderer->CreateAnimation("FireIdle_Left", "FireIdle_Left.png", 0, 7, 0.2f);
@@ -371,7 +375,18 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 		switch (CurPlayerCopyState)
 		{
 		case ECopyAbilityState::Normal:
-			CrouchStart();
+			switch (CurPlayerEatState)
+			{
+			case EPlayerEatState::Normal:
+				CrouchStart();
+
+				break;
+			case EPlayerEatState::Eating:
+				EatingCrouchStart();
+				break;
+			default:
+				break;
+			}
 			break;
 		case ECopyAbilityState::Spark:
 			SparkCrouchStart();
@@ -461,6 +476,7 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 			BreakStart();
 			break;
 		case ECopyAbilityState::Spark:
+
 			break;
 		case ECopyAbilityState::Beam:
 			break;
@@ -625,8 +641,8 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 		break;
 
 	case EPlayerState::KnockBack:
-
-			KnockBackStart();
+		CreateJumpStar();
+		KnockBackStart();
 
 
 		break;
@@ -720,13 +736,7 @@ void APlayer::Tick(float _DeltaTime)
 	PlayerTransform.Scale = { 6,6 };
 	UEngineDebug::CoreDebugRender(PlayerTransform, UEngineDebug::EDebugPosType::Circle);*/
 
-
-
-
-
 	DirCheck();
-	
-	
 
 	switch (CurPlayerState)
 	{
@@ -767,8 +777,6 @@ void APlayer::Tick(float _DeltaTime)
 		Attack(_DeltaTime);
 		break;
 	case EPlayerState::KnockBack:
-
-
 		KnockBack(_DeltaTime);
 		break;
 	case EPlayerState::Die:
@@ -826,6 +834,9 @@ void APlayer::KnockBackStart()
 	SpriteRenderer->SetComponentScale({ 270,270 });
 	SpriteRenderer->ChangeAnimation("Damaged" + DirString);
 	CollisionComponent->SetActive(false);
+	AlphaTime = 1.f;
+
+
 }
 void APlayer::FireKnockBackStart()
 {
@@ -838,14 +849,16 @@ void APlayer::FireKnockBackStart()
 }
 void APlayer::KnockBack(float _DeltaTime)
 {
-	//Gravity(_DeltaTime);
+
+	AlphaTime -= _DeltaTime;
+
+	if (AlphaTime > 0.f)
+	{
+		SpriteRenderer->SetAlphafloat(AlphaVar);
+		AlphaVar = 1.f - AlphaVar;
+	}
 	if (true == SpriteRenderer->IsCurAnimationEnd() && GetCurHp()>0 )
 	{
-		/*while ( true == PlayerNextPosCheck(_DeltaTime, FVector2D::DOWN))
-		{
-			AddActorLocation( FVector2D::DOWN * Speed * _DeltaTime);
-
-		}*/
 		CollisionComponent->SetActive(true);
 
 		ChangeState(EPlayerState::Idle);
@@ -853,13 +866,14 @@ void APlayer::KnockBack(float _DeltaTime)
 	}
 	if (0>=GetCurHp() && true==SpriteRenderer->IsCurAnimationEnd())
 	{
+		CollisionComponent->SetActive(true);
+
 		ChangeState(EPlayerState::Die);
 		return;
 	}
 	if (true == PlayerNextPosCheck(_DeltaTime, KnockBackVec))
 	{
-		AddActorLocation((KnockBackVec) * 50.0f * _DeltaTime);
-		//AddActorLocation(FVector2D::DOWN * 50.0f * _DeltaTime);
+		AddActorLocation((KnockBackVec) * 100.0f * _DeltaTime);
 
 
 	}
@@ -1035,7 +1049,7 @@ void APlayer::IdleStart()
 	Speed = 300.0f;
 	SpriteRenderer->ChangeAnimation("Idle" + DirString);
 
-	
+	SpriteRenderer->SetAlphafloat(1.0f);
 
 }
 void APlayer::FireIdleStart()
@@ -1130,22 +1144,33 @@ void APlayer::SparkCrouchStart()
 	Speed = 300.0f;
 	SpriteRenderer->ChangeAnimation("SparkCrouch" + DirString);
 }
+void APlayer::EatingCrouchStart()
+{
+	Speed = 300.0f;
+	CurPlayerEatState = EPlayerEatState::Normal;
+	CurPlayerCopyState = ColMonster->GetCopyAbilityState();
+	SpriteRenderer->ChangeAnimation("EatingCrouch" + DirString);
 
+}
 
 void APlayer::Crouch(float _DeltaTime)
 {
 	DirCheck();
-	CrouchStartAnim();
+	//CrouchStartAnim();
 
 	if (true == UEngineInput::GetInst().IsPress('Z'))
 	{
 		ChangeState(EPlayerState::Slide);
 		return;
 	}
-	if (true == UEngineInput::GetInst().IsUp(VK_DOWN))
+	if (true == UEngineInput::GetInst().IsFree(VK_DOWN))
 	{
-		ChangeState(EPlayerState::Idle);
-		return;
+		if (true == SpriteRenderer->IsCurAnimationEnd())
+		{
+			ChangeState(EPlayerState::Idle);
+			return;
+
+		}
 	}
 }
 
@@ -1353,8 +1378,6 @@ void APlayer::ChangeMoveStateByCopy(int _KeyIndex)
 			ChangeState(EPlayerState::Idle);
 			break;
 		case ECopyAbilityState::Spark:
-			
-			
 			CurPlayerCopyState = ECopyAbilityState::Normal;
 			ChangeState(EPlayerState::Idle);
 			break;
@@ -1381,6 +1404,22 @@ void APlayer::ChangeMoveStateByCopy(int _KeyIndex)
 }
 void APlayer::CreateJumpStar()
 {
+	switch (CurPlayerCopyState)
+	{
+	case ECopyAbilityState::Normal:
+		return;
+		break;
+	case ECopyAbilityState::Fire:
+		//Dash »óÅÂ¿¡¼­ º® ºÎµúÇû´Ù.
+		if (true == IsFireDashState) return;
+		break;
+	case ECopyAbilityState::Spark:
+		break;
+	case ECopyAbilityState::Beam:
+		break;
+	default:
+		break;
+	}
 	AJumpStar* Star = GetWorld()->SpawnActor<AJumpStar>();
 	Star->SetActorLocation(GetActorLocation());
 	Star->SetMainPawn(this);
@@ -1607,6 +1646,7 @@ void APlayer::Dash(float _DeltaTime)
 	Gravity(_DeltaTime);
 
 
+
 	AActor* _ColActor = CollisionComponent->CollisionOnce(ECollisionGroup::MonsterBody);
 	if (_ColActor != nullptr)
 	{
@@ -1681,6 +1721,7 @@ void APlayer::Dash(float _DeltaTime)
 
 
 	
+	
 		UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
 		if (Color == UColor::BLACK)
 		{
@@ -1708,8 +1749,30 @@ void APlayer::Dash(float _DeltaTime)
 			break;
 		}
 	}
+	//CheckFireDashState(_DeltaTime, Vector);
 }
+void APlayer::CheckFireDashState(float _DeltaTime, const FVector2D& Vector)
+{
+	if (CurPlayerCopyState == ECopyAbilityState::Fire)
+	{
+		if (false == PlayerNextPosCheck(_DeltaTime, FVector2D::UP))
+		{
+			IsFireDashState = true;
+			this->ColKnockBackEnter(Vector);
+		}
+	}
+}
+void APlayer::ColKnockBackEnter(FVector2D _Vector)
+{
+	_Vector = _Vector * (-1.0f);
 
+	_Vector.Normalize();
+	SetKnockBackForce(_Vector);
+
+	IsFireDashState = false;
+	//³Ë¹é »óÅÂ·Î
+	ChangeState(EPlayerState::KnockBack);
+}
 void APlayer::ChangeDashStateByEat(int _KeyIndex)
 {
 	switch (_KeyIndex)
@@ -2277,10 +2340,12 @@ void APlayer::ColKnockBackEnter(AActor* _ColActor)
 {
 	FVector2D Vector = GetActorLocation()- _ColActor->GetActorLocation();
 	Vector.Normalize();
-	
+	Vector.Y = 0;
+
 	SetKnockBackForce(Vector);
 
 	SetIsDamagedState(true);
+	 //GetWorld()->SpawnActor<AJumpStar*>();
 	ChangeState(EPlayerState::KnockBack);
 }
 
@@ -2301,37 +2366,7 @@ void APlayer::ChangeIdleStateByCopy(int _KeyIndex)
 	{
 	case VK_DOWN:
 
-		switch (CurPlayerCopyState)
-		{
-		case ECopyAbilityState::Normal:
-			switch (CurPlayerEatState)
-			{
-			case EPlayerEatState::Normal:
-				ChangeState(EPlayerState::Crouch);
-				break;
-			case EPlayerEatState::Eating:
-				CurPlayerEatState = EPlayerEatState::Normal;
-				CurPlayerCopyState = ColMonster->GetCopyAbilityState();
-				ChangeState(EPlayerState::Idle);
-				break;
-			default:
-				break;
-			}
-			break;
-			break;
-		case ECopyAbilityState::Fire:
-			ChangeState(EPlayerState::Crouch);
-			break;
-		case ECopyAbilityState::Spark:
-			ChangeState(EPlayerState::Crouch);
-			break;
-		case ECopyAbilityState::Beam:
-			ChangeState(EPlayerState::Crouch);
-			break;
-		default:
-			ChangeState(EPlayerState::Crouch);
-			break;
-		}
+		ChangeState(EPlayerState::Crouch);
 
 	break;
 

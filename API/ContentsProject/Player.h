@@ -151,6 +151,7 @@ private:
     void EatingMoveStart();
     void EatingDashStart();
     void EatingJumpStart();
+    void EatingCrouchStart();
 
     
     void CheckSlideDir();
@@ -198,6 +199,8 @@ private:
     void BreakStart();
     void Breaking(float _DeltaTime);
     void Dash(float _DeltaTime);
+    void CheckFireDashState(float _DeltaTime, const FVector2D& Vector);
+    void ColKnockBackEnter(FVector2D _Vector);
     void Attack(float _DeltaTime);
     void KnockBackStart();
     void KnockBack(float _DeltaTime);
@@ -345,6 +348,9 @@ private:
     float Speed = 300.0f;
     float MaxAcc = 1000.0f;
 
+    float AlphaTime = 1.f;
+    float AlphaVar = 1.f;
+
     bool IsDebug = true;
 
     bool IsGround = false;
@@ -356,6 +362,7 @@ private:
     bool IsFly = false;
 
     bool IsDamage = false;
+    bool IsFireDashState = false;
 
     FVector2D Acc = FVector2D::ZERO;
 

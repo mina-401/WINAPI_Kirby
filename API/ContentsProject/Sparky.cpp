@@ -68,6 +68,18 @@ void ASparky::AttackStart()
 	AMonster::AttackStart();
 
 	//SpriteRenderer->
+
+	int a = 0;
+}
+//
+void ASparky::Attack(float _DeltaTime)
+{
+	AMonster::Attack(_DeltaTime);
+
+	if (2 >= SpriteRenderer->GetFrameIndex())
+	{
+		return;
+	}
 	if (nullptr != AttackColComponent) {
 		AActor* ColActor = AttackColComponent->CollisionOnce(ECollisionGroup::PlayerBody);
 		if (nullptr != ColActor)
@@ -78,13 +90,6 @@ void ASparky::AttackStart()
 			}
 		}
 	}
-	int a = 0;
-}
-//
-void ASparky::Attack(float _DeltaTime)
-{
-	AMonster::Attack(_DeltaTime);
-	
 	
 }
 

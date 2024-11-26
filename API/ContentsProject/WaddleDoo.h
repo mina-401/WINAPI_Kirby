@@ -20,14 +20,19 @@ public:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
+	void BeamSetActive(bool _bool);
+
 protected:
 
 private:
 	
 	void AttackCollisionEnter(AActor* _ColActor) ;
+	void DooDirCheck();
 	void AttackCollisionStay(AActor* _ColActor);
 	void AttackCollisionEnd(AActor* _ColActor);
 	void CollisionEnter(AActor* _ColActor) override;
+	void BeamCollisionEnter(AActor* _ColActor);
+	void BeamCollisionEnd(AActor* _ColActor);
 	//void CollisionStay(AActor* _ColActor)override;
 	//void CollisionEnd(AActor* _ColActor)override;
 
@@ -39,11 +44,14 @@ private:
 	int R = 100;
 
 	bool IsBoome = false;
+	bool IsRightBeam = false;
 	bool Attackable = true;
+	bool IsActive = false;
 
 	float CurBulletTime = 0.0f;
 	float BulletTime = 50.0f;
-	float Angle = -90.0f;
-	float PlusAngle = 120.0f;
+	float Angle = 0.0f;
+	float LeftAngle = -120.0f;
+	float RightAngle = -60.0f;
 	float CurPlusAngle = 0.0f;
 };
