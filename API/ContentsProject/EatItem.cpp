@@ -46,7 +46,8 @@ void AEatItem::CollisionEnter(AActor* _ColActor)
 	if (nullptr != player)
 	{
 		player->SetCurPlayerCopyState(ECopyAbilityState::Fire);
-		
+		player->SetColAnyActor(this);
+
 		SetActive(false);
 	}
 }

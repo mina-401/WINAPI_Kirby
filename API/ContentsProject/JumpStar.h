@@ -1,6 +1,8 @@
 #pragma once
 
 #include <EngineCore/Actor.h>
+#include "ContentsEnum.h"
+
 
 class AJumpStar : public AActor
 {
@@ -44,7 +46,15 @@ public:
 	{
 		MainPawn = _MainPawn;
 	}
+	ECopyAbilityState GetCopyState() const
+	{
+		return CopyState;
+	}
 
+	void SetCopyState(ECopyAbilityState _CopyState)
+	{
+		CopyState = _CopyState;
+	}
 protected:
 	void Tick(float _DeltaTime) override;
 	void BeginPlay() override;
@@ -61,6 +71,6 @@ private:
 	bool Ishaling = false;
 
 	class APlayer* MainPawn = nullptr;
-	
+	ECopyAbilityState CopyState = ECopyAbilityState::Fire;
 };
 

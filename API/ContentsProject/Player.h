@@ -82,6 +82,15 @@ public:
         Life = _Life;
     }
 
+    AActor* GetColAnyActor() const
+    {
+        return ColAnyActor;
+    }
+    void SetColAnyActor(AActor* _col)
+    {
+        ColAnyActor = _col;
+    }
+
     bool GetIsDamagedState()
     {
         return IsDamage;
@@ -385,6 +394,8 @@ private:
     USoundPlayer BGMVictoryPlayer;
 
     ActorVector BulletVector;
+  
+    class AActor* ColAnyActor = nullptr;
     class AJumpStar* star = nullptr;
 };
 

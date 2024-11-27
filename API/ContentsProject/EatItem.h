@@ -1,5 +1,6 @@
 #pragma once
 #include <EngineCore/Actor.h>
+#include "ContentsEnum.h"
 
 class AEatItem : public AActor
 {
@@ -28,6 +29,16 @@ public:
 	{
 		MainPawn = _MainPawn;
 	}
+
+	ECopyAbilityState GetCopyState() const
+	{
+		return CopyState;
+	}
+
+	void SetCopyState(ECopyAbilityState _CopyState)
+	{
+		CopyState = _CopyState;
+	}
 protected:
 	class USpriteRenderer* SpriteRenderer = nullptr;
 	class U2DCollision* CollisionComponent = nullptr;
@@ -40,5 +51,7 @@ private:
 	FVector2D End = FVector2D::ZERO;
 
 	class APlayer* MainPawn = nullptr;
+
+	ECopyAbilityState CopyState = ECopyAbilityState::Fire;
 };
 
