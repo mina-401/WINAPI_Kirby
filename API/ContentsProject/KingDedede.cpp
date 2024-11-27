@@ -8,6 +8,7 @@
 #include <EngineCore/EngineCoreDebug.h>
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/ImageManager.h>
+#include <EngineBase/EngineRandom.h>
 
 #include <EngineCore/2DCollision.h>
 #include "ContentsEnum.h"
@@ -17,6 +18,7 @@ AKingDedede::AKingDedede()
 		SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 		SetName("KingDedede");
 
+		
 		//SpriteRenderer->SetSprite("KingDedede_Left.png");
 		SpriteRenderer->SetComponentScale({ 500, 500 });
 
@@ -33,11 +35,11 @@ AKingDedede::AKingDedede()
 		UImageManager::GetInst().CuttingSprite("KingJumpAttack3_Left.png", { 200, 200 });
 		UImageManager::GetInst().CuttingSprite("KingJumpAttack3_Right.png", { 200, 200 });
 		UImageManager::GetInst().CuttingSprite("KingFlyAttack_Left.png", { 200, 200 });
-		UImageManager::GetInst().CuttingSprite("KingFlyAttack_Right.png", { 200, 200 });
+		UImageManager::GetInst().CuttingSprite("KingFlyAttack_Right.png", { 200, 200 });*/
 		UImageManager::GetInst().CuttingSprite("KingDamaged_Left.png", { 200, 200 });
 		UImageManager::GetInst().CuttingSprite("KingDamaged_Right.png", { 200, 200 });
-		UImageManager::GetInst().CuttingSprite("KingDie_Left.png", { 200, 200 });
-		UImageManager::GetInst().CuttingSprite("KingDie_Right.png", { 200, 200 });*/
+		//UImageManager::GetInst().CuttingSprite("KingDie_Left.png", { 200, 200 });
+		//UImageManager::GetInst().CuttingSprite("KingDie_Right.png", { 200, 200 });
 
 		//UImageManager::GetInst().CuttingSprite("Sparky_Right.png", { 128, 128 });
 
@@ -45,17 +47,17 @@ AKingDedede::AKingDedede()
 		SpriteRenderer->CreateAnimation("Idle_Right", "KingIdle_Right.png", 0,3, 0.5f, false);
 		SpriteRenderer->CreateAnimation("Walk_Left", "KingWalk_Left.png", 0,4, 0.2f);
 		SpriteRenderer->CreateAnimation("Walk_Right", "KingWalk_Right.png",0,4, 0.2f);
-		/*SpriteRenderer->CreateAnimation("JumpAttack1_Left", "KingJumpAttack1_Left.png", 0,0, 0.2f, true);
+	/*	SpriteRenderer->CreateAnimation("JumpAttack1_Left", "KingJumpAttack1_Left.png", 0,0, 0.2f, true);
 		SpriteRenderer->CreateAnimation("JumpAttack1_Right", "KingJumpAttack1_Right.png", 0,0, 0.2f, true);
 		SpriteRenderer->CreateAnimation("JumpAttack2_Left", "KingJumpAttack2_Left.png", 0, 0, 0.2f, true);
 		SpriteRenderer->CreateAnimation("JumpAttack2_Right", "KingJumpAttack2_Right.png", 0, 0, 0.2f, true);
 		SpriteRenderer->CreateAnimation("JumpAttack3_Left", "KingJumpAttack3_Left.png", 0, 0, 0.2f, true);
 		SpriteRenderer->CreateAnimation("JumpAttack3_Right", "KingJumpAttack3_Right.png", 0, 0, 0.2f, true);
 		SpriteRenderer->CreateAnimation("FlyAttack_Left", "KingFlyAttack_Left.png", 0, 0, 0.2f, true);
-		SpriteRenderer->CreateAnimation("FlyAttack_Right", "KingFlyAttack_Right.png", 0, 0, 0.2f, true);
-		SpriteRenderer->CreateAnimation("Damaged_Left", "KingDamaged_Left.png", 9, 9, 0.2f, true);
-		SpriteRenderer->CreateAnimation("Damaged_Right", "KingDamaged_Right.png", 9, 9, 0.2f, true);
-		SpriteRenderer->CreateAnimation("Die_Left", "KingDie_Left.png", 9, 9, 0.2f, true);
+		SpriteRenderer->CreateAnimation("FlyAttack_Right", "KingFlyAttack_Right.png", 0, 0, 0.2f, true);*/
+		SpriteRenderer->CreateAnimation("Damaged_Left", "KingDamaged_Left.png", 0, 0, 2.0f, false);
+		SpriteRenderer->CreateAnimation("Damaged_Right", "KingDamaged_Right.png", 0, 0, 2.0f, false);
+		/*SpriteRenderer->CreateAnimation("Die_Left", "KingDie_Left.png", 9, 9, 0.2f, true);
 		SpriteRenderer->CreateAnimation("Die_Right", "KingDie_Right.png", 9, 9, 0.2f, true);*/
 		SpriteRenderer->ChangeAnimation("Idle_Left");
 
@@ -76,10 +78,10 @@ AKingDedede::AKingDedede()
 
 	{
 		CollisionComponent = CreateDefaultSubObject<U2DCollision>();
-		CollisionComponent->SetComponentLocation({ 0, 0 });
-		CollisionComponent->SetComponentScale({ 100, -200 });
+		CollisionComponent->SetComponentLocation({ 0, -100 });
+		CollisionComponent->SetComponentScale({ 180, 180 });
 		CollisionComponent->SetCollisionGroup(ECollisionGroup::MonsterBody);
-		CollisionComponent->SetCollisionType(ECollisionType::Rect);
+		CollisionComponent->SetCollisionType(ECollisionType::CirCle);
 
 		DebugOn();
 	}
@@ -89,14 +91,36 @@ AKingDedede::~AKingDedede()
 {
 }
 
+void AKingDedede::Chase(float _DeltaTime)
+{
+	AMonster::Chase(_DeltaTime);
+	//
+}
+
 void AKingDedede::AttackStart()
 {
-	AMonster::AttackStart();
+	//AMonster::AttackStart();
+
+	DirCheck();
+
+	switch (AttackRound)
+	{
+	case 1:
+		SpriteRenderer->ChangeAnimation("JumpAttack1" + DirString);
+
+		break;
+	default:
+		SpriteRenderer->ChangeAnimation("JumpAttack1" + DirString);
+
+		break;
+	}
 }
 
 void AKingDedede::Attack(float _DeltaTime)
 {
 	AMonster::Attack(_DeltaTime);
+	
+	
 }
 
 void AKingDedede::MoveStart()
@@ -107,11 +131,17 @@ void AKingDedede::MoveStart()
 void AKingDedede::Move(float _DeltaTime)
 {
 	AMonster::Move(_DeltaTime);
+
+
 }
 
 void AKingDedede::BeginPlay()
 {
 	AMonster::BeginPlay();
+
+	//AttackRound = Random.RandomInt(1, 3);
+
+	int a = 0;
 }
 
 void AKingDedede::Tick(float _DeltaTime)
@@ -134,6 +164,28 @@ void AKingDedede::Idle(float _DeltaTime)
 	}
 	
 }
+
+void AKingDedede::ColKnockBackEnter(AActor* _ColActor)
+{
+	// 아무것도 하지 않음
+}
+
+//void AKingDedede::CheckPlayerPos()
+//{
+//	AActor* Player = GetWorld()->GetPawn();
+//	Player = dynamic_cast<APlayer*>(Player);
+//
+//	FVector2D Range = Player->GetActorLocation() - this->GetActorLocation();
+//	float PlayerRange = Range.Length();
+//
+//	if (PlayerRange <= MonsterToPlayerRange)
+//	{
+//
+//		TargetPosVector = Player->GetActorLocation() - GetActorLocation();
+//		//ChangeState(EMonsterState::Chase);
+//		//return;
+//	}
+//}
 
 void AKingDedede::AttackCollisionEnter(AActor* _ColActor)
 {

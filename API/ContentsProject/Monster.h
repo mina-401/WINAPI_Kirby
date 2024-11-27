@@ -44,6 +44,8 @@ public:
 	virtual void Die(float _DeltaTime);
 	//virtual void Damaged(float _DeltaTime);
 	virtual void KnockBackStart();
+	virtual void CheckPlayerPos();
+	virtual void ColKnockBackEnter(AActor* _ColActor);
 
 	
 
@@ -100,7 +102,6 @@ public:
 		KnockBackVec = _Vector;
 
 	}
-	void ColKnockBackEnter(AActor* _ColActor);
 
 	void SetMainPawn(class APlayer* _pawn)
 	{
@@ -120,7 +121,7 @@ protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
-	void CheckPlayerPos();
+	
 	void DirCheck();
 	void MonsterDirCheck();
 	

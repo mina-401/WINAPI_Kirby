@@ -57,6 +57,7 @@ enum class EMonsterState
 	Die,
 };
 
+
 enum class ECopyAbilityState
 {
 	Normal,

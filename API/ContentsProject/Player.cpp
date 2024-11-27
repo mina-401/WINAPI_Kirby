@@ -29,6 +29,7 @@
 #include "JumpStar.h"
 #include "MonsterFireBullet.h"
 #include "EatItem.h"
+#include "KingDedede.h"
 
 
 
@@ -1102,20 +1103,9 @@ void APlayer::Idle(float _DeltaTime)
 
 	PlayerGroundCheck(GravityForce);
 	Gravity(_DeltaTime);
-	//DownHillGravity(_DeltaTime);
-	AActor* _ColActor = CollisionComponent->CollisionOnce(ECollisionGroup::MonsterBody);
-	if (_ColActor != nullptr)
-	{
-		AMonster* Target = dynamic_cast<AMonster*>(_ColActor);
-		if (nullptr != Target) {
-				Target->ColKnockBackEnter(this);
-				this->ColKnockBackEnter(Target);
 
-				return;
-		}
 
-	}
-
+	PlayerKnockBack();
 	if (true == UEngineInput::GetInst().IsPress(VK_LEFT) ||
 		true == UEngineInput::GetInst().IsPress(VK_RIGHT))
 	{ 
@@ -1327,12 +1317,12 @@ void APlayer::Jump(float _DeltaTime)
 {
 	DirCheck();
 
+	PlayerKnockBack();
 
 	PlayerGroundCheck(GravityForce);
 	JumpGravity(_DeltaTime);
 	AddActorLocation(JumpPower*_DeltaTime);
 
-	
 	FVector2D Vector = FVector2D::ZERO;
 
 	if (true == UEngineInput::GetInst().IsPress(VK_LEFT)) Vector += FVector2D::LEFT;
@@ -1495,15 +1485,7 @@ void APlayer::Move(float _DeltaTime)
 	//DownHillGravity(_DeltaTime);
 	Gravity(_DeltaTime);
 	
-	AActor* _ColActor = CollisionComponent->CollisionOnce(ECollisionGroup::MonsterBody);
-	if (_ColActor != nullptr)
-	{
-		AMonster* Target = dynamic_cast<AMonster*>(_ColActor);
-		if (nullptr != Target) {
-			Target->ColKnockBackEnter(this);
-			this->ColKnockBackEnter(Target);
-		}
-	}
+	PlayerKnockBack();
 
 
 	FVector2D Vector = FVector2D::ZERO;
@@ -1708,12 +1690,13 @@ void APlayer::Dash(float _DeltaTime)
 	Gravity(_DeltaTime);
 
 
-
 	AActor* _ColActor = CollisionComponent->CollisionOnce(ECollisionGroup::MonsterBody);
 	if (_ColActor != nullptr)
 	{
 		AMonster* Target = dynamic_cast<AMonster*>(_ColActor);
 		if (nullptr != Target) {
+
+
 			//this->ColKnockBackEnter(_ColActor);
 			if (CurPlayerCopyState == ECopyAbilityState::Fire)
 			{
@@ -1721,6 +1704,8 @@ void APlayer::Dash(float _DeltaTime)
 
 			}
 			else {
+
+
 				Target->ColKnockBackEnter(this);
 				this->ColKnockBackEnter(Target);
 			}
@@ -1812,6 +1797,22 @@ void APlayer::Dash(float _DeltaTime)
 		}
 	}
 	//CheckFireDashState(_DeltaTime, Vector);
+}
+void APlayer::PlayerKnockBack()
+{
+
+	AActor* _ColActor = CollisionComponent->CollisionOnce(ECollisionGroup::MonsterBody);
+	if (_ColActor != nullptr)
+	{
+		AMonster* Target = dynamic_cast<AMonster*>(_ColActor);
+		if (nullptr != Target) {
+
+
+				Target->ColKnockBackEnter(this);
+				this->ColKnockBackEnter(Target);
+		}
+
+	}
 }
 void APlayer::CheckFireDashState(float _DeltaTime, const FVector2D& Vector)
 {
@@ -2017,25 +2018,7 @@ void APlayer::Fly(float _DeltaTime)
 		GravityForce = FVector2D::ZERO;
 		Vector += FVector2D::UP;
 	}
-	AActor* _ColActor = CollisionComponent->CollisionOnce(ECollisionGroup::MonsterBody);
-	if (_ColActor != nullptr)
-	{
-		AMonster* Target = dynamic_cast<AMonster*>(_ColActor);
-		if (nullptr != Target) {
-			//this->ColKnockBackEnter(_ColActor);
-			if (CurPlayerCopyState == ECopyAbilityState::Fire)
-			{
-				Target->ColKnockBackEnter(this);
-
-			}
-			else {
-				Target->ColKnockBackEnter(this);
-				this->ColKnockBackEnter(Target);
-			}
-			return;
-		}
-
-	}
+	PlayerKnockBack();
 	if (true ==PlayerNextPosCheck(_DeltaTime, Vector))
 	{
 		AddActorLocation(Vector * Speed * _DeltaTime);
@@ -2107,7 +2090,7 @@ void APlayer::FlyDown(float _DeltaTime)
 	FVector2D Vector = FVector2D::ZERO;
 	PlayerGroundCheck(FVector2D::DOWN);
 	FlyGravity(_DeltaTime);
-
+	PlayerKnockBack();
 	
 	if (true == UEngineInput::GetInst().IsPress(VK_LEFT))
 	{
@@ -2395,6 +2378,12 @@ void APlayer::CollisionEnter(AActor* _ColActor)
 
 		SetIsDamagedState(true);
 		ChangeState(EPlayerState::KnockBack);
+	}
+
+	AKingDedede* king = dynamic_cast<AKingDedede*>(_ColActor);
+	if (nullptr != king)
+	{
+
 	}
 }
 	

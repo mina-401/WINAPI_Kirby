@@ -212,6 +212,7 @@ private:
     void BreakStart();
     void Breaking(float _DeltaTime);
     void Dash(float _DeltaTime);
+    void PlayerKnockBack();
     void CheckFireDashState(float _DeltaTime, const FVector2D& Vector);
     void ColKnockBackEnter(FVector2D _Vector);
     void Attack(float _DeltaTime);

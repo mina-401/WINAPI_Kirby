@@ -285,7 +285,7 @@ void AMonster::IdleStart()
 }
 void AMonster::Idle(float _DeltaTime)
 {
-
+	int a = 0;
 }
 
 
@@ -349,8 +349,8 @@ void AMonster::ChaseStart()
 
 void AMonster::Chase(float _DeltaTime)
 {
+	//CheckPlayerPos();
 	ChangeMonsterDir(_DeltaTime);
-	DirCheck();
 	ChaseStart();
 
 	Gravity(_DeltaTime);
@@ -360,7 +360,8 @@ void AMonster::Chase(float _DeltaTime)
 	if (Color == UColor::BLACK)
 	{
 		//경사면, 그라운드에 서있다.
-		UColor NextColor = ColImage->GetColor(GetActorLocation() + FVector2D::UP, UColor::WHITE);
+		FVector2D UPVector = { 0.0f,-4.5f };
+		UColor NextColor = ColImage->GetColor(GetActorLocation() + UPVector, UColor::WHITE);
 		if (NextColor != UColor::BLACK)
 		{
 			AddActorLocation(FVector2D::UP);
@@ -429,7 +430,7 @@ void AMonster::CheckPlayerPos()
 void AMonster::CollisionEnter(AActor* _ColActor)
 {
 
-	
+	int a = 0;
 
 
 }
