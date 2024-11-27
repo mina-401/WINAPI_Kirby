@@ -52,6 +52,6 @@ private:
 
 	class APlayer* MainPawn = nullptr;
 
-	ECopyAbilityState CopyState = ECopyAbilityState::Fire;
+	ECopyAbilityState CopyState = ECopyAbilityState::Normal;
 };
 

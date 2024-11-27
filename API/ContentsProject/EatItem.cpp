@@ -10,18 +10,7 @@
 AEatItem::AEatItem()
 {
 	SetName("Item");
-	{
-
-		SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
-
-		SpriteRenderer->SetSprite("Item_FireCopy.png");
-		SpriteRenderer->SetComponentScale({ 60, 60 });
-
-		SpriteRenderer->SetOrder(ERenderOrder::MONSTER);
-
-		UImageManager::GetInst().CuttingSprite("Item_FireCopy.png", { 60, 59 });
-
-	}
+	
 
 
 	{
@@ -45,7 +34,7 @@ void AEatItem::CollisionEnter(AActor* _ColActor)
 	APlayer* player = dynamic_cast<APlayer*>(_ColActor);
 	if (nullptr != player)
 	{
-		player->SetCurPlayerCopyState(ECopyAbilityState::Fire);
+		player->SetCurPlayerCopyState(this->GetCopyState());
 		player->SetColAnyActor(this);
 
 		SetActive(false);
@@ -58,7 +47,7 @@ void AEatItem::BeginPlay()
 	SetMainPawn(dynamic_cast<APlayer*>(GetWorld()->GetPawn()));
 
 	Start = GetActorLocation();
-	End = Start + FVector2D(0, 5); // 위로 20만큼 이동
+	End = Start + FVector2D(0, 5); 
 }
 
 void AEatItem::Tick(float _DeltaTime)
@@ -68,7 +57,7 @@ void AEatItem::Tick(float _DeltaTime)
 	CurDeltaTime += _DeltaTime;
 
 	// Lerp 비율 계산
-	float t = sinf(CurDeltaTime / LerpTime * 3.14); // Sin 함수를 사용하여 부드러운 위아래 움직임 생성
+	float t = sinf(CurDeltaTime / LerpTime * 3.14f); // Sin 함수를 사용하여 부드러운 위아래 움직임 생성
 	FVector2D NextPos = Lerp(Start, End, t);
 
 

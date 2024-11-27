@@ -106,7 +106,7 @@ void KirbyContentsCore::BeginPlay()
 		ULevel::CollisionGroupLink(ECollisionGroup::Potal, ECollisionGroup::PlayerBody);
 
 
-		UEngineAPICore::GetCore()->OpenLevel("Title");
+		UEngineAPICore::GetCore()->OpenLevel("StageBossKingDedede");
 	}
 }
 

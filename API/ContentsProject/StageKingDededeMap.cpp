@@ -4,6 +4,7 @@
 #include <EngineCore/EngineAPICore.h>
 #include <EngineCore/SpriteRenderer.h>
 #include "ContentsEnum.h"
+#include <EnginePlatform/EngineInput.h>
 AStageKingDededeMap::AStageKingDededeMap()
 {
 	{
@@ -36,6 +37,7 @@ AStageKingDededeMap::~AStageKingDededeMap()
 
 void AStageKingDededeMap::BeginPlay()
 {
+	Super::BeginPlay();
 	APlayer* player = GetWorld()->GetPawn<APlayer>();
 
 
@@ -44,8 +46,14 @@ void AStageKingDededeMap::BeginPlay()
 
 void AStageKingDededeMap::Tick(float _deltaTime)
 {
+	Super::Tick(_deltaTime);
 	APlayer* player = GetWorld()->GetPawn<APlayer>();
 	player->BlockCameraPos(MapScale, WinSize);
 	FVector2D  CurCameraPos = GetWorld()->GetCameraPos();
+
+	if (true == UEngineInput::GetInst().IsDown('Y'))
+	{
+		ColSpriteRenderer->SetActiveSwitch();
+	}
 
 }

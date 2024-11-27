@@ -172,7 +172,15 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="FireItem.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="HotHead.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="InhaleStar.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -206,6 +214,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Score.h" />
+    <ClInclude Include="SparkItem.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Sparky.h">
       <SubType>
       </SubType>
@@ -324,7 +336,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="FireItem.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="HotHead.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="InhaleStar.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -358,6 +378,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Score.cpp" />
+    <ClCompile Include="SparkItem.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Sparky.cpp">
       <SubType>
       </SubType>

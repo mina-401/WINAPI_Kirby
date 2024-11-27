@@ -16,8 +16,17 @@ public:
 	void AttackStart() override;
 	void Attack(float _DeltaTime) override;
 
+	 void MoveStart()override;
+	 void Move(float _DeltaTime)override;
+
+
+
+
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
+
+	 void IdleStart() override;
+	 void Idle(float _DeltaTime) override;
 
 	void AttackCollisionEnter(AActor* _ColActor);
 protected:

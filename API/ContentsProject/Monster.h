@@ -30,6 +30,8 @@ public:
 	void SetColImage(std::string_view _ColImageName);
 
 	virtual void MoveStart();
+	virtual void IdleStart();
+	virtual void Idle(float _DeltaTime);
 	virtual void Move(float _DeltaTime);
 	virtual void ChaseStart();
 	virtual void Chase(float _DeltaTime);
@@ -119,7 +121,8 @@ protected:
 	void Tick(float _DeltaTime) override;
 
 	void CheckPlayerPos();
-
+	void DirCheck();
+	void MonsterDirCheck();
 	
 
 	virtual void CollisionEnter(AActor* _ColActor);
@@ -157,8 +160,7 @@ private:
 	void MonsterGroundCheck(FVector2D _MovePos);
 	bool MonsterNextPosCheck(float _DeltaTime, FVector2D _Vector);
 	bool MonsterKnockBackNextPosCheck(float _DeltaTime, FVector2D _Vector);
-	void MonsterDirCheck();
-	void DirCheck();
+	
 	void MoveDirCheck(FVector2D _Pos);
 	void JumpGravity(float _DeltaTime)
 	{

@@ -56,6 +56,9 @@ void AMonster::ChangeState(EMonsterState _CurMonsterState)
 	DirCheck();
 	switch (_CurMonsterState)
 	{
+	case EMonsterState::Idle:
+		IdleStart();
+		break;
 	case EMonsterState::Move:
 		MoveStart();
 		break;
@@ -140,6 +143,7 @@ void AMonster::KnockBack(float _DeltaTime)
 
 void AMonster::ChangeMonsterDir(float _DeltaTime)
 {
+
 	if (false == MonsterNextPosCheck(_DeltaTime, MoveVector))
 	{
 		//방향 바꾸기
@@ -239,6 +243,9 @@ void AMonster::Tick(float _DeltaTime)
 
 	switch (CurMonsterState)
 	{
+	case EMonsterState::Idle:
+		Idle(_DeltaTime);
+		break;
 	case EMonsterState::Move:
 		Move(_DeltaTime);
 		break;
@@ -271,6 +278,16 @@ void AMonster::MoveStart()
 	DirCheck();
 	SpriteRenderer->ChangeAnimation("Walk" + DirString);
 }
+void AMonster::IdleStart()
+{
+	DirCheck();
+	SpriteRenderer->ChangeAnimation("Idle" + DirString);
+}
+void AMonster::Idle(float _DeltaTime)
+{
+
+}
+
 
 void AMonster::Move(float _DeltaTime)
 {
@@ -290,7 +307,8 @@ void AMonster::Move(float _DeltaTime)
 		UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
 		if (Color == UColor::BLACK)
 		{
-			UColor NextColor = ColImage->GetColor(GetActorLocation() + FVector2D::UP, UColor::WHITE);
+			FVector2D UPVector = { 0.0f,-4.5f };
+			UColor NextColor = ColImage->GetColor(GetActorLocation() + UPVector, UColor::WHITE);
 			if (NextColor != UColor::BLACK)
 			{
 				AddActorLocation(FVector2D::UP);

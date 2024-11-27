@@ -149,6 +149,15 @@
     <ClInclude Include="EatItem.h">
       <Filter>ContentsObject\Kirby\Item</Filter>
     </ClInclude>
+    <ClInclude Include="FireItem.h">
+      <Filter>ContentsObject\Kirby\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="SparkItem.h">
+      <Filter>ContentsObject\Kirby\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="InhaleStar.h">
+      <Filter>ContentsObject\Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -274,6 +283,15 @@
     </ClCompile>
     <ClCompile Include="EatItem.cpp">
       <Filter>ContentsObject\Kirby\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="FireItem.cpp">
+      <Filter>ContentsObject\Kirby\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="SparkItem.cpp">
+      <Filter>ContentsObject\Kirby\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="InhaleStar.cpp">
+      <Filter>ContentsObject\Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
