@@ -1782,8 +1782,6 @@ void APlayer::Dash(float _DeltaTime)
 		else AddActorLocation(Vector * Speed * _DeltaTime);
 	
 
-
-
 	while (true)
 	{
 		UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);

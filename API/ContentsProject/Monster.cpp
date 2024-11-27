@@ -318,7 +318,6 @@ void AMonster::Move(float _DeltaTime)
 		else AddActorLocation(MoveVector * Speed * _DeltaTime);
 	}
 
-
 	MonsterClimbingUphill();
 }
 

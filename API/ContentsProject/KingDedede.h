@@ -35,15 +35,21 @@ public:
 	//void DieStart() override;
 	 void ColKnockBackEnter(AActor* _ColActor) override;
 
-	 //void CheckPlayerPos() override;
+	 
+
+	 void CheckPlayerPos() override;
 	void AttackCollisionEnter(AActor* _ColActor);
 protected:
 
 private:
 	 UEngineRandom Random;
 
+	 float ChaseTime = 5.0f;
+	 float CurChaseTime = 0.0f;
 
 	int AttackRound = 3;
+	FVector2D HammerLeftPosition = { -80,-30 };
+	FVector2D HammerRightPosition = { 80,-30 };
 
 };
 

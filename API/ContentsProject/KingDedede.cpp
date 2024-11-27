@@ -26,35 +26,34 @@ AKingDedede::AKingDedede()
 
 		UImageManager::GetInst().CuttingSprite("KingIdle_Left.png", { 200, 200 });
 		UImageManager::GetInst().CuttingSprite("KingIdle_Right.png", { 200, 200 });
-		UImageManager::GetInst().CuttingSprite("KingWalk_Left.png", { 150, 150 });
-		UImageManager::GetInst().CuttingSprite("KingWalk_Right.png", { 150, 150 });
-		/*UImageManager::GetInst().CuttingSprite("KingJumpAttack1_Left.png", { 200, 200 });
+		UImageManager::GetInst().CuttingSprite("KingWalk_Left.png", { 200, 200 });
+		UImageManager::GetInst().CuttingSprite("KingWalk_Right.png", { 200, 200 });
+		UImageManager::GetInst().CuttingSprite("KingJumpAttack1_Left.png", { 200, 200 });
 		UImageManager::GetInst().CuttingSprite("KingJumpAttack1_Right.png", { 200, 200 });
 		UImageManager::GetInst().CuttingSprite("KingJumpAttack2_Left.png", { 200, 200 });
 		UImageManager::GetInst().CuttingSprite("KingJumpAttack2_Right.png", { 200, 200 });
 		UImageManager::GetInst().CuttingSprite("KingJumpAttack3_Left.png", { 200, 200 });
 		UImageManager::GetInst().CuttingSprite("KingJumpAttack3_Right.png", { 200, 200 });
 		UImageManager::GetInst().CuttingSprite("KingFlyAttack_Left.png", { 200, 200 });
-		UImageManager::GetInst().CuttingSprite("KingFlyAttack_Right.png", { 200, 200 });*/
+		UImageManager::GetInst().CuttingSprite("KingFlyAttack_Right.png", { 200, 200 });
 		UImageManager::GetInst().CuttingSprite("KingDamaged_Left.png", { 200, 200 });
 		UImageManager::GetInst().CuttingSprite("KingDamaged_Right.png", { 200, 200 });
-		//UImageManager::GetInst().CuttingSprite("KingDie_Left.png", { 200, 200 });
-		//UImageManager::GetInst().CuttingSprite("KingDie_Right.png", { 200, 200 });
+		UImageManager::GetInst().CuttingSprite("KingDie_Left.png", { 200, 200 });
+		UImageManager::GetInst().CuttingSprite("KingDie_Right.png", { 200, 200 });
 
-		//UImageManager::GetInst().CuttingSprite("Sparky_Right.png", { 128, 128 });
 
 		SpriteRenderer->CreateAnimation("Idle_Left", "KingIdle_Left.png", 0,3, 0.5f, false);
 		SpriteRenderer->CreateAnimation("Idle_Right", "KingIdle_Right.png", 0,3, 0.5f, false);
 		SpriteRenderer->CreateAnimation("Walk_Left", "KingWalk_Left.png", 0,4, 0.2f);
 		SpriteRenderer->CreateAnimation("Walk_Right", "KingWalk_Right.png",0,4, 0.2f);
-	/*	SpriteRenderer->CreateAnimation("JumpAttack1_Left", "KingJumpAttack1_Left.png", 0,0, 0.2f, true);
-		SpriteRenderer->CreateAnimation("JumpAttack1_Right", "KingJumpAttack1_Right.png", 0,0, 0.2f, true);
-		SpriteRenderer->CreateAnimation("JumpAttack2_Left", "KingJumpAttack2_Left.png", 0, 0, 0.2f, true);
-		SpriteRenderer->CreateAnimation("JumpAttack2_Right", "KingJumpAttack2_Right.png", 0, 0, 0.2f, true);
-		SpriteRenderer->CreateAnimation("JumpAttack3_Left", "KingJumpAttack3_Left.png", 0, 0, 0.2f, true);
-		SpriteRenderer->CreateAnimation("JumpAttack3_Right", "KingJumpAttack3_Right.png", 0, 0, 0.2f, true);
-		SpriteRenderer->CreateAnimation("FlyAttack_Left", "KingFlyAttack_Left.png", 0, 0, 0.2f, true);
-		SpriteRenderer->CreateAnimation("FlyAttack_Right", "KingFlyAttack_Right.png", 0, 0, 0.2f, true);*/
+		SpriteRenderer->CreateAnimation("JumpAttack1_Left", "KingJumpAttack1_Left.png", 0,3, 0.4f, true);
+		SpriteRenderer->CreateAnimation("JumpAttack1_Right", "KingJumpAttack1_Right.png", 0,3, 0.4f, true);
+		SpriteRenderer->CreateAnimation("JumpAttack2_Left", "KingJumpAttack2_Left.png", 0, 3, 0.4f, true);
+		SpriteRenderer->CreateAnimation("JumpAttack2_Right", "KingJumpAttack2_Right.png", 0, 3, 0.4f, true);
+		SpriteRenderer->CreateAnimation("JumpAttack3_Left", "KingJumpAttack3_Left.png", 0, 1, 0.4f, true);
+		SpriteRenderer->CreateAnimation("JumpAttack3_Right", "KingJumpAttack3_Right.png", 0, 1, 0.4f, true);
+		SpriteRenderer->CreateAnimation("FlyAttack_Left", "KingFlyAttack_Left.png", 0, 8, 0.3f, true);
+		SpriteRenderer->CreateAnimation("FlyAttack_Right", "KingFlyAttack_Right.png", 0, 8, 0.3f, true);
 		SpriteRenderer->CreateAnimation("Damaged_Left", "KingDamaged_Left.png", 0, 0, 2.0f, false);
 		SpriteRenderer->CreateAnimation("Damaged_Right", "KingDamaged_Right.png", 0, 0, 2.0f, false);
 		/*SpriteRenderer->CreateAnimation("Die_Left", "KingDie_Left.png", 9, 9, 0.2f, true);
@@ -65,15 +64,17 @@ AKingDedede::AKingDedede()
 
 	}
 	{
-		/*AttackColComponent = CreateDefaultSubObject<U2DCollision>();
-		AttackColComponent->SetComponentLocation({ 0, 0 });
-		AttackColComponent->SetComponentScale({ 100, 200 });
+		AttackColComponent = CreateDefaultSubObject<U2DCollision>();
+		AttackColComponent->SetComponentLocation(HammerLeftPosition);
+		AttackColComponent->SetComponentScale({ 50, 50 });
 		AttackColComponent->SetCollisionGroup(ECollisionGroup::MonsterAttack);
-		AttackColComponent->SetCollisionType(ECollisionType::Rect);*/
+		AttackColComponent->SetCollisionType(ECollisionType::CirCle);
 
-		//AttackColComponent->SetCollisionEnter(std::bind(&ASparky::AttackCollisionEnter, this, std::placeholders::_1));
+		AttackColComponent->SetCollisionEnter(std::bind(&AKingDedede::AttackCollisionEnter, this, std::placeholders::_1));
 		//AttackColComponent->SetCollisionStay(std::bind(&ASparky::AttackCollisionStay, this, std::placeholders::_1));
 		//AttackColComponent->SetCollisionEnd(std::bind(&ASparky::AttackCollisionEnd, this, std::placeholders::_1));
+
+		AttackColComponent->SetActive(false);
 	}
 
 	{
@@ -94,7 +95,40 @@ AKingDedede::~AKingDedede()
 void AKingDedede::Chase(float _DeltaTime)
 {
 	AMonster::Chase(_DeltaTime);
-	//
+	CheckPlayerPos();
+
+	if (CurChaseTime > 500.0f)
+	{
+		CurChaseTime = 0.0f;
+		ChangeState(EMonsterState::Attack);
+		return;
+	}
+	CurChaseTime += 0.2f;
+
+	/*AActor* Col= AttackColComponent->CollisionOnce(ECollisionGroup::PlayerBody);
+	if (Col != nullptr)
+	{
+		int a = 0;
+	}*/
+
+
+
+	/*AActor* Player = GetWorld()->GetPawn();
+	Player = dynamic_cast<APlayer*>(Player);
+
+	FVector2D Range = Player->GetActorLocation() - this->GetActorLocation();
+	float PlayerRange = Range.Length();*/
+
+
+
+	/*if (PlayerRange <= MonsterToPlayerRange)
+	{
+
+		TargetPosVector = Player->GetActorLocation() - GetActorLocation();
+		ChangeState(EMonsterState::Chase);
+		return;
+	}*/
+	//SetActorLocation(GetActorLocation()+)
 }
 
 void AKingDedede::AttackStart()
@@ -109,17 +143,28 @@ void AKingDedede::AttackStart()
 		SpriteRenderer->ChangeAnimation("JumpAttack1" + DirString);
 
 		break;
+	case 2:
+		SpriteRenderer->ChangeAnimation("JumpAttack2" + DirString);
+		break;
+	case 3:
+		SpriteRenderer->ChangeAnimation("JumpAttack3" + DirString);
+		break;
+	case 4:
+		SpriteRenderer->ChangeAnimation("FlyAttack" + DirString);
+		break;
+
 	default:
 		SpriteRenderer->ChangeAnimation("JumpAttack1" + DirString);
-
 		break;
 	}
 }
 
 void AKingDedede::Attack(float _DeltaTime)
 {
-	AMonster::Attack(_DeltaTime);
-	
+	if (true == SpriteRenderer->IsCurAnimationEnd()) {
+		ChangeState(EMonsterState::Idle);
+		return;
+	}
 	
 }
 
@@ -131,7 +176,13 @@ void AKingDedede::MoveStart()
 void AKingDedede::Move(float _DeltaTime)
 {
 	AMonster::Move(_DeltaTime);
-
+	if (CurChaseTime > ChaseTime)
+	{
+		CurChaseTime = 0.0f;
+		ChangeState(EMonsterState::Chase);
+		return;
+	}
+	CurChaseTime += 0.2f;
 
 }
 
@@ -140,7 +191,7 @@ void AKingDedede::BeginPlay()
 	AMonster::BeginPlay();
 
 	//AttackRound = Random.RandomInt(1, 3);
-
+	MonsterToPlayerRange = 300.0f;
 	int a = 0;
 }
 
@@ -170,23 +221,17 @@ void AKingDedede::ColKnockBackEnter(AActor* _ColActor)
 	// 아무것도 하지 않음
 }
 
-//void AKingDedede::CheckPlayerPos()
-//{
-//	AActor* Player = GetWorld()->GetPawn();
-//	Player = dynamic_cast<APlayer*>(Player);
-//
-//	FVector2D Range = Player->GetActorLocation() - this->GetActorLocation();
-//	float PlayerRange = Range.Length();
-//
-//	if (PlayerRange <= MonsterToPlayerRange)
-//	{
-//
-//		TargetPosVector = Player->GetActorLocation() - GetActorLocation();
-//		//ChangeState(EMonsterState::Chase);
-//		//return;
-//	}
-//}
+void AKingDedede::CheckPlayerPos()
+{
+	AActor* Player = GetWorld()->GetPawn();
+	Player = dynamic_cast<APlayer*>(Player);
+
+	TargetPosVector = Player->GetActorLocation() - GetActorLocation();
+
+
+}
 
 void AKingDedede::AttackCollisionEnter(AActor* _ColActor)
 {
+	//int a = 0;
 }
