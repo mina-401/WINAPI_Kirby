@@ -33,10 +33,17 @@ void AStage1_1GameMode::BeginPlay()
 		SoundManager& SoundManager = SoundManager::GetInst();
 		USoundPlayer& BGMPlayer = SoundManager.GetSoundPlayer(); // 레퍼런스 사용
 
-		BGMPlayer = UEngineSound::Play("04. Prism Plains.mp3");
-		BGMPlayer.Loop(1);
 
-		SoundManager.SetSoundPlayer(BGMPlayer);
+		if (false == BGMPlayer.IsPlaying())
+		{
+			BGMPlayer = UEngineSound::Play("04. Prism Plains.mp3");
+			BGMPlayer.Loop(1);
+
+			SoundManager.SetSoundPlayer(BGMPlayer);
+		}
+
+
+		
 
 
 	}
