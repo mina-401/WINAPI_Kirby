@@ -81,6 +81,11 @@ void AHotHead::AttackStart()
 void AHotHead::Attack(float _DeltaTime)
 {
 	AMonster::Attack(_DeltaTime);
+	if (true == BGMPlayer.IsPlaying())
+	{
+		BGMPlayer.Stop();
+	}
+	BGMPlayer = UEngineSound::Play("AttackFire.WAV");
 }
 
 void AHotHead::BeginPlay()

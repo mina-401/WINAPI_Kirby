@@ -108,6 +108,7 @@ void AMonster::Inhaled(float _DeltaTime)
 }
 void AMonster::DieStart()
 {
+    BGMPlayer = UEngineSound::Play("MonsterDie.WAV");
 	SetActive(false);
 	MonWidget->SetActive(false);
 }
@@ -124,7 +125,7 @@ void AMonster::KnockBackStart()
 	//AddActorLocation({ 0,-100 });
 	SpriteRenderer->ChangeAnimation("Damaged" + DirString);
 	//Destroy(1.0);
-
+	BGMPlayer = UEngineSound::Play("Kirby KnockBack.WAV");
 }
 
 void AMonster::KnockBack(float _DeltaTime)

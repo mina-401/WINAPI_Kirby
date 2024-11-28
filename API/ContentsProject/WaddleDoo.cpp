@@ -7,6 +7,7 @@
 #include <EngineCore/EngineCoreDebug.h>
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/ImageManager.h>
+#include <EnginePlatform/EngineSound.h>
 
 #include <EngineCore/2DCollision.h>
 #include "ContentsEnum.h"
@@ -140,6 +141,7 @@ void AWaddleDoo::AttackStart()
 {
 	AMonster::AttackStart();
 	
+
 	
 }
 
@@ -149,6 +151,10 @@ void AWaddleDoo::Attack(float _DeltaTime)
 	{
 		IsActive = false;
 		AttackColComponent->SetActive(IsActive);
+		if (true == BGMPlayer.IsPlaying())
+		{
+			BGMPlayer.Stop();
+		}
 	}
 	AMonster::Attack(_DeltaTime);
 
@@ -158,7 +164,13 @@ void AWaddleDoo::Attack(float _DeltaTime)
 	{
 		return;
 	}
+	if (false == BGMPlayer.IsPlaying())
+	{
+		BGMPlayer = UEngineSound::Play("AttackBeam.WAV");
+		BGMPlayer.Loop(1);
 
+	}
+	
 		IsActive = true;
 		AttackColComponent->SetActive(IsActive);
 

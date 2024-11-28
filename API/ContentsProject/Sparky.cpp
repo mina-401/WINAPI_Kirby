@@ -7,6 +7,7 @@
 #include <EngineCore/EngineCoreDebug.h>
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/ImageManager.h>
+#include <EnginePlatform/EngineSound.h>
 
 #include <EngineCore/2DCollision.h>
 #include "ContentsEnum.h"
@@ -69,16 +70,21 @@ void ASparky::AttackStart()
 
 	//SpriteRenderer->
 
-	int a = 0;
 }
 //
 void ASparky::Attack(float _DeltaTime)
 {
 	AMonster::Attack(_DeltaTime);
 
-	if (7 >= SpriteRenderer->GetFrameIndex())
+	if (5 >= SpriteRenderer->GetFrameIndex())
 	{
 		return;
+	}
+	if (false == BGMPlayer.IsPlaying())
+	{
+		BGMPlayer = UEngineSound::Play("AttackSpark.WAV");
+		BGMPlayer.Loop(1);
+
 	}
 	if (nullptr != AttackColComponent) {
 		AActor* ColActor = AttackColComponent->CollisionOnce(ECollisionGroup::PlayerBody);

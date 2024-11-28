@@ -1,6 +1,7 @@
 #pragma once
 #include <EngineCore/Actor.h>
 #include <EngineCore/SpriteRenderer.h>
+#include <EnginePlatform/EngineSound.h>
 #include "ContentsEnum.h"
 
 // Ό³Έν :
@@ -155,6 +156,8 @@ protected:
 	class U2DCollision* SpawnColComponent = nullptr;
 	class U2DCollision* CollisionComponent = nullptr;
 
+	USoundPlayer BGMPlayer;
+
 private:
 	void MonsterClimbingUphill();
 	void ChangeMonsterDir(float _DeltaTime);
@@ -200,5 +203,7 @@ private:
 	FVector2D KnockBackVec = FVector2D::ZERO;
 
 	class APlayer* MainPawn = nullptr;
+
+
 };
 

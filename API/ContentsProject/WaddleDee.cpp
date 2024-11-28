@@ -7,6 +7,7 @@
 #include <EngineCore/EngineCoreDebug.h>
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/ImageManager.h>
+#include <EnginePlatform/EngineSound.h>
 
 #include <EngineCore/2DCollision.h>
 #include "ContentsEnum.h"
@@ -64,6 +65,7 @@ void AWaddleDee::BeginPlay()
 void AWaddleDee::AttackStart()
 {
 	int a = 0;
+	
 }
 
 void AWaddleDee::Attack(float _DeltaTime)

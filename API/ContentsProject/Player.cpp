@@ -985,6 +985,13 @@ void APlayer::Die(float _DeltaTime)
 void APlayer::FireAttackStart()
 {
 	Speed = 300.0f;
+
+	if (true == BGMPlayer.IsPlaying())
+	{
+		BGMPlayer.Stop();
+	}
+	BGMPlayer = UEngineSound::Play("AttackFire.WAV");
+
 	SpriteRenderer->SetComponentScale({ 270,270 });
 	SpriteRenderer->ChangeAnimation("FireAttack" + DirString);
 	{
@@ -1007,6 +1014,16 @@ void APlayer::FireAttackStart()
 void APlayer::SparkAttackStart()
 {
 	Speed = 300.0f;
+	if (true == BGMPlayer.IsPlaying())
+	{
+		BGMPlayer.Stop();
+	}
+	//BGMPlayer = UEngineSound::Play("AttackSpark.WAV");
+
+		BGMPlayer = UEngineSound::Play("AttackSpark.WAV");
+		BGMPlayer.Loop(1);
+	
+
 	SpriteRenderer->ChangeAnimation("SparkAttack" + DirString);
 	{
 		InhaleRightComponent->SetComponentLocation({ 0, 0 });
@@ -1028,6 +1045,11 @@ void APlayer::Attack(float _DeltaTime)
 	
 	if (true == SpriteRenderer->IsCurAnimationEnd())
 	{
+		if (true == BGMPlayer.IsPlaying())
+		{
+			BGMPlayer.Stop();
+		}
+
 		//ColMonster = nullptr;
 		InhaleRightComponent->SetActive(false);
 		InhaleLeftComponent->SetActive(false);
@@ -1268,22 +1290,20 @@ void APlayer::FireChangeStart()
 {
 
 	BGMPlayer = UEngineSound::Play("Kirby Copy Change.WAV");
-	//UEngineAPICore::GetCore()->SetGlobalTimeScale(0.0f);
+	UEngineAPICore::GetCore()->SetGlobalTimeScale(0.0f);
 	SpriteRenderer->ChangeAnimation("FireChange");
 
 }
 void APlayer::SparkChangeStart()
 {
-
-
-		BGMPlayer = UEngineSound::Play("Kirby Copy Change.WAV");
-	//UEngineAPICore::GetCore()->SetGlobalTimeScale(0.0f);
+	BGMPlayer = UEngineSound::Play("Kirby Copy Change.WAV");
+	UEngineAPICore::GetCore()->SetGlobalTimeScale(0.0f);
 	SpriteRenderer->ChangeAnimation("SparkChange");
 }
 void APlayer::Change(float _DeltaTime)
 {
 
-	/*if (CurChangeTime > ChangeTime)
+	if (CurChangeTime > ChangeTime)
 	{
 		UEngineAPICore::GetCore()->SetGlobalTimeScale(1.0f);
 		if (true == SpriteRenderer->IsCurAnimationEnd())
@@ -1293,7 +1313,7 @@ void APlayer::Change(float _DeltaTime)
 			ChangeState(EPlayerState::Idle);
 		}
 	}
-	CurChangeTime += 0.05f;*/
+	CurChangeTime += 0.05f;
 
 	
 	if (true == SpriteRenderer->IsCurAnimationEnd())
@@ -2222,7 +2242,11 @@ void APlayer::FlyDown(float _DeltaTime)
 }
 void APlayer::ExhaleStart()
 {
-	BGMPlayer = UEngineSound::Play("Kirby Jump.WAV");
+	if (true == BGMPlayer.IsPlaying())
+	{
+		BGMPlayer.Stop();
+	}
+	BGMPlayer = UEngineSound::Play("Star Pang.WAV");
 	SpriteRenderer->ChangeAnimation("Exhale" + DirString);
 
 
