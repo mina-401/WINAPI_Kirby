@@ -396,6 +396,9 @@ private:
     bool IsDamage = false;
     bool IsFireDashState = false;
 
+    bool IsChange = false;
+    bool IsCurPlayerStateChange = false;
+
     FVector2D Acc = FVector2D::ZERO;
 
     FVector2D Force = FVector2D::ZERO;

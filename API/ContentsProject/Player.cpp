@@ -360,6 +360,7 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 		case ECopyAbilityState::Beam:
 			break;
 		case ECopyAbilityState::Fire:
+			
 			FireIdleStart();
 			break;
 		default:
@@ -390,6 +391,7 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 			}
 			break;
 		case ECopyAbilityState::Spark:
+			
 			SparkCrouchStart();
 			break;
 		case ECopyAbilityState::Beam:
@@ -1170,6 +1172,9 @@ void APlayer::FireCrouchStart()
 {
 	Speed = 300.0f;
 	SpriteRenderer->SetComponentScale({ 270,270 });
+
+
+
 	SpriteRenderer->ChangeAnimation("FireCrouch" + DirString);
 }
 void APlayer::SparkCrouchStart()
@@ -1225,14 +1230,32 @@ void APlayer::Crouch(float _DeltaTime)
 	}
 	if (true == UEngineInput::GetInst().IsFree(VK_DOWN))
 	{
-		if (true == SpriteRenderer->IsCurAnimationEnd())
+
+		if (false == IsChange)
 		{
+			if (true == SpriteRenderer->IsCurAnimationEnd())
+			{
+				//여기서 ㅜ> copy 있는  상태로 변환하면 change 
+				//
+				ChangeState(EPlayerState::Change);
 				//BGMPlayer = UEngineSound::Play("Kirby Copy Change.WAV");
+				IsChange = true;
+				return;
 
-			ChangeState(EPlayerState::Change);
-			return;
-
+			}
 		}
+		else {
+			if (true == SpriteRenderer->IsCurAnimationEnd())
+			{
+			
+				ChangeState(EPlayerState::Idle);
+				//BGMPlayer = UEngineSound::Play("Kirby Copy Change.WAV");
+				return;
+
+			}
+		}
+
+		
 	}
 }
 void APlayer::ChangeStart()
@@ -1243,17 +1266,18 @@ void APlayer::ChangeStart()
 }
 void APlayer::FireChangeStart()
 {
-	//DirCheck();
 
-	//UEngineAPICore::GetCore()->SetGlobalTimeScale(0.0f);
 	BGMPlayer = UEngineSound::Play("Kirby Copy Change.WAV");
+	//UEngineAPICore::GetCore()->SetGlobalTimeScale(0.0f);
 	SpriteRenderer->ChangeAnimation("FireChange");
+
 }
 void APlayer::SparkChangeStart()
 {
-	//DirCheck();
+
+
+		BGMPlayer = UEngineSound::Play("Kirby Copy Change.WAV");
 	//UEngineAPICore::GetCore()->SetGlobalTimeScale(0.0f);
-	BGMPlayer = UEngineSound::Play("Kirby Copy Change.WAV");
 	SpriteRenderer->ChangeAnimation("SparkChange");
 }
 void APlayer::Change(float _DeltaTime)
@@ -2562,6 +2586,7 @@ void APlayer::ChangeIdleStateByCopy(int _KeyIndex)
 		}
 		break;
 	case 'A':
+		IsChange = false;
 		switch (CurPlayerCopyState)
 		{
 		case ECopyAbilityState::Normal:
