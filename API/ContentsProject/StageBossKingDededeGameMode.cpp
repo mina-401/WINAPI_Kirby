@@ -5,6 +5,9 @@
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/EngineAPICore.h>
 #include "KingDedede.h"
+#include "ItemRoomBeforeBossGameMode.h"
+#include "Stage1_1GameMode.h"
+#include "SoundManager.h"
 AStageBossKingDededeGameMode::AStageBossKingDededeGameMode()
 {
 	SetName("StageBossKingDedede");
@@ -27,11 +30,23 @@ void AStageBossKingDededeGameMode::BeginPlay()
 	NewBoss->SetColImage("foregroundKingDedede1-1_col.png");
 	NewBoss->SetActorLocation({ 400,365 });
 
-	UEngineSound::AllSoundOff();
+	{
 
-	
-	BGMPlayer = UEngineSound::Play("09. King Dedede.mp3");
-	BGMPlayer.Loop(1);
+		SoundManager& SoundManager = SoundManager::GetInst();
+		USoundPlayer& BGMPlayer = SoundManager.GetSoundPlayer(); // 레퍼런스 사용
+
+		if (true == BGMPlayer.IsPlaying())
+		{
+			BGMPlayer.Stop();
+		}
+		BGMPlayer = UEngineSound::Play("09. King Dedede.mp3");
+		BGMPlayer.Loop(1);
+
+		SoundManager.SetSoundPlayer(BGMPlayer);
+
+
+	}
+
 
 }
 

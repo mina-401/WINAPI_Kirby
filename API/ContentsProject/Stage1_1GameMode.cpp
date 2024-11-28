@@ -11,7 +11,7 @@
 #include "WaddleDee.h"
 #include "WaddleDoo.h"
 #include "Sparky.h"
-
+#include "SoundManager.h"
 
 #include "Stage1_1Map.h"
 
@@ -29,9 +29,14 @@ void AStage1_1GameMode::BeginPlay()
 
 
 	{
-		//BGMPlayer = APlayer::GetPlaySound();
+		
+		SoundManager& SoundManager = SoundManager::GetInst();
+		USoundPlayer& BGMPlayer = SoundManager.GetSoundPlayer(); // 레퍼런스 사용
+
 		BGMPlayer = UEngineSound::Play("04. Prism Plains.mp3");
 		BGMPlayer.Loop(1);
+
+		SoundManager.SetSoundPlayer(BGMPlayer);
 
 
 	}

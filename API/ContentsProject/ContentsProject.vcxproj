@@ -214,6 +214,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Score.h" />
+    <ClInclude Include="SoundManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="SparkItem.h">
       <SubType>
       </SubType>
@@ -378,6 +382,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Score.cpp" />
+    <ClCompile Include="SoundManager.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="SparkItem.cpp">
       <SubType>
       </SubType>

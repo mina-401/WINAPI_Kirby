@@ -97,12 +97,6 @@ void AStage1_3Map::Tick(float _deltaTime)
 	if (true == UEngineInput::GetInst().IsPress(VK_UP) && IsPlayerStayPotal) {
 
 
-		USoundPlayer BGMSound;
-		if (true == BGMSound.IsPlaying())
-		{
-			int a = 0;
-		}
-
 		USoundPlayer EffectSound;
 		EffectSound = UEngineSound::Play("Potal travel.WAV");
 		UEngineAPICore::GetCore()->OpenLevel("ItemRoomBeforeBoss");

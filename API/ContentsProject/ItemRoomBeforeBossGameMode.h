@@ -17,9 +17,14 @@ public:
 
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
+
+	static USoundPlayer GetSoundPlayer()
+	{
+		return BGMPlayer;
+	}
 protected:
 
 private:
-	USoundPlayer BGMPlayer;
+	static USoundPlayer BGMPlayer;
 };
 

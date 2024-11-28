@@ -5,12 +5,16 @@
 #include "Player.h"
 #include "EatItem.h"
 
+#include "Stage1_1GameMode.h"
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/EngineAPICore.h>
 #include <EnginePlatform/EngineSound.h>
 #include "FireItem.h"
 #include "SparkItem.h"
+#include "SoundManager.h"
 
+
+USoundPlayer AItemRoomBeforeBossGameMode::BGMPlayer;
 AItemRoomBeforeBossGameMode::AItemRoomBeforeBossGameMode()
 {
 	SetName("ItemRoomBeforeBoss");
@@ -21,6 +25,7 @@ AItemRoomBeforeBossGameMode::AItemRoomBeforeBossGameMode()
 
 AItemRoomBeforeBossGameMode::~AItemRoomBeforeBossGameMode()
 {
+	BGMPlayer.Off();
 }
 
 void AItemRoomBeforeBossGameMode::BeginPlay()
@@ -38,11 +43,27 @@ void AItemRoomBeforeBossGameMode::BeginPlay()
 	NewSparkItem->SetActorLocation({ 450.0f,190.0f });
 
 
-	//UEngineSound::AllSoundOff();
+
+	{
+
+		SoundManager& SoundManager = SoundManager::GetInst();
+		USoundPlayer& BGMPlayer = SoundManager.GetSoundPlayer(); // 레퍼런스 사용
+
+		if (true == BGMPlayer.IsPlaying())
+		{
+			BGMPlayer.Stop();
+		}
+		BGMPlayer = UEngineSound::Play("08. Boss Prelude.mp3");
+		BGMPlayer.Loop(1);
+
+		SoundManager.SetSoundPlayer(BGMPlayer);
+
+
+	}
+
+	////int a = 0;
 	
-	int a = 0;
-	BGMPlayer = UEngineSound::Play("08. Boss Prelude.mp3");
-	BGMPlayer.Loop(1);
+	//BGMPlayer.Loop(1);
 
 }
 

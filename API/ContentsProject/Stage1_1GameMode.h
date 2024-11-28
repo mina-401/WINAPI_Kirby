@@ -16,6 +16,8 @@ public:
 
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
+
+
 protected:
 
 public:
@@ -24,7 +26,7 @@ public:
 	class AMonster* MonsterSparky = nullptr;
 
 private:
-	USoundPlayer BGMPlayer;
+
 	
 };
 

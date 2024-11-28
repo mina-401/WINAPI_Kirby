@@ -1257,12 +1257,15 @@ bool APlayer::PlayerKnockBackNextPosCheck(float _DeltaTime, FVector2D _Vector)
 
 void APlayer::EatingJumpStart()
 {
+	BGMPlayer = UEngineSound::Play("Kirby Jump.WAV");
+
 	GravityForce = FVector2D::ZERO;
 	Speed = 150.0f;
 	SpriteRenderer->ChangeAnimation("EatingJump" + DirString);
 }
 void APlayer::JumpStart()
 {
+	BGMPlayer = UEngineSound::Play("Kirby Jump.WAV"); 
 	GravityForce = FVector2D::ZERO;
 	Speed = 300.0f;
 
@@ -1270,6 +1273,8 @@ void APlayer::JumpStart()
 }
 void APlayer::SparkJumpStart()
 {
+	BGMPlayer = UEngineSound::Play("Kirby Jump.WAV");
+
 	GravityForce = FVector2D::ZERO;
 	Speed = 300.0f;
 
@@ -1277,6 +1282,8 @@ void APlayer::SparkJumpStart()
 }
 void APlayer::FireJumpStart()
 {
+	BGMPlayer = UEngineSound::Play("Kirby Jump.WAV");
+
 	GravityForce = FVector2D::ZERO;
 	Speed = 300.0f;
 	SpriteRenderer->SetComponentScale({ 270,270 });
