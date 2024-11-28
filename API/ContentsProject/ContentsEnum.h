@@ -37,6 +37,7 @@ enum class EPlayerState
 	Exhale,
 	KnockBack,
 	Die,
+	Change,
 };
 
 enum class EPlayerEatState

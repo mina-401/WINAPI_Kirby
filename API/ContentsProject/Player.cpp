@@ -104,11 +104,14 @@ APlayer::APlayer()
 		UImageManager::GetInst().CuttingSprite("FireDash_Right.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("FireDamaged_Left.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("FireDamaged_Right.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("FireChange.png", { 128, 128 });
+
 
 		UImageManager::GetInst().CuttingSprite("AllSparkKirby_Left.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("AllSparkKirby_Right.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("AttackKirby_Right.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("AttackKirby_Left.png", { 128, 128 });
+		UImageManager::GetInst().CuttingSprite("SparkChange.png", { 128, 128 });
 
 
 
@@ -155,6 +158,7 @@ APlayer::APlayer()
 		SpriteRenderer->CreateAnimation("EatingCrouch_Right", "EatingCrouch_Right.png", 0, 4, 0.2f, false);
 
 		//Fire
+		SpriteRenderer->CreateAnimation("FireChange", "FireChange.png", 0,0, 0.0f);
 		SpriteRenderer->CreateAnimation("FireIdle_Left", "FireIdle_Left.png", 0, 7, 0.2f);
 		SpriteRenderer->CreateAnimation("FireIdle_Right", "FireIdle_Right.png", 0, 2, 0.2f);
 		SpriteRenderer->CreateAnimation("FireRun_Left", "FireDash_Left.png", 0, 8, 0.1f);
@@ -185,6 +189,7 @@ APlayer::APlayer()
 		SpriteRenderer->CreateAnimation("FireDamaged_Right", "FireDamaged_Right.png", 0, 7, 0.1f, false);
 
 		//spark
+		SpriteRenderer->CreateAnimation("SparkChange", "SparkChange.png", 0, 0, 0.4f);
 		SpriteRenderer->CreateAnimation("SparkIdle_Left", "AllSparkKirby_Left.png", 0, 7, 0.2f);
 		SpriteRenderer->CreateAnimation("SparkIdle_Right", "AllSparkKirby_Right.png", 0, 7, 0.2f);
 		SpriteRenderer->CreateAnimation("SparkRun_Left", "AllSparkKirby_Left.png", 114,119, 0.1f,true);
@@ -646,10 +651,31 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 	case EPlayerState::Die:
 		DieStart();
 		break;
+
+	case EPlayerState::Change:
+		switch (CurPlayerCopyState)
+		{
+		case ECopyAbilityState::Normal:
+			//ChangeStart();
+			break;
+		case ECopyAbilityState::Fire:
+			FireChangeStart();
+
+			break;
+		case ECopyAbilityState::Spark:
+			SparkChangeStart();
+			break;
+		case ECopyAbilityState::Beam:
+			break;
+		default:
+			break;
+		}
+		break;
+
 	default:
 		break;
 	}
-
+	
 
 
 
@@ -778,17 +804,13 @@ void APlayer::Tick(float _DeltaTime)
 	case EPlayerState::Die:
 		Die(_DeltaTime);
 		break;
+	case EPlayerState::Change:
+		Change(_DeltaTime);
+		break;
 	default:
 		break;
 	}
 	
-	//AddActorLocation(Force);
-
-	if (true)
-	{
-		// Force -= -Force*
-	}
-	//;
 
 }
 
@@ -957,6 +979,7 @@ void APlayer::Die(float _DeltaTime)
 		
 	
 }
+
 void APlayer::FireAttackStart()
 {
 	Speed = 300.0f;
@@ -1151,11 +1174,17 @@ void APlayer::FireCrouchStart()
 }
 void APlayer::SparkCrouchStart()
 {
+
 	Speed = 300.0f;
 	SpriteRenderer->ChangeAnimation("SparkCrouch" + DirString);
 }
 void APlayer::EatingCrouchStart()
 {
+	if (true == BGMPlayer.IsPlaying())
+	{
+		BGMPlayer.Stop();
+	}
+	BGMPlayer = UEngineSound::Play("Kirby Eating Down.WAV");
 	Speed = 300.0f;
 	CurPlayerEatState = EPlayerEatState::Normal;
 
@@ -1168,6 +1197,7 @@ void APlayer::EatingCrouchStart()
 	AMonster* Mon = dynamic_cast<AMonster*>(ColAnyActor);
 	if (Mon != nullptr)
 	{
+
 		CurPlayerCopyState = Mon->GetCopyAbilityState();
 
 	}
@@ -1175,6 +1205,7 @@ void APlayer::EatingCrouchStart()
 	AEatItem* Item = dynamic_cast<AEatItem*>(ColAnyActor);
 	if (Item != nullptr)
 	{
+		BGMPlayer = UEngineSound::Play("Kirby Copy Change.WAV");
 		CurPlayerCopyState = Item->GetCopyState();
 
 	}
@@ -1196,13 +1227,58 @@ void APlayer::Crouch(float _DeltaTime)
 	{
 		if (true == SpriteRenderer->IsCurAnimationEnd())
 		{
-			ChangeState(EPlayerState::Idle);
+				//BGMPlayer = UEngineSound::Play("Kirby Copy Change.WAV");
+
+			ChangeState(EPlayerState::Change);
 			return;
 
 		}
 	}
 }
+void APlayer::ChangeStart()
+{
+	//UEngineAPICore::GetCore()->SetGlobalTimeScale(1.0f);
+	//ChangeState(EPlayerState::Idle);
+	//return;
+}
+void APlayer::FireChangeStart()
+{
+	//DirCheck();
 
+	//UEngineAPICore::GetCore()->SetGlobalTimeScale(0.0f);
+	BGMPlayer = UEngineSound::Play("Kirby Copy Change.WAV");
+	SpriteRenderer->ChangeAnimation("FireChange");
+}
+void APlayer::SparkChangeStart()
+{
+	//DirCheck();
+	//UEngineAPICore::GetCore()->SetGlobalTimeScale(0.0f);
+	BGMPlayer = UEngineSound::Play("Kirby Copy Change.WAV");
+	SpriteRenderer->ChangeAnimation("SparkChange");
+}
+void APlayer::Change(float _DeltaTime)
+{
+
+	/*if (CurChangeTime > ChangeTime)
+	{
+		UEngineAPICore::GetCore()->SetGlobalTimeScale(1.0f);
+		if (true == SpriteRenderer->IsCurAnimationEnd())
+		{
+			CurChangeTime = 0.0f;
+			
+			ChangeState(EPlayerState::Idle);
+		}
+	}
+	CurChangeTime += 0.05f;*/
+
+	
+	if (true == SpriteRenderer->IsCurAnimationEnd())
+	{
+		CurChangeTime = 0.0f;
+
+		ChangeState(EPlayerState::Idle);
+	}
+}
 void APlayer::CrouchStartAnim()
 {
 	switch (CurPlayerCopyState)
@@ -1953,18 +2029,21 @@ void APlayer::Slide(float _DeltaTime)
 }
 void APlayer::FlyStart()
 {
+	BGMPlayer = UEngineSound::Play("Kirby Flying.WAV");
 	GravityForce = FVector2D::ZERO;
 	Speed = 300.0f;
 	SpriteRenderer->ChangeAnimation("Fly"+DirString);
 }
 void APlayer::FireFlyStart()
 {
+	BGMPlayer = UEngineSound::Play("Kirby Flying.WAV");
 	GravityForce = FVector2D::ZERO;
 	Speed = 300.0f;
 	SpriteRenderer->ChangeAnimation("FireFly" + DirString);
 }
 void APlayer::SparkFlyStart()
 {
+	BGMPlayer = UEngineSound::Play("Kirby Flying.WAV");
 	GravityForce = FVector2D::ZERO;
 	Speed = 300.0f;
 	SpriteRenderer->ChangeAnimation("SparkFly" + DirString);
@@ -2009,11 +2088,22 @@ void APlayer::Fly(float _DeltaTime)
 	if (true == UEngineInput::GetInst().IsDown('X'))
 	{
 		IsFly = false;
+		if (true == BGMPlayer.IsPlaying())
+		{
+			BGMPlayer.Stop();
+		}
+		BGMPlayer = UEngineSound::Play("Kirby Air Pang.WAV");
+
 		ChangeState(EPlayerState::FlyDown);
 		return;
 
 	}if (true == UEngineInput::GetInst().IsPress('Z'))
 	{
+		if (true == BGMPlayer.IsPlaying())
+		{
+			BGMPlayer.Stop();
+		}
+		BGMPlayer = UEngineSound::Play("Kirby Flying.WAV");
 		GravityForce = FVector2D::ZERO;
 		Vector += FVector2D::UP;
 	}
@@ -2064,10 +2154,12 @@ void APlayer::FlyDownAnim()
 }
 void APlayer::FlyDownStart()
 {
+	//BGMPlayer = UEngineSound::Play("Kirby Jump.WAV");
 	SpriteRenderer->ChangeAnimation("FlyingDown" + DirString);
 }
 void APlayer::FireFlyDownStart()
 {
+	//BGMPlayer = UEngineSound::Play("Kirby Jump.WAV");
 	SpriteRenderer->ChangeAnimation("FireFlyingDown" + DirString);
 
 }
@@ -2107,6 +2199,7 @@ void APlayer::FlyDown(float _DeltaTime)
 }
 void APlayer::ExhaleStart()
 {
+	BGMPlayer = UEngineSound::Play("Kirby Jump.WAV");
 	SpriteRenderer->ChangeAnimation("Exhale" + DirString);
 
 
@@ -2168,6 +2261,12 @@ void APlayer::Exhale(float _DeltaTime)
 }
 void APlayer::InhaleStart()
 {
+	if (true == BGMPlayer.IsPlaying())
+	{
+		BGMPlayer.Stop();
+	}
+	BGMPlayer = UEngineSound::Play("Kirby Inhale.WAV");
+
 	SpriteRenderer->ChangeAnimation("Inhale" + DirString);
 }
 
@@ -2244,6 +2343,13 @@ void APlayer::Inhale(float _DeltaTime)
 
 	if (Jumpstar != nullptr)
 	{
+
+		if (true == BGMPlayer.IsPlaying())
+		{
+			BGMPlayer.Stop();
+		}
+		BGMPlayer = UEngineSound::Play("Kiby Inhale Eating.WAV");
+
 		ColAnyActor = ColStar;
 
 		CurPlayerEatState = EPlayerEatState::Eating;
@@ -2260,6 +2366,12 @@ void APlayer::Inhale(float _DeltaTime)
 	{
 		AMonster* ColMonster= dynamic_cast<AMonster*>(ColMon);
 		if (ColMonster != nullptr) {
+
+			if (true == BGMPlayer.IsPlaying())
+			{
+				BGMPlayer.Stop();
+			}
+			BGMPlayer = UEngineSound::Play("Kiby Inhale Eating.WAV");
 
 			ColAnyActor = ColMon;
 

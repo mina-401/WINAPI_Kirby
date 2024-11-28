@@ -161,6 +161,8 @@ private:
     float CurColTime = 0.0f;
     float ColTime = 50.0f;
 
+    float ChangeTime = 50.0f;
+    float CurChangeTime = 0.0f;
 
     // 점프
     // 공격
@@ -190,6 +192,9 @@ private:
     void FireFlyDownStart();
     void FireAttackStart();
     void FireKnockBackStart();
+    void FireChangeStart();
+
+    void SparkChangeStart();
 
     void SparkIdleStart();
     void SparkSlideStart();
@@ -200,7 +205,7 @@ private:
     void SparkFlyingStart();
     void SparkFlyDownStart();
     void SparkJumpStart();  
-    void SparkKnockBackStart();
+    //void SparkKnockBackStart();
 
     void DirCheck();
     void ChangeState(EPlayerState CurPlayerState);
@@ -228,9 +233,10 @@ private:
     void Attack(float _DeltaTime);
     void KnockBackStart();
     void KnockBack(float _DeltaTime);
-
     void DieStart();
     void Die(float _DeltaTime);
+    void ChangeStart();
+    void Change(float _DeltaTime);
 
     void AttackStartAnim();
 
