@@ -65,7 +65,7 @@ AKingDedede::AKingDedede()
 	}
 	{
 		AttackColComponent = CreateDefaultSubObject<U2DCollision>();
-		AttackColComponent->SetComponentLocation(HammerLeftPosition);
+		AttackColComponent->SetComponentLocation({0,0});
 		AttackColComponent->SetComponentScale({ 50, 50 });
 		AttackColComponent->SetCollisionGroup(ECollisionGroup::MonsterAttack);
 		AttackColComponent->SetCollisionType(ECollisionType::CirCle);
@@ -128,15 +128,16 @@ void AKingDedede::Chase(float _DeltaTime)
 		ChangeState(EMonsterState::Chase);
 		return;
 	}*/
-	//SetActorLocation(GetActorLocation()+)
+	//SetActorLocation(GetActorLocation())
 }
 
 void AKingDedede::AttackStart()
 {
-	//AMonster::AttackStart();
 
 	DirCheck();
-
+	
+	AttackRound = Random.RandomInt(1, 4);
+	
 	switch (AttackRound)
 	{
 	case 1:
@@ -157,11 +158,19 @@ void AKingDedede::AttackStart()
 		SpriteRenderer->ChangeAnimation("JumpAttack1" + DirString);
 		break;
 	}
+
 }
 
 void AKingDedede::Attack(float _DeltaTime)
 {
+
+	if (1 == SpriteRenderer->GetCurIndex())
+	{
+		AttackColComponent->SetActive(true);
+	}
 	if (true == SpriteRenderer->IsCurAnimationEnd()) {
+
+		AttackColComponent->SetActive(false);
 		ChangeState(EMonsterState::Idle);
 		return;
 	}
@@ -198,6 +207,22 @@ void AKingDedede::BeginPlay()
 void AKingDedede::Tick(float _DeltaTime)
 {
 	AMonster::Tick(_DeltaTime);
+
+	DirHammerCollision();
+
+}
+
+void AKingDedede::DirHammerCollision()
+{
+	if (DirString == "_Right")
+	{
+		AttackColComponent->SetComponentLocation(HammerRightPosition);
+
+	}
+	else {
+		AttackColComponent->SetComponentLocation(HammerLeftPosition);
+
+	}
 }
 
 void AKingDedede::IdleStart()

@@ -125,6 +125,14 @@ public:
         return CurPlayerCopyState;
     }
 
+   /*static USoundPlayer GetPlaySound()
+    {
+        return BGMPlayer;
+    }*/
+
+
+
+
 public:
     
     std::string DirString = "_Right";
@@ -133,7 +141,9 @@ public:
 protected:
 
 private:
-   
+    //static USoundPlayer BGMPlayer;
+
+    USoundPlayer BGMPlayer;
     FVector2D Size = { 0,0 };
     FVector2D KnockBackVec = FVector2D::ZERO;
     const float MaxHp = 100.0f;
@@ -391,7 +401,7 @@ private:
     class AMonster* ColMonster = nullptr;
     class AMonsterFireBullet* ColBullet = nullptr;
 
-    USoundPlayer BGMPlayLevelPrismPlayer;
+    static USoundPlayer BGMPlayLevelPrismPlayer;
     USoundPlayer BGMVictoryPlayer;
 
     ActorVector BulletVector;

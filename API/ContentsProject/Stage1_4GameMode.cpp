@@ -2,7 +2,7 @@
 #include "Stage1_4GameMode.h"
 #include "Stage1_4Map.h"
 #include "Player.h"
-
+#include <EnginePlatform/EngineSound.h>
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/EngineAPICore.h>
 AStage1_4GameMode::AStage1_4GameMode()

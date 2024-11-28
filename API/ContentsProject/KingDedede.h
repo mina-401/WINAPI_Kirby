@@ -22,6 +22,8 @@ public:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
+	void DirHammerCollision();
+
 	void IdleStart() override;
 	void Idle(float _DeltaTime) override;
 	void MoveStart() override;

@@ -20,11 +20,11 @@ void ATitleGameMode::BeginPlay()
 	Super::BeginPlay();
 	TitleLogo* NewActor = GetWorld()->SpawnActor<TitleLogo>();
 
-	/*{
+	{
 		BGMPlayer = UEngineSound::Play("01. Ttile Screen.mp3");
 		BGMPlayer.Loop(1);
 
-	}*/
+	}
 }
 
 void ATitleGameMode::Tick(float _DeltaTime)
@@ -33,6 +33,7 @@ void ATitleGameMode::Tick(float _DeltaTime)
 
 	if (true == UEngineInput::GetInst().IsDown(VK_SPACE))
 	{
+		BGMPlayer.Off();
 		UEngineAPICore::GetCore()->OpenLevel("Stage1_1");
 	}
 

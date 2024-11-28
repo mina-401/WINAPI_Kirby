@@ -64,6 +64,8 @@ void AItemRoomBeforeBossMap::Tick(float _deltaTime)
 {
 	Super::Tick(_deltaTime);	
 	if (true == UEngineInput::GetInst().IsPress(VK_UP) && IsPlayerStayPotal) {
+		USoundPlayer EffectSound;
+		EffectSound = UEngineSound::Play("Potal travel.WAV");
 		UEngineAPICore::GetCore()->OpenLevel("StageBossKingDedede");
 	}
 	APlayer* player = GetWorld()->GetPawn<APlayer>();

@@ -395,11 +395,16 @@ void AMonster::AttackStart()
 {
 	DirCheck();
 	SpriteRenderer->ChangeAnimation("Attack" + DirString);
+
+	
+	
 	
 }
 
 void AMonster::Attack(float _DeltaTime)
 {
+
+
 	if (true == SpriteRenderer->IsCurAnimationEnd()) {
 		ChangeState(EMonsterState::Move);
 		return;

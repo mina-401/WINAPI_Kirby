@@ -63,28 +63,69 @@ void KirbyContentsCore::BeginPlay()
 		}
 	}
 
-/*	{
+	{
 		UEngineDirectory Dir;
 		if (false == Dir.MoveParentToDirectory("Resource"))
 		{
 			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
 			return;
 		}
-		Dir.Append("Sound");
+		Dir.Append("Sound//Stage1Sound");
 		std::vector<UEngineFile> SoundFiles = Dir.GetAllFile();
 		for (size_t i = 0; i < SoundFiles.size(); i++)
 		{
 			std::string FilePath = SoundFiles[i].GetPathToString();
 			UEngineSound::Load(FilePath);
 		}
+	}
+	
+	{
+		UEngineDirectory Dir;
+		if (false == Dir.MoveParentToDirectory("Resource"))
+		{
+			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+			return;
 		}
-	*/
-
-	//UImageManager::GetInst().CuttingSprite("KirbyDance.png", { 128, 128 });
+		Dir.Append("Sound//BossSound");
+		std::vector<UEngineFile> SoundFiles = Dir.GetAllFile();
+		for (size_t i = 0; i < SoundFiles.size(); i++)
+		{
+			std::string FilePath = SoundFiles[i].GetPathToString();
+			UEngineSound::Load(FilePath);
+		}
+	}
+	{
+		UEngineDirectory Dir;
+		if (false == Dir.MoveParentToDirectory("Resource"))
+		{
+			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+			return;
+		}
+		Dir.Append("Sound//TitleSound");
+		std::vector<UEngineFile> SoundFiles = Dir.GetAllFile();
+		for (size_t i = 0; i < SoundFiles.size(); i++)
+		{
+			std::string FilePath = SoundFiles[i].GetPathToString();
+			UEngineSound::Load(FilePath);
+		}
+	}
+	{
+		UEngineDirectory Dir;
+		if (false == Dir.MoveParentToDirectory("Resource"))
+		{
+			MSGASSERT("리소스 폴더를 찾지 못했습니다.");
+			return;
+		}
+		Dir.Append("Sound//EffectSound");
+		std::vector<UEngineFile> SoundFiles = Dir.GetAllFile();
+		for (size_t i = 0; i < SoundFiles.size(); i++)
+		{
+			std::string FilePath = SoundFiles[i].GetPathToString();
+			UEngineSound::Load(FilePath);
+		}
+	}
 
 	{
-
-
 		UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("WinAPI_Kirby");
 
 		UEngineAPICore::GetCore()->CreateLevel<ATitleGameMode, AActor>("Title");
@@ -106,7 +147,7 @@ void KirbyContentsCore::BeginPlay()
 		ULevel::CollisionGroupLink(ECollisionGroup::Potal, ECollisionGroup::PlayerBody);
 
 
-		UEngineAPICore::GetCore()->OpenLevel("StageBossKingDedede");
+		UEngineAPICore::GetCore()->OpenLevel("Title");
 	}
 }
 

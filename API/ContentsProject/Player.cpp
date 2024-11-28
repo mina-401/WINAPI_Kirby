@@ -32,7 +32,8 @@
 #include "KingDedede.h"
 
 
-
+//Àü¿ª BGM Player
+//USoundPlayer APlayer::BGMPlayer; 
 APlayer::APlayer()
 {
 
@@ -290,13 +291,6 @@ void APlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	{  
-		//BGMPlayLevelPrismPlayer = UEngineSound::Play("04. Prism Plains.mp3");
-		//BGMPlayLevelPrismPlayer.Loop(1);
-		
-		//BGMPlayer = UEngineSound::Play("05. Victory Star.mp3");
-
-	}
 
 
 	//ABullet* Bullet = GetWorld()->SpawnActor<ABullet>();

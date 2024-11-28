@@ -1,5 +1,5 @@
 #pragma once
-
+#include <EnginePlatform/EngineSound.h>
 #include <EngineCore/GameMode.h>
 
 class AStage1_2GameMode : public AGameMode
@@ -20,5 +20,7 @@ public:
 protected:
 
 private:
+
+	USoundPlayer BGMPlayLevelPrismPlayer;
 };
 

@@ -87,9 +87,10 @@ void AStage1_2Map::Tick(float _deltaTime)
 	player->BlockCameraPos(MapScale, WinSize);
 
 	if (true == UEngineInput::GetInst().IsPress(VK_UP) && IsPlayerStayPotal) {
+		USoundPlayer EffectSound;
+		EffectSound = UEngineSound::Play("Potal travel.WAV");
 		UEngineAPICore::GetCore()->OpenLevel("Stage1_3");
 	}
-
 	AStage1_2GameMode* GameMode = GetWorld()->GetGameMode<AStage1_2GameMode>();
 	AMonster* HotHead = GameMode->MonsterHotHead;
 	//HotHead->SetMainPawn(this);

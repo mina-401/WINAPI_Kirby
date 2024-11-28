@@ -5,6 +5,7 @@
 #include "StageBackground.h"
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/EngineAPICore.h>
+#include <EnginePlatform/EngineSound.h>
 AStage1_3GameMode::AStage1_3GameMode()
 {
 	SetName("Stage1_3");
@@ -22,6 +23,7 @@ void AStage1_3GameMode::BeginPlay()
 	APlayer* player = GetWorld()->GetPawn<APlayer>();
 	player->SetColImage("foreground1-3_col.png");
 	// 레벨 카메라 위치 이동
+
 }
 
 void AStage1_3GameMode::Tick(float _DeltaTime)

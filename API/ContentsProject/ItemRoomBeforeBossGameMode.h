@@ -1,5 +1,6 @@
 #pragma once
 #include <EngineCore/GameMode.h>
+#include <EnginePlatform/EngineSound.h>
 // Ό³Έν :
 class AItemRoomBeforeBossGameMode : public AGameMode
 {
@@ -19,6 +20,6 @@ public:
 protected:
 
 private:
-
+	USoundPlayer BGMPlayer;
 };
 

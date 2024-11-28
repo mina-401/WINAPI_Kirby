@@ -1,6 +1,6 @@
 #pragma once
 #include <EngineCore/GameMode.h>
-
+#include <EnginePlatform/EngineSound.h>
 class AStage1_1GameMode : public AGameMode
 {
 public:
@@ -23,6 +23,8 @@ public:
 	class AMonster* MonsterWaddleDoo = nullptr;
 	class AMonster* MonsterSparky = nullptr;
 
+private:
+	USoundPlayer BGMPlayer;
 	
 };
 

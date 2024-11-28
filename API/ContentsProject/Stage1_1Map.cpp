@@ -7,6 +7,7 @@
 #include <EngineCore/SpriteRenderer.h>
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/2DCollision.h>
+#include <EnginePlatform/EngineSound.h>
 
 #include "Stage1_1GameMode.h"
 #include "Monster.h"
@@ -90,6 +91,9 @@ void AStage1_1Map::Tick(float _deltaTime)
 	}*/
 
 	if (true == UEngineInput::GetInst().IsPress(VK_UP) && IsPlayerStayPotal) {
+
+		USoundPlayer EffectSound;
+		EffectSound = UEngineSound::Play("Potal travel.WAV");
 		UEngineAPICore::GetCore()->OpenLevel("Stage1_2");
 	}
 

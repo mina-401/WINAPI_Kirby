@@ -4,6 +4,7 @@
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/EngineAPICore.h>
 
+#include <EnginePlatform/EngineSound.h>
 #include <EngineCore/SpriteRenderer.h>
 #include "Player.h"
 #include "Monster.h"
@@ -13,6 +14,7 @@
 
 
 #include "Stage1_1Map.h"
+
 AStage1_1GameMode::AStage1_1GameMode()
 {
 	SetName("Stage1_1");
@@ -26,7 +28,13 @@ void AStage1_1GameMode::BeginPlay()
 	Super::BeginPlay();
 
 
+	{
+		//BGMPlayer = APlayer::GetPlaySound();
+		BGMPlayer = UEngineSound::Play("04. Prism Plains.mp3");
+		BGMPlayer.Loop(1);
 
+
+	}
 	AStageBackground* NewActor = GetWorld()->SpawnActor<AStageBackground>();
 	AStage1_1Map* NewMap = GetWorld()->SpawnActor<AStage1_1Map>();
 	APlayer* Player = GetWorld()->GetPawn<APlayer>();

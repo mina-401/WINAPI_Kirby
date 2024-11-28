@@ -26,6 +26,13 @@ void AStageBossKingDededeGameMode::BeginPlay()
 	AKingDedede* NewBoss= GetWorld()->SpawnActor<AKingDedede>();
 	NewBoss->SetColImage("foregroundKingDedede1-1_col.png");
 	NewBoss->SetActorLocation({ 400,365 });
+
+	UEngineSound::AllSoundOff();
+
+	
+	BGMPlayer = UEngineSound::Play("09. King Dedede.mp3");
+	BGMPlayer.Loop(1);
+
 }
 
 void AStageBossKingDededeGameMode::Tick(float _DeltaTime)
