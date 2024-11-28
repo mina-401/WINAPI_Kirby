@@ -2,7 +2,7 @@
 
 #include <EngineCore/Actor.h>
 #include "ContentsEnum.h"
-
+#include <EnginePlatform/EngineSound.h>
 
 class AJumpStar : public AActor
 {
@@ -72,5 +72,7 @@ private:
 
 	class APlayer* MainPawn = nullptr;
 	ECopyAbilityState CopyState = ECopyAbilityState::Fire;
+
+	USoundPlayer BGMPlayer;
 };
 

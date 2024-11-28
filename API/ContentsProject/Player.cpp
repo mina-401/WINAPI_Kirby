@@ -1274,7 +1274,6 @@ void APlayer::Change(float _DeltaTime)
 	
 	if (true == SpriteRenderer->IsCurAnimationEnd())
 	{
-		CurChangeTime = 0.0f;
 
 		ChangeState(EPlayerState::Idle);
 	}

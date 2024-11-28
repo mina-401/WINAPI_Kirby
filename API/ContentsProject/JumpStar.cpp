@@ -5,7 +5,7 @@
 #include <EngineCore/SpriteRenderer.h>
 #include <EngineCore/ImageManager.h>
 #include "Player.h"
-
+#include <EnginePlatform/EngineSound.h>
 
 AJumpStar::AJumpStar()
 {
@@ -76,6 +76,8 @@ void AJumpStar::BeginPlay()
 		JumpPower.X = JumpPower.X * 100.0f;
 
 	}
+
+	BGMPlayer = UEngineSound::Play("JumpStart Pang.WAV");
 }
 void AJumpStar::SetForegroundColImage()
 {
