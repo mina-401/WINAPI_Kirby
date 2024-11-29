@@ -30,6 +30,7 @@
 #include "MonsterFireBullet.h"
 #include "EatItem.h"
 #include "KingDedede.h"
+#include "MonsterBullet.h"
 
 
 //Àü¿ª BGM Player
@@ -1220,7 +1221,15 @@ void APlayer::EatingCrouchStart()
 	{
 		CurPlayerCopyState = Star->GetCopyState();
 
+
 	}
+
+	/*AMonsterBullet* MonStar = dynamic_cast<AMonsterBullet*>(ColAnyActor);
+	if (MonStar != nullptr)
+	{
+		CurPlayerCopyState = MonStar->GetCopyState();
+
+	}*/
 	AMonster* Mon = dynamic_cast<AMonster*>(ColAnyActor);
 	if (Mon != nullptr)
 	{
@@ -2363,7 +2372,15 @@ void APlayer::Inhale(float _DeltaTime)
 			star->SetIshale(true);
 			star->InhalingGravity(_DeltaTime, Vector);
 		}
+		MonsterBullet = dynamic_cast<AMonsterBullet*>(ColStar);
 
+		if (nullptr != MonsterBullet)
+		{
+			Vector = GetActorLocation() - MonsterBullet->GetActorLocation();
+			Vector.Normalize();
+			//StarBlock->SetIshale(true);
+			MonsterBullet->InhalingGravity(_DeltaTime, Vector);
+		}
 
 	}
 
@@ -2412,6 +2429,29 @@ void APlayer::Inhale(float _DeltaTime)
 		return;
 	}
 
+	ColStar = CollisionComponent->CollisionOnce(ECollisionGroup::Block);
+	AMonsterBullet* MonsterBullet = dynamic_cast<AMonsterBullet*>(ColStar);
+
+ 	if (MonsterBullet != nullptr)
+	{
+
+		if (true == BGMPlayer.IsPlaying())
+		{
+			BGMPlayer.Stop();
+		}
+		BGMPlayer = UEngineSound::Play("Kirby Inhale Eating.WAV");
+
+		ColAnyActor = ColStar;
+
+		CurPlayerEatState = EPlayerEatState::Eating;
+		MonsterBullet->SetActive(false);
+		InhaleRightComponent->SetActive(false);
+		InhaleLeftComponent->SetActive(false);
+
+		ChangeState(EPlayerState::Idle);
+		return;
+	}
+
 	ColMon = CollisionComponent->CollisionOnce(ECollisionGroup::MonsterBody);
 	if (ColMon != nullptr)
 	{
@@ -2422,7 +2462,7 @@ void APlayer::Inhale(float _DeltaTime)
 			{
 				BGMPlayer.Stop();
 			}
-			BGMPlayer = UEngineSound::Play("Kiby Inhale Eating.WAV");
+			BGMPlayer = UEngineSound::Play("Kirby Inhale Eating.WAV");
 
 			ColAnyActor = ColMon;
 

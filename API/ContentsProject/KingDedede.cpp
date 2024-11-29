@@ -105,7 +105,9 @@ void AKingDedede::Die(float _DeltaTime)
 {
 	if (true == SpriteRenderer->IsCurAnimationEnd())
 	{
-		SetActive(false);
+		IsActive = false;
+		CollisionComponent->SetActive(false);
+		//SetActive(false);
 	}
 	
 }

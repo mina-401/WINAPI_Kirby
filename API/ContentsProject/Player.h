@@ -425,5 +425,6 @@ private:
   
     class AActor* ColAnyActor = nullptr;
     class AJumpStar* star = nullptr;
+    class AMonsterBullet* MonsterBullet = nullptr;
 };
 

@@ -28,6 +28,13 @@ public:
 	{
 		return MainPawn;
 	}
+
+	void InhalingGravity(float _DeltaTime, FVector2D _Vector)
+	{
+
+		FVector2D NextPos = _Vector * _DeltaTime * 150.0f;
+		AddActorLocation(NextPos);
+	}
 	//void CollisionEnter(AActor* _ColActor);
 protected:
 	void Tick(float _DeltaTime) override;
