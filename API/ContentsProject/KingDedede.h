@@ -35,7 +35,10 @@ public:
 	void InhaledStart() override;
 	void Inhaled(float _DeltaTime) override;
 	void InhalingGravity(float _DeltaTime, FVector2D _Vector) override;
-	//void DieStart() override;
+	void DieStart() override;
+	void Die(float _DeltaTime) override;
+
+
 	 void ColKnockBackEnter(AActor* _ColActor) override;
 
 	 

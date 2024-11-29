@@ -9,6 +9,7 @@
 #include <EnginePlatform/EngineInput.h>
 #include <EngineCore/ImageManager.h>
 #include <EngineBase/EngineRandom.h>
+#include "MonsterWidget.h"
 
 #include <EngineCore/2DCollision.h>
 #include "ContentsEnum.h"
@@ -57,8 +58,8 @@ AKingDedede::AKingDedede()
 		SpriteRenderer->CreateAnimation("FlyAttack_Right", "KingFlyAttack_Right.png", 0, 8, 0.3f, true);
 		SpriteRenderer->CreateAnimation("Damaged_Left", "KingDamaged_Left.png", 0, 0, 1.0f, false);
 		SpriteRenderer->CreateAnimation("Damaged_Right", "KingDamaged_Right.png", 0, 0, 1.0f, false);
-		/*SpriteRenderer->CreateAnimation("Die_Left", "KingDie_Left.png", 9, 9, 0.2f, true);
-		SpriteRenderer->CreateAnimation("Die_Right", "KingDie_Right.png", 9, 9, 0.2f, true);*/
+		SpriteRenderer->CreateAnimation("Die_Left", "KingDie_Left.png", {0,1,2,2,2,2}, 0.5f, false);
+		SpriteRenderer->CreateAnimation("Die_Right", "KingDie_Right.png", { 0,1,2,2,2,2 }, 0.5f, false);
 		SpriteRenderer->ChangeAnimation("Idle_Left");
 
 		//SpriteRenderer->SetAnimationEvent("Idle_Left", 3, std::bind(&AKingDedede::AKingDedede, this, FVector2D::RIGHT));
@@ -92,7 +93,22 @@ AKingDedede::AKingDedede()
 AKingDedede::~AKingDedede()
 {
 }
+void AKingDedede::DieStart()
+{
+	BGMPlayer = UEngineSound::Play("MonsterDie.WAV");
+	//
+	SpriteRenderer->ChangeAnimation("Die" + DirString);
+	MonWidget->SetActive(false);
+}
 
+void AKingDedede::Die(float _DeltaTime)
+{
+	if (true == SpriteRenderer->IsCurAnimationEnd())
+	{
+		SetActive(false);
+	}
+	
+}
 void AKingDedede::Chase(float _DeltaTime)
 {
 	AMonster::Chase(_DeltaTime);
