@@ -2416,7 +2416,7 @@ void APlayer::Inhale(float _DeltaTime)
 		{
 			BGMPlayer.Stop();
 		}
-		BGMPlayer = UEngineSound::Play("Kiby Inhale Eating.WAV");
+		BGMPlayer = UEngineSound::Play("Kirby Inhale Eating.WAV");
 
 		ColAnyActor = ColStar;
 
@@ -2444,9 +2444,11 @@ void APlayer::Inhale(float _DeltaTime)
 		ColAnyActor = ColStar;
 
 		CurPlayerEatState = EPlayerEatState::Eating;
-		MonsterBullet->SetActive(false);
 		InhaleRightComponent->SetActive(false);
 		InhaleLeftComponent->SetActive(false);
+
+
+		MonsterBullet->SetActive(false);
 
 		ChangeState(EPlayerState::Idle);
 		return;

@@ -42,7 +42,7 @@ AMonsterBullet::AMonsterBullet()
 		CollisionComponent->SetComponentScale({ 50,50 });
 		CollisionComponent->SetCollisionGroup(ECollisionGroup::Block);
 		CollisionComponent->SetCollisionType(ECollisionType::CirCle);
-		//CollisionComponent->SetCollisionEnter(std::bind(&AMonsterBullet::CollisionEnter, this, std::placeholders::_1));
+		//CollisionComponent->SetCollisionStay(std::bind(&AMonsterBullet::CollisionStay, this, std::placeholders::_1));
 
 	}
 	{
@@ -61,12 +61,12 @@ void AMonsterBullet::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
-	AlphaTime -= _DeltaTime;
+	/*AlphaTime -= _DeltaTime;
 	if (AlphaTime > 0.f)
 	{
 		BackSpriteRenderer->SetAlphafloat(AlphaValue);
 		AlphaValue = 1.f - AlphaValue;
-	}
+	}*/
 	
 }
 
