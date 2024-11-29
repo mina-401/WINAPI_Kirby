@@ -192,6 +192,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="MonsterBullet.h" />
     <ClInclude Include="MonsterFireBullet.h">
       <SubType>
       </SubType>
@@ -360,6 +361,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="MonsterBullet.cpp" />
     <ClCompile Include="MonsterFireBullet.cpp">
       <SubType>
       </SubType>

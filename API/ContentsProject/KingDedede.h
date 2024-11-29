@@ -50,6 +50,8 @@ private:
 	 float ChaseTime = 5.0f;
 	 float CurChaseTime = 0.0f;
 
+	 int AttackPointIndex = 0;
+
 	int AttackRound = 3;
 	FVector2D HammerLeftPosition = { -80,-30 };
 	FVector2D HammerRightPosition = { 80,-30 };

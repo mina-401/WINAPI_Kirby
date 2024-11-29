@@ -113,7 +113,15 @@ public:
 	{
 		return MainPawn;
 	}
-	
+	void SetDamagePower(float _Power)
+	{
+		DamagePower = _Power;
+	}
+
+	float GetDamagePower() const
+	{
+		return DamagePower;
+	}
 public:
 	std::string DirString = "_Left";
 
@@ -203,6 +211,7 @@ private:
 	FVector2D KnockBackVec = FVector2D::ZERO;
 
 	class APlayer* MainPawn = nullptr;
+	float DamagePower = 50.0f;
 
 
 };

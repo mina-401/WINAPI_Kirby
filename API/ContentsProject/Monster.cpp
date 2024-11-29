@@ -135,11 +135,20 @@ void AMonster::KnockBack(float _DeltaTime)
 		AddActorLocation(KnockBackVec  * _DeltaTime);
 
 	}
-
-	if (GetCurHp() <= 0)
+	if (true == SpriteRenderer->IsCurAnimationEnd())
 	{
-		ChangeState(EMonsterState::Die);
+		if (GetCurHp() <= 0)
+		{
+			ChangeState(EMonsterState::Die);
+			return;
+		}
+		else
+		{
+			ChangeState(EMonsterState::Move);
+			return;
+		}
 	}
+
 }
 
 void AMonster::ChangeMonsterDir(float _DeltaTime)
@@ -220,6 +229,8 @@ void AMonster::BeginPlay()
 	MonWidget = GetWorld()->SpawnActor<AMonsterWidget>();
 	MonWidget->SetOwner(this);
 	MonWidget->SetActive(false);
+
+
 }
 
 void AMonster::Tick(float _DeltaTime)

@@ -32,8 +32,8 @@ AWaddleDoo::AWaddleDoo()
 		SpriteRenderer->CreateAnimation("Attack_Right", "WaddleDoo_Right.png", { 5,6,5,6,5,6,7,8,8,8,8,8 }, 0.2f, true);
 		SpriteRenderer->CreateAnimation("Inhaled_Left", "WaddleDoo_Left.png", 13, 13, 0.2f, true);
 		SpriteRenderer->CreateAnimation("Inhaled_Right", "WaddleDoo_Right.png", 13, 13, 0.2f, true);
-		SpriteRenderer->CreateAnimation("Damaged_Left", "WaddleDoo_Right.png", 13, 13, 0.2f, true);
-		SpriteRenderer->CreateAnimation("Damaged_Right", "WaddleDoo_Right.png", 13, 13, 0.2f, true);
+		SpriteRenderer->CreateAnimation("Damaged_Left", "WaddleDoo_Right.png", 13, 13, 1.0f, true);
+		SpriteRenderer->CreateAnimation("Damaged_Right", "WaddleDoo_Right.png", 13, 13, 1.0f, true);
 		SpriteRenderer->ChangeAnimation("Walk_Left");
 
 
@@ -246,6 +246,7 @@ void AWaddleDoo::BeginPlay()
 	AMonster::BeginPlay();
 	SetCopyAbilityState(ECopyAbilityState::Normal);
 	SetMainPawn(dynamic_cast<APlayer*>(GetWorld()->GetPawn()));
+	SetDamagePower(100.0f);
 
 	BeamSetActive(false);
 

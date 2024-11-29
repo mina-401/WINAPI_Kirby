@@ -131,7 +131,7 @@ void AKirbyWidget::Tick(float _deltaTime)
 		float hp = Owner->GetCurHp();
 		float HpRatio = hp / Owner->GetMaxHp();
 		HpBar->SetComponentScale({ HpBarScale.X * HpRatio,HpBarScale.Y });
-
+		
 
 		bool IsDamaged = Owner->GetIsDamagedState();
 
@@ -150,7 +150,7 @@ void AKirbyWidget::Tick(float _deltaTime)
 				IsDamaged = false;
 
 			}
-			if (TotalDamage >= DamagePower)
+			if (TotalDamage >= Owner->GetDamagePower())
 			{
 				IsDamaged = false;
 			}

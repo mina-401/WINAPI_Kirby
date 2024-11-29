@@ -12,6 +12,7 @@
 
 #include <EngineCore/2DCollision.h>
 #include "ContentsEnum.h"
+#include "MonsterBullet.h"
 AKingDedede::AKingDedede()
 {
 	{
@@ -54,8 +55,8 @@ AKingDedede::AKingDedede()
 		SpriteRenderer->CreateAnimation("JumpAttack3_Right", "KingJumpAttack3_Right.png", 0, 1, 0.4f, true);
 		SpriteRenderer->CreateAnimation("FlyAttack_Left", "KingFlyAttack_Left.png", 0, 8, 0.3f, true);
 		SpriteRenderer->CreateAnimation("FlyAttack_Right", "KingFlyAttack_Right.png", 0, 8, 0.3f, true);
-		SpriteRenderer->CreateAnimation("Damaged_Left", "KingDamaged_Left.png", 0, 0, 2.0f, false);
-		SpriteRenderer->CreateAnimation("Damaged_Right", "KingDamaged_Right.png", 0, 0, 2.0f, false);
+		SpriteRenderer->CreateAnimation("Damaged_Left", "KingDamaged_Left.png", 0, 0, 1.0f, false);
+		SpriteRenderer->CreateAnimation("Damaged_Right", "KingDamaged_Right.png", 0, 0, 1.0f, false);
 		/*SpriteRenderer->CreateAnimation("Die_Left", "KingDie_Left.png", 9, 9, 0.2f, true);
 		SpriteRenderer->CreateAnimation("Die_Right", "KingDie_Right.png", 9, 9, 0.2f, true);*/
 		SpriteRenderer->ChangeAnimation("Idle_Left");
@@ -136,12 +137,14 @@ void AKingDedede::AttackStart()
 
 	DirCheck();
 	
-	AttackRound = Random.RandomInt(1, 4);
+	//AttackRound = Random.RandomInt(1, 4);
+	AttackRound = 3;
 	
 	switch (AttackRound)
 	{
 	case 1:
 		SpriteRenderer->ChangeAnimation("JumpAttack1" + DirString);
+		AttackPointIndex = 3;
 
 		break;
 	case 2:
@@ -149,13 +152,15 @@ void AKingDedede::AttackStart()
 		break;
 	case 3:
 		SpriteRenderer->ChangeAnimation("JumpAttack3" + DirString);
+		AttackPointIndex = 1;
 		break;
 	case 4:
 		SpriteRenderer->ChangeAnimation("FlyAttack" + DirString);
 		break;
 
 	default:
-		SpriteRenderer->ChangeAnimation("JumpAttack1" + DirString);
+		SpriteRenderer->ChangeAnimation("JumpAttack3" + DirString);
+		AttackPointIndex = 1;
 		break;
 	}
 
@@ -164,9 +169,14 @@ void AKingDedede::AttackStart()
 void AKingDedede::Attack(float _DeltaTime)
 {
 
-	if (1 == SpriteRenderer->GetCurIndex())
+	if (AttackPointIndex == SpriteRenderer->GetCurIndex())
 	{
 		AttackColComponent->SetActive(true);
+		AMonsterBullet* Bullet = GetWorld()->SpawnActor<AMonsterBullet>();
+		Bullet->SetMainPawn(this);
+
+		FVector2D Pos ={ AttackColComponent->GetComponentLocation().X*2,  AttackColComponent->GetComponentLocation().Y};
+		Bullet->SetActorLocation(GetActorLocation()+ Pos);
 	}
 	if (true == SpriteRenderer->IsCurAnimationEnd()) {
 
@@ -215,7 +225,8 @@ void AKingDedede::BeginPlay()
 
 	//AttackRound = Random.RandomInt(1, 3);
 	MonsterToPlayerRange = 300.0f;
-	int a = 0;
+	SetDamagePower(50.0f);
+
 }
 
 void AKingDedede::Tick(float _DeltaTime)
@@ -257,7 +268,12 @@ void AKingDedede::Idle(float _DeltaTime)
 
 void AKingDedede::ColKnockBackEnter(AActor* _ColActor)
 {
-	// 아무것도 하지 않음
+	AMonster::ColKnockBackEnter(_ColActor);
+
+
+
+
+
 }
 
 void AKingDedede::CheckPlayerPos()

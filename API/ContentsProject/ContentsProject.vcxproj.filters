@@ -161,6 +161,7 @@
     <ClInclude Include="SoundManager.h">
       <Filter>ContentsObject\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="MonsterBullet.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -299,6 +300,7 @@
     <ClCompile Include="SoundManager.cpp">
       <Filter>ContentsObject\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="MonsterBullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">

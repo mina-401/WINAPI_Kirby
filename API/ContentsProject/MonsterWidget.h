@@ -22,6 +22,8 @@ public:
 	{
 		Owner = _Monster;
 	}
+
+
 protected:
 
 private:
@@ -29,7 +31,7 @@ private:
 	class USpriteRenderer* MonHp = nullptr;
 	FVector2D MapScale;
 	FVector2D WinSize;
-	FVector2D HpBarScale = { 183, 17 };
+	FVector2D HpBarScale = { 183*0.8f, 17*0.8f };
 
 	class AMonster* Owner = nullptr;
 };

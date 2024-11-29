@@ -130,8 +130,14 @@ public:
         return BGMPlayer;
     }*/
 
-
-
+    float GetDamagePower() const
+    {
+        return DamagePower;
+    }
+    void SetDamagePower(float _Power)
+    {
+        DamagePower = _Power;
+    }
 
 public:
     
@@ -365,6 +371,8 @@ private:
     FVector2D SlidePower = FVector2D(300.0f, 0.0f);
     FVector2D CurRSlidePower = FVector2D(300.0f, 0.0f);
     FVector2D CurSlidePower = FVector2D(300.0f, 0.0f);
+
+    float DamagePower = 25.0f;
 
     float BreakTime = 100.0f;
 

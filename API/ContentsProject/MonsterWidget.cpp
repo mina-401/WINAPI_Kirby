@@ -28,7 +28,7 @@ AMonsterWidget::AMonsterWidget()
 
 			WinSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
 
-			MapScale = MonHpBarCase->SetSpriteScale(1.0f);
+			MapScale = MonHpBarCase->SetSpriteScale(0.8f);
 
 			MonHpBarCase->SetCameraEffect(false);
 		}
@@ -59,34 +59,44 @@ void AMonsterWidget::Tick(float _deltaTime)
 
 	{
 
+
+		float hp = Owner->GetCurHp();
+		float HpRatio = hp / Owner->GetMaxHp();
+		MonHp->SetComponentScale({ HpBarScale.X * HpRatio,HpBarScale.Y });
+
+
 		bool IsDamaged = Owner->GetIsDamagedState();
-	
+
+
+
+		if (true == IsDamaged)
+		{
+
+
+			TotalDamage += 0.1f;
+			hp = Owner->GetCurHp() - 0.1f;
+			if (hp <= 0)
+			{
+
+
+				IsDamaged = false;
+
+			}
+			if (TotalDamage >= Owner->GetDamagePower())
+			{
+				IsDamaged = false;
+			}
+
+		}
+
 		if (false == IsDamaged)
 		{
 			Owner->SetIsDamagedState(false);
-			//Owner->Set
 			TotalDamage = 0;
-			return;
-		}
-
-
-		TotalDamage += 0.1f;
-
-		float hp = Owner->GetCurHp() - 0.1f;
-		if (hp <= 0)
-		{
-			IsDamaged = false;
 
 		}
-		if (TotalDamage >= DamagePower)
-		{
-			IsDamaged = false;
-		}
-			float HpRatio = hp / Owner->GetMaxHp();
 
-			MonHp->SetComponentScale({ HpBarScale.X * HpRatio,HpBarScale.Y });
-			Owner->SetCurHP(hp);
-		
+		Owner->SetCurHP(hp);
 
 
 	}
@@ -98,6 +108,5 @@ void AMonsterWidget::BeginPlay()
 	MonHpBarCase->SetComponentLocation({ WinSize.X - 150,WinSize.Y - 20 });
 	MonHp->SetComponentLocation({ WinSize.X - 150- HpBarScale.Half().X,WinSize.Y - 20});
 
-	SetDamagePower(100.0f);
 }
 

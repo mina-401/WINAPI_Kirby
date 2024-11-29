@@ -32,8 +32,8 @@ ASparky::ASparky()
 		SpriteRenderer->CreateAnimation("Attack_Right", "Sparky_Right.png", { 1,1,1,3,6,7,6,7,6,7,6,7,6,7,8 }, 0.2f, true);
 		SpriteRenderer->CreateAnimation("Inhaled_Left", "Sparky_Left.png", 9, 9, 0.2f, true);
 		SpriteRenderer->CreateAnimation("Inhaled_Right", "Sparky_Right.png", 9, 9, 0.2f, true);
-		SpriteRenderer->CreateAnimation("Damaged_Left", "Sparky_Right.png", 9, 9, 0.2f, true);
-		SpriteRenderer->CreateAnimation("Damaged_Right", "Sparky_Right.png", 9, 9, 0.2f, true);
+		SpriteRenderer->CreateAnimation("Damaged_Left", "Sparky_Right.png", 9, 9, 1.0f, true);
+		SpriteRenderer->CreateAnimation("Damaged_Right", "Sparky_Right.png", 9, 9, 1.0f, true);
 		SpriteRenderer->ChangeAnimation("Walk_Left");
 	}
 	{
@@ -103,6 +103,8 @@ void ASparky::BeginPlay()
 {
 	AMonster::BeginPlay();
 	SetCopyAbilityState(ECopyAbilityState::Spark);
+	SetDamagePower(100.0f);
+
 }
 
 void ASparky::Tick(float _DeltaTime)

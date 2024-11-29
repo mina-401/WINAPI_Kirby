@@ -60,6 +60,8 @@ void AWaddleDee::BeginPlay()
 {
 	AMonster::BeginPlay();
 	SetCopyAbilityState(ECopyAbilityState::Fire);
+	SetDamagePower(100.0f);
+
 }
 
 void AWaddleDee::AttackStart()
