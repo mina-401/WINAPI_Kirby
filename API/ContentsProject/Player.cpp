@@ -2372,6 +2372,10 @@ void APlayer::Inhale(float _DeltaTime)
 		AMonster* Monster = dynamic_cast<AMonster*>(ColMon);
 
 		if (nullptr != Monster) {
+
+			
+			
+
 			if (Monster->GetCurMonsterState() != EMonsterState::Inhaled) {
 				Monster->ChangeState(EMonsterState::Inhaled);
 

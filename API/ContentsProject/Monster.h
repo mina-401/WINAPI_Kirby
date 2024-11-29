@@ -47,6 +47,7 @@ public:
 	virtual void KnockBackStart();
 	virtual void CheckPlayerPos();
 	virtual void ColKnockBackEnter(AActor* _ColActor);
+	virtual void InhalingGravity(float _DeltaTime, FVector2D _Vector);
 
 	
 
@@ -75,7 +76,6 @@ public:
 	{
 		CopyAbilityStatus = _copy;
 	}
-	void InhalingGravity(float _DeltaTime, FVector2D _Vector);
 
 	float GetMaxHp() const
 	{
@@ -191,7 +191,7 @@ private:
 		// »ó½Ã 
 	}
 	
-
+	
 private:
 	const float MaxHp = 100.0f;
 	float CurHp = 100.0f;

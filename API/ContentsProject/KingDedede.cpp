@@ -177,6 +177,20 @@ void AKingDedede::Attack(float _DeltaTime)
 	
 }
 
+void AKingDedede::InhaledStart()
+{
+	return;
+}
+
+void AKingDedede::Inhaled(float _DeltaTime)
+{
+	ChangeState(EMonsterState::Idle);
+	return;
+}
+void AKingDedede::InhalingGravity(float _DeltaTime, FVector2D _Vector)
+{
+	return;
+}
 void AKingDedede::MoveStart()
 {
 	AMonster::MoveStart();

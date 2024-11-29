@@ -32,8 +32,9 @@ public:
 	void Chase(float _DeltaTime) override;
 	void AttackStart() override;
 	void Attack(float _DeltaTime) override;
-	//void InhaledStart() override;
-	//void Inhaled(float _DeltaTime) override;
+	void InhaledStart() override;
+	void Inhaled(float _DeltaTime) override;
+	void InhalingGravity(float _DeltaTime, FVector2D _Vector) override;
 	//void DieStart() override;
 	 void ColKnockBackEnter(AActor* _ColActor) override;
 
