@@ -7,13 +7,6 @@
 #include "ContentsEnum.h"
 #include "ActorVector.h"
 
-class PlayerStats
-{
-public:
-
-
-};
-
 
 class APlayer : public AActor
 {

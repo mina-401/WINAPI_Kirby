@@ -162,6 +162,12 @@
       <Filter>ContentsObject\Manager</Filter>
     </ClInclude>
     <ClInclude Include="MonsterBullet.h" />
+    <ClInclude Include="EndingMap.h">
+      <Filter>ContentsObject\GameMap</Filter>
+    </ClInclude>
+    <ClInclude Include="DanceKirby.h">
+      <Filter>ContentsObject\Kirby</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -301,6 +307,12 @@
       <Filter>ContentsObject\Manager</Filter>
     </ClCompile>
     <ClCompile Include="MonsterBullet.cpp" />
+    <ClCompile Include="EndingMap.cpp">
+      <Filter>ContentsObject\GameMap</Filter>
+    </ClCompile>
+    <ClCompile Include="DanceKirby.cpp">
+      <Filter>ContentsObject\Kirby</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">

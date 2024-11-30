@@ -1,7 +1,7 @@
 #pragma once
 #include <EngineCore/GameMode.h>
+#include <EnginePlatform/EngineSound.h>
 
-// Ό³Έν :
 class AEndingGameMode : public AGameMode
 {
 public:
@@ -15,9 +15,11 @@ public:
 	AEndingGameMode& operator=(const AEndingGameMode& _Other) = delete;
 	AEndingGameMode& operator=(AEndingGameMode&& _Other) noexcept = delete;
 
+	void BeginPlay() override;
+	void Tick(float _DeltaTime) override;
 protected:
 
 private:
-
+	USoundPlayer BGMPlayer;
 };
 

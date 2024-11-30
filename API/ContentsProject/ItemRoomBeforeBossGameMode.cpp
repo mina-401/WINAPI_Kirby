@@ -47,7 +47,7 @@ void AItemRoomBeforeBossGameMode::BeginPlay()
 	{
 
 		SoundManager& SoundManager = SoundManager::GetInst();
-		USoundPlayer& BGMPlayer = SoundManager.GetSoundPlayer(); // ·¹ÆÛ·±½º »ç¿ë
+		USoundPlayer& BGMPlayer = SoundManager.GetSoundPlayer(); // ï¿½ï¿½ï¿½Û·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 
 		if (true == BGMPlayer.IsPlaying())
 		{

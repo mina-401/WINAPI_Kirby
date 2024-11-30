@@ -1,7 +1,7 @@
 #pragma once
 #include <EnginePlatform/EngineSound.h>
 #include <EngineCore/GameMode.h>
-// ¼³¸í :
+// ï¿½ï¿½ï¿½ï¿½ :
 class ATitleGameMode : public AGameMode
 {
 public:

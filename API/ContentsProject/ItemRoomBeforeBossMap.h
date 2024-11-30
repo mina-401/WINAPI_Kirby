@@ -1,7 +1,7 @@
 #pragma once
 #include <EngineCore/Actor.h>
 
-// ¼³¸í :
+// ï¿½ï¿½ï¿½ï¿½ :
 class AItemRoomBeforeBossMap :public AActor
 {
 public:

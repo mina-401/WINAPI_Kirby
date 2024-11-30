@@ -17,6 +17,8 @@
 #include "ContentsEnum.h"
 #include "TitleGameMode.h"
 #include "Player.h"
+#include "DanceKirby.h"
+#include "EndingGameMode.h"
 KirbyContentsCore::KirbyContentsCore()
 {
 }
@@ -25,7 +27,7 @@ KirbyContentsCore::~KirbyContentsCore()
 {
 }
 
-// ¿£ÁøÀÌ ½ÇÇàµÇ°í ´Ü 1¹ø ½ÇÇàµÈ´Ù.
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½ï¿½ 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È´ï¿½.
 void KirbyContentsCore::BeginPlay()
 {
 
@@ -46,12 +48,12 @@ void KirbyContentsCore::BeginPlay()
 		DeleteObject(OldPen);
 	}
 
-	// ÀÌ¹ÌÁö·Îµå
+	// ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½Îµï¿½
 	{
 		UEngineDirectory Dir;
 		if (false == Dir.MoveParentToDirectory("Resource"))
 		{
-			MSGASSERT("¸®¼Ò½º Æú´õ¸¦ Ã£Áö ¸øÇß½À´Ï´Ù.");
+			MSGASSERT("ï¿½ï¿½ï¿½Ò½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
 			return;
 		}
 		Dir.Append("Image");
@@ -67,7 +69,7 @@ void KirbyContentsCore::BeginPlay()
 		UEngineDirectory Dir;
 		if (false == Dir.MoveParentToDirectory("Resource"))
 		{
-			MSGASSERT("¸®¼Ò½º Æú´õ¸¦ Ã£Áö ¸øÇß½À´Ï´Ù.");
+			MSGASSERT("ï¿½ï¿½ï¿½Ò½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
 			return;
 		}
 		Dir.Append("Sound//Stage1Sound");
@@ -83,7 +85,7 @@ void KirbyContentsCore::BeginPlay()
 		UEngineDirectory Dir;
 		if (false == Dir.MoveParentToDirectory("Resource"))
 		{
-			MSGASSERT("¸®¼Ò½º Æú´õ¸¦ Ã£Áö ¸øÇß½À´Ï´Ù.");
+			MSGASSERT("ï¿½ï¿½ï¿½Ò½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
 			return;
 		}
 		Dir.Append("Sound//BossSound");
@@ -98,7 +100,7 @@ void KirbyContentsCore::BeginPlay()
 		UEngineDirectory Dir;
 		if (false == Dir.MoveParentToDirectory("Resource"))
 		{
-			MSGASSERT("¸®¼Ò½º Æú´õ¸¦ Ã£Áö ¸øÇß½À´Ï´Ù.");
+			MSGASSERT("ï¿½ï¿½ï¿½Ò½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
 			return;
 		}
 		Dir.Append("Sound//TitleSound");
@@ -113,7 +115,7 @@ void KirbyContentsCore::BeginPlay()
 		UEngineDirectory Dir;
 		if (false == Dir.MoveParentToDirectory("Resource"))
 		{
-			MSGASSERT("¸®¼Ò½º Æú´õ¸¦ Ã£Áö ¸øÇß½À´Ï´Ù.");
+			MSGASSERT("ï¿½ï¿½ï¿½Ò½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
 			return;
 		}
 		Dir.Append("Sound//EffectSound");
@@ -136,6 +138,7 @@ void KirbyContentsCore::BeginPlay()
 		//UEngineAPICore::GetCore()->CreateLevel<AStage1_4GameMode, APlayer>("Stage1_4");
 		UEngineAPICore::GetCore()->CreateLevel<AItemRoomBeforeBossGameMode, APlayer>("ItemRoomBeforeBoss");
 		UEngineAPICore::GetCore()->CreateLevel<AStageBossKingDededeGameMode, APlayer>("StageBossKingDedede");
+		UEngineAPICore::GetCore()->CreateLevel<AEndingGameMode, ADanceKirby>("Stage_DanceEnding");
 
 		ULevel::CollisionGroupLink(ECollisionGroup::MonsterAttack, ECollisionGroup::PlayerBody);
 		//ULevel::CollisionGroupLink(ECollisionGroup::MonsterBody, ECollisionGroup::PlayerBody);
