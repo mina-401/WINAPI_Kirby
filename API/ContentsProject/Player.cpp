@@ -33,7 +33,7 @@
 #include "MonsterBullet.h"
 
 
-//Àü¿ª BGM Player
+//ï¿½ï¿½ï¿½ï¿½ BGM Player
 //USoundPlayer APlayer::BGMPlayer; 
 APlayer::APlayer()
 {
@@ -45,6 +45,7 @@ APlayer::APlayer()
 
 		SetName("Kirby");
 
+		UImageManager::GetInst().CuttingSprite("KirbyDance.png", { 128, 128 });
 
 		UImageManager::GetInst().CuttingSprite("Die.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("Idle_Left.png", { 128, 128 });
@@ -308,12 +309,12 @@ void APlayer::BeginPlay()
 	GetWorld()->SetCameraToMainPawn(false);
 
 
-	//ÀúÀåµÇ¾î ÀÖ´Â Ä¿ºñ ½ºÅÈ °¡Á®¿À±â
+	//ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ ï¿½Ö´ï¿½ Ä¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	CurPlayerCopyState = PlayerStatsManager::GetInst().GetCopyAbilityState();
 	Life = PlayerStatsManager::GetInst().GetLife();
 	CurHp = PlayerStatsManager::GetInst().GetHp();
 
-	//Ä¿ºñ UI ¶ç¿ì±â
+	//Ä¿ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½
 	PlayerHud = GetWorld()->SpawnActor<AKirbyWidget>();
 	PlayerHud->SetOwner(this);
 
@@ -321,9 +322,7 @@ void APlayer::BeginPlay()
 
 	ChangeState(EPlayerState::Idle);
 	
-	//Å° ¹ÙÀÎµù
-	//ÀÎÀÚ¸¦ È£ÃâÇÒ ¶§ ³Ö¾îÁÜÀ» ¸í½ÃÇÏ´Â °ÍÀÌ placeholders
-
+	
 	/*UEngineInput::GetInst().BindAction('A', KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::LEFT));
 	UEngineInput::GetInst().BindAction('D', KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::RIGHT));
 	UEngineInput::GetInst().BindAction('S', KeyEvent::Press, std::bind(&APlayer::MoveFunction, this, FVector2D::DOWN));
@@ -373,7 +372,7 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 
 
 
-		//º¼»§»§ »óÅÂ´Â crouch ¾ÈµÈ´Ù.
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â´ï¿½ crouch ï¿½ÈµÈ´ï¿½.
 	case EPlayerState::Crouch:
 		switch (CurPlayerCopyState)
 		{
@@ -527,7 +526,7 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 
 
 
-		//º¼»§»§Àº ¾Èµé¾î¿È
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Èµï¿½ï¿½ï¿½
 	case EPlayerState::Fly:
 
 		switch (CurPlayerCopyState)
@@ -624,7 +623,7 @@ void APlayer::ChangeState(EPlayerState _CurPlayerState)
 	case EPlayerState::Exhale:
 		ExhaleStart();
 		break;
-	//copy »óÅÂÀÏ ¶§¸¸ »óÅÂ º¯°æ
+	//copy ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	case EPlayerState::Attack:
 		switch (CurPlayerCopyState)
 		{
@@ -880,7 +879,9 @@ void APlayer::KnockBack(float _DeltaTime)
 {
 	AlphaTime -= _DeltaTime;
 
-	// Gravity(_DeltaTime);
+	//Gravity(_DeltaTime);
+
+	///PlayerGroundCheck(GravityForce);
 
 
 	if (AlphaTime > 0.f)
@@ -894,6 +895,7 @@ void APlayer::KnockBack(float _DeltaTime)
 
 		ChangeState(EPlayerState::Idle);
 		return;
+		
 	}
 	if (0>=GetCurHp() && true==SpriteRenderer->IsCurAnimationEnd())
 	{
@@ -915,7 +917,7 @@ void APlayer::KnockBack(float _DeltaTime)
 	//	UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
 	//	if (Color == UColor::GRAY)
 	//	{
-	//		// ³ª°¡ ¶¥À§·Î ¿Ã¶ó°¥¶§±îÁö while °è¼Ó ¿Ã·ÁÁØ´Ù.
+	//		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¶ó°¥¶ï¿½ï¿½ï¿½ï¿½ï¿½ while ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ø´ï¿½.
 	//		AddActorLocation(FVector2D::UP * Speed * _DeltaTime);
 	//	}
 	//	else {
@@ -929,19 +931,19 @@ void APlayer::DieStart()
 	Life -= 1;
 
 	if (0 >= Life) {
-		GravityForce = FVector2D::ZERO;
-		SpriteRenderer->ChangeAnimation("Die");
+		//GravityForce = FVector2D::ZERO;
+		//SpriteRenderer->ChangeAnimation("Die");
 	}
 	if (0 < Life)
 	{
-		CurHp = GetMaxHp(); // »ý¸íÀÌ ³²¾Æ ÀÖ´Ù. ´Ù½Ã Ç®ÇÇµµ Ã¤¿î´Ù.
+		CurHp = GetMaxHp(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½. ï¿½Ù½ï¿½ Ç®ï¿½Çµï¿½ Ã¤ï¿½ï¿½ï¿½.
 	}
 	
 }
 void APlayer::Die(float _DeltaTime)
 {
 	
-	// ¸®¼Â ·¹º§Àº hp°¡ 0º¸´Ù ÀÛÀ»¶§ ½ÇÇàµÈ´Ù.
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ hpï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È´ï¿½.
 	if (true == SpriteRenderer->IsCurAnimationEnd())
 	{
 		CollisionComponent->SetActive(true);
@@ -977,8 +979,8 @@ void APlayer::Die(float _DeltaTime)
 	}
 	
 	
-	JumpGravity(_DeltaTime);
-	AddActorLocation(JumpPower*_DeltaTime);
+	//JumpGravity(_DeltaTime);
+	//AddActorLocation(JumpPower*_DeltaTime);
 		
 	
 }
@@ -1266,7 +1268,7 @@ void APlayer::Crouch(float _DeltaTime)
 		{
 			if (true == SpriteRenderer->IsCurAnimationEnd())
 			{
-				//¿©±â¼­ ¤Ì> copy ÀÖ´Â  »óÅÂ·Î º¯È¯ÇÏ¸é change 
+				//ï¿½ï¿½ï¿½â¼­ ï¿½ï¿½> copy ï¿½Ö´ï¿½  ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯ï¿½Ï¸ï¿½ change 
 				//
 				ChangeState(EPlayerState::Change);
 				//BGMPlayer = UEngineSound::Play("Kirby Copy Change.WAV");
@@ -1462,7 +1464,7 @@ void APlayer::Jump(float _DeltaTime)
 		return;
 	}
 
-	//´ÙÀ½ À§Ä¡·Î °¥ ¼ö ÀÖ´Ù.
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½.
 	if (true == PlayerNextPosCheck(_DeltaTime, Vector))
 	{
 		AddActorLocation(Vector  * _DeltaTime * 150.0f);
@@ -1571,7 +1573,7 @@ void APlayer::ChangeMoveStateByCopy(int _KeyIndex)
 			CreateJumpStar();
 			CurPlayerCopyState = ECopyAbilityState::Normal;
 			ChangeState(EPlayerState::Idle);
-			//´É·Â¹ñ±â
+			//ï¿½É·Â¹ï¿½ï¿½
 			break;
 		default:
 			break;
@@ -1591,7 +1593,7 @@ void APlayer::CreateJumpStar()
 		return;
 		break;
 	case ECopyAbilityState::Fire:
-		//Dash »óÅÂ¿¡¼­ º® ºÎµúÇû´Ù.
+		//Dash ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½.
 		if (true == IsFireDashState) return;
 		break;
 	case ECopyAbilityState::Spark:
@@ -1695,7 +1697,7 @@ void APlayer::Move(float _DeltaTime)
 		UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
 		if (Color == UColor::GRAY)
 		{
-			// ³ª°¡ ¶¥À§·Î ¿Ã¶ó°¥¶§±îÁö while °è¼Ó ¿Ã·ÁÁØ´Ù.
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¶ó°¥¶ï¿½ï¿½ï¿½ï¿½ï¿½ while ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ø´ï¿½.
 			AddActorLocation(FVector2D::UP*Speed * _DeltaTime);
 		}
 		else {
@@ -1916,7 +1918,7 @@ void APlayer::Dash(float _DeltaTime)
 		UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
 		if (Color == UColor::GRAY)
 		{
-			// ³ª°¡ ¶¥À§·Î ¿Ã¶ó°¥¶§±îÁö while °è¼Ó ¿Ã·ÁÁØ´Ù.
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¶ó°¥¶ï¿½ï¿½ï¿½ï¿½ï¿½ while ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ø´ï¿½.
 			AddActorLocation(FVector2D::UP * Speed * _DeltaTime);
 		}
 		else {
@@ -1960,7 +1962,7 @@ void APlayer::ColKnockBackEnter(FVector2D _Vector)
 	SetKnockBackForce(_Vector*150.f);
 
 	IsFireDashState = false;
-	//³Ë¹é »óÅÂ·Î
+	//ï¿½Ë¹ï¿½ ï¿½ï¿½ï¿½Â·ï¿½
 	ChangeState(EPlayerState::KnockBack);
 }
 void APlayer::ChangeDashStateByEat(int _KeyIndex)
@@ -1998,7 +2000,7 @@ void APlayer::Accel(float _DeltaTime, FVector2D Vector)
 {
 	Acc += Vector * Speed * _DeltaTime;
 
-	// ÃÖ´ë ¼Óµµ Á¦ÇÑÇÑ´Ù
+	// ï¿½Ö´ï¿½ ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½
 	float AccSize = (Acc.X * Acc.X) + (Acc.Y * Acc.Y);
 	if (AccSize > MaxAcc * MaxAcc)
 	{
@@ -2074,7 +2076,7 @@ void APlayer::Slide(float _DeltaTime)
 	// Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
 	//if (Color == UColor::WHITE)
 	//{
-	//	// ³ª°¡ ¶¥À§·Î ¿Ã¶ó°¥¶§±îÁö while °è¼Ó ¿Ã·ÁÁØ´Ù.
+	//	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¶ó°¥¶ï¿½ï¿½ï¿½ï¿½ï¿½ while ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ø´ï¿½.
 	//	AddActorLocation(FVector2D::DOWN);
 	//}
 	
@@ -2429,8 +2431,8 @@ void APlayer::Inhale(float _DeltaTime)
 		return;
 	}
 
-	ColStar = CollisionComponent->CollisionOnce(ECollisionGroup::Block);
-	AMonsterBullet* MonsterBullet = dynamic_cast<AMonsterBullet*>(ColStar);
+	AActor* ColMonStar = CollisionComponent->CollisionOnce(ECollisionGroup::Block);
+	AMonsterBullet* MonsterBullet = dynamic_cast<AMonsterBullet*>(ColMonStar);
 
  	if (MonsterBullet != nullptr)
 	{
@@ -2441,14 +2443,17 @@ void APlayer::Inhale(float _DeltaTime)
 		}
 		BGMPlayer = UEngineSound::Play("Kirby Inhale Eating.WAV");
 
-		ColAnyActor = ColStar;
+		//ColAnyActor = ColMonStar;
 
 		CurPlayerEatState = EPlayerEatState::Eating;
 		InhaleRightComponent->SetActive(false);
 		InhaleLeftComponent->SetActive(false);
 
-
+		//ColAnyActor
 		MonsterBullet->SetActive(false);
+		
+		//MonsterBullet->IsActive = false;
+			//IsActive=false;
 
 		ChangeState(EPlayerState::Idle);
 		return;
@@ -2473,13 +2478,7 @@ void APlayer::Inhale(float _DeltaTime)
 			InhaleRightComponent->SetActive(false);
 			InhaleLeftComponent->SetActive(false);
 
-			
-			// ¸ó½ºÅÍ ÈíÀÔÇÑ »óÅÂ Ä¿ºñ ¾Ö´Ï¸ÞÀÌ¼Ç
 			ChangeState(EPlayerState::Idle);
-
-			if (star != nullptr) {
-				star->SetIshale(false);
-			}
 		}
 		return;
 	}
@@ -2676,7 +2675,7 @@ void APlayer::ChangeIdleStateByCopy(int _KeyIndex)
 			CreateJumpStar();
 			CurPlayerCopyState = ECopyAbilityState::Normal;
 			ChangeState(EPlayerState::Idle);
-			//´É·Â¹ñ±â
+			//ï¿½É·Â¹ï¿½ï¿½
 			break;
 		default:
 			break;

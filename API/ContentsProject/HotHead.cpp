@@ -32,8 +32,8 @@ AHotHead::AHotHead()
 		SpriteRenderer->CreateAnimation("Attack_Right", "HotHead_Right.png", 5, 7, 0.2f, false);
 		SpriteRenderer->CreateAnimation("Inhaled_Left", "HotHead_Left.png", 19, 19, 0.2f, true);
 		SpriteRenderer->CreateAnimation("Inhaled_Right", "HotHead_Right.png", 19, 19, 0.2f, true);
-		SpriteRenderer->CreateAnimation("Damaged_Left", "HotHead_Left.png",19,19, 1.0f, true);
-		SpriteRenderer->CreateAnimation("Damaged_Right", "HotHead_Right.png",19,19, 1.0f, true);
+		SpriteRenderer->CreateAnimation("Damaged_Left", "HotHead_Left.png",19,19, 1.5f, false);
+		SpriteRenderer->CreateAnimation("Damaged_Right", "HotHead_Right.png",19,19, 1.5f, false);
 		SpriteRenderer->ChangeAnimation("Walk_Left");
 	}
 	{

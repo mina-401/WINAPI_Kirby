@@ -32,7 +32,7 @@ std::string UEnginePath::GetFileName()
 {
 	if (true == IsDirectory())
 	{
-		MSGASSERT("ÆÄÀÏ °æ·Î ÀÏ¶§¸¸ GetFileNameÀ» È£ÃâÇÒ¼ö ÀÖ½À´Ï´Ù." + Path.string());
+		MSGASSERT("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ï¶ï¿½ï¿½ï¿½ GetFileNameï¿½ï¿½ È£ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½." + Path.string());
 		return "";
 	}
 
@@ -43,7 +43,7 @@ std::string UEnginePath::GetDirectoryName()
 {
 	if (false == IsDirectory())
 	{
-		MSGASSERT("µð·ºÅä¸® °æ·Î ÀÏ¶§¸¸ GetDirectoryNameÀ» È£ÃâÇÒ¼ö ÀÖ½À´Ï´Ù." + Path.string());
+		MSGASSERT("ï¿½ï¿½ï¿½ä¸® ï¿½ï¿½ï¿½ ï¿½Ï¶ï¿½ï¿½ï¿½ GetDirectoryNameï¿½ï¿½ È£ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½." + Path.string());
 		return "";
 	}
 
@@ -57,7 +57,7 @@ std::string UEnginePath::GetExtension()
 
 bool UEnginePath::IsExists()
 {
-	// C++ÀÌ ºôµåµÇ´Â°÷¿¡¼­´Â ¸ðµÎ´Ù µ¿ÀÏÇÏ°Ô µ¹¾Æ°£´Ù.
+	// C++ï¿½ï¿½ ï¿½ï¿½ï¿½Ç´Â°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Î´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½.
 	// std::filesystem::create_directory()
 	return std::filesystem::exists(Path);
 }
@@ -82,14 +82,14 @@ void UEnginePath::Append(std::string_view _AppendName)
 }
 bool UEnginePath::MoveParentToDirectory(std::string_view _Path)
 {
-	// ÀÌ·± °æ¿ì¿¡´Â ´õ¹Ì¸¦ ¸¸µå´Â°Ô ÁÁ´Ù.
+	// ï¿½Ì·ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½.
 
 	// Path = L"D:\\Project\\GM2\\API\\App\\AAA.png"
 	UEnginePath DummyPath = UEnginePath(Path);
 
 	if (false == DummyPath.IsDirectory())
 	{
-		MSGASSERT("µð·ºÅä¸® °æ·ÎÀÏ¶§¸¸ MoveParentToDirectory ¸¦ È£ÃâÇÒ¼ö ÀÖ½À´Ï´Ù");
+		MSGASSERT("ï¿½ï¿½ï¿½ä¸® ï¿½ï¿½ï¿½ï¿½Ï¶ï¿½ï¿½ï¿½ MoveParentToDirectory ï¿½ï¿½ È£ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½");
 		return false;
 	}
 

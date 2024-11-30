@@ -4,7 +4,7 @@
 
 //class AActor
 //{
-//    Player* NewPlayer; // <= ¸ÁÇß´Ù.
+//    Player* NewPlayer; // <= ï¿½ï¿½ï¿½ß´ï¿½.
 //};
 //
 //class Player : public AActor
@@ -12,14 +12,14 @@
 //
 //};
 
-// ·¹º§ÀÌ ³ôÀº Çì´õ´Â ·¹º§ÀÌ ³·Àº 
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 // #include <EngineCore/EngineAPICore.h>
 
 //#ifdef _WINDOWS
 //#include <Windows.h>
-//#elseif _¸®´ª½º
+//#elseif _ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //#include <Windows.h>
-//#elseif ¾Èµå·ÎÀÌµå
+//#elseif ï¿½Èµï¿½ï¿½ï¿½Ìµï¿½
 //#endif 
 
 HINSTANCE UEngineWindow::hInstance = nullptr;
@@ -34,7 +34,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hWnd, &ps);
-        // TODO: ¿©±â¿¡ hdc¸¦ »ç¿ëÇÏ´Â ±×¸®±â ÄÚµå¸¦ Ãß°¡ÇÕ´Ï´Ù...
+        // TODO: ï¿½ï¿½ï¿½â¿¡ hdcï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½Úµå¸¦ ï¿½ß°ï¿½ï¿½Õ´Ï´ï¿½...
         EndPaint(hWnd, &ps);
     }
     break;
@@ -57,8 +57,8 @@ void UEngineWindow::EngineWindowInit(HINSTANCE _Instance)
 {
     hInstance = _Instance;
 
-    // ¾îÂ÷ÇÇ ¹«Á¶°Ç ÇØÁà¾ß ÇÑ´Ù¸é ¿©±â¼­ ÇÏ·Á°í ÇÑ°Í.
-    // µðÆúÆ® À©µµ¿ì Å¬·¡½º µî·Ï
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´Ù¸ï¿½ ï¿½ï¿½ï¿½â¼­ ï¿½Ï·ï¿½ï¿½ï¿½ ï¿½Ñ°ï¿½.
+    // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     WNDCLASSEXA wcex;
     wcex.cbSize = sizeof(WNDCLASSEX);
     wcex.style = CS_HREDRAW | CS_VREDRAW;
@@ -77,27 +77,27 @@ void UEngineWindow::EngineWindowInit(HINSTANCE _Instance)
 
 int UEngineWindow::WindowMessageLoop(EngineDelegate _StartFunction, EngineDelegate _FrameFunction)
 {
-    // ´ÜÃàÅ° ÀÎµ¥ °ÔÀÓ
+    // ï¿½ï¿½ï¿½ï¿½Å° ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½
     // HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSPROJECT2));
     MSG msg = MSG();
 
-    // ±âº» ¸Þ½ÃÁö ·çÇÁÀÔ´Ï´Ù:
-    // ¸Þ¼¼Áö ·çÇÁ°¡ getMessage¶ó¸é °ÔÀÓÀÇ ·çÇÁ¸¦ µ¹¸±¼ö ¾ø´Ù.
-    // µ¿±â ÇÔ¼öÀÌ±â ¶§¹®ÀÌ´Ù.
-    // µ¿±â ÀÚ½ÅÀÇ ¸ñÀûÀÌ ³¡³¯¶§±îÁö Á¤ÁöÇÏ´Â ÇÔ¼ö.
+    // ï¿½âº» ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½:
+    // ï¿½Þ¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ getMessageï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½Ì±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½.
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½.
 
     // GetMessage
-    // ¸Þ¼¼Áö°¡ ¾ø´Ù => ¿µ¿øÈ÷ ±â´Ù¸²
-    // ¸Þ¼¼Áö°¡ ÀÖ´Ù => Ã³¸®ÇÏ°í ¸®ÅÏ
+    // ï¿½Þ¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ => ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ù¸ï¿½
+    // ï¿½Þ¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ => Ã³ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    // Ã³¸®ÇÏ°í ¸®ÅÏ
-    // ¸Þ¼¼Áö°¡ ¾ø´Ù => ¸®ÅÏ
-    // ¸Þ¼¼Áö°¡ ÀÖ´Ù => Ã³¸®ÇÏ°í ¸®ÅÏ
+    // Ã³ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½
+    // ï¿½Þ¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ => ï¿½ï¿½ï¿½ï¿½
+    // ï¿½Þ¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ => Ã³ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     // WindowCount;
 
-    // ÇÁ·Î±×·¥ ½ÃÀÛÇÏ°í µü 1¹ø ÇØ¾ßÇÒÀÏ ÀÖ´Ù¸é ¿©±â¿¡ ³Ö¾î¶ó.
-    // ÃÖ´ëÇÑ ¿¹¿ÜÃ³¸® ÇØÁÖ´Â°Ô ÁÁ´Ù.
+    // ï¿½ï¿½ï¿½Î±×·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ 1ï¿½ï¿½ ï¿½Ø¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½ï¿½ï¿½â¿¡ ï¿½Ö¾ï¿½ï¿½.
+    // ï¿½Ö´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½Ö´Â°ï¿½ ï¿½ï¿½ï¿½ï¿½.
     if (true == _StartFunction.IsBind())
     {
         _StartFunction();
@@ -105,10 +105,10 @@ int UEngineWindow::WindowMessageLoop(EngineDelegate _StartFunction, EngineDelega
 
     while (0 != WindowCount)
     {
-        // if (!TranslateAccelerator(msg.hwnd, nullptr, &msg))  => À©µµ¿ì ´ÜÃàÅ° ÀÚÃ¼¸¦ »ç¿ëÇÏÁö
-        // ¾ÊÀ» °ÍÀÌ¹Ç·Î ±×³É ¹«½Ã
+        // if (!TranslateAccelerator(msg.hwnd, nullptr, &msg))  => ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å° ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¹Ç·ï¿½ ï¿½×³ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-        // PM_REMOVE == ³»°¡ Ã³¸®ÇÒ¶§ Áö±Ý±îÁö ½×ÀÎ ¸Þ¼¼Áö ´ÙÁö¿ö.
+        // PM_REMOVE == ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ò¶ï¿½ ï¿½ï¿½ï¿½Ý±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
         if (0 != PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
             TranslateMessage(&msg);
@@ -119,8 +119,8 @@ int UEngineWindow::WindowMessageLoop(EngineDelegate _StartFunction, EngineDelega
         {
             _FrameFunction();
         }
-        // ¸Þ¼¼Áö°¡ ¾ø´Â ½Ã°£¿¡ ³» °ÔÀÓÀ» µ¹¸®´Â°Å¾ß.
-        // ¸Þ¼¼Áö Ã³¸®ÇÏ°í ³ª¼­ ³» °ÔÀÓ¿£ÁøÀ» µ¹¸°´Ù.
+        // ï¿½Þ¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â°Å¾ï¿½.
+        // ï¿½Þ¼ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¿ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
     }
 
     return (int)msg.wParam;
@@ -128,7 +128,7 @@ int UEngineWindow::WindowMessageLoop(EngineDelegate _StartFunction, EngineDelega
 
 void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
 {
-    // ÀÏ¹ÝÀûÀÎ ¸ÊÀÇ »ç¿ë¹ý
+    // ï¿½Ï¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     std::map<std::string, WNDCLASSEXA>::iterator EndIter = WindowClasss.end();
     std::map<std::string, WNDCLASSEXA>::iterator FindIter = WindowClasss.find(std::string(_Class.lpszClassName));
@@ -136,13 +136,13 @@ void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
     // ckw
     if (EndIter != FindIter)
     {
-        // std::string ErrorText = "°°Àº ÀÌ¸§ÀÇ À©µµ¿ì Å¬·¡½º¸¦ 2¹ø µî·ÏÇß½À´Ï´Ù" + std::string(_Class.lpszClassName);
+        // std::string ErrorText = "ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 2ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½" + std::string(_Class.lpszClassName);
 
-        // std::string ³»ºÎ¿¡ µé°í ÀÖ´Â ¸É¹öº¯¼ö => std::string => std::vector<char>
+        // std::string ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ => std::string => std::vector<char>
         // std::vector<char> char* = new char[100];
-        // ErrorText const char* ¸®ÅÏÇØÁÖ´Â ÇÔ¼ö°¡ c_str()
+        // ErrorText const char* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ c_str()
         // const char* Text = ErrorText.c_str();
-        MSGASSERT(std::string(_Class.lpszClassName) + " °°Àº ÀÌ¸§ÀÇ À©µµ¿ì Å¬·¡½º¸¦ 2¹ø µî·ÏÇß½À´Ï´Ù");
+        MSGASSERT(std::string(_Class.lpszClassName) + " ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 2ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½");
         return;
     }
 
@@ -170,7 +170,7 @@ UEngineWindow::~UEngineWindow()
         BackBufferImage = nullptr;
     }
 
-    // ¸±¸®ÁîÇÏ´Â ¼ø¼­´Â ¿Ø¸¸ÇÏ¸é ¸¸µé¾îÁø ¼ø¼­ÀÇ ¿ª¼øÀÌ ÁÁ´Ù.
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø¸ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
     if (nullptr != WindowHandle)
     {
         DestroyWindow(WindowHandle);
@@ -182,7 +182,7 @@ void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassN
 {
     if (false == WindowClasss.contains(_ClassName.data()))
     {
-        MSGASSERT(std::string(_ClassName) + " µî·ÏÇÏÁö ¾ÊÀº Å¬·¡½º·Î À©µµ¿ìÃ¢À» ¸¸µé·Á°í Çß½À´Ï´Ù");
+        MSGASSERT(std::string(_ClassName) + " ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½");
         return;
     }
 
@@ -191,25 +191,25 @@ void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassN
 
     if (nullptr == WindowHandle)
     {
-        MSGASSERT(std::string(_TitleName) + " À©µµ¿ì »ý¼º¿¡ ½ÇÆÐÇß½À´Ï´Ù.");
+        MSGASSERT(std::string(_TitleName) + " ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
         return;
     }
 
-    // À©µµ¿ì°¡ ¸¸µé¾îÁö¸é hdc¸¦ ¿©±â¼­ ¾ò¾î¿Ã °Ì´Ï´Ù.
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ì°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ hdcï¿½ï¿½ ï¿½ï¿½ï¿½â¼­ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì´Ï´ï¿½.
     HDC WindowMainDC = GetDC(WindowHandle);
 
-    // nullptrÀÌ ¾Æ´Ï°Ô ¸¸µç ¼ø°£ ÀÌÁ¦ ÁøÂ¥ À©µµ¿ì ¹öÆÛ°¡ ¸¸µé¾îÁ³´Ù.
+    // nullptrï¿½ï¿½ ï¿½Æ´Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¥ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
     WindowImage = new UEngineWinImage();
-    // ÀÌ°Ç ¸¸µç´Ù´Â °³³äÀÌ ¾Æ´Ï´Ù.
+    // ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½Ù´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï´ï¿½.
     WindowImage->Create(WindowMainDC);
 }
 
 void UEngineWindow::Open(std::string_view _TitleName /*= "Window"*/)
 {
-    // ¾î window ¾È¸¸µé°í ¶ç¿ì·Á°í ÇÏ³×?
+    // ï¿½ï¿½ window ï¿½È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½?
     if (0 == WindowHandle)
     {
-        // ¸¸µé¾î
+        // ï¿½ï¿½ï¿½ï¿½ï¿½
         Create(_TitleName);
     }
 
@@ -218,7 +218,7 @@ void UEngineWindow::Open(std::string_view _TitleName /*= "Window"*/)
         return;
     }
 
-    // ´Ü¼øÈ÷ À©µµÃ¢À» º¸¿©ÁÖ´Â °Í¸¸ÀÌ ¾Æ´Ï¶ó
+    // ï¿½Ü¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Í¸ï¿½ï¿½ï¿½ ï¿½Æ´Ï¶ï¿½
     ShowWindow(WindowHandle, SW_SHOW);
     UpdateWindow(WindowHandle);
     ++WindowCount;
@@ -227,15 +227,15 @@ void UEngineWindow::Open(std::string_view _TitleName /*= "Window"*/)
 
 void UEngineWindow::SetWindowPosAndScale(FVector2D _Pos, FVector2D _Scale)
 {
-    // ÀÌÀüÀÇ Å©±â¿Í ´Þ¶óÁ³À»¶§¸¸ ¹é¹öÆÛ¸¦ »õ·Î ¸¸µç °ÍÀÌ´Ù.
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ï¿½ ï¿½Þ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Û¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½.
     if (false == WindowSize.EqualToInt(_Scale))
     {
-        // È­¸éÀÇ Å©±â¿Í ÀüÈ÷ µ¿ÀÏÇÑ Å©±â¿©¾ß ÇÑ´Ù.
-        // ¿©·¯¹ø È£ÃâÇÏ¸é ±âÁ¸¿¡ ¸¸µé¾ú´ø ³à¼®ÀÌ LeckÀÌ µÇ¹Ç·Î
-        // È­¸éÅ©±â¸¦ Á¶Á¤ÇÒ ¶§¸¶´Ù »èÁ¦ÇØÁà¾ß ÇÑ´Ù.
+        // È­ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½â¿©ï¿½ï¿½ ï¿½Ñ´ï¿½.
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½à¼®ï¿½ï¿½ Leckï¿½ï¿½ ï¿½Ç¹Ç·ï¿½
+        // È­ï¿½ï¿½Å©ï¿½â¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
         if (nullptr != BackBufferImage)
         {
-            // ±âÁ¸ ¹é¹öÆÛ´Â Áö¿ö¹ö¸®°í
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Û´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             delete BackBufferImage;
             BackBufferImage = nullptr;
         }
@@ -248,13 +248,13 @@ void UEngineWindow::SetWindowPosAndScale(FVector2D _Pos, FVector2D _Scale)
 
     RECT Rc = { 0, 0, _Scale.iX(), _Scale.iY() };
 
-    // ÀÌ°Ô ±× °è»êÇØÁÖ´Â ÇÔ¼öÀÌ´Ù.
-    // Å¸ÀÌÆ²¹Ù Å©±â±îÁö ÇÕÃÄÁø Å©±â·Î ÁØ´Ù.
-    // À©µµ¿ì ÀÔÀå
-    // ÇöÀç À©µµ¿ìÀÇ ½ºÅ¸ÀÏÀ» ³Ö¾îÁà¾ß ÇÑ´Ù.
+    // ï¿½Ì°ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½ï¿½Ì´ï¿½.
+    // Å¸ï¿½ï¿½Æ²ï¿½ï¿½ Å©ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½.
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
 
-    // ±×·¯¸é ¶Ç ÀÌ³à¼®Àº 
-    // À©µµ¿ì¿¡¼­ °¡Á®¾ßÇÒ À§Ä¡¸¦ Æ÷ÇÔÇÑ Å©±â¸¦ ÁÖ°Ô µÈ´Ù.
+    // ï¿½×·ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì³à¼®ï¿½ï¿½ 
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ì¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½â¸¦ ï¿½Ö°ï¿½ ï¿½È´ï¿½.
     AdjustWindowRect(&Rc, WS_OVERLAPPEDWINDOW, FALSE);
 
     ::SetWindowPos(WindowHandle, nullptr, _Pos.iX(), _Pos.iY(), Rc.right - Rc.left, Rc.bottom - Rc.top, SWP_NOZORDER);
@@ -265,7 +265,7 @@ FVector2D UEngineWindow::GetMousePos()
     POINT MousePoint;
 
     GetCursorPos(&MousePoint);
-    // À©µµ¿ìÃ¢ À§Ä¡±âÁØÀ¸·Î ¸¶¿ì½º Æ÷Áö¼ÇÀ» 
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¢ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
     ScreenToClient(WindowHandle, &MousePoint);
 
     return FVector2D(MousePoint.x, MousePoint.y);

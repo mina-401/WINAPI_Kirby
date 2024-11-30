@@ -5,7 +5,7 @@
 UEngineDirectory::UEngineDirectory()
 	: UEnginePath()
 {
-	// ¸¸µé¾îÁö¸é ÇöÀç·Î 
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ 
 }
 
 UEngineDirectory::UEngineDirectory(std::string_view _Path)
@@ -28,7 +28,7 @@ std::vector<class UEngineFile> UEngineDirectory::GetAllFile(bool _IsRecursive /*
 {
 	std::vector<class UEngineFile> Result;
 
-	// °æ·Î¸¦ ³Ö¾îÁÖ¸é ±× °æ·ÎÀÇ Ã¹¹øÂ° ÆÄÀÏÀ» °¡¸®Å°°Ô µÈ´Ù.
+	// ï¿½ï¿½Î¸ï¿½ ï¿½Ö¾ï¿½ï¿½Ö¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½È´ï¿½.
 	std::filesystem::directory_iterator Diriter = std::filesystem::directory_iterator(Path);
 
 	while (false == Diriter._At_end())
@@ -57,7 +57,7 @@ std::vector<class UEngineDirectory> UEngineDirectory::GetAllDirectory()
 {
 	std::vector<class UEngineDirectory> Result;
 
-	// °æ·Î¸¦ ³Ö¾îÁÖ¸é ±× °æ·ÎÀÇ Ã¹¹øÂ° ÆÄÀÏÀ» °¡¸®Å°°Ô µÈ´Ù.
+	// ï¿½ï¿½Î¸ï¿½ ï¿½Ö¾ï¿½ï¿½Ö¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½È´ï¿½.
 	std::filesystem::directory_iterator Diriter = std::filesystem::directory_iterator(Path);
 
 	while (false == Diriter._At_end())
@@ -82,7 +82,7 @@ std::vector<class UEngineDirectory> UEngineDirectory::GetAllDirectory()
 void UEngineDirectory::GetAllFileRecursive(std::filesystem::path _Path
 	, std::vector<class UEngineFile>& _Result)
 {
-	// °æ·Î¸¦ ³Ö¾îÁÖ¸é ±× °æ·ÎÀÇ Ã¹¹øÂ° ÆÄÀÏÀ» °¡¸®Å°°Ô µÈ´Ù.
+	// ï¿½ï¿½Î¸ï¿½ ï¿½Ö¾ï¿½ï¿½Ö¸ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½È´ï¿½.
 	std::filesystem::directory_iterator Diriter = std::filesystem::directory_iterator(_Path);
 
 	while (false == Diriter._At_end())

@@ -1,11 +1,11 @@
 #pragma once
 #include <string>
-// ¿©·¯ºÐµéÀÌ ¿©±â¿¡´Ù°¡ ÀÌ·¸°Ô Æ¯Á¤ Çì´õ¸¦ ³ÖÀ¸¸é
-// F5¸¦ ´©¸¦¶§¸¶´Ù. #include <Windows.h>°¡ Àçºôµå µÈ´Ù.
-// ¹Ì¸®ÄÄÆÄÀÏµÈ Çì´õ¸¦ »ç¿ëÇÏ¸é
-// ¹Ì¸®ÄÄÆÄÀÏµÈ Çì´õ¿¡ ³Ö¾îÁø Çì´õ´Â ºôµå¸¦ÇÏ¸é .pchÆÄÀÏ¿¡ ºôµå°á°ú°¡ ³²°í
-// ±×ÈÄ¿¡´Â ºôµåµÇÁö ¾Ê´Â´Ù.
-// ÄÄÆÄÀÏ ½Ã°£ÀÌ 
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½â¿¡ï¿½Ù°ï¿½ ï¿½Ì·ï¿½ï¿½ï¿½ Æ¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// F5ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½. #include <Windows.h>ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½È´ï¿½.
+// ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½
+// ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½å¸¦ï¿½Ï¸ï¿½ .pchï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+// ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´Â´ï¿½.
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ï¿½ï¿½ 
 #include <Windows.h>
 #include <EnginePlatform/EngineWindow.h>
 #include <EngineBase/EngineTimer.h>
@@ -16,8 +16,8 @@
 
 #include "Level.h"
 
-// ÇÔ¼öÆ÷ÀÎÅÍ
-// °¡»óÇÔ¼ö
+// ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½
 
 class UContentsCore
 {
@@ -26,9 +26,9 @@ public:
 	virtual void Tick() = 0;
 };
 
-// UEngineAPICore => ¾ð¸®¾ó·Î º¸¸é world¶ó°í º¼¼ö ÀÖ´Ù.
+// UEngineAPICore => ï¿½ð¸®¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ worldï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½.
 
-// ¼³¸í :
+// ï¿½ï¿½ï¿½ï¿½ :
 class UEngineAPICore
 {
 public:
@@ -66,19 +66,19 @@ public:
 
 		if (false != Levels.contains(UpperName))
 		{
-			MSGASSERT("Á¸ÀçÇÏ´Â ÀÌ¸§ÀÇ ·¹º§À» ¶Ç ¸¸µé¼ö ¾ø½À´Ï´Ù" + UpperName);
+			MSGASSERT("ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½" + UpperName);
 			return nullptr;
 		}
 
 
 		ULevel* NewLevel = new ULevel();
 
-		// °ÔÀÓ ¸ðµå°¡ ·¹º§ÀÇ Æ¯¼ºÀ» ¼³Á¤ÇÏ´Â Áß¿äÇÑ °´Ã¼
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Æ¯ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ß¿ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼
 		NewLevel->CreateGameMode<GameModeType, MainPawnType>();
 		NewLevel->SetName(UpperName);
 
 
-		// ·¹º§À» stringÀ¸·Î ÀúÀåÇÏ°í stringÀ¸·Î È£ÃâÇÑ´Ù.
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ stringï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ stringï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½Ñ´ï¿½.
 		Levels.insert({ UpperName, NewLevel });
 
 		return NewLevel;
@@ -91,7 +91,7 @@ public:
 		// DestroyLevelName = _LevelName;
 		std::string UpperName = UEngineString::ToUpper(_LevelName);
 
-		// Áö±Ý ´çÀå ÀÌ³à¼®À» Áö¿ì¸é ¾ÈµÈ´Ù.
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì³à¼®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ÈµÈ´ï¿½.
 		if (CurLevel->GetName() != UpperName)
 		{
 			DestroyLevel(_LevelName);
@@ -99,8 +99,8 @@ public:
 			return;
 		}
 
-		// CurLevelÀº »èÁ¦µÇ¾î¾ß ÇÑ´Ù.
-		// ³ªÀÇ Æ÷ÀÎÅÍ´Â »ì¾ÆÀÖ´Ù. CurLevel
+		// CurLevelï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ ï¿½Ñ´ï¿½.
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í´ï¿½ ï¿½ï¿½ï¿½ï¿½Ö´ï¿½. CurLevel
 		std::map<std::string, class ULevel*>::iterator FindIter = Levels.find(UpperName);
 		Levels.erase(FindIter);
 		NextLevel = CreateLevel<GameModeType, MainPawnType>(UpperName);
@@ -113,7 +113,7 @@ public:
 
 		if (false == Levels.contains(UpperName))
 		{
-			// MSGASSERT("Á¸ÀçÇÏÁö ¾Ê´Â ·¹º§À» ¸®¼ÂÇÒ¼ö ¾ø½À´Ï´Ù." + UpperName);
+			// MSGASSERT("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½." + UpperName);
 			return;
 		}
 
@@ -146,16 +146,16 @@ private:
 	static UContentsCore* UserCore;
 
 	UEngineTimer DeltaTimer = UEngineTimer();
-	UEngineWindow EngineMainWindow = UEngineWindow(); // ¿£Áø ¸ÞÀÎ À©µµ¿ì
+	UEngineWindow EngineMainWindow = UEngineWindow(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-	// ´©°¡ ·¹º§ÀÇ ¼ÒÀ¯ÀÚ¶ó°í °³³äÀ» Àâ´Â°Ô ÁÁ³Ä?
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ú¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½?
 
-	// ¸¸µé¾îÁø ¸ðµç ·¹º§
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	std::map<std::string, class ULevel*> Levels;
 
-	// ÇöÀç ³»°¡ ´«À¸·Î º¸°í ÀÖ¾î¾ßÇÏ´Â ·¹º§
-	// µ¹¾Æ°¡°í ÀÖ´Â ·¹º§
-	// Æ÷ÀÎÅÍ Ã¼ÀÎÁö ¹æ½Ä
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
+	// ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	class ULevel* CurLevel = nullptr;
 	class ULevel* NextLevel = nullptr;
 	bool IsCurLevelReset = false;

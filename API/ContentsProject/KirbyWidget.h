@@ -1,6 +1,6 @@
 #pragma once
 #include "Widget.h"
-// ¼³¸í :
+// ï¿½ï¿½ï¿½ï¿½ :
 class AKirbyWidget : public AWidget
 {
 public:

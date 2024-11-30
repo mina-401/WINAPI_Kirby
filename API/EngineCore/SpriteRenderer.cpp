@@ -18,11 +18,11 @@ USpriteRenderer::~USpriteRenderer()
 // StaticMeshRenderer : public URenderer
 void USpriteRenderer::Render(float _DeltaTime)
 {
-	// ¾÷µ¥ÀÌÆ®
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 
 	if (nullptr == Sprite)
 	{
-		MSGASSERT("½ºÇÁ¶óÀÌÆ®°¡ ¼¼ÆÃµÇÁö ¾ÊÀº ¾×ÅÍ¸¦ ·£´õ¸µÀ» ÇÒ¼ö ¾ø½À´Ï´Ù.");
+		MSGASSERT("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 		return;
 	}
 	UEngineWindow& MainWindow = UEngineAPICore::GetCore()->GetMainWindow();
@@ -38,24 +38,24 @@ void USpriteRenderer::Render(float _DeltaTime)
 		Trans.Location = Trans.Location - (Level->CameraPos * CameraEffectScale);
 	}
 
-	// 100, 100 ·£´õ¸µ ÇÑ´Ù°í Ä¡°Ú½À´Ï´Ù.
+	// 100, 100 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´Ù°ï¿½ Ä¡ï¿½Ú½ï¿½ï¿½Ï´ï¿½.
 
-	// 0.5f, 0.5f PivotRealScale = 0, 0ÀÌ ³ª¿Í¾ß ÇÑ´Ù.;
+	// 0.5f, 0.5f PivotRealScale = 0, 0ï¿½ï¿½ ï¿½ï¿½ï¿½Í¾ï¿½ ï¿½Ñ´ï¿½.;
 
 
 	// Trans.Scale;
 	// 100, 100 
 
-	// 0.5f, 0.5f ÀÏ¶§ 
+	// 0.5f, 0.5f ï¿½Ï¶ï¿½ 
 	// 0, 0
-	// 0.0f, 0.5f ÀÏ¶§ 
+	// 0.0f, 0.5f ï¿½Ï¶ï¿½ 
 	// -50, 0.0f
 
 
-	// ÀÌ¹ÌÁö Å©±â¿¡ ±â¹ÝÇÑ ¾î¶² °ªÀÌ µÉ¼ö¹Û¿¡ ¾ø´Ù.
+	// ï¿½Ì¹ï¿½ï¿½ï¿½ Å©ï¿½â¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½î¶² ï¿½ï¿½ï¿½ï¿½ ï¿½É¼ï¿½ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½.
 	FVector2D PivotRealScale;
 
-	//                 ¼Ò¼öÁ¡ ¹ö¸²
+	//                 ï¿½Ò¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	PivotRealScale.X = std::floorf((0.5f - Pivot.X) * Trans.Scale.X);
 	PivotRealScale.Y = std::floorf((0.5f - Pivot.Y) * Trans.Scale.Y);
 
@@ -74,11 +74,11 @@ void USpriteRenderer::Render(float _DeltaTime)
 
 void USpriteRenderer::BeginPlay()
 {
-	// ºÎ¸ð Å¬·¡½ºÀÇ ÇÔ¼ö¸¦ È£ÃâÇÏ´Â°É ±ôºýÇÏ¸é ¾ÈµÈ´Ù.
-	// ½À°üµÇ¸é °¡Àå ¾ð¸®¾ó ÇÐ½À¿¡¼­ °É¸²µ¹ÀÌ µÇ´Â ½À°üÀÌ µÈ´Ù.
+	// ï¿½Î¸ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½Ï´Â°ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ÈµÈ´ï¿½.
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ð¸®¾ï¿½ ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½É¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È´ï¿½.
 	Super::BeginPlay();
 
-	// ½ºÇÁ¶óÀÌÆ® ·£´õ·¯°¡ 
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 
 	AActor* Actor = GetActor();
 	ULevel* Level = Actor->GetWorld();
@@ -90,7 +90,7 @@ void USpriteRenderer::ComponentTick(float _DeltaTime)
 {
 	Super::ComponentTick(_DeltaTime);
 
-	// ¾Ö´Ï¸ÞÀÌ¼Ç ÁøÇà½ÃÅ°´Â ÄÚµå¸¦ ComponentTickÀ¸·Î ¿Å°å´Ù. 
+	// ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½Úµå¸¦ ComponentTickï¿½ï¿½ï¿½ï¿½ ï¿½Å°ï¿½ï¿½. 
 	if (nullptr != CurAnimation)
 	{
 		CurAnimation->IsEnd = false;
@@ -116,7 +116,7 @@ void USpriteRenderer::ComponentTick(float _DeltaTime)
 				CurAnimation->Events[CurIndex]();
 			}
 
-			// ¾Ö´Ï¸ÞÀÌ¼Ç ¾Øµå
+			// ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½Øµï¿½
 			if (CurAnimation->CurIndex >= Indexs.size())
 			{
 				CurAnimation->IsEnd = true;
@@ -156,16 +156,16 @@ void USpriteRenderer::ComponentTick(float _DeltaTime)
 
 void USpriteRenderer::SetSprite(std::string_view _Name, int _CurIndex /*= 0*/)
 {
-	// ½Ì±ÛÅæ¿¡ ´ëÇØ¼­ ¼³¸íÇÒ¶§
-	// °ªÀ» ÆíÇÏ°Ô °øÀ¯ÇÏ±â À§ÇØ¼­ »ç¿ëÇÏ´Â °Å¶ó°í ÇÏ¸é Æ²·È´Ù.
-	// °´Ã¼¸¦ ´Ü 1°³ ¸¸µå´Â ÆÐÅÏÀÌ¶ó´Â °ÍÀ» ÀØÁö ¸¶½Ã°í
+	// ï¿½Ì±ï¿½ï¿½æ¿¡ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Å¶ï¿½ï¿½ ï¿½Ï¸ï¿½ Æ²ï¿½È´ï¿½.
+	// ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã°ï¿½
 
-	// ¾×ÅÍ°¡ ¸¸µé¾îÁ³À»¶§´Â ·Îµå°¡ ³¡³­ »óÈ²ÀÌ¾î¾ß ÇÑ´Ù.
+	// ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµå°¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È²ï¿½Ì¾ï¿½ï¿½ ï¿½Ñ´ï¿½.
 	Sprite = UImageManager::GetInst().FindSprite(_Name);
 
 	if (nullptr == Sprite)
 	{
-		MSGASSERT("·ÎµåÇÏÁö ¾ÊÀº ½ºÇÁ¶óÀÌÆ®¸¦ »ç¿ëÇÏ·Á°í Çß½À´Ï´Ù" + std::string(_Name));
+		MSGASSERT("ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½" + std::string(_Name));
 		return;
 	}
 
@@ -178,16 +178,16 @@ void USpriteRenderer::SetOrder(int _Order)
 
 	Order = _Order;
 
-	// PushRenderer ¿¡¼­ ³ª´Â ·£´õ ±¸Á¶¿¡ ÆíÀÔµÈ´Ù.
-	// ±×·±µ¥ 2¹øµé¾î°¡´Â ¹ö±×°¡ º¸¿´´Ù.
-	// ±×·¡¼­ ÀÌ°É ÇØ¼­ ÀÏ´Ü¤¼ ¸·¾Ò´Ù. 
+	// PushRenderer ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÔµÈ´ï¿½.
+	// ï¿½×·ï¿½ï¿½ï¿½ 2ï¿½ï¿½ï¿½ï¿½î°¡ï¿½ï¿½ ï¿½ï¿½ï¿½×°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
+	// ï¿½×·ï¿½ï¿½ï¿½ ï¿½Ì°ï¿½ ï¿½Ø¼ï¿½ ï¿½Ï´Ü¤ï¿½ ï¿½ï¿½ï¿½Ò´ï¿½. 
 	if (PrevOrder == Order)
 	{
 		return;
 	}
 
-	// µ¿ÀûÀ¸·Î ÇØ¾ßÇÒ¶§´Â ·¹º§ÀÌ ¼¼ÆÃµÇ¾î ÀÖÀ» °ÍÀÌ¹Ç·Î
-	// ·¹º§ÀÌ ¼¼ÆÃµÇ¾î ÀÖ´Ù¸é Áï°¢ ¹Ù²ãÁØ´Ù.
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø¾ï¿½ï¿½Ò¶ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÃµÇ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¹Ç·ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÃµÇ¾ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½ï°¢ ï¿½Ù²ï¿½ï¿½Ø´ï¿½.
 	ULevel* Level = GetActor()->GetWorld();
 
 	if (nullptr != Level)
@@ -200,7 +200,7 @@ FVector2D USpriteRenderer::SetSpriteScale(float _Ratio /*= 1.0f*/, int _CurIndex
 {
 	if (nullptr == Sprite)
 	{
-		MSGASSERT("½ºÇÁ¶óÀÌÆ®¸¦ ¼¼ÆÃÇÏÁö ¾Ê°í ½ºÇÁ¶óÀÌÆ® Å©±â·Î ·£´õ·¯ Å©±â¸¦ Á¶Á¤ÇÒ¼ö ¾ø½À´Ï´Ù.");
+		MSGASSERT("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® Å©ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½â¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 		return FVector2D::ZERO;
 	}
 
@@ -266,7 +266,7 @@ void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::stri
 
 	if (_Frame.size() != _Indexs.size())
 	{
-		MSGASSERT(UpperName + "À» ¸¸µé´Ù ¿¡·¯°¡ ³µ½À´Ï´Ù ÇÁ·¹ÀÓ°ú Å¸ÀÓÀÇ Ä«¿îÆ®°¡ ¼­·Î ´Ù¸¨´Ï´Ù");
+		MSGASSERT(UpperName + "ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó°ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ï¿½Ï´ï¿½");
 		return;
 	}
 
@@ -279,7 +279,7 @@ void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::stri
 
 	if (nullptr == FindSprite)
 	{
-		MSGASSERT("·ÎµåÇÏÁö ¾ÊÀº ½ºÇÁ¶óÀÌÆ®¸¦ ¾Ö´Ï¸ÞÀÌ¼Ç »ý¼­¿¡ »ç¿ëÇÏ·Á°í Çß½À´Ï´Ù" + std::string(UpperName));
+		MSGASSERT("ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½" + std::string(UpperName));
 		return;
 	}
 
@@ -300,7 +300,7 @@ void USpriteRenderer::ChangeAnimation(std::string_view _AnimationName, bool _For
 
 	if (false == FrameAnimations.contains(UpperName))
 	{
-		MSGASSERT("Á¸ÀçÇÏÁö ¾ÊÀº ¾Ö´Ï¸ÞÀÌ¼ÇÀ¸·Î º¯°æÇÏ·Á°í Çß½À´Ï´Ù. = " + UpperName);
+		MSGASSERT("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½. = " + UpperName);
 		return;
 	}
 
@@ -330,7 +330,7 @@ void USpriteRenderer::SetAnimationEvent(std::string_view _AnimationName, int _Fr
 
 	if (false == FrameAnimations.contains(UpperName))
 	{
-		MSGASSERT("Á¸ÀçÇÏÁö ¾ÊÀº ¾Ö´Ï¸ÞÀÌ¼ÇÀ¸·Î º¯°æÇÏ·Á°í Çß½À´Ï´Ù. = " + UpperName);
+		MSGASSERT("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½. = " + UpperName);
 		return;
 	}
 
@@ -349,7 +349,7 @@ void USpriteRenderer::SetAnimationEvent(std::string_view _AnimationName, int _Fr
 
 	if (false == Check)
 	{
-		MSGASSERT("Á¸ÀçÇÏÁö ¾Ê´Â ÇÁ·¹ÀÓ¿¡ ÀÌº¥Æ®¸¦ »ý¼ºÇÏ·Á°í Çß½À´Ï´Ù" + std::string(_AnimationName));
+		MSGASSERT("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ó¿ï¿½ ï¿½Ìºï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½" + std::string(_AnimationName));
 		return;
 	}
 
@@ -362,7 +362,7 @@ void USpriteRenderer::SetCameraEffectScale(float _Effect)
 	CameraEffectScale = _Effect;
 }
 
-// ¿©·¯ºÐµéÀÌ ¾Ö´Ï¸ÞÀÌ¼ÇÀ» ÇÏ°Å³ª
+// ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½Ï°Å³ï¿½
 void USpriteRenderer::SetPivotType(PivotType _Type)
 {
 	if (PivotType::Center == _Type)
@@ -373,7 +373,7 @@ void USpriteRenderer::SetPivotType(PivotType _Type)
 
 	if (nullptr == Sprite)
 	{
-		MSGASSERT("ÀÌ¹ÌÁö¸¦ ±â¹ÝÀ¸·ÎÇÑ ÇÇº¿¼³Á¤Àº ½ºÇÁ¶óÀÌÆ®°¡ ¼¼ÆÃµÇÁö ¾ÊÀº »óÅÂ¿¡¼­´Â È£ÃâÇÒ¼ö ¾ø½À´Ï´Ù");
+		MSGASSERT("ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Çºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
 		return;
 	}
 

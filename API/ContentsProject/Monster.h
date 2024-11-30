@@ -4,7 +4,7 @@
 #include <EnginePlatform/EngineSound.h>
 #include "ContentsEnum.h"
 
-// ¼³¸í :
+// ï¿½ï¿½ï¿½ï¿½ :
 
 
 class AMonster : public AActor
@@ -196,7 +196,7 @@ private:
 			GravityForce = FVector2D::ZERO;
 		}
 
-		// »ó½Ã 
+		// ï¿½ï¿½ï¿½ 
 	}
 	
 	

@@ -16,7 +16,7 @@ AMonster::AMonster()
 {
 
 	{
-		U2DCollision* CollisionComponent = CreateDefaultSubObject<U2DCollision>();
+		CollisionComponent = CreateDefaultSubObject<U2DCollision>();
 		CollisionComponent->SetComponentLocation({ 0, -20 });
 		CollisionComponent->SetComponentScale({ 50, 50 });
 		CollisionComponent->SetCollisionGroup(ECollisionGroup::MonsterBody);
@@ -66,15 +66,6 @@ void AMonster::ChangeState(EMonsterState _CurMonsterState)
 		ChaseStart();
 		break;
 	case EMonsterState::Attack:
-		/*switch (CopyAbilityStatus)
-		{
-		case ECopyAbilityStatus::AbleCopy:
-			break;
-		case ECopyAbilityStatus::UnableCopy:
-			break;
-		default:
-			break;
-		}*/
 		this->AttackStart();
 
 		break;
@@ -130,23 +121,17 @@ void AMonster::KnockBackStart()
 
 void AMonster::KnockBack(float _DeltaTime)
 {
-	if (true == MonsterKnockBackNextPosCheck(_DeltaTime, KnockBackVec))
+	if (true == MonsterNextPosCheck(_DeltaTime, KnockBackVec))
 	{
 		AddActorLocation(KnockBackVec  * _DeltaTime);
 
 	}
+	
+	
 	if (true == SpriteRenderer->IsCurAnimationEnd())
 	{
-		if (GetCurHp() <= 0)
-		{
-			ChangeState(EMonsterState::Die);
-			return;
-		}
-		else
-		{
-			ChangeState(EMonsterState::Move);
-			return;
-		}
+		ChangeState(EMonsterState::Move);
+		return;
 	}
 
 }
@@ -156,7 +141,7 @@ void AMonster::ChangeMonsterDir(float _DeltaTime)
 
 	if (false == MonsterNextPosCheck(_DeltaTime, MoveVector))
 	{
-		//¹æÇâ ¹Ù²Ù±â
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Ù±ï¿½
 		if (MoveVector == FVector2D::RIGHT) {
 			MoveVector = FVector2D::LEFT;
 		}
@@ -199,7 +184,8 @@ bool AMonster::MonsterNextPosCheck(float _DeltaTime, FVector2D _Vector)
 }
 bool AMonster::MonsterKnockBackNextPosCheck(float _DeltaTime, FVector2D _Vector)
 {
-	UColor Color = ColImage->GetColor(GetActorLocation() + _Vector * _DeltaTime, UColor::WHITE);
+	FVector2D DownVector = { 0.0,-1.0f };
+	UColor Color = ColImage->GetColor(GetActorLocation() + (_Vector) * _DeltaTime+ DownVector, UColor::WHITE);
 	if (Color == UColor::BLACK)
 	{
 		return false;
@@ -237,7 +223,7 @@ void AMonster::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
-	//ÇÃ·¹ÀÌ¾î¿Í ÀÏÁ¤°Å¸®¿¡ ÀÖÀ¸¸é µû¶ó°£´Ù.
+	//ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ó°£´ï¿½.
 	// target - me
 	/*if (true == IsColEnd)
 	{
@@ -252,7 +238,15 @@ void AMonster::Tick(float _DeltaTime)
 			CurHpbarTime += 0.2f;
 		}
 	}*/
+	if (GetCurHp() <= 0)
+	{
+		if (CurMonsterState != EMonsterState::Die)
+		{
+			ChangeState(EMonsterState::Die);
+			return;
 
+		}
+	}
 	switch (CurMonsterState)
 	{
 	case EMonsterState::Idle:
@@ -340,7 +334,7 @@ void AMonster::MonsterClimbingUphill()
 		UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
 		if (Color == UColor::GRAY)
 		{
-			// ³ª°¡ ¶¥À§·Î ¿Ã¶ó°¥¶§±îÁö while °è¼Ó ¿Ã·ÁÁØ´Ù.
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã¶ó°¥¶ï¿½ï¿½ï¿½ï¿½ï¿½ while ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ø´ï¿½.
 			AddActorLocation(FVector2D::UP);
 		}
 		else {
@@ -370,12 +364,12 @@ void AMonster::Chase(float _DeltaTime)
 	UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
 	if (Color == UColor::BLACK)
 	{
-		//°æ»ç¸é, ±×¶ó¿îµå¿¡ ¼­ÀÖ´Ù.
-		FVector2D UPVector = { 0.0f,-4.5f };
-		UColor NextColor = ColImage->GetColor(GetActorLocation() + UPVector, UColor::WHITE);
+		FVector2D Pos = { MoveVector.X, MoveVector.Y - 1.0f };
+		FVector2D NextPos = Pos *_DeltaTime * Speed;
+		UColor NextColor = ColImage->GetColor(NextPos, UColor::WHITE);
 		if (NextColor != UColor::BLACK)
 		{
-			AddActorLocation(FVector2D::UP);
+			AddActorLocation(NextPos);
 		}
 
 	}
@@ -391,7 +385,7 @@ void AMonster::Chase(float _DeltaTime)
 	MonsterClimbingUphill();
 
 
-	//¾îµò°¡¿¡¼­ ÇÃ·¹ÀÌ¾î°¡ ¾Èº¸ÀÌ¸é º¸Åë»óÅÂ·Î
+	//ï¿½ï¿½ò°¡¿ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½Èºï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½
 }
 void AMonster::MoveDirCheck(FVector2D _Pos)
 {
@@ -452,17 +446,17 @@ void AMonster::CollisionEnter(AActor* _ColActor)
 }
 void AMonster::ColKnockBackEnter(AActor* _ColActor)
 {
-	// ¹Ð·Á³ª°¥ ¹æÇâ
+	// ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	FVector2D Vector = GetActorLocation()- _ColActor->GetActorLocation() ;
 	Vector.Normalize();
 	SetKnockBackForce(Vector*150.0f);
 
 	MonWidget->SetActive(true);
 	
-	//µ¥¹ÌÁö ¹Þ¾Ò´Ù 
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Ò´ï¿½ 
 	SetIsDamagedState(true);
 	
-	//³Ë¹é »óÅÂ·Î
+	//ï¿½Ë¹ï¿½ ï¿½ï¿½ï¿½Â·ï¿½
 	ChangeState(EMonsterState::KnockBack);
 }
 void AMonster::CollisionStay(AActor* _ColActor)

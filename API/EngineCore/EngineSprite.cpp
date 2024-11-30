@@ -15,11 +15,11 @@ void UEngineSprite::PushData(UEngineWinImage* _Image, const FTransform& _Trans)
 {
 	if (true == _Trans.Scale.IsZeroed())
 	{
-		MSGASSERT("Å©±â°¡ 0ÀÎ ÀÌ¹ÌÁö¸¦ ¸¸µé¼ö ¾ø½À´Ï´Ù");
+		MSGASSERT("Å©ï¿½â°¡ 0ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
 	}
 	
 
-	// ¸®½ºÆ® ÀÌ´Ï¼È¶óÀÌÀú
+	// ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ì´Ï¼È¶ï¿½ï¿½ï¿½ï¿½ï¿½
 	Data.push_back({ _Image, _Trans });
 }
 

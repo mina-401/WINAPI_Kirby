@@ -33,8 +33,8 @@ AWaddleDee::AWaddleDee()
 		SpriteRenderer->CreateAnimation("Attack_Right", "WaddleDee_Right.png", 0, 4, 0.2f);
 		SpriteRenderer->CreateAnimation("Inhaled_Left", "WaddleDee_Left.png", 9, 9, 0.2f,true);
 		SpriteRenderer->CreateAnimation("Inhaled_Right", "WaddleDee_Right.png", 9, 9, 0.2f,true);
-		SpriteRenderer->CreateAnimation("Damaged_Left", "WaddleDee_Left.png", 9, 9, 1.0f);
-		SpriteRenderer->CreateAnimation("Damaged_Right", "WaddleDee_Right.png", 9, 9, 1.0f);
+		SpriteRenderer->CreateAnimation("Damaged_Left", "WaddleDee_Left.png", 9, 9, 1.5f,false);
+		SpriteRenderer->CreateAnimation("Damaged_Right", "WaddleDee_Right.png", 9, 9, 1.5f, false);
 		SpriteRenderer->ChangeAnimation("Walk_Left");
 
 

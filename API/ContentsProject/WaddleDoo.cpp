@@ -43,7 +43,7 @@ AWaddleDoo::AWaddleDoo()
 		BeamSpriteRenderer1 = CreateDefaultSubObject<USpriteRenderer>();
 
 		BeamSpriteRenderer1->SetComponentScale({ 250, 250 });
-		BeamSpriteRenderer1->SetComponentLocation({ 0, -50 });
+		BeamSpriteRenderer1->SetComponentLocation({ 0, -25 });
 		BeamSpriteRenderer1->SetOrder(ERenderOrder::MONSTER);
 
 		BeamSpriteRenderer1->CreateAnimation("WaddleDoo_Beam", "WaddleDoo_Beam.png", 0, 1, 0.2f, true);
@@ -55,7 +55,7 @@ AWaddleDoo::AWaddleDoo()
 		BeamSpriteRenderer2 = CreateDefaultSubObject<USpriteRenderer>();
 
 		BeamSpriteRenderer2->SetComponentScale({ 250, 250 });
-		BeamSpriteRenderer2->SetComponentLocation({ 0, -50 });
+		BeamSpriteRenderer2->SetComponentLocation({ 0,  -25 });
 		BeamSpriteRenderer2->SetOrder(ERenderOrder::MONSTER);
 						 
 		BeamSpriteRenderer2->CreateAnimation("WaddleDoo_Beam", "WaddleDoo_Beam.png", 0, 1, 0.2f, true);
@@ -67,7 +67,7 @@ AWaddleDoo::AWaddleDoo()
 		BeamSpriteRenderer3 = CreateDefaultSubObject<USpriteRenderer>();
 						 
 		BeamSpriteRenderer3->SetComponentScale({ 250, 250 });
-		BeamSpriteRenderer3->SetComponentLocation({ 0, -50 });
+		BeamSpriteRenderer3->SetComponentLocation({ 0,  -25 });
 		BeamSpriteRenderer3->SetOrder(ERenderOrder::MONSTER);
 						  
 		BeamSpriteRenderer3->CreateAnimation("WaddleDoo_Beam", "WaddleDoo_Beam.png", 0, 1, 0.2f, true);
@@ -79,7 +79,7 @@ AWaddleDoo::AWaddleDoo()
 		BeamSpriteRenderer4 = CreateDefaultSubObject<USpriteRenderer>();
 						  
 		BeamSpriteRenderer4->SetComponentScale({ 250, 250 });
-		BeamSpriteRenderer4->SetComponentLocation({ 0, -50 });
+		BeamSpriteRenderer4->SetComponentLocation({ 0,  -25 });
 		BeamSpriteRenderer4->SetOrder(ERenderOrder::MONSTER);
 						  
 		BeamSpriteRenderer4->CreateAnimation("WaddleDoo_Beam", "WaddleDoo_Beam.png", 0, 1, 0.2f, true);
@@ -108,11 +108,11 @@ AWaddleDoo::AWaddleDoo()
 	}*/
 
 	{
-		U2DCollision* CollisionComponent = CreateDefaultSubObject<U2DCollision>();
-		CollisionComponent->SetComponentLocation({ 0, 0 });
+		//CollisionComponent = CreateDefaultSubObject<U2DCollision>();
+		CollisionComponent->SetComponentLocation({ 0, -25 });
 		CollisionComponent->SetComponentScale({ 50, 50 });
-		CollisionComponent->SetCollisionGroup(ECollisionGroup::MonsterBody);
-		CollisionComponent->SetCollisionType(ECollisionType::CirCle);
+		//CollisionComponent->SetCollisionGroup(ECollisionGroup::MonsterBody);
+		//CollisionComponent->SetCollisionType(ECollisionType::CirCle);
 
 
 
@@ -120,7 +120,7 @@ AWaddleDoo::AWaddleDoo()
 
 	{
 		U2DCollision* CollisionComponent = CreateDefaultSubObject<U2DCollision>();
-		CollisionComponent->SetComponentLocation({ 0, 0 });
+		CollisionComponent->SetComponentLocation({ 0, -25 });
 		CollisionComponent->SetComponentScale({ 200, 200 });
 		CollisionComponent->SetCollisionGroup(ECollisionGroup::MonsterAttack);
 		CollisionComponent->SetCollisionType(ECollisionType::CirCle);

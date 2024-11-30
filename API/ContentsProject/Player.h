@@ -170,9 +170,9 @@ private:
     float ChangeTime = 50.0f;
     float CurChangeTime = 0.0f;
 
-    // Á¡ÇÁ
-    // °ø°Ý
-    // Á¡ÇÁ°ø°Ý
+    // ï¿½ï¿½ï¿½ï¿½
+    // ï¿½ï¿½ï¿½ï¿½
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     // 
 
     
@@ -301,7 +301,7 @@ private:
             GravityForce = FVector2D::ZERO;
         }
 
-        // »ó½Ã 
+        // ï¿½ï¿½ï¿½ 
     }
     void FlyGravity(float _DeltaTime)
     {
@@ -314,7 +314,7 @@ private:
             GravityForce = FVector2D::ZERO;
         }
 
-        // »ó½Ã 
+        // ï¿½ï¿½ï¿½ 
     }
     void JumpGravity(float _DeltaTime)
     {
@@ -343,14 +343,14 @@ private:
             FrictionForce = FVector2D::ZERO;
         }
 
-        // »ó½Ã 
+        // ï¿½ï¿½ï¿½ 
     }
 
 
  
     void DeAccel(float _DeltaTime, FVector2D Vector)
     {
-        // ÀÔ·Â ¹æÇâÀ¸·Î °¡¼ÓÇÑ´Ù
+        // ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½
         Acc += Vector * 50.0f * _DeltaTime;
         AddActorLocation(Acc * _DeltaTime);
     }

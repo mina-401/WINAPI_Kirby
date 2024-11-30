@@ -6,7 +6,7 @@
 std::map<std::string, UEngineSound*> UEngineSound::Sounds;
 std::list<USoundPlayer> UEngineSound::Players;
 
-// »ç¿îµå¸¦ Á¦¾îÇÏ±âÀ§ÇÑ ÇÚµé
+// ï¿½ï¿½ï¿½å¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½
 FMOD::System* SoundSystem = nullptr;
 
 #ifdef _DEBUG
@@ -22,17 +22,17 @@ public:
 	{
 		if (FMOD_RESULT::FMOD_OK != FMOD::System_Create(&SoundSystem))
 		{
-			MSGASSERT("FMOD ½Ã½ºÅÛ ÀÌ´Ö¿¡ ½ÇÆÐÇß½À´Ï´Ù.");
+			MSGASSERT("FMOD ï¿½Ã½ï¿½ï¿½ï¿½ ï¿½Ì´Ö¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
 			return;
 		}
 
-		// »ç¿îµå Ã¤³Î¼³Á¤
-		// int maxchannels, µ¿½Ã¿¡ ¸î°³±îÁö »ç¿îµå Àç»ýÀÌ µÇ´Â°¡?
-		// FMOD_INITFLAGS flags, ÁöÁ¤»çÇ×ÀÌ ÀÖ³ÄÀÎµ¥
-		// void* extradriverdata ÁöÁ¤»çÇ×¿¡ ´ëÇÑ µ¥ÀÌÅÍ³Ö¾îÁÙ°Ô ÀÖ³Ä.
+		// ï¿½ï¿½ï¿½ï¿½ Ã¤ï¿½Î¼ï¿½ï¿½ï¿½
+		// int maxchannels, ï¿½ï¿½ï¿½Ã¿ï¿½ ï¿½î°³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´Â°ï¿½?
+		// FMOD_INITFLAGS flags, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö³ï¿½ï¿½Îµï¿½
+		// void* extradriverdata ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í³Ö¾ï¿½ï¿½Ù°ï¿½ ï¿½Ö³ï¿½.
 		if (FMOD_RESULT::FMOD_OK != SoundSystem->init(32, FMOD_DEFAULT, nullptr))
 		{
-			MSGASSERT("FMOD ½Ã½ºÅÛ ÀÌ´Ö¿¡ ½ÇÆÐÇß½À´Ï´Ù.");
+			MSGASSERT("FMOD ï¿½Ã½ï¿½ï¿½ï¿½ ï¿½Ì´Ö¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
 			return;
 		}
 	}
@@ -103,11 +103,11 @@ void UEngineSound::Update()
 
 	if (FMOD_RESULT::FMOD_OK != SoundSystem->update())
 	{
-		MSGASSERT("FMOD ½Ã½ºÅÛ ¾÷µ¥ÀÌÆ®¿¡ ÀÌ»óÀÌ °¨ÁöµÇ¾ú½À´Ï´Ù.");
+		MSGASSERT("FMOD ï¿½Ã½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ì»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 	}
 }
 
-// ¿£ÁøÀÌ ³¡³¯¶§ Á÷Á¢ È£Ãâ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½
 void UEngineSound::Release()
 {
 	std::map<std::string, UEngineSound*>::iterator StartIter = Sounds.begin();
@@ -154,7 +154,7 @@ void UEngineSound::Load(std::string_view _Path)
 
 void UEngineSound::Load(std::string_view _Name, std::string_view _Path)
 {
-	// ÀÌ³à¼®Àº UTF-8·Î °æ·Î¸¦ ¹Ù²ãÁà¾ß ÇÒ¼ö ÀÖ´Ù.
+	// ï¿½Ì³à¼®ï¿½ï¿½ UTF-8ï¿½ï¿½ ï¿½ï¿½Î¸ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¼ï¿½ ï¿½Ö´ï¿½.
 	std::string UpperString = UEngineString::ToUpper(_Name);
 
 	UEngineSound* NewSound = new UEngineSound();
@@ -162,14 +162,14 @@ void UEngineSound::Load(std::string_view _Name, std::string_view _Path)
 	if (false != UEngineSound::Sounds.contains(UpperString))
 	{
 		delete NewSound;
-		MSGASSERT("ÀÌ¹Ì ·ÎµåÇÑ »ç¿îµå¸¦ ¶Ç ·ÎµåÇÏ·Á°í Çß½À´Ï´Ù." + UpperString);
+		MSGASSERT("ï¿½Ì¹ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½å¸¦ ï¿½ï¿½ ï¿½Îµï¿½ï¿½Ï·ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½." + UpperString);
 		return;
 	}
 
 	if (false == NewSound->ResLoad(_Path))
 	{
 		delete NewSound;
-		MSGASSERT("»ç¿îµå ·Îµå¿¡ ½ÇÆÐÇß½À´Ï´Ù" + UpperString);
+		MSGASSERT("ï¿½ï¿½ï¿½ï¿½ ï¿½Îµå¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½" + UpperString);
 		return;
 	}
 
@@ -197,23 +197,23 @@ USoundPlayer UEngineSound::Play(std::string_view _Name)
 
 	if (nullptr == FindSound)
 	{
-		MSGASSERT("·ÎµåÇÏÁö ¾ÊÀº »ç¿îµå¸¦ Àç»ýÇÏ·Á°í Çß½À´Ï´Ù" + UpperString);
+		MSGASSERT("ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½å¸¦ ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½" + UpperString);
 	}
 
 
-	// ±×³É ´Ü¼øÈ÷ Àç»ýÇÏ´Â°Ô ¾Æ´Ï¶ó¸é Ã¤³ÎÀ» ¾ò¾î¿Í¾ß ¼Ó·«ÀÌ³ª ÇÇÄ¡ º¼·ý ¹Í½Ì µîµîÀ» Á¶ÀýÇÒ¼ö ÀÖ´Ù.
+	// ï¿½×³ï¿½ ï¿½Ü¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´Â°ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½ Ã¤ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í¾ï¿½ ï¿½Ó·ï¿½ï¿½Ì³ï¿½ ï¿½ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Í½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½Ö´ï¿½.
 	FMOD::Channel* Ch = nullptr;
 
 	SoundSystem->playSound(FindSound->SoundHandle, nullptr, false, &Ch);
 
-	// ÀÌ Àç»ý¿¡ °ü·ÃµÈ ¸ðµç »çÇ×¿¡ ´ëÇÑ 
+	// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ãµï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½×¿ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 	// WINproc => 
 	// Ch->setCallback();
 
-	// 1¹ø Àç»ý
+	// 1ï¿½ï¿½ ï¿½ï¿½ï¿½
 	Ch->setLoopCount(0);
 
-	// º¼·ý 1·Î
+	// ï¿½ï¿½ï¿½ï¿½ 1ï¿½ï¿½
 	Ch->setVolume(1.0f);
 
 	USoundPlayer NewPlayer;
@@ -228,16 +228,16 @@ USoundPlayer UEngineSound::Play(std::string_view _Name)
 
 bool UEngineSound::ResLoad(std::string_view _Path)
 {
-	// À¯´ÏÄÚµå·Î ³Ö¾îµµ
-	// ¸ÖÆ¼¹ÙÀÌÆ®·Î ³Ö¾îµµ Á¦´ë·Î ¾ÈµÉ¶§°¡ ÀÖ´Ù.
-	// ±×·¯¸é UTF½Ã¸®Áî·Î ÀÎÄÚµùÇØ¼­ ³Ö¾îÁà¾ßÇÒ¶§°¡ ÀÖ´Ù.
-	// FMOD¸¦ »ç¿ëÇÏ´Â ºÎºÐ
-	// ÇØºÃ´õ´Ï µÈ´Ù UTF½Ã¸®Áî·Î ¾ÈÇØÁàµµ µÆ´Ù.
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ ï¿½Ö¾îµµ
+	// ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ö¾îµµ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ÈµÉ¶ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½.
+	// ï¿½×·ï¿½ï¿½ï¿½ UTFï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ï¿½Ø¼ï¿½ ï¿½Ö¾ï¿½ï¿½ï¿½ï¿½ï¿½Ò¶ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½.
+	// FMODï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Îºï¿½
+	// ï¿½ØºÃ´ï¿½ï¿½ï¿½ ï¿½È´ï¿½ UTFï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½àµµ ï¿½Æ´ï¿½.
 	SoundSystem->createSound(_Path.data(), FMOD_LOOP_NORMAL, nullptr, &SoundHandle);
 
 	if (nullptr == SoundHandle)
 	{
-		MSGASSERT("»ç¿îµå ·Îµù¿¡ ½ÇÆÐÇß½À´Ï´Ù" + std::string(_Path));
+		MSGASSERT("ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½" + std::string(_Path));
 		return false;
 	}
 

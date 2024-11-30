@@ -48,16 +48,16 @@ AKingDedede::AKingDedede()
 		SpriteRenderer->CreateAnimation("Idle_Right", "KingIdle_Right.png", 0,3, 0.5f, false);
 		SpriteRenderer->CreateAnimation("Walk_Left", "KingWalk_Left.png", 0,4, 0.2f);
 		SpriteRenderer->CreateAnimation("Walk_Right", "KingWalk_Right.png",0,4, 0.2f);
-		SpriteRenderer->CreateAnimation("JumpAttack1_Left", "KingJumpAttack1_Left.png", 0,3, 0.4f, true);
-		SpriteRenderer->CreateAnimation("JumpAttack1_Right", "KingJumpAttack1_Right.png", 0,3, 0.4f, true);
-		SpriteRenderer->CreateAnimation("JumpAttack2_Left", "KingJumpAttack2_Left.png", 0, 3, 0.4f, true);
-		SpriteRenderer->CreateAnimation("JumpAttack2_Right", "KingJumpAttack2_Right.png", 0, 3, 0.4f, true);
-		SpriteRenderer->CreateAnimation("JumpAttack3_Left", "KingJumpAttack3_Left.png", 0, 1, 0.4f, true);
-		SpriteRenderer->CreateAnimation("JumpAttack3_Right", "KingJumpAttack3_Right.png", 0, 1, 0.4f, true);
+		SpriteRenderer->CreateAnimation("JumpAttack1_Left", "KingJumpAttack1_Left.png", 0,3, 0.4f, false);
+		SpriteRenderer->CreateAnimation("JumpAttack1_Right", "KingJumpAttack1_Right.png", 0,3, 0.4f, false);
+		SpriteRenderer->CreateAnimation("JumpAttack2_Left", "KingJumpAttack2_Left.png", 0, 3, 0.4f, false);
+		SpriteRenderer->CreateAnimation("JumpAttack2_Right", "KingJumpAttack2_Right.png", 0, 3, 0.4f, false);
+		SpriteRenderer->CreateAnimation("JumpAttack3_Left", "KingJumpAttack3_Left.png", 0, 1, 0.4f, false);
+		SpriteRenderer->CreateAnimation("JumpAttack3_Right", "KingJumpAttack3_Right.png", 0, 1, 0.4f, false);
 		SpriteRenderer->CreateAnimation("FlyAttack_Left", "KingFlyAttack_Left.png", 0, 8, 0.3f, true);
 		SpriteRenderer->CreateAnimation("FlyAttack_Right", "KingFlyAttack_Right.png", 0, 8, 0.3f, true);
-		SpriteRenderer->CreateAnimation("Damaged_Left", "KingDamaged_Left.png", 0, 0, 1.0f, false);
-		SpriteRenderer->CreateAnimation("Damaged_Right", "KingDamaged_Right.png", 0, 0, 1.0f, false);
+		SpriteRenderer->CreateAnimation("Damaged_Left", "KingDamaged_Left.png", 0, 0, 1.5f, false);
+		SpriteRenderer->CreateAnimation("Damaged_Right", "KingDamaged_Right.png", 0, 0, 1.5f, false);
 		SpriteRenderer->CreateAnimation("Die_Left", "KingDie_Left.png", {0,1,2,2,2,2}, 0.5f, false);
 		SpriteRenderer->CreateAnimation("Die_Right", "KingDie_Right.png", { 0,1,2,2,2,2 }, 0.5f, false);
 		SpriteRenderer->ChangeAnimation("Idle_Left");
@@ -80,11 +80,11 @@ AKingDedede::AKingDedede()
 	}
 
 	{
-		CollisionComponent = CreateDefaultSubObject<U2DCollision>();
+		//CollisionComponent = CreateDefaultSubObject<U2DCollision>();
 		CollisionComponent->SetComponentLocation({ 0, -100 });
 		CollisionComponent->SetComponentScale({ 180, 180 });
-		CollisionComponent->SetCollisionGroup(ECollisionGroup::MonsterBody);
-		CollisionComponent->SetCollisionType(ECollisionType::CirCle);
+		//CollisionComponent->SetCollisionGroup(ECollisionGroup::MonsterBody);
+		//CollisionComponent->SetCollisionType(ECollisionType::CirCle);
 
 		DebugOn();
 	}
@@ -97,6 +97,7 @@ void AKingDedede::DieStart()
 {
 	BGMPlayer = UEngineSound::Play("MonsterDie.WAV");
 	//
+	CollisionComponent->SetActive(false);
 	SpriteRenderer->ChangeAnimation("Die" + DirString);
 	MonWidget->SetActive(false);
 }
@@ -189,15 +190,19 @@ void AKingDedede::Attack(float _DeltaTime)
 
 	if (AttackPointIndex == SpriteRenderer->GetCurIndex())
 	{
-		AttackColComponent->SetActive(true);
-		AMonsterBullet* Bullet = GetWorld()->SpawnActor<AMonsterBullet>();
-		Bullet->SetMainPawn(this);
+		if (Bullet == nullptr) {
+			AttackColComponent->SetActive(true);
+			Bullet = GetWorld()->SpawnActor<AMonsterBullet>();
+			Bullet->SetMainPawn(this);
 
-		FVector2D Pos ={ AttackColComponent->GetComponentLocation().X*2,  AttackColComponent->GetComponentLocation().Y};
-		Bullet->SetActorLocation(GetActorLocation()+ Pos);
-	}
+			FVector2D Pos = { AttackColComponent->GetComponentLocation().X * 2,  AttackColComponent->GetComponentLocation().Y };
+			Bullet->SetActorLocation(GetActorLocation() + Pos);
+		}
+		}
+		
 	if (true == SpriteRenderer->IsCurAnimationEnd()) {
 
+		Bullet = nullptr;
 		AttackColComponent->SetActive(false);
 		ChangeState(EMonsterState::Idle);
 		return;

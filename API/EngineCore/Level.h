@@ -2,7 +2,7 @@
 #include "GameMode.h"
 
 
-// ÀÌ·±½ÄÀ¸·Î 
+// ï¿½Ì·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 class CollisionLinkData
 {
 public:
@@ -18,7 +18,7 @@ public:
 };
 
 
-// ¼³¸í :
+// ï¿½ï¿½ï¿½ï¿½ :
 class ULevel : public UObject
 {
 public:
@@ -35,10 +35,10 @@ public:
 	ULevel& operator=(ULevel&& _Other) noexcept = delete;
 
 	ULevel& operator=(const ULevel& _Other) = delete;
-	// ³»°¡ CurLevel µÆÀ»´ë
+	// ï¿½ï¿½ï¿½ï¿½ CurLevel ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	void LevelChangeStart();
 
-	// ³ª ÀÌÁ¦ »õ·Î¿î ·¹º§·Î ¹Ù²ð°Å¾ß.
+	// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½Å¾ï¿½.
 	void LevelChangeEnd();
 
 	void Tick(float _DeltaTime);
@@ -52,7 +52,7 @@ public:
 		ActorType* NewActor = new ActorType();
 
 		AActor* ActorPtr = dynamic_cast<AActor*>(NewActor);
-		// ³»°¡ ³Î ¸¸µç ·¹º§ÀÌ¾ß.
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½.
 		ActorPtr->World = this;
 
 		BeginPlayList.push_back(ActorPtr);
@@ -128,7 +128,7 @@ public:
 
 		for (size_t i = 0; i < CollisionLink.size(); i++)
 		{
-			// Á¶±Ý ÃßÇÏÁö¸¸ vector
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ vector
 			if (CollisionLink[i].Key == LinkData.Key)
 			{
 				return;
@@ -147,16 +147,16 @@ private:
 	void BeginPlayCheck();
 
 
-	// °ÔÀÓ·¹º§°ú ¸ÞÀÎÆùÀ» ¸¸µé¾î¼­ °ÔÀÓÀ» ÁØºñ½ÃÅ°´Â ÇÔ¼ö·Îµµ ¸¸µé¾ú´Ù.
+	// ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½î¼­ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Øºï¿½ï¿½Å°ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 	template<typename GameModeType, typename MainPawnType>
 	void CreateGameMode()
 	{
 		GameMode = new GameModeType();
 
-		// È­¸éÀ» ¹Ù¶óºÁÁÖ´Â Ä«¸Þ¶ó¶ó°í »ý°¢ÇÏ°í ¸¸µå¼Åµµ µË´Ï´Ù.
+		// È­ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¶ï¿½ï¿½ï¿½Ö´ï¿½ Ä«ï¿½Þ¶ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½Åµï¿½ ï¿½Ë´Ï´ï¿½.
 		MainPawn = new MainPawnType();
 
-		// ¿ùµå¼¼ÆÃÀÌ ¸ÕÀúµÇ´Â°ÍÀÌ ±²ÀåÈ÷ Áß¿äÇÏ´Ù.
+		// ï¿½ï¿½ï¿½å¼¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç´Â°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß¿ï¿½ï¿½Ï´ï¿½.
 		MainPawn->World = this;
 		GameMode->World = this;
 
@@ -169,7 +169,7 @@ private:
 		//AllActors.push_back(MainPawn);
 	}
 
-	// ¾Æ¹«³ª ÇÔºÎ·Î È£ÃâÇÏÁö ¸øÇÏ°Ô ÇÏ±â À§ÇØ¼­ private ÀÌ¾î¾ß ÇÑ´Ù.
+	// ï¿½Æ¹ï¿½ï¿½ï¿½ ï¿½ÔºÎ·ï¿½ È£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ private ï¿½Ì¾ï¿½ï¿½ ï¿½Ñ´ï¿½.
 	void PushRenderer(class USpriteRenderer* _Renderer);
 	void ChangeRenderOrder(class USpriteRenderer* _Renderer, int _PrevOrder);
 
@@ -180,16 +180,16 @@ private:
 	void CollisionEventCheck(class U2DCollision* _Left, class U2DCollision* _Right);
 
 
-	// Çë°¡¸®¾È Ç¥±â¹ý
-	// ÀÌ¸§Àº ¸¶À½´ë·Î
-	// ¸É¹öº¯¼öÀÇ ÀÌ¸§Àº ´ë¹®ÀÚ
-	// À½¿ªÇÏÁö¸¶¼¼¿ä
+	// ï¿½ë°¡ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½
+	// ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// ï¿½É¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ë¹®ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	// dujumsaigury
-	// ¿µ¾îÀÇ¹Ì·Î ÇØÁÖ½Ã¸é µË´Ï´Ù.
-	// ¸Ç¾Õ¸¸ 
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ç¹Ì·ï¿½ ï¿½ï¿½ï¿½Ö½Ã¸ï¿½ ï¿½Ë´Ï´ï¿½.
+	// ï¿½Ç¾Õ¸ï¿½ 
 	class AGameMode* GameMode = nullptr;
 
-	// ÁÖÀÎ°ø
+	// ï¿½ï¿½ï¿½Î°ï¿½
 	class AActor* MainPawn = nullptr;
 
 	std::list<AActor*> AllActors;
@@ -197,20 +197,20 @@ private:
 	std::list<AActor*> BeginPlayList;
 
 	bool IsCameraToMainPawn = true;
-	// ¾Æ·¡ Æ÷Áö¼Ç 2°³°¡ Ä«¸Þ¶ó.
+	// ï¿½Æ·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 2ï¿½ï¿½ï¿½ï¿½ Ä«ï¿½Þ¶ï¿½.
 	FVector2D CameraPos;
 	FVector2D CameraPivot;
 
-	// ¿À´õ¸µÀ» ÇÒ°ÍÀÌ´Ù.
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½ï¿½Ì´ï¿½.
 	std::map<int, std::list<class USpriteRenderer*>> Renderers;
 
-	// Á÷Á¢È£ÃâÀ» À§ÇØ¼­ µé°í¸¸ ÀÖ´Â ¿ëµµ
+	// ï¿½ï¿½ï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ëµµ
 	std::map<int, std::list<class U2DCollision*>> Collisions;
 
-	// ÀÌº¥Æ® Ã¼Å©¹æ½ÄÀ» À§ÇØ¼­ ¾î¶² ±×·ìÀÌ ¾î¶² ±×·ì°ú Ãæµ¹ÇÏÁö ±â·ÏÇØ ³õÀº ÀÚ·á±¸Á¶
+	// ï¿½Ìºï¿½Æ® Ã¼Å©ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½î¶² ï¿½×·ï¿½ï¿½ï¿½ ï¿½î¶² ï¿½×·ï¿½ï¿½ ï¿½æµ¹ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·á±¸ï¿½ï¿½
 	static std::vector<CollisionLinkData> CollisionLink;
 
-	// ÇÁ·¹ÀÓ¸¶´Ù Ãæµ¹Ã¼Å©¸¦ ÇÏ´Â ÄÝ¸®ÀüµéÀ» µû·Î ¸ð¾Æ ³õÀº ÀÚ·á±¸Á¶ => ÀÌ°Å ÇÇÇÏ°í ½Í´Ù.
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ó¸ï¿½ï¿½ï¿½ ï¿½æµ¹Ã¼Å©ï¿½ï¿½ ï¿½Ï´ï¿½ ï¿½Ý¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·á±¸ï¿½ï¿½ => ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Í´ï¿½.
 	std::map<int, std::list<class U2DCollision*>> CheckCollisions;
 };
 

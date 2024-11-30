@@ -1,7 +1,7 @@
 #pragma once
 #include "Monster.h"
 #include <EngineBase/EngineRandom.h>
-// ¼³¸í :
+// ï¿½ï¿½ï¿½ï¿½ :
 class AKingDedede : public AMonster
 {
 public:
@@ -60,6 +60,8 @@ private:
 	int AttackRound = 3;
 	FVector2D HammerLeftPosition = { -80,-30 };
 	FVector2D HammerRightPosition = { 80,-30 };
+
+	class	AMonsterBullet* Bullet = nullptr;
 
 };
 

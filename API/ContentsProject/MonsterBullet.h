@@ -2,7 +2,7 @@
 #pragma once
 #include <EngineCore/Actor.h>
 
-// ¼³¸í :
+// ï¿½ï¿½ï¿½ï¿½ :
 class AMonsterBullet : public AActor
 {
 public:
@@ -35,6 +35,7 @@ public:
 		FVector2D NextPos = _Vector * _DeltaTime * 150.0f;
 		AddActorLocation(NextPos);
 	}
+	bool IsActive = true;
 	//void CollisionEnter(AActor* _ColActor);
 protected:
 	void Tick(float _DeltaTime) override;
@@ -61,4 +62,5 @@ private:
 	float AlphaValue = 1.0f;
 
 	FVector2D Vector = FVector2D::ZERO;
+
 };

@@ -4,17 +4,17 @@
 #include <EngineBase/EnginePath.h>
 #include <EngineBase/EngineString.h>
 
-// GDI Plus ¿ë Çì´õ
+// GDI Plus ï¿½ï¿½ ï¿½ï¿½ï¿½
 #include <objidl.h>
 #include <gdiplus.h>
 
-// $(WindowsSDK_LibraryPath_x64) <= ¿©±â °æ·Î¾È¿¡ µé¾îÀÖ´Â ¶óÀÌºê·¯¸® ÀÔ´Ï´Ù.
+// $(WindowsSDK_LibraryPath_x64) <= ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Î¾È¿ï¿½ ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½ ï¿½Ô´Ï´ï¿½.
 
-// ÀÌ¹ÌÁö¿ë window±âº» ¶óÀÌºê·¯¸®°¡ 2°¡Áö°¡ ÀÖ½À´Ï´Ù.
-// BMP È®Àå¿ë ¶óÀÌºê·¯¸®
+// ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ windowï¿½âº» ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½ï¿½ï¿½ 2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½.
+// BMP È®ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½
 #pragma comment(lib, "Msimg32.lib")
 
-// PNG ¸¦ ÅëÇÑ window ³×ÀÌÆ¼ºê ±×·¡ÇÈ È®Àå¿ë ¶óÀÌºê·¯¸®
+// PNG ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ window ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìºê·¯ï¿½ï¿½
 #pragma comment(lib, "Gdiplus.lib")
 
 UEngineWinImage::UEngineWinImage()
@@ -23,8 +23,8 @@ UEngineWinImage::UEngineWinImage()
 
 UEngineWinImage::~UEngineWinImage()
 {
-	// À©µµ¿ì ¸¸µé¾îÁØ ¸Þ¸ð¸®¶óµµ ¸¯Àº ¾ÈµÇ°ÚÁö¸¸
-	// ¿Ø¸¸ÇÏ¸é ³»°¡ ¸í½ÃÀûÀ¸·Î Áö¿öÁÖ´Â°ÍÀ» ¼±È£ÇÕ´Ï´Ù.
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¸ð¸®¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ÈµÇ°ï¿½ï¿½ï¿½ï¿½ï¿½
+	// ï¿½Ø¸ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´Â°ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½Õ´Ï´ï¿½.
 	if (nullptr != hBitMap)
 	{
 		DeleteObject(hBitMap);
@@ -43,39 +43,39 @@ void UEngineWinImage::Create(UEngineWinImage* _TargetImage, FVector2D _Scale)
 {
 	if (nullptr == _TargetImage)
 	{
-		MSGASSERT("Main windowDC¸¦ ³ÖÁö¾Ê°í ÀÌ¹ÌÁö¸¦ »ý¼ºÇÏ·Á°í Çß½À´Ï´Ù");
+		MSGASSERT("Main windowDCï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ê°ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½");
 		return;
 	}
 
-	// HDC ¾Æ¹«°Íµµ ¾ø°÷¿¡¼­
-	// HDC ³Ö¾î´Þ¶ó°í ÇÏ´Âµ¥ window HDC
-	// int X; ¸¸µé·Á´Â ºó ÀÌ¹ÌÁöÀÇ xÅ©±â
-	// int Y; ¸¸µé·Á´Â ºó ÀÌ¹ÌÁöÀÇ yÅ©±â
+	// HDC ï¿½Æ¹ï¿½ï¿½Íµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// HDC ï¿½Ö¾ï¿½Þ¶ï¿½ï¿½ ï¿½Ï´Âµï¿½ window HDC
+	// int X; ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ xÅ©ï¿½ï¿½
+	// int Y; ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ yÅ©ï¿½ï¿½
 
-	// ¾Æ¹«°Íµµ ¾ø´Â°÷¿¡ 
-	// HDC hdc Å¸°Ù ÀÌ ÀÌ¹ÌÁö¸¦ ¸¸µé¾î¼­ ±×¸®·Á°í ÇÏ´Â Å¸°Ù
-	// int cx ¸¸µé·Á´Â ÀÌ¹ÌÁöÀÇ Å©±â
-	// int cy ¸¸µé·Á´Â ÀÌ¹ÌÁöÀÇ Å©±â
+	// ï¿½Æ¹ï¿½ï¿½Íµï¿½ ï¿½ï¿½ï¿½Â°ï¿½ï¿½ï¿½ 
+	// HDC hdc Å¸ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½î¼­ ï¿½×¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½ Å¸ï¿½ï¿½
+	// int cx ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½
+	// int cy ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½
 
 
 
 	HBITMAP NewBitmap = static_cast<HBITMAP>(CreateCompatibleBitmap(_TargetImage->GetDC(), _Scale.iX(), _Scale.iY()));
 
-	// ÀÌ¹ÌÁö ±×ÀÚÃ¼
-	// ÀÌ¹ÌÁö¸¦ ¼öÁ¤ÇÒ¼ö ÀÖ´Â ±ÇÇÑ HDC
-	// ÀÌ¹ÌÁöÀÇ µ¥ÀÌÅÍ ±ÇÇÑ HBITMAP
-	// HDC<=>HBITMAP ÀÌ ÇÕÃÄÁ®¼­ ÀÌ¹ÌÁö¿Í ÀÌ¹ÌÁö¸¦ ¼öÁ¤ÇÏ´Â ±ÇÇÑÀÌ ¿¬°áµÇ´Â °³³ä
+	// ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼
+	// ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ HDC
+	// ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ HBITMAP
+	// HDC<=>HBITMAP ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-	// º×
+	// ï¿½ï¿½
 	HDC NewImageDC = CreateCompatibleDC(_TargetImage->GetDC());
 
-	// À©µµ¿ì°¡ Á¤ÇÏ±â¸¦ º×°ú µµÈ­Áö¸¦ ÇÑ½ÖÀ¸·Î ¾È¿«À¸¸é ¸ø±×¸².
-	// º×À» ¸¸µé±â¸¸ ÇØµµ  1, 1 ÀÌ¹ÌÁö¶û ¿¬°áÇØ ³õ´Â´Ù. window 
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ì°¡ ï¿½ï¿½ï¿½Ï±â¸¦ ï¿½×°ï¿½ ï¿½ï¿½È­ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È¿ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½×¸ï¿½.
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½â¸¸ ï¿½Øµï¿½  1, 1 ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â´ï¿½. window 
 
-	// º×°ú µµÈ­Áö¸¦ ¿¬°áÇÏ´Â ÀÛ¾÷À» °ÅÃÄ¾ß ÇÑ´Ù.
+	// ï¿½×°ï¿½ ï¿½ï¿½È­ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ä¾ï¿½ ï¿½Ñ´ï¿½.
 	HBITMAP OldBitMap = static_cast<HBITMAP>(SelectObject(NewImageDC, NewBitmap));
-	// OldBitMap 1, 1 Å©±âÀÇ ÀÌ¹ÌÁö
-	// °¡¸¸È÷ ³»¹ö·ÁµÎ¸é leck
+	// OldBitMap 1, 1 Å©ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¸ï¿½ leck
 	DeleteObject(OldBitMap);
 
 	hBitMap = NewBitmap;
@@ -88,30 +88,30 @@ void UEngineWinImage::CopyToBit(UEngineWinImage* _TargetImage, const FTransform&
 {
 	if (nullptr == _TargetImage)
 	{
-		MSGASSERT("º¹»ç¹ÞÀ» ´ë»óÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù");
+		MSGASSERT("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½");
 	}
 
 	HDC CopyDC = ImageDC;
 	HDC TargetDC = _TargetImage->ImageDC;
-	// CopyDC => TargetDC¿¡ Ä«ÇÇÇÏ°Ú´Ù.
-	// À©µµ¿ì´Â ÀÌ·± HDC°£ÀÇ Copy¸¦ À§ÇØ¼­ 
-	// Ä«ÇÇ¿ë ÇÔ¼öµéÀ» ¸î°³ ÁØºñÇß°í ±×Áß¿¡¼­
-	// °¡Àå ±âº»ÀûÀÎ ÇÔ¼ö°¡ ¹Ù·Î Bitblt
+	// CopyDC => TargetDCï¿½ï¿½ Ä«ï¿½ï¿½ï¿½Ï°Ú´ï¿½.
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì·ï¿½ HDCï¿½ï¿½ï¿½ï¿½ Copyï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ 
+	// Ä«ï¿½Ç¿ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½î°³ ï¿½Øºï¿½ï¿½ß°ï¿½ ï¿½ï¿½ï¿½ß¿ï¿½ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½âº»ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½Ù·ï¿½ Bitblt
 
-	//HDC hdc, Ä«ÇÇ ¹ÞÀ» ´ë»ó <= ¿©±â¿¡´Ù°¡ º¹»çÇØ¶ó
-	//int x, <= À§Ä¡x
-	//int y, <= À§Ä¡y
-	//int cx, <= Å©±âx
-	//int cy, <= Å©±âx
-	// HDC hdcSrc, Ä«ÇÇÇÒ ÀÌ¹ÌÁö
-	// int x1, ÀÌ¹ÌÁö ½ÃÀÛÁ¡ 0
+	//HDC hdc, Ä«ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ <= ï¿½ï¿½ï¿½â¿¡ï¿½Ù°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¶ï¿½
+	//int x, <= ï¿½ï¿½Ä¡x
+	//int y, <= ï¿½ï¿½Ä¡y
+	//int cx, <= Å©ï¿½ï¿½x
+	//int cy, <= Å©ï¿½ï¿½x
+	// HDC hdcSrc, Ä«ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½
+	// int x1, ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0
 	// int y1, 
-	// rop => Ä«ÇÇ ¿É¼Ç
+	// rop => Ä«ï¿½ï¿½ ï¿½É¼ï¿½
 
 	FVector2D LeftTop = _Trans.CenterLeftTop();
 	FVector2D RightBot = _Trans.CenterRightBottom();
 
-	// ÀÌ¹ÌÁö 
+	// ï¿½Ì¹ï¿½ï¿½ï¿½ 
 	BitBlt(
 		TargetDC,
 		LeftTop.iX(),
@@ -123,27 +123,27 @@ void UEngineWinImage::CopyToBit(UEngineWinImage* _TargetImage, const FTransform&
 		0,
 		SRCCOPY);
 
-	// SRCCOPY Ä«ÇÇÇÒ¶§ 
+	// SRCCOPY Ä«ï¿½ï¿½ï¿½Ò¶ï¿½ 
 
 	FVector2D Vector;
 }
 
 void UEngineWinImage::CopyToTrans(UEngineWinImage* _TargetImage, const FTransform& _RenderTrans, const FTransform& _LTImageTrans, UColor _Color /*= UColor(255, 0, 255, 255)*/)
 {
-	// _RenderTrans ¾×ÅÍÀÇ Æ®·£½ºÆû
+	// _RenderTrans ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-	// _LTImageTrans ÀÌ¹ÌÁö ÂÉ°µ Å©±â°¡
+	// _LTImageTrans ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½É°ï¿½ Å©ï¿½â°¡
 
 	HDC CopyDC = ImageDC;
 	HDC TargetDC = _TargetImage->ImageDC;
 
-	//_In_ HDC hdcDest, ¿©±â¿¡´Ù°¡ Ä«ÇÇÇØ¶ó
-	//_In_ int xoriginDest, ±×·ÁÁö´Â À§Ä¡
-	//_In_ int yoriginDest, ±×·ÁÁö´Â À§Ä¡
-	//_In_ int wDest, ±×·ÁÁö´Â Å©±â
-	//_In_ int hDest, ±×·ÁÁö´Â Å©±â
-	//_In_ HDC hdcSrc, º¹»çµÉ ÀÌ¹ÌÁö => ¿©·¯ºÐµéÀÌ ·ÎµåÇÑ ÀÌ¹ÌÁö
-	//_In_ int xoriginSrc, ÀÌ¹ÌÁö ÀÌºÎºÐ 
+	//_In_ HDC hdcDest, ï¿½ï¿½ï¿½â¿¡ï¿½Ù°ï¿½ Ä«ï¿½ï¿½ï¿½Ø¶ï¿½
+	//_In_ int xoriginDest, ï¿½×·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
+	//_In_ int yoriginDest, ï¿½×·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡
+	//_In_ int wDest, ï¿½×·ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½
+	//_In_ int hDest, ï¿½×·ï¿½ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½
+	//_In_ HDC hdcSrc, ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ => ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½
+	//_In_ int xoriginSrc, ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ÌºÎºï¿½ 
 	//_In_ int yoriginSrc, int X
 	//_In_ int wSrc,
 	//_In_ int hSrc,
@@ -172,15 +172,15 @@ void UEngineWinImage::CopyToAlpha(UEngineWinImage* _TargetImage,
 	unsigned char _Alpha)
 {
 
-	// ¾ËÆÄ ºí·£µå´Â ¾ËÆÄ Ã¤³ÎÀÌ¶ó´Â °ÍÀ» ÀÌ¿ëÇØ¼­ ¾ËÆÄ¸¦ Àû¿ë½ÃÅ²´Ù.
-	// ÀÌ¹ÌÁö´Â 
-	// R G B A ·Î ÀÌ·ç¾îÁ® ÀÖ´Ù. ÄÃ·¯Ã¤³ÎÀÌ¶ó°í ºÎ¸¥´Ù.
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½Ä¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Å²ï¿½ï¿½.
+	// ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ 
+	// R G B A ï¿½ï¿½ ï¿½Ì·ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½. ï¿½Ã·ï¿½Ã¤ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ ï¿½Î¸ï¿½ï¿½ï¿½.
 
-	// 0ÀÌ¸é °ËÀº»ö
-	// 255¸é Èò»öÀÔ´Ï´Ù.
-	// ¾ËÆÄºí·£µå°¡ ¾ËÆÄ¸¦ Àû¿ë½ÃÅ°´Â ºÎºÐÀº
-	// ¾ËÆÄÃ¤³ÎÀÌ 255ÀÎ ºÎºÐ¸¸ Àû¿ë½ÃÅµ´Ï´Ù.
-	// ÀÌ Ã¤³ÎÀº Æ÷Åä¼¥¿¡¼­ À©µµ¿ì => Ã¤³ÎÃ¢¿¡¼­ È®ÀÎÇÒ ¼ö ÀÖ½À´Ï´Ù.
+	// 0ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// 255ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
+	// ï¿½ï¿½ï¿½Äºï¿½ï¿½ï¿½å°¡ ï¿½ï¿½ï¿½Ä¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½Îºï¿½ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½Ã¤ï¿½ï¿½ï¿½ï¿½ 255ï¿½ï¿½ ï¿½ÎºÐ¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Åµï¿½Ï´ï¿½.
+	// ï¿½ï¿½ Ã¤ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ä¼¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ => Ã¤ï¿½ï¿½Ã¢ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½.
 
 	BLENDFUNCTION BLEND;
 	BLEND.BlendOp = AC_SRC_OVER;
@@ -209,23 +209,23 @@ void UEngineWinImage::CopyToAlpha(UEngineWinImage* _TargetImage,
 
 void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path)
 {
-	// Png¶û BmpÀÏ¶§ ·ÎµåÇÏ´Â ¹æ½ÄÀÌ ´Þ¶óÁø´Ù.
-	// Png·Î´Â À©µµ¿ìÀÇ ±âº» ÀÌ¹ÌÁö°¡ ¾Æ´Ï¶ó¼­.
-	// BMP´Â ½±°Ô ·ÎµùµÇÁö¸¸ PNG´Â Á¶±Ý´õ ÄÚµå¸¦ ÃÄ¾ß ÇÑ´Ù.
-	// ±×·¡ÇÈ½º´Â °á±¹ WinApi
+	// Pngï¿½ï¿½ Bmpï¿½Ï¶ï¿½ ï¿½Îµï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¶ï¿½ï¿½ï¿½ï¿½ï¿½.
+	// Pngï¿½Î´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½âº» ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¶ï¿½.
+	// BMPï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ PNGï¿½ï¿½ ï¿½ï¿½ï¿½Ý´ï¿½ ï¿½Úµå¸¦ ï¿½Ä¾ï¿½ ï¿½Ñ´ï¿½.
+	// ï¿½×·ï¿½ï¿½È½ï¿½ï¿½ï¿½ ï¿½á±¹ WinApi
 
-	// Png¸¦ ·ÎµåÇØ¼­ Bmp·Î º¯È¯ÇÏ´Â °úÁ¤À» °ÅÄ¡´Â °³³ä¿¡ °¡±õ´Ù.
-	// ÇÏÁö¸¸ °á±¹ ·ÎµåÇÏ´Â ÇÔ¼ö¸¸ ´Ù¸¦»ÓÀÌÁö
-	// ·Îµå°¡ ³¡³µ´Ù¸é °á±¹
+	// Pngï¿½ï¿½ ï¿½Îµï¿½ï¿½Ø¼ï¿½ Bmpï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ä¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½á±¹ ï¿½Îµï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// ï¿½Îµå°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ù¸ï¿½ ï¿½á±¹
 	// class Color
 	// {
 	//    char R, G, B, 255;
 	// }
 	// Color Arr[??][??]
 
-	// ·Îµå°¡ ³¡³ª¸é windowÀÇ °üÇÒÀÌ´Ù. 
+	// ï¿½Îµå°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ windowï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½. 
 
-	// ¾ð¸®¾óÀÌ ±×·¸°Ô ÇÕ´Ï´Ù.
+	// ï¿½ð¸®¾ï¿½ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ ï¿½Õ´Ï´ï¿½.
 	// Window.png => WINDOW.PNG
 	// WIndow.png
 	// WIndow.Png
@@ -240,30 +240,30 @@ void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path
 
 	if (".PNG" == UpperExt)
 	{
-		// ·Îµå±îÁö¸¸ GDI Plus¸¦ ÀÌ¿ë ·£´õ¸µÀº 
-		// WInapiÇÔ¼ö¸¦ »ç¿ëÇÏ´Â °³³äÀ¸·Î °£´Ù./
+		// ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ GDI Plusï¿½ï¿½ ï¿½Ì¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+		// WInapiï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½./
 
-		// GDIPLus¿ë ÇÚµéÀ» Ç¥ÇöÇÒ¶§ 
+		// GDIPLusï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½Ò¶ï¿½ 
 		ULONG_PTR gidplustoken = 0;
 
-		// GDI plus¸¦ »ç¿ëÇÏ±â À§ÇÑ ÀÎÇ²
+		// GDI plusï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç²
 		Gdiplus::GdiplusStartupInput StartupInput;
 		Gdiplus::GdiplusStartup(&gidplustoken, &StartupInput, nullptr);
 
 
 		std::wstring WidePath = UEngineString::AnsiToUnicode(_Path);
 
-		// °æ·Î ³Ö¾îÁÖ¸é ÀÌ¹ÌÁö ·ÎµùÇØÁÖ´Â ÇÔ¼ö
+		// ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½Ö¸ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½Ô¼ï¿½
 		Gdiplus::Image* pImage = Gdiplus::Image::FromFile(WidePath.c_str());
 
-		// º¹»çº»À» »ý¼ºÇÏ°í °Å±â¿¡¼­ bitmap ºÎºÐÀ» »Ì¾Æ³»´Â ¹æ½Ä
+		// ï¿½ï¿½ï¿½çº»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Å±â¿¡ï¿½ï¿½ bitmap ï¿½Îºï¿½ï¿½ï¿½ ï¿½Ì¾Æ³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		Gdiplus::Bitmap* pBitMap = reinterpret_cast<Gdiplus::Bitmap*>(pImage->Clone());
 
 		Gdiplus::Status stat = pBitMap->GetHBITMAP(Gdiplus::Color(255, 255, 0, 255), &NewBitmap);
 
 		if (Gdiplus::Status::Ok != stat)
 		{
-			MSGASSERT("Png ÀÌ¹ÌÁö ·Îµå¿¡ ½ÇÆÐÇß½À´Ï´Ù." + std::string(_Path));
+			MSGASSERT("Png ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½Îµå¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½." + std::string(_Path));
 			return;
 		}
 
@@ -279,11 +279,11 @@ void UEngineWinImage::Load(UEngineWinImage* _TargetImage, std::string_view _Path
 
 	if (nullptr == NewBitmap)
 	{
-		MSGASSERT("ÀÌ¹ÌÁö ·Îµù¿¡ ½ÇÆÐÇß½À´Ï´Ù");
+		MSGASSERT("ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½");
 		return;
 	}
 
-	// º×
+	// ï¿½ï¿½
 	HDC NewImageDC = CreateCompatibleDC(_TargetImage->GetDC());
 
 	HBITMAP OldBitMap = static_cast<HBITMAP>(SelectObject(NewImageDC, NewBitmap));
@@ -317,11 +317,7 @@ UColor UEngineWinImage::GetColor(FIntPoint _Point, UColor _DefaultColor = UColor
 		return _DefaultColor;
 	}
 
-	// ::²À ºÙ¿©¾ß ÇÑ´Ù. ¸í½ÃÀûÀ¸·Î Àü¿ª¿¡ Á¸ÀçÇÏ´Â À©µµ¿ì
-	// UEngineWinImage::GetPixel È¥µ·ÀÌ ¿Ã¼ö ÀÖ´Ù.
-
-	// RGBA
-	// 1111
+	
 	UColor ResultColor = ::GetPixel(ImageDC, _Point.X, _Point.Y);
 	return ResultColor;
 }

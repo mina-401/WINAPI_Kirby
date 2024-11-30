@@ -73,4 +73,5 @@ void AMonsterBullet::Tick(float _DeltaTime)
 void AMonsterBullet::BeginPlay()
 {
 	Super::BeginPlay();
+	//SetActive(false);
 }
