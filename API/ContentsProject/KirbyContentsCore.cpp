@@ -126,6 +126,21 @@ void KirbyContentsCore::BeginPlay()
 			UEngineSound::Load(FilePath);
 		}
 	}
+	{
+		UEngineDirectory Dir;
+		if (false == Dir.MoveParentToDirectory("Resource"))
+		{
+			MSGASSERT("���ҽ� ������ ã�� ���߽��ϴ�.");
+			return;
+		}
+		Dir.Append("Sound//EndingSound");
+		std::vector<UEngineFile> SoundFiles = Dir.GetAllFile();
+		for (size_t i = 0; i < SoundFiles.size(); i++)
+		{
+			std::string FilePath = SoundFiles[i].GetPathToString();
+			UEngineSound::Load(FilePath);
+		}
+	}
 
 	{
 		UEngineAPICore::GetCore()->GetMainWindow().SetWindowTitle("WinAPI_Kirby");

@@ -26,5 +26,8 @@ public:
     void LevelChangeStart() override;
     void LevelChangeEnd() override;
     void SetColImage(std::string_view _ColImageName);
+
+private:
+    class USpriteRenderer* SpriteRenderer = nullptr;
 };
 

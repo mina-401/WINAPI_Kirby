@@ -22,6 +22,9 @@ public:
 protected:
 
 private:
-	
+	class USpriteRenderer* SpriteRenderer = nullptr;
+	class USpriteRenderer* ColSpriteRenderer = nullptr;
+	FVector2D MapScale;
+
 };
 

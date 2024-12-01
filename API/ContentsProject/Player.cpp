@@ -45,7 +45,7 @@ APlayer::APlayer()
 
 		SetName("Kirby");
 
-		UImageManager::GetInst().CuttingSprite("KirbyDance.png", { 128, 128 });
+		
 
 		UImageManager::GetInst().CuttingSprite("Die.png", { 128, 128 });
 		UImageManager::GetInst().CuttingSprite("Idle_Left.png", { 128, 128 });

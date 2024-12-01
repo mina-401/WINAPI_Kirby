@@ -108,10 +108,10 @@ public:
         KnockBackVec = _Vector;
 
     }
-    const ActorVector& GetBulletVector()
+   /* const ActorVector& GetBulletVector()
     {
         return BulletVector;
-    }
+    }*/
 
     ECopyAbilityState GetCurPlayerCopyState() const
     {
@@ -414,7 +414,7 @@ private:
     static USoundPlayer BGMPlayLevelPrismPlayer;
     USoundPlayer BGMVictoryPlayer;
 
-    ActorVector BulletVector;
+    //ActorVector BulletVector;
   
     class AActor* ColAnyActor = nullptr;
     class AJumpStar* star = nullptr;

@@ -24,6 +24,7 @@ void AEndingGameMode::BeginPlay()
 
 	}
 	ADanceKirby* player = GetWorld()->GetPawn<ADanceKirby>();
+	player->SetActorLocation({ 150,150 });
 
 //	player->SetColImage("foregroundKingDedede1-1_col.png");
 	AEndingMap* NewActor = GetWorld()->SpawnActor<AEndingMap>();
