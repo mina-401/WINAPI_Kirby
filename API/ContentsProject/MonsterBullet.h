@@ -2,7 +2,6 @@
 #pragma once
 #include <EngineCore/Actor.h>
 
-// ���� :
 class AMonsterBullet : public AActor
 {
 public:
@@ -51,7 +50,7 @@ private:
 	//class UEngineWinImage* ColImage = nullptr;
 	class USpriteRenderer* SpriteRenderer = nullptr;
 	class USpriteRenderer* BackSpriteRenderer = nullptr;
-
+	
 	class AMonster* MainPawn = nullptr;
 
 	float Speed = 500.0f;

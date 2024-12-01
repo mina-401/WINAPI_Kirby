@@ -8,7 +8,6 @@ UEngineFile::UEngineFile()
 
 }
 
-// �ڽĿ��� �θ� �����ڸ� ��������� ȣ�����ָ� �ȴ�.
 UEngineFile::UEngineFile(std::string_view _Path)
 	: UEnginePath(_Path)
 {
@@ -23,7 +22,6 @@ UEngineFile::UEngineFile(std::filesystem::path _Path)
 
 UEngineFile::~UEngineFile()
 {
-	// �Ҹ��ڸ� �̿��ؼ� �ڿ������� �ı��ǵ��� ����°� ����.
 	Close();
 }
 
@@ -31,8 +29,6 @@ void UEngineFile::FileOpen(const char* _Mode)
 {
 	fopen_s(&File, Path, _Mode);
 
-	// ����ڵ�
-	// ������ ���� ���ߴ�.
 	if (nullptr == File)
 	{
 		// char [] Arr0
@@ -87,24 +83,18 @@ void UEngineFile::Read(void* _Ptr, size_t _Size)
 	fread(_Ptr, _Size, 1, File);
 }
 
-// �ζ����� ������ �������и��ϸ� �ζ����� �ϱ� ����ϴ�.
 bool UEngineFile::IsExits()
 {
 	int Result = _access(Path, 00);
 
-	// 0�̸� �ִ°� 0 �̿��� ���̸� ���� ��
 	return 0 == Result;
 }
 
 
 
-// ���� ���� Ȥ�� �÷��� ��ɵ��� ������ �ѽ��̴�.
-// �����Ѵ�.
-// ����Ѵ�.
-// ������
+
 void UEngineFile::Close()
 {
-	// ����ڵ�
 	if (nullptr != File)
 	{
 		fclose(File);

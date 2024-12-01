@@ -5,7 +5,6 @@
 UEngineDirectory::UEngineDirectory()
 	: UEnginePath()
 {
-	// ��������� ����� 
 }
 
 UEngineDirectory::UEngineDirectory(std::string_view _Path)
@@ -28,7 +27,6 @@ std::vector<class UEngineFile> UEngineDirectory::GetAllFile(bool _IsRecursive /*
 {
 	std::vector<class UEngineFile> Result;
 
-	// ��θ� �־��ָ� �� ����� ù��° ������ ����Ű�� �ȴ�.
 	std::filesystem::directory_iterator Diriter = std::filesystem::directory_iterator(Path);
 
 	while (false == Diriter._At_end())
@@ -57,7 +55,6 @@ std::vector<class UEngineDirectory> UEngineDirectory::GetAllDirectory()
 {
 	std::vector<class UEngineDirectory> Result;
 
-	// ��θ� �־��ָ� �� ����� ù��° ������ ����Ű�� �ȴ�.
 	std::filesystem::directory_iterator Diriter = std::filesystem::directory_iterator(Path);
 
 	while (false == Diriter._At_end())
@@ -82,7 +79,6 @@ std::vector<class UEngineDirectory> UEngineDirectory::GetAllDirectory()
 void UEngineDirectory::GetAllFileRecursive(std::filesystem::path _Path
 	, std::vector<class UEngineFile>& _Result)
 {
-	// ��θ� �־��ָ� �� ����� ù��° ������ ����Ű�� �ȴ�.
 	std::filesystem::directory_iterator Diriter = std::filesystem::directory_iterator(_Path);
 
 	while (false == Diriter._At_end())

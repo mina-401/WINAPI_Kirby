@@ -1,18 +1,7 @@
-#include "PreCompile.h"
+﻿#include "PreCompile.h"
 #include "EngineWindow.h"
 #include <EngineBase/EngineDebug.h>
 
-//class AActor
-//{
-//    Player* NewPlayer; // <= ���ߴ�.
-//};
-//
-//class Player : public AActor
-//{
-//
-//};
-
-// ������ ���� ����� ������ ���� 
 // #include <EngineCore/EngineAPICore.h>
 
 //#ifdef _WINDOWS
@@ -34,7 +23,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hWnd, &ps);
-        // TODO: ���⿡ hdc�� ����ϴ� �׸��� �ڵ带 �߰��մϴ�...
         EndPaint(hWnd, &ps);
     }
     break;
@@ -57,8 +45,7 @@ void UEngineWindow::EngineWindowInit(HINSTANCE _Instance)
 {
     hInstance = _Instance;
 
-    // ������ ������ ����� �Ѵٸ� ���⼭ �Ϸ��� �Ѱ�.
-    // ����Ʈ ������ Ŭ���� ���
+   
     WNDCLASSEXA wcex;
     wcex.cbSize = sizeof(WNDCLASSEX);
     wcex.style = CS_HREDRAW | CS_VREDRAW;
@@ -77,27 +64,9 @@ void UEngineWindow::EngineWindowInit(HINSTANCE _Instance)
 
 int UEngineWindow::WindowMessageLoop(EngineDelegate _StartFunction, EngineDelegate _FrameFunction)
 {
-    // ����Ű �ε� ����
-    // HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSPROJECT2));
+ 
     MSG msg = MSG();
 
-    // �⺻ �޽��� �����Դϴ�:
-    // �޼��� ������ getMessage��� ������ ������ ������ ����.
-    // ���� �Լ��̱� �����̴�.
-    // ���� �ڽ��� ������ ���������� �����ϴ� �Լ�.
-
-    // GetMessage
-    // �޼����� ���� => ������ ��ٸ�
-    // �޼����� �ִ� => ó���ϰ� ����
-
-    // ó���ϰ� ����
-    // �޼����� ���� => ����
-    // �޼����� �ִ� => ó���ϰ� ����
-
-    // WindowCount;
-
-    // ���α׷� �����ϰ� �� 1�� �ؾ����� �ִٸ� ���⿡ �־��.
-    // �ִ��� ����ó�� ���ִ°� ����.
     if (true == _StartFunction.IsBind())
     {
         _StartFunction();
@@ -105,10 +74,7 @@ int UEngineWindow::WindowMessageLoop(EngineDelegate _StartFunction, EngineDelega
 
     while (0 != WindowCount)
     {
-        // if (!TranslateAccelerator(msg.hwnd, nullptr, &msg))  => ������ ����Ű ��ü�� �������
-        // ���� ���̹Ƿ� �׳� ����
-
-        // PM_REMOVE == ���� ó���Ҷ� ���ݱ��� ���� �޼��� ������.
+       
         if (0 != PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
             TranslateMessage(&msg);
@@ -119,8 +85,7 @@ int UEngineWindow::WindowMessageLoop(EngineDelegate _StartFunction, EngineDelega
         {
             _FrameFunction();
         }
-        // �޼����� ���� �ð��� �� ������ �����°ž�.
-        // �޼��� ó���ϰ� ���� �� ���ӿ����� ������.
+      
     }
 
     return (int)msg.wParam;
@@ -128,7 +93,7 @@ int UEngineWindow::WindowMessageLoop(EngineDelegate _StartFunction, EngineDelega
 
 void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
 {
-    // �Ϲ����� ���� ����
+   
 
     std::map<std::string, WNDCLASSEXA>::iterator EndIter = WindowClasss.end();
     std::map<std::string, WNDCLASSEXA>::iterator FindIter = WindowClasss.find(std::string(_Class.lpszClassName));
@@ -136,13 +101,8 @@ void UEngineWindow::CreateWindowClass(const WNDCLASSEXA& _Class)
     // ckw
     if (EndIter != FindIter)
     {
-        // std::string ErrorText = "���� �̸��� ������ Ŭ������ 2�� ����߽��ϴ�" + std::string(_Class.lpszClassName);
-
-        // std::string ���ο� ��� �ִ� �ɹ����� => std::string => std::vector<char>
-        // std::vector<char> char* = new char[100];
-        // ErrorText const char* �������ִ� �Լ��� c_str()
-        // const char* Text = ErrorText.c_str();
-        MSGASSERT(std::string(_Class.lpszClassName) + " ���� �̸��� ������ Ŭ������ 2�� ����߽��ϴ�");
+        
+        MSGASSERT(std::string(_Class.lpszClassName) + " ");
         return;
     }
 
@@ -170,7 +130,6 @@ UEngineWindow::~UEngineWindow()
         BackBufferImage = nullptr;
     }
 
-    // �������ϴ� ������ �ظ��ϸ� ������� ������ ������ ����.
     if (nullptr != WindowHandle)
     {
         DestroyWindow(WindowHandle);
@@ -182,7 +141,7 @@ void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassN
 {
     if (false == WindowClasss.contains(_ClassName.data()))
     {
-        MSGASSERT(std::string(_ClassName) + " ������� ���� Ŭ������ ������â�� ������� �߽��ϴ�");
+        MSGASSERT(std::string(_ClassName) + "");
         return;
     }
 
@@ -191,25 +150,20 @@ void UEngineWindow::Create(std::string_view _TitleName, std::string_view _ClassN
 
     if (nullptr == WindowHandle)
     {
-        MSGASSERT(std::string(_TitleName) + " ������ ������ �����߽��ϴ�.");
+        MSGASSERT(std::string(_TitleName) + " .");
         return;
     }
 
-    // �����찡 ��������� hdc�� ���⼭ ���� �̴ϴ�.
     HDC WindowMainDC = GetDC(WindowHandle);
 
-    // nullptr�� �ƴϰ� ���� ���� ���� ��¥ ������ ���۰� ���������.
     WindowImage = new UEngineWinImage();
-    // �̰� ����ٴ� ������ �ƴϴ�.
     WindowImage->Create(WindowMainDC);
 }
 
 void UEngineWindow::Open(std::string_view _TitleName /*= "Window"*/)
 {
-    // �� window �ȸ���� ������ �ϳ�?
     if (0 == WindowHandle)
     {
-        // �����
         Create(_TitleName);
     }
 
@@ -218,24 +172,18 @@ void UEngineWindow::Open(std::string_view _TitleName /*= "Window"*/)
         return;
     }
 
-    // �ܼ��� ����â�� �����ִ� �͸��� �ƴ϶�
     ShowWindow(WindowHandle, SW_SHOW);
     UpdateWindow(WindowHandle);
     ++WindowCount;
-    // ShowWindow(WindowHandle, SW_HIDE);
 }
 
 void UEngineWindow::SetWindowPosAndScale(FVector2D _Pos, FVector2D _Scale)
 {
-    // ������ ũ��� �޶��������� ����۸� ���� ���� ���̴�.
     if (false == WindowSize.EqualToInt(_Scale))
     {
-        // ȭ���� ũ��� ���� ������ ũ�⿩�� �Ѵ�.
-        // ������ ȣ���ϸ� ������ ������� �༮�� Leck�� �ǹǷ�
-        // ȭ��ũ�⸦ ������ ������ ��������� �Ѵ�.
+      
         if (nullptr != BackBufferImage)
         {
-            // ���� ����۴� ����������
             delete BackBufferImage;
             BackBufferImage = nullptr;
         }
@@ -248,13 +196,6 @@ void UEngineWindow::SetWindowPosAndScale(FVector2D _Pos, FVector2D _Scale)
 
     RECT Rc = { 0, 0, _Scale.iX(), _Scale.iY() };
 
-    // �̰� �� ������ִ� �Լ��̴�.
-    // Ÿ��Ʋ�� ũ����� ������ ũ��� �ش�.
-    // ������ ����
-    // ���� �������� ��Ÿ���� �־���� �Ѵ�.
-
-    // �׷��� �� �̳༮�� 
-    // �����쿡�� �������� ��ġ�� ������ ũ�⸦ �ְ� �ȴ�.
     AdjustWindowRect(&Rc, WS_OVERLAPPEDWINDOW, FALSE);
 
     ::SetWindowPos(WindowHandle, nullptr, _Pos.iX(), _Pos.iY(), Rc.right - Rc.left, Rc.bottom - Rc.top, SWP_NOZORDER);
@@ -265,7 +206,6 @@ FVector2D UEngineWindow::GetMousePos()
     POINT MousePoint;
 
     GetCursorPos(&MousePoint);
-    // ������â ��ġ�������� ���콺 �������� 
     ScreenToClient(WindowHandle, &MousePoint);
 
     return FVector2D(MousePoint.x, MousePoint.y);
