@@ -17,7 +17,7 @@ AEndingMap::AEndingMap()
 		SpriteRenderer->SetSprite("ending_background_map.png");
 
 		MapScale = SpriteRenderer->SetSpriteScale(1.05f);
-		SpriteRenderer->SetComponentLocation({ MapScale.X - 50,MapScale.Y });
+		SpriteRenderer->SetComponentLocation(MapScale.Half());
 	}
 	/*{
 		ColSpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
@@ -36,6 +36,9 @@ AEndingMap::~AEndingMap()
 void AEndingMap::BeginPlay()
 {
 	Super::BeginPlay();
+
+	ADanceKirby* player = GetWorld()->GetPawn<ADanceKirby>();
+	player->SetActorLocation({ MapScale.Half().X,MapScale.Half().Y+76});
 	
 
 }
