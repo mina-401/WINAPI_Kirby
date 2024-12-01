@@ -32,7 +32,7 @@ std::string UEnginePath::GetFileName()
 {
 	if (true == IsDirectory())
 	{
-		MSGASSERT("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ï¶ï¿½ï¿½ï¿½ GetFileNameï¿½ï¿½ È£ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½." + Path.string());
+		MSGASSERT("ÆÄÀÏ °æ·Î ÀÏ¶§¸¸ GetFileNameÀ» È£ÃâÇÒ¼ö ÀÖ½À´Ï´Ù." + Path.string());
 		return "";
 	}
 
@@ -43,12 +43,13 @@ std::string UEnginePath::GetDirectoryName()
 {
 	if (false == IsDirectory())
 	{
-		MSGASSERT("ï¿½ï¿½ï¿½ä¸® ï¿½ï¿½ï¿½ ï¿½Ï¶ï¿½ï¿½ï¿½ GetDirectoryNameï¿½ï¿½ È£ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½." + Path.string());
+		MSGASSERT("µð·ºÅä¸® °æ·Î ÀÏ¶§¸¸ GetDirectoryNameÀ» È£ÃâÇÒ¼ö ÀÖ½À´Ï´Ù." + Path.string());
 		return "";
 	}
 
 	return Path.filename().string();
 }
+
 std::string UEnginePath::GetExtension()
 {
 	return Path.extension().string();
@@ -57,7 +58,7 @@ std::string UEnginePath::GetExtension()
 
 bool UEnginePath::IsExists()
 {
-	// C++ï¿½ï¿½ ï¿½ï¿½ï¿½Ç´Â°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Î´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½ï¿½.
+	// C++ÀÌ ºôµåµÇ´Â°÷¿¡¼­´Â ¸ðµÎ´Ù µ¿ÀÏÇÏ°Ô µ¹¾Æ°£´Ù.
 	// std::filesystem::create_directory()
 	return std::filesystem::exists(Path);
 }
@@ -76,28 +77,39 @@ void UEnginePath::MoveParent()
 {
 	Path = Path.parent_path();
 }
+
 void UEnginePath::Append(std::string_view _AppendName)
 {
 	Path.append(_AppendName);
 }
+
 bool UEnginePath::MoveParentToDirectory(std::string_view _Path)
 {
-	// ï¿½Ì·ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½.
+	// ÀÌ·± °æ¿ì¿¡´Â ´õ¹Ì¸¦ ¸¸µå´Â°Ô ÁÁ´Ù.
 
 	// Path = L"D:\\Project\\GM2\\API\\App\\AAA.png"
 	UEnginePath DummyPath = UEnginePath(Path);
 
 	if (false == DummyPath.IsDirectory())
 	{
-		MSGASSERT("ï¿½ï¿½ï¿½ä¸® ï¿½ï¿½ï¿½ï¿½Ï¶ï¿½ï¿½ï¿½ MoveParentToDirectory ï¿½ï¿½ È£ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½");
+		MSGASSERT("µð·ºÅä¸® °æ·ÎÀÏ¶§¸¸ MoveParentToDirectory ¸¦ È£ÃâÇÒ¼ö ÀÖ½À´Ï´Ù");
 		return false;
 	}
 
+	// ÀÌ°Ô ¹«ÇÑ ·çÇÁ °É¸®´Â ÄÚµå ÀÔ´Ï´Ù.
 	bool Result = false;
 	std::filesystem::path CurPath = DummyPath.Path;
-	while (CurPath != CurPath.root_path())
+
+	std::filesystem::path Root = CurPath.root_path();
+	while (true)
 	{
 		CurPath = DummyPath.Path;
+
+		if (CurPath == Root)
+		{
+			break;
+		}
+
 		CurPath.append(_Path);
 		if (true == std::filesystem::exists(CurPath))
 		{

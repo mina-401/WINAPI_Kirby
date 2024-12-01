@@ -36,6 +36,12 @@ public:
 		else
 			return value;
 	}
+
+	template <typename DataType>
+	static DataType Lerp(DataType A, DataType B, DataType Alpha)
+	{
+		return A * (1 - Alpha) + B * Alpha;
+	}
 };
 
 class FVector2D
@@ -109,7 +115,7 @@ public:
 
 	class FIntPoint ConvertToPoint() const;
 
-	static FVector2D Normalize(FVector2D _Value)
+	static FVector2D Normalize(FVector2D _Value) 
 	{
 		_Value.Normalize();
 		return _Value;
@@ -240,6 +246,16 @@ public:
 		Stream += "]";
 		return Stream;
 	}
+
+	static FVector2D Lerp(FVector2D _A, FVector2D _B, float _Alpha)
+	{
+		FVector2D Result;
+		_Alpha = UEngineMath::Clamp(_Alpha, 0.0f, 1.0f);
+		Result.X = UEngineMath::Lerp(_A.X, _B.X, _Alpha);
+		Result.Y = UEngineMath::Lerp(_A.Y, _B.Y, _Alpha);
+		return Result;
+	}
+
 };
 
 enum class ECollisionType
@@ -287,10 +303,10 @@ public:
 
 	FVector2D CenterLeftBottom() const
 	{
-		FVector2D Location;
-		Location.X = Location.X - Scale.hX();
-		Location.Y = Location.Y + Scale.hY();
-		return Location;
+		FVector2D Result;
+		Result.X = Location.X - Scale.hX();
+		Result.Y = Location.Y + Scale.hY();
+		return Result;
 	}
 
 	float CenterLeft() const
@@ -305,10 +321,10 @@ public:
 
 	FVector2D CenterRightTop() const
 	{
-		FVector2D Location;
-		Location.X = Location.X + Scale.hX();
-		Location.Y = Location.Y - Scale.hY();
-		return Location;
+		FVector2D Result;
+		Result.X = Location.X + Scale.hX();
+		Result.Y = Location.Y - Scale.hY();
+		return Result;
 	}
 
 	FVector2D CenterRightBottom() const
@@ -386,7 +402,6 @@ class UColor
 public:
 	static const UColor WHITE;
 	static const UColor BLACK;
-	static const UColor GRAY;
 
 	union
 	{

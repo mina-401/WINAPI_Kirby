@@ -1,6 +1,7 @@
 #include "PreCompile.h"
 #include "EngineFile.h"
 #include "EngineDebug.h"
+#include "EngineSerializer.h"
 
 UEngineFile::UEngineFile()
 {
@@ -8,6 +9,13 @@ UEngineFile::UEngineFile()
 
 }
 
+UEngineFile::UEngineFile(const std::string& _Path)
+	: UEnginePath(std::string_view(_Path.c_str()))
+{
+
+}
+
+// ÀÚ½Ä¿¡¼­ ºÎ¸ð »ý¼ºÀÚ¸¦ ¸í½ÃÀûÀ¸·Î È£ÃâÇØÁÖ¸é µÈ´Ù.
 UEngineFile::UEngineFile(std::string_view _Path)
 	: UEnginePath(_Path)
 {
@@ -22,40 +30,70 @@ UEngineFile::UEngineFile(std::filesystem::path _Path)
 
 UEngineFile::~UEngineFile()
 {
+	// ¼Ò¸êÀÚ¸¦ ÀÌ¿ëÇØ¼­ ÀÚ¿¬½º·´°Ô ÆÄ±«µÇµµ·Ï ¸¸µå´Â°Ô ÁÁ´Ù.
 	Close();
 }
 
 void UEngineFile::FileOpen(const char* _Mode)
 {
-	fopen_s(&File, Path, _Mode);
+	fopen_s(&File, GetPathToString().c_str(), _Mode);
 
+	// ¹æ¾îÄÚµå
+	// ÆÄÀÏÀ» ¿­Áö ¸øÇß´Ù.
 	if (nullptr == File)
 	{
 		// char [] Arr0
 		// char [] Arr1
 		// Arr0 + Arr1
 
-		MSGASSERT(Path /*+ "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½"*/);
+		MSGASSERT(GetPathToString() + + "ÆÄÀÏ ¿ÀÇÂ¿¡ ½ÇÆÐÇß½À´Ï´Ù");
 	}
 }
 
+
+void UEngineFile::Write(UEngineSerializer& _Ser)
+{
+	Write(_Ser.GetDataPtr(), _Ser.GetWriteOffset());
+}
+
+int UEngineFile::GetFileSize()
+{
+	if (false == IsFile())
+	{
+		MSGASSERT(Path.string() + "ÆÄÀÏÀÌ ¾Æ´Ñ Á¸ÀçÀÇ Å©±â¸¦ ¾Ë¼ö´Â ¾ø½À´Ï´Ù.");
+		return -1;
+	}
+
+	return static_cast<int>(std::filesystem::file_size(Path));
+}
+
+void UEngineFile::Read(class UEngineSerializer& _Ser)
+{
+	// ÆÄÀÏ Å©±â¸¦ ´Ù ÀÐ¾î¼­ 
+
+	int FileSize = GetFileSize();
+
+	_Ser.DataResize(FileSize);
+
+	Read(_Ser.GetDataPtr(), FileSize);
+}
 
 void UEngineFile::Write(const void* _Ptr, size_t _Size)
 {
 	if (0 == _Size)
 	{
-		MSGASSERT("Å©ï¿½â°¡ 0ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+		MSGASSERT("Å©±â°¡ 0ÀÎ µ¥ÀÌÅÍ¸¦ ¾µ¼ö´Â ¾ø½À´Ï´Ù.");
 	}
 
 	if (nullptr == _Ptr)
 	{
-		MSGASSERT("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½Þ¸ð¸®¸ï¿½ ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
+		MSGASSERT("Á¸ÀçÇÏÁö ¾Ê´Â ¸Þ¸ð¸®¸¦ »ç¿ëÇÏ·Á°í Çß½À´Ï´Ù.");
 	}
 
-	// wï¿½ï¿½ ï¿½ï¿½ì¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã³ï¿½ï¿½
+	// wÀÏ °æ¿ì¿¡ ´ëÇÑ ¿¹¿ÜÃ³¸®
 	if (nullptr == File)
 	{
-		MSGASSERT("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½");
+		MSGASSERT("¿­Áö ¾ÊÀº ÆÄÀÏ¿¡ ³»¿ëÀ» ¾²·Á°í Çß½À´Ï´Ù");
 		return;
 	}
 
@@ -66,35 +104,32 @@ void UEngineFile::Read(void* _Ptr, size_t _Size)
 {
 	if (0 == _Size)
 	{
-		MSGASSERT("Å©ï¿½â°¡ 0ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+		MSGASSERT("Å©±â°¡ 0ÀÎ µ¥ÀÌÅÍ¸¦ ÀÐÀ»¼ö´Â ¾ø½À´Ï´Ù.");
 	}
 
 	if (nullptr == _Ptr)
 	{
-		MSGASSERT("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½Þ¸ð¸®¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
+		MSGASSERT("Á¸ÀçÇÏÁö ¾Ê´Â ¸Þ¸ð¸®¸¦ ÀÐÀ¸·Á°í Çß½À´Ï´Ù.");
 	}
 
 	if (nullptr == File)
 	{
-		MSGASSERT("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½");
+		MSGASSERT("¿­Áö ¾ÊÀº ÆÄÀÏ¿¡ ³»¿ëÀ» ¾²·Á°í Çß½À´Ï´Ù");
 		return;
 	}
 
 	fread(_Ptr, _Size, 1, File);
 }
 
-bool UEngineFile::IsExits()
-{
-	int Result = _access(Path, 00);
-
-	return 0 == Result;
-}
 
 
-
-
+// º¸Åë ÆÄÀÏ È¤Àº ÇÃ·§Æû ±â´ÉµéÀº ¾ðÁ¦³ª ÇÑ½ÖÀÌ´Ù.
+// ½ÃÀÛÇÑ´Ù.
+// »ç¿ëÇÑ´Ù.
+// ³¡³½´Ù
 void UEngineFile::Close()
 {
+	// ¹æ¾îÄÚµå
 	if (nullptr != File)
 	{
 		fclose(File);
