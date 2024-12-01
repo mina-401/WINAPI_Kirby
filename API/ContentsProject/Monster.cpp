@@ -138,8 +138,8 @@ void AMonster::KnockBack(float _DeltaTime)
 
 void AMonster::ChangeMonsterDir(float _DeltaTime)
 {
-
-	if (false == MonsterNextPosCheck(_DeltaTime, MoveVector))
+	FVector2D Pos = { MoveVector.X, MoveVector.Y - 3.5f };
+	if (false == MonsterNextPosCheck(_DeltaTime, Pos))
 	{
 		//���� �ٲٱ�
 		if (MoveVector == FVector2D::RIGHT) {
@@ -364,18 +364,19 @@ void AMonster::Chase(float _DeltaTime)
 	UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
 	if (Color == UColor::BLACK)
 	{
-		FVector2D Pos = { MoveVector.X, MoveVector.Y - 1.0f };
-		FVector2D NextPos = Pos *_DeltaTime * Speed;
-		UColor NextColor = ColImage->GetColor(NextPos, UColor::WHITE);
+		//FVector2D Pos = { MoveVector.X, MoveVector.Y - 4.5f };
+		FVector2D Pos = {0.0f,-1.0f };
+		//FVector2D NextPos = Pos *_DeltaTime * Speed;
+		UColor NextColor = ColImage->GetColor(Pos, UColor::WHITE);
 		if (NextColor != UColor::BLACK)
 		{
-			AddActorLocation(NextPos);
+			AddActorLocation(Pos);
 		}
 
 	}
 	else {
 
-		//TargetPosVector.Normalize();
+		TargetPosVector.Normalize();
 		MoveDirCheck(TargetPosVector); 
 
 		FVector2D NextPos = MoveVector * _DeltaTime * Speed;
@@ -385,7 +386,6 @@ void AMonster::Chase(float _DeltaTime)
 	MonsterClimbingUphill();
 
 
-	//��򰡿��� �÷��̾ �Ⱥ��̸� ������·�
 }
 void AMonster::MoveDirCheck(FVector2D _Pos)
 {

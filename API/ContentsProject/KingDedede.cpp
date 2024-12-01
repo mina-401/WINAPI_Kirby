@@ -115,7 +115,7 @@ void AKingDedede::Die(float _DeltaTime)
 void AKingDedede::Chase(float _DeltaTime)
 {
 	AMonster::Chase(_DeltaTime);
-	CheckPlayerPos();
+	//CheckPlayerPos();
 
 	if (CurChaseTime > 500.0f)
 	{
@@ -124,31 +124,6 @@ void AKingDedede::Chase(float _DeltaTime)
 		return;
 	}
 	CurChaseTime += 0.2f;
-
-	/*AActor* Col= AttackColComponent->CollisionOnce(ECollisionGroup::PlayerBody);
-	if (Col != nullptr)
-	{
-		int a = 0;
-	}*/
-
-
-
-	/*AActor* Player = GetWorld()->GetPawn();
-	Player = dynamic_cast<APlayer*>(Player);
-
-	FVector2D Range = Player->GetActorLocation() - this->GetActorLocation();
-	float PlayerRange = Range.Length();*/
-
-
-
-	/*if (PlayerRange <= MonsterToPlayerRange)
-	{
-
-		TargetPosVector = Player->GetActorLocation() - GetActorLocation();
-		ChangeState(EMonsterState::Chase);
-		return;
-	}*/
-	//SetActorLocation(GetActorLocation())
 }
 
 void AKingDedede::AttackStart()
@@ -247,7 +222,7 @@ void AKingDedede::BeginPlay()
 	AMonster::BeginPlay();
 
 	//AttackRound = Random.RandomInt(1, 3);
-	MonsterToPlayerRange = 300.0f;
+	MonsterToPlayerRange = 150.0f;
 	SetDamagePower(50.0f);
 
 }
