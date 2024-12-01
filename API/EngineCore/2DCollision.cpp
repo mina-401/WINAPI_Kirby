@@ -44,7 +44,11 @@ void U2DCollision::ComponentTick(float _DeltaTime)
 		FTransform ActorTransform = GetActorTransform();
 		FVector2D CameraPos = GetActor()->GetWorld()->GetCameraPos();
 
-		ActorTransform.Location -= CameraPos;
+		
+		if (true == IsCameraEffect)
+		{
+			ActorTransform.Location -= CameraPos;
+		}
 
 		switch (CollisionType)
 		{
@@ -85,6 +89,11 @@ bool U2DCollision::Collision(int _OtherCollisionGroup, std::vector<AActor*>& _Re
 	for (; StartIter != EndIter; ++StartIter)
 	{
 		U2DCollision* DestCollision = *StartIter;
+
+		if (ThisCollision == DestCollision)
+		{
+			continue;
+		}
 
 		if (false == DestCollision->IsActive())
 		{
@@ -158,6 +167,35 @@ void U2DCollision::SetCollisionEnd(std::function<void(AActor*)> _Function)
 
 }
 
+void U2DCollision::CollisionSetRelease()
+{
+	std::set<U2DCollision*>::iterator StartIter = CollisionCheckSet.begin();
+	std::set<U2DCollision*>::iterator EndIter = CollisionCheckSet.end();
+
+	for (; StartIter != EndIter; )
+	{
+		U2DCollision* ColCollison = *StartIter;
+
+		if (nullptr == ColCollison)
+		{
+			++StartIter;
+			continue;
+		}
+
+		if (false == ColCollison->IsActive() || true == ColCollison->IsDestroy())
+		{
+			if (nullptr != End)
+			{
+				End(ColCollison->GetActor());
+			}
+			StartIter = CollisionCheckSet.erase(StartIter);
+			continue;
+		}
+
+		++StartIter;
+	}
+}
+
 // 엔진 이벤트코드니까 이상한 곳에서 할필요가 없다.
 // 컨텐츠에서는 존재하는지도 몰라야 한다.
 void U2DCollision::CollisionEventCheck(class U2DCollision* _Other)
@@ -188,7 +226,7 @@ void U2DCollision::CollisionEventCheck(class U2DCollision* _Other)
 
 			CollisionCheckSet.insert(DestCollision);
 		}
-		else
+		else 
 		{
 			if (nullptr != Stay)
 			{
@@ -196,7 +234,7 @@ void U2DCollision::CollisionEventCheck(class U2DCollision* _Other)
 			}
 		}
 	}
-	else
+	else 
 	{
 		// 충돌 안했다.
 		// 충돌은 안했는데 예전에 충돌한 기록은 가지고 있어ㅏ.

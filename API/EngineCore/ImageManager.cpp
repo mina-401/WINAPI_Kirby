@@ -51,7 +51,7 @@ void UImageManager::Load(std::string_view Path)
 	UEnginePath EnginePath = UEnginePath(Path);
 
 	std::string FileName = EnginePath.GetFileName();
-
+	
 	Load(FileName, Path);
 }
 
@@ -71,13 +71,13 @@ void UImageManager::Load(std::string_view _KeyName, std::string_view Path)
 
 	if (true == EnginePath.IsDirectory())
 	{
-		MSGASSERT("ï¿½ï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½Îµï¿½ï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½." + std::string(Path));
+		MSGASSERT("µð·ºÅä¸®´Â ·ÎµåÇÒ¼ö ¾ø½À´Ï´Ù." + std::string(Path));
 		return;
 	}
 
 	if (false == EnginePath.IsExists())
 	{
-		MSGASSERT("ï¿½ï¿½È¿ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½." + std::string(Path));
+		MSGASSERT("À¯È¿ÇÏÁö ¾ÊÀº ÆÄÀÏ °æ·Î ÀÔ´Ï´Ù." + std::string(Path));
 		return;
 	}
 
@@ -87,32 +87,32 @@ void UImageManager::Load(std::string_view _KeyName, std::string_view Path)
 
 	if (true == Images.contains(UpperName))
 	{
-		MSGASSERT("ï¿½Îµï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½." + UpperName);
+		MSGASSERT("·ÎµåµÈ ÀÌ¹ÌÁö¸¦ ¶Ç ·ÎµåÇÒ ¼ö ¾ø½À´Ï´Ù." + UpperName);
 		return;
 	}
 
 	if (true == Sprites.contains(UpperName))
 	{
-		MSGASSERT("ï¿½Îµï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½." + UpperName);
+		MSGASSERT("·ÎµåµÈ ÀÌ¹ÌÁö¸¦ ¶Ç ·ÎµåÇÒ ¼ö ¾ø½À´Ï´Ù." + UpperName);
 		return;
 	}
 
-	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Õ´Ï´ï¿½.
+	// ¸¸µé¾ú´Ù°í ³¡ÀÌ ¾Æ´Õ´Ï´Ù.
 	UEngineWinImage* NewImage = new UEngineWinImage();
 	NewImage->Load(WindowImage, Path);
 	NewImage->SetName(UpperName);
-	Images.insert({ UpperName , NewImage });
+	Images.insert({ UpperName , NewImage});
 
 	UEngineSprite* NewSprite = new UEngineSprite();
 
-	// ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï°Ú´ï¿½.
+	// ÀÌ¹ÌÁö¸¦ ÀÚ¸£´Â ±âÁØÀÌ µÇ´Â À§Ä¡´Â ¿ÞÂÊ À§¸¦ ±âÁØÀ¸·Î ÀÚ¸£´Â °ÍÀ» ÇÏ°Ú´Ù.
 	FTransform Trans;
 	Trans.Location = { 0,0 };
 	Trans.Scale = NewImage->GetImageScale();
 	NewSprite->PushData(NewImage, Trans);
 
 	NewSprite->SetName(UpperName);
-	Sprites.insert({ UpperName , NewSprite });
+	Sprites.insert({ UpperName , NewSprite});
 }
 
 void UImageManager::LoadFolder(std::string_view _KeyName, std::string_view _Path)
@@ -121,7 +121,7 @@ void UImageManager::LoadFolder(std::string_view _KeyName, std::string_view _Path
 
 	if (false == EnginePath.IsExists())
 	{
-		MSGASSERT("ï¿½ï¿½È¿ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½." + std::string(_Path));
+		MSGASSERT("À¯È¿ÇÏÁö ¾ÊÀº ÆÄÀÏ °æ·Î ÀÔ´Ï´Ù." + std::string(_Path));
 		return;
 	}
 
@@ -129,7 +129,7 @@ void UImageManager::LoadFolder(std::string_view _KeyName, std::string_view _Path
 
 	if (true == Sprites.contains(UpperName))
 	{
-		MSGASSERT("ï¿½Îµï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½." + UpperName);
+		MSGASSERT("·ÎµåµÈ ÀÌ¹ÌÁö¸¦ ¶Ç ·ÎµåÇÒ ¼ö ¾ø½À´Ï´Ù." + UpperName);
 		return;
 	}
 
@@ -138,7 +138,7 @@ void UImageManager::LoadFolder(std::string_view _KeyName, std::string_view _Path
 	NewSprite->SetName(UpperName);
 	Sprites.insert({ UpperName , NewSprite });
 
-	// ï¿½Îµï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ Window Main HDC
+	// ·ÎµåÇÏ±â À§ÇØ¼­ ÇÊ¿äÇÑ Window Main HDC
 	UEngineWinImage* WindowImage = UEngineAPICore::GetCore()->GetMainWindow().GetWindowImage();
 
 	UEngineDirectory Dir = _Path;
@@ -156,13 +156,13 @@ void UImageManager::LoadFolder(std::string_view _KeyName, std::string_view _Path
 			NewImage->Load(WindowImage, FilePath);
 		}
 		Images.insert({ UpperFileName,  NewImage });
-		// ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// ÀÌ¹ÌÁö ·ÎµùÀº ³¡³µÀ¸´Ï
 
 		FTransform Transform;
 		Transform.Location = { 0, 0 };
 		Transform.Scale = NewImage->GetImageScale();
 
-		NewSprite->PushData(NewImage, Transform);
+		NewSprite->PushData( NewImage, Transform);
 	}
 }
 
@@ -172,13 +172,13 @@ void UImageManager::CuttingSprite(std::string_view _KeyName, int _X, int _Y)
 
 	if (false == Sprites.contains(UpperName))
 	{
-		MSGASSERT("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½" + std::string(_KeyName));
+		MSGASSERT("Á¸ÀçÇÏÁö ¾ÊÀº ½ºÇÁ¶óÀÌÆ®¸¦ ÀÚ¸£·Á°í Çß½À´Ï´Ù" + std::string(_KeyName));
 		return;
 	}
 
 	if (false == Images.contains(UpperName))
 	{
-		MSGASSERT("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½" + std::string(_KeyName));
+		MSGASSERT("Á¸ÀçÇÏÁö ¾ÊÀº ÀÌ¹ÌÁö¸¦ ±â¹ÝÀ¸·Î ½ºÇÁ¶óÀÌÆ®¸¦ ÀÚ¸£·Á°í Çß½À´Ï´Ù" + std::string(_KeyName));
 		return;
 	}
 
@@ -201,13 +201,13 @@ void UImageManager::CuttingSprite(std::string_view _KeyName, FVector2D _CuttingS
 
 	if (false == Sprites.contains(UpperName))
 	{
-		MSGASSERT("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½" + std::string(_KeyName));
+		MSGASSERT("Á¸ÀçÇÏÁö ¾ÊÀº ½ºÇÁ¶óÀÌÆ®¸¦ ÀÚ¸£·Á°í Çß½À´Ï´Ù" + std::string(_KeyName));
 		return;
 	}
 
 	if (false == Images.contains(UpperName))
 	{
-		MSGASSERT("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ú¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½" + std::string(_KeyName));
+		MSGASSERT("Á¸ÀçÇÏÁö ¾ÊÀº ÀÌ¹ÌÁö¸¦ ±â¹ÝÀ¸·Î ½ºÇÁ¶óÀÌÆ®¸¦ ÀÚ¸£·Á°í Çß½À´Ï´Ù" + std::string(_KeyName));
 		return;
 	}
 
@@ -220,15 +220,64 @@ void UImageManager::CuttingSprite(std::string_view _KeyName, FVector2D _CuttingS
 
 	if (0 != (Image->GetImageScale().iX() % _CuttingSize.iX()))
 	{
-		MSGASSERT("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½Ã¿ï¿½ xï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½." + std::string(_KeyName));
+		MSGASSERT("½ºÇÁ¶óÀÌÆ® ÄÆÆÃ¿¡ x°¡ µü ¶³¾îÁöÁö ¾Ê½À´Ï´Ù." + std::string(_KeyName));
 		return;
 	}
 
 	if (0 != (Image->GetImageScale().iY() % _CuttingSize.iY()))
 	{
-		MSGASSERT("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½Ã¿ï¿½ yï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½." + std::string(_KeyName));
+		MSGASSERT("½ºÇÁ¶óÀÌÆ® ÄÆÆÃ¿¡ y°¡ µü ¶³¾îÁöÁö ¾Ê½À´Ï´Ù." + std::string(_KeyName));
 		return;
 	}
+
+	int SpriteX = Image->GetImageScale().iX() / _CuttingSize.iX();
+	int SpriteY = Image->GetImageScale().iY() / _CuttingSize.iY();
+
+	FTransform CuttingTrans;
+
+	CuttingTrans.Location = FVector2D::ZERO;
+	CuttingTrans.Scale = _CuttingSize;
+
+	for (size_t y = 0; y < SpriteY; ++y)
+	{
+		for (size_t x = 0; x < SpriteX; ++x)
+		{
+			Sprite->PushData(Image, CuttingTrans);
+			CuttingTrans.Location.X += _CuttingSize.X;
+		}
+
+		CuttingTrans.Location.X = 0.0f;
+		CuttingTrans.Location.Y += _CuttingSize.Y;
+	}
+}
+
+void UImageManager::CuttingSprite(std::string_view _NewSpriteName, std::string_view _Image, FVector2D _CuttingSize)
+{
+	std::string SpriteUpperName = UEngineString::ToUpper(_NewSpriteName);
+	std::string ImageUpperName = UEngineString::ToUpper(_Image);
+
+	if (false == Images.contains(ImageUpperName))
+	{
+		MSGASSERT("Á¸ÀçÇÏÁö ¾ÊÀº ÀÌ¹ÌÁö¸¦ ±â¹ÝÀ¸·Î ½ºÇÁ¶óÀÌÆ®¸¦ ÀÚ¸£·Á°í Çß½À´Ï´Ù" + std::string(_Image));
+		return;
+	}
+
+	UEngineSprite* Sprite = new UEngineSprite();
+
+	if (false == Sprites.contains(SpriteUpperName))
+	{
+		Sprite = new UEngineSprite();;
+		Sprites.insert({ SpriteUpperName, Sprite });
+	}
+	else {
+		Sprite = Sprites[SpriteUpperName];
+	}
+
+	UEngineWinImage* Image = Images[ImageUpperName];
+
+	Sprite->ClearSpriteData();
+	Sprite->SetName(SpriteUpperName);
+	Image->SetName(ImageUpperName);
 
 	int SpriteX = Image->GetImageScale().iX() / _CuttingSize.iX();
 	int SpriteY = Image->GetImageScale().iY() / _CuttingSize.iY();
@@ -261,16 +310,16 @@ bool UImageManager::IsLoadSprite(std::string_view _KeyName)
 UEngineSprite* UImageManager::FindSprite(std::string_view _KeyName)
 {
 	std::string UpperName = UEngineString::ToUpper(_KeyName);
-
+	
 	if (false == Sprites.contains(UpperName))
 	{
-		MSGASSERT("ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½" + std::string(_KeyName));
+		MSGASSERT("·ÎµåÇÏÁö ¾ÊÀº ½ºÇÁ¶óÀÌÆ®¸¦ »ç¿ëÇÏ·Á°í Çß½À´Ï´Ù" + std::string(_KeyName));
 		return nullptr;
 	}
 
 	//std::map<std::string, UEngineSprite*>::iterator FindIter = Sprites.find(UpperName);
 
-	// ï¿½Ì°É·ï¿½ 
+	// ÀÌ°É·Î 
 	return Sprites[UpperName];
 }
 
@@ -280,21 +329,21 @@ UEngineWinImage* UImageManager::FindImage(std::string_view _KeyName)
 
 	if (false == Images.contains(UpperName))
 	{
-		// MSGASSERT("ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ ï¿½ß½ï¿½ï¿½Ï´ï¿½" + std::string(_KeyName));
+		// MSGASSERT("·ÎµåÇÏÁö ¾ÊÀº ½ºÇÁ¶óÀÌÆ®¸¦ »ç¿ëÇÏ·Á°í Çß½À´Ï´Ù" + std::string(_KeyName));
 		return nullptr;
 	}
 
-	// ï¿½Ì°É·ï¿½ 
+	// ÀÌ°É·Î 
 	return Images[UpperName];
 }
 
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ß¶ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.
-// _NewSpriteKeyName : ï¿½ï¿½ï¿½Î¿ï¿½ Å° ï¿½ï¿½
-// _StartPos : ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß¶ï¿½ ï¿½Â»ï¿½ï¿½ ï¿½ï¿½
-// _CuttingSize : ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-// _XYOffSet : ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, XY
-// _Xcount : ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-// _ImageCount : ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+// ±âÁ¸ÀÇ ÀÌ¹ÌÁö¸¦ Ã£¾Æ Àß¶ó³½ ÈÄ »õ·Î¿î ½ºÇÁ¶óÀÌÆ® ÀÌ¹ÌÁö¸¦ ¸¸µì´Ï´Ù.
+// _NewSpriteKeyName : »õ·Î¿î Å° °ª
+// _StartPos : ±âÁ¸ ÀÌ¹ÌÁö¿¡¼­ Àß¶ó³¾ ÁÂ»ó´Ü °ª
+// _CuttingSize : ÀÌ¹ÌÁö »çÀÌÁî
+// _XYOffSet : ÀÌ¹ÌÁö »çÀÌÀÇ ºó°ø°£ °£°Ý, XY
+// _Xcount : °¡·Î ÀÌ¹ÌÁö °¹¼ö
+// _ImageCount : ÃÑ ÀÌ¹ÌÁö °¹¼ö
 void UImageManager::CreateCutSprite(std::string_view _SearchKeyName, std::string_view _NewSpriteKeyName, FVector2D _StartPos, FVector2D _CuttingSize, FVector2D _XYOffSet, UINT _Xcount, UINT _ImageCount)
 {
 	std::string SearchName = UEngineString::ToUpper(_SearchKeyName);
@@ -302,32 +351,32 @@ void UImageManager::CreateCutSprite(std::string_view _SearchKeyName, std::string
 
 	if (_Xcount <= 0)
 	{
-		MSGASSERT("ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0 ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
+		MSGASSERT("ÀÌ¹ÌÁöÀÇ °¡·Î °¹¼ö°¡ 0 ÀÌÇÏÀÔ´Ï´Ù.");
 		return;
 	}
 	if (_ImageCount <= 0)
 	{
-		MSGASSERT("ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0 ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
+		MSGASSERT("ÃÑ ÀÌ¹ÌÁö °¹¼ö°¡ 0 ÀÌÇÏÀÔ´Ï´Ù.");
 		return;
 	}
 	if (Sprites.contains(SearchName) == false)
 	{
-		MSGASSERT(std::string(_SearchKeyName) + "ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ Spriteï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+		MSGASSERT(std::string(_SearchKeyName) + "¶ó´Â ÀÌ¸§ÀÇ Sprite´Â ·ÎµåÇÒ ¼ö ¾ø½À´Ï´Ù.");
 		return;
 	}
 	if (Images.contains(SearchName) == false)
 	{
-		MSGASSERT(std::string(_SearchKeyName) + "ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ Spriteï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+		MSGASSERT(std::string(_SearchKeyName) + "¶ó´Â ÀÌ¸§ÀÇ Sprite´Â ·ÎµåÇÒ ¼ö ¾ø½À´Ï´Ù.");
 		return;
 	}
 	if (Sprites.contains(NewSpriteName) == true)
 	{
-		MSGASSERT(std::string(_NewSpriteKeyName) + "ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ Spriteï¿½ï¿½ ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
+		MSGASSERT(std::string(_NewSpriteKeyName) + "¶ó´Â ÀÌ¸§ÀÇ Sprite°¡ ÀÌ¹Ì Á¸ÀçÇÕ´Ï´Ù.");
 		return;
 	}
 	if (Images.contains(NewSpriteName) == true)
 	{
-		MSGASSERT(std::string(_NewSpriteKeyName) + "ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ Imageï¿½ï¿½ ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
+		MSGASSERT(std::string(_NewSpriteKeyName) + "¶ó´Â ÀÌ¸§ÀÇ Image°¡ ÀÌ¹Ì Á¸ÀçÇÕ´Ï´Ù.");
 		return;
 	}
 
@@ -348,12 +397,12 @@ void UImageManager::CreateCutSprite(std::string_view _SearchKeyName, std::string
 
 	if (TotalSizeX > Image->GetImageScale().X)
 	{
-		MSGASSERT("ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½î°¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½îº¸ï¿½ï¿½ Å®ï¿½Ï´ï¿½.");
+		MSGASSERT("ÇÊ¿äÇÑ ÀÌ¹ÌÁö °¡·Î »çÀÌÁî°¡ ¿øº» ÀÌ¹ÌÁö »çÀÌÁîº¸´Ù Å®´Ï´Ù.");
 		return;
 	}
 	if (TotalSizeY > Image->GetImageScale().Y)
 	{
-		MSGASSERT("ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½î°¡ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½îº¸ï¿½ï¿½ Å®ï¿½Ï´ï¿½.");
+		MSGASSERT("ÇÊ¿äÇÑ ÀÌ¹ÌÁö ¼¼·Î »çÀÌÁî°¡ ¿øº» ÀÌ¹ÌÁö »çÀÌÁîº¸´Ù Å®´Ï´Ù.");
 		return;
 	}
 

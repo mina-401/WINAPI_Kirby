@@ -86,6 +86,11 @@ public:
 		return CollisionType;
 	}
 
+	void SetCameraEffect(bool _IsCameraEffect)
+	{
+		IsCameraEffect = _IsCameraEffect;
+	}
+
 	//                                        충돌한 상대
 	void SetCollisionEnter(std::function<void(AActor*)> _Function);
 	void SetCollisionStay(std::function<void(AActor*)> _Function);
@@ -94,6 +99,8 @@ public:
 protected:
 
 private:
+	void CollisionSetRelease();
+
 	void CollisionEventCheck(class U2DCollision* _Other);
 
 	// 충돌체의 오더는 약간 의미가 다르다.
@@ -105,6 +112,8 @@ private:
 
 	// value없는 맵입니다.
 	std::set<U2DCollision*> CollisionCheckSet;
+
+	bool IsCameraEffect = true;
 
 	std::function<void(AActor*)> Enter;
 	std::function<void(AActor*)> Stay;

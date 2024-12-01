@@ -18,8 +18,8 @@ ULevel::ULevel()
 ULevel::~ULevel()
 {
 	{
-		// BeginPlayList ï¿½Ñ¹ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í´ï¿½ 
-		// ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½î°¡ ï¿½Ö´ï¿½.
+		// BeginPlayList ÇÑ¹øµµ Ã¼ÀÎÁö ¾ÈÇÑ ¾×ÅÍ´Â 
+		// ¾×ÅÍµéÀÌ ´Ù ºñ±ä ÇÃ·¹ÀÌ ¸®½ºÆ®¿¡ µé¾î°¡ ÀÖ´Ù.
 
 		std::list<AActor*>::iterator StartIter = BeginPlayList.begin();
 		std::list<AActor*>::iterator EndIter = BeginPlayList.end();
@@ -42,7 +42,7 @@ ULevel::~ULevel()
 
 		if (nullptr != CurActor)
 		{
-			delete* StartIter;
+			delete *StartIter;
 		}
 	}
 }
@@ -62,14 +62,13 @@ void ULevel::BeginPlayCheck()
 
 		BeginPlayList.clear();
 
-		// todtjdtl 
 		AActor::ComponentBeginPlay();
 	}
 
 
 }
 
-// ï¿½ï¿½ï¿½ï¿½ CurLevel ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// ³»°¡ CurLevel µÆÀ»´ë
 void ULevel::LevelChangeStart()
 {
 	BeginPlayCheck();
@@ -83,7 +82,7 @@ void ULevel::LevelChangeStart()
 			{
 				AActor* CurActor = *StartIter;
 
-				// ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ È£ï¿½ï¿½Ë´Ï´ï¿½.
+				// ÀÌ°Ç ²¨Áø¾Öµµ È£ÃâµË´Ï´Ù.
 				CurActor->LevelChangeStart();
 			}
 		}
@@ -96,7 +95,7 @@ void ULevel::LevelChangeStart()
 			{
 				AActor* CurActor = *StartIter;
 
-				// ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ È£ï¿½ï¿½Ë´Ï´ï¿½.
+				// ÀÌ°Ç ²¨Áø¾Öµµ È£ÃâµË´Ï´Ù.
 				CurActor->LevelChangeStart();
 			}
 		}
@@ -104,7 +103,7 @@ void ULevel::LevelChangeStart()
 
 }
 
-// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½Å¾ï¿½.
+// ³ª ÀÌÁ¦ »õ·Î¿î ·¹º§·Î ¹Ù²ð°Å¾ß.
 void ULevel::LevelChangeEnd()
 {
 	{
@@ -128,7 +127,7 @@ void ULevel::LevelChangeEnd()
 			{
 				AActor* CurActor = *StartIter;
 
-				// ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ È£ï¿½ï¿½Ë´Ï´ï¿½.
+				// ÀÌ°Ç ²¨Áø¾Öµµ È£ÃâµË´Ï´Ù.
 				CurActor->LevelChangeEnd();
 			}
 		}
@@ -162,11 +161,11 @@ void ULevel::Render(float _DeltaTime)
 {
 	ScreenClear();
 
-	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ USpriteRenderer ï¿½Ù²ï¿½ï¿½ï¿½ï¿½.
-	// ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â°ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì´Ï´ï¿½.
+	// Áö±Ý ÀÌÁ¦ ·£´õ¸µÀÇ ÁÖÃ¼°¡ USpriteRenderer ¹Ù²î¾ú´Ù.
+	// ¾×ÅÍ¸¦ ±â¹ÝÀ¸·Î ·£´õ¸µÀ» µ¹¸®´Â°Ç °ð Áö¿öÁú °Ì´Ï´Ù.
 
-	// ï¿½ï¿½ï¿½Í°ï¿½ SpriteRendererï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
-	// Levelï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë¾Æ¾ï¿½ ï¿½Ñ´ï¿½.
+	// ¾×ÅÍ°¡ SpriteRenderer¸¦ ¸¸µé¸é
+	// Levelµµ ±× ½ºÇÁ¶óÀÌÆ® ·£´õ·¯¸¦ ¾Ë¾Æ¾ß ÇÑ´Ù.
 
 	if (true == IsCameraToMainPawn)
 	{
@@ -210,11 +209,11 @@ void ULevel::Collision(float _DeltaTime)
 
 		int Left = Data.Left;
 		int Right = Data.Right;
-
-		// ï¿½Ìºï¿½Æ®ï¿½ï¿½ ï¿½æµ¹Ã¼Å©ï¿½Ï´ï¿½ ï¿½×·ï¿½
+		
+		// ÀÌº¥Æ®·Î Ãæµ¹Ã¼Å©ÇÏ´Â ±×·ì
 		std::list<class U2DCollision*>& LeftList = CheckCollisions[Left];
 
-		// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½×·ï¿½ï¿½ï¿½ ï¿½Æ´Ï¾îµµ ï¿½Ç¹Ç·ï¿½ ï¿½×³ï¿½ ï¿½Ý¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½.
+		// ±× ´ë»óÀº ÀÌº¥Æ® ±×·ìÀÌ ¾Æ´Ï¾îµµ µÇ¹Ç·Î ±×³É ÄÝ¸®Àü ¸ðÀ½¿¡¼­ °¡Á®¿Â´Ù.
 		std::list<class U2DCollision*>& RightList = Collisions[Right];
 
 		std::list<class U2DCollision*>::iterator StartLeftIter = LeftList.begin();
@@ -224,18 +223,25 @@ void ULevel::Collision(float _DeltaTime)
 
 		for (; StartLeftIter != EndLeftIter; ++StartLeftIter)
 		{
-			U2DCollision* LeftCollision = *StartLeftIter;
+		 	U2DCollision* LeftCollision = *StartLeftIter;
 
 			if (false == LeftCollision->IsActive())
 			{
 				continue;
 			}
 
+			// LeftCollision->CollisionSetRelease();
+
 			std::list<class U2DCollision*>::iterator StartRightIter = RightList.begin();
 
 			for (; StartRightIter != EndRightIter; ++StartRightIter)
 			{
 				U2DCollision* RightCollision = *StartRightIter;
+				if (LeftCollision == RightCollision)
+				{
+					continue;
+				}
+
 				if (false == RightCollision->IsActive())
 				{
 					continue;
@@ -245,15 +251,38 @@ void ULevel::Collision(float _DeltaTime)
 			}
 		}
 	}
+
+	// Ãæµ¹¿¡¼­ Á×Àº¾ÖµéÀ» ÇÑ¹ø Ã¼Å©ÇØÁÖ´Â ¿ëµµ
+	for (size_t i = 0; i < CollisionLink.size(); i++)
+	{
+		CollisionLinkData Data = CollisionLink[i];
+		int Left = Data.Left;
+		int Right = Data.Right;
+		// ÀÌº¥Æ®·Î Ãæµ¹Ã¼Å©ÇÏ´Â ±×·ì
+		std::list<class U2DCollision*>& LeftList = CheckCollisions[Left];
+		std::list<class U2DCollision*>::iterator StartLeftIter = LeftList.begin();
+		std::list<class U2DCollision*>::iterator EndLeftIter = LeftList.end();
+		for (; StartLeftIter != EndLeftIter; ++StartLeftIter)
+		{
+			U2DCollision* LeftCollision = *StartLeftIter;
+
+			if (false == LeftCollision->IsActive())
+			{
+				continue;
+			}
+
+			LeftCollision->CollisionSetRelease();
+		}
+	}
 }
 
-// ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ®ï¿½Úµï¿½Ï±ï¿½ ï¿½Ì»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ê¿ä°¡ ï¿½ï¿½ï¿½ï¿½.
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
+// ¿£Áø ÀÌº¥Æ®ÄÚµå´Ï±î ÀÌ»óÇÑ °÷¿¡¼­ ÇÒÇÊ¿ä°¡ ¾ø´Ù.
+// ÄÁÅÙÃ÷¿¡¼­´Â Á¸ÀçÇÏ´ÂÁöµµ ¸ô¶ó¾ß ÇÑ´Ù.
 
 
 void ULevel::Release(float _DeltaTime)
 {
-	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Üºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Õ´Ï´ï¿½.
+	// ¸±¸®Áî ¼ø¼­´Â ¸»´ÜºÎÅÍ µ¹·Á¾ß ÇÕ´Ï´Ù.
 	std::list<AActor*>::iterator StartIter = AllActors.begin();
 	std::list<AActor*>::iterator EndIter = AllActors.end();
 
@@ -263,7 +292,7 @@ void ULevel::Release(float _DeltaTime)
 		CurActor->ReleaseTimeCheck(_DeltaTime);
 	}
 
-	// ï¿½æµ¹Ã¼ ï¿½ï¿½ï¿½ï¿½
+	// Ãæµ¹Ã¼ Á¦°Å
 	{
 		std::map<int, std::list<class U2DCollision*>>::iterator StartOrderIter = Collisions.begin();
 		std::map<int, std::list<class U2DCollision*>>::iterator EndOrderIter = Collisions.end();
@@ -275,7 +304,7 @@ void ULevel::Release(float _DeltaTime)
 			std::list<class U2DCollision*>::iterator CollisionStartIter = CollisionList.begin();
 			std::list<class U2DCollision*>::iterator CollisionEndIter = CollisionList.end();
 
-			// ï¿½ð¸®¾ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½ï¿½.
+			// ¾ð¸®¾óÀº Áß°£¿¡ »èÁ¦ÇÒ¼ö ¾ø¾î.
 			for (; CollisionStartIter != CollisionEndIter; )
 			{
 				if (false == (*CollisionStartIter)->IsDestroy())
@@ -284,15 +313,15 @@ void ULevel::Release(float _DeltaTime)
 					continue;
 				}
 
-				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ä°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.
-				// (*RenderStartIter) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
-				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Þ¸ð¸®¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½.
+				// ·£´õ·¯´Â Áö¿ï ÇÊ¿ä°¡ ¾ø½À´Ï´Ù.
+				// (*RenderStartIter) ´©°¡ Áö¿ï ±ÇÇÑÀ» °¡Á³´À³Ä.
+				// ÄÄÆ÷³ÍÆ®ÀÇ ¸Þ¸ð¸®¸¦ »èÁ¦ÇÒ¼ö ±ÇÇÑÀº ¿À·ÎÁö ¾×ÅÍ¸¸ °¡Áö°í ÀÖ´Ù.
 				CollisionStartIter = CollisionList.erase(CollisionStartIter);
 			}
 		}
 	}
 
-	// ï¿½Ìºï¿½Æ® ï¿½æµ¹Ã¼ ï¿½ï¿½ï¿½ï¿½
+	// ÀÌº¥Æ® Ãæµ¹Ã¼ Á¦°Å
 	{
 		std::map<int, std::list<class U2DCollision*>>::iterator StartOrderIter = CheckCollisions.begin();
 		std::map<int, std::list<class U2DCollision*>>::iterator EndOrderIter = CheckCollisions.end();
@@ -304,7 +333,7 @@ void ULevel::Release(float _DeltaTime)
 			std::list<class U2DCollision*>::iterator CollisionStartIter = CollisionList.begin();
 			std::list<class U2DCollision*>::iterator CollisionEndIter = CollisionList.end();
 
-			// ï¿½ð¸®¾ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½ï¿½.
+			// ¾ð¸®¾óÀº Áß°£¿¡ »èÁ¦ÇÒ¼ö ¾ø¾î.
 			for (; CollisionStartIter != CollisionEndIter; )
 			{
 				if (false == (*CollisionStartIter)->IsDestroy())
@@ -313,15 +342,15 @@ void ULevel::Release(float _DeltaTime)
 					continue;
 				}
 
-				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ä°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.
-				// (*RenderStartIter) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
-				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Þ¸ð¸®¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½.
+				// ·£´õ·¯´Â Áö¿ï ÇÊ¿ä°¡ ¾ø½À´Ï´Ù.
+				// (*RenderStartIter) ´©°¡ Áö¿ï ±ÇÇÑÀ» °¡Á³´À³Ä.
+				// ÄÄÆ÷³ÍÆ®ÀÇ ¸Þ¸ð¸®¸¦ »èÁ¦ÇÒ¼ö ±ÇÇÑÀº ¿À·ÎÁö ¾×ÅÍ¸¸ °¡Áö°í ÀÖ´Ù.
 				CollisionStartIter = CollisionList.erase(CollisionStartIter);
 			}
 		}
 	}
 
-	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	// ·£´õ·¯ Á¦°Å
 	{
 		std::map<int, std::list<class USpriteRenderer*>>::iterator StartOrderIter = Renderers.begin();
 		std::map<int, std::list<class USpriteRenderer*>>::iterator EndOrderIter = Renderers.end();
@@ -333,7 +362,7 @@ void ULevel::Release(float _DeltaTime)
 			std::list<class USpriteRenderer*>::iterator RenderStartIter = RendererList.begin();
 			std::list<class USpriteRenderer*>::iterator RenderEndIter = RendererList.end();
 
-			// ï¿½ð¸®¾ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½ï¿½.
+			// ¾ð¸®¾óÀº Áß°£¿¡ »èÁ¦ÇÒ¼ö ¾ø¾î.
 			for (; RenderStartIter != RenderEndIter; )
 			{
 				if (false == (*RenderStartIter)->IsDestroy())
@@ -342,15 +371,15 @@ void ULevel::Release(float _DeltaTime)
 					continue;
 				}
 
-				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ä°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.
-				// (*RenderStartIter) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
-				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Þ¸ð¸®¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½.
+				// ·£´õ·¯´Â Áö¿ï ÇÊ¿ä°¡ ¾ø½À´Ï´Ù.
+				// (*RenderStartIter) ´©°¡ Áö¿ï ±ÇÇÑÀ» °¡Á³´À³Ä.
+				// ÄÄÆ÷³ÍÆ®ÀÇ ¸Þ¸ð¸®¸¦ »èÁ¦ÇÒ¼ö ±ÇÇÑÀº ¿À·ÎÁö ¾×ÅÍ¸¸ °¡Áö°í ÀÖ´Ù.
 				RenderStartIter = RendererList.erase(RenderStartIter);
 			}
 		}
 	}
 
-	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	// ¾×ÅÍ Á¦°Å
 	{
 		std::list<AActor*>::iterator StartIter = AllActors.begin();
 		std::list<AActor*>::iterator EndIter = AllActors.end();
@@ -367,7 +396,7 @@ void ULevel::Release(float _DeltaTime)
 				continue;
 			}
 
-			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Í´ï¿½ ï¿½ï¿½Â¥ ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½.
+			// ·¹º§Àº ¾×ÅÍÀÇ »èÁ¦±ÇÇÑÀ» °¡Áö°í ÀÖÀ¸´Ï ¾×ÅÍ´Â ÁøÂ¥ Áö¿ö ÁØ´Ù.
 			delete CurActor;
 			StartIter = AllActors.erase(StartIter);
 		}
@@ -385,7 +414,7 @@ void ULevel::ScreenClear()
 
 void ULevel::DoubleBuffering()
 {
-	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
+	// ·¹º§ÀÇ ·£´õ¸µÀÌ ³¡³µ´Ù.
 	UEngineWindow& MainWindow = UEngineAPICore::GetCore()->GetMainWindow();
 
 	UEngineWinImage* WindowImage = MainWindow.GetWindowImage();
@@ -395,7 +424,7 @@ void ULevel::DoubleBuffering()
 	Trans.Location = MainWindow.GetWindowSize().Half();
 	Trans.Scale = MainWindow.GetWindowSize();
 
-	// ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Û¿ï¿½ ï¿½ï¿½ ï¿½×·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½.
+	// ÀÌ¹ÌÁö µéÀº ¹é¹öÆÛ¿¡ ´Ù ±×·ÁÁ³À» °ÍÀÌ´Ù.
 	BackBufferImage->CopyToBit(WindowImage, Trans);
 
 }
@@ -424,11 +453,11 @@ void ULevel::PushCheckCollision(class U2DCollision* _Collision)
 void ULevel::ChangeRenderOrder(class USpriteRenderer* _Renderer, int _PrevOrder)
 {
 	//std::vector<int> Value;
-	// ï¿½ï¿½ï¿½Í´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ê°¡ ï¿½ï¿½ï¿½ï¿½.
+	// º¤ÅÍ´Â ¸®¹«ºê°¡ ¾ø´Ù.
 	//Value.remove
 
-	// 0ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì´ï¿½.
-	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½Æ´Õ´Ï´ï¿½.
+	// 0¹ø¿¡ µé¾îÀÖ¾úÀ» °ÍÀÌ´Ù.
+	// º°·Î ºü¸¥ ÇÔ¼ö´Â ¾Æ´Õ´Ï´Ù.
 	Renderers[_PrevOrder].remove(_Renderer);
 
 	Renderers[_Renderer->GetOrder()].push_back(_Renderer);

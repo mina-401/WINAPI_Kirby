@@ -9,16 +9,16 @@
 
 
 
-// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ²ï¿½î¼­ 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
-// 1ï¿½ï¿½ ï¿½ï¿½ï¿½ÃµÇ°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Å´ï¿½.
+// ¿£ÁøÀ» ÅëÆ²¾î¼­ 1¹ø ¸¸µé¾îÁö±â ¶§¹®¿¡.
+// 1¹ø ¼¼ÆÃµÇ°í Àý´ë·Î ¹Ù²îÁö ¾ÊÀ»°Å´Ù.
 UEngineAPICore* UEngineAPICore::MainCore = nullptr;
 UContentsCore* UEngineAPICore::UserCore = nullptr;
 
 #include <Windows.h>
-// 1 ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½ï¿½Æ°ï¿½ï¿½ 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// 1 Àú´Â ÃÊ´ç ¹öÆ°À» 1¹ø ´­·¯¿ä
 //QueryPerformanceCounter
 
-// 3 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+// 3 ÇöÀç±îÁö 3¹ø ´­·¶¾î¿ä 
 //QueryPerformanceFrequency
 
 // #include <chrono>
@@ -56,8 +56,8 @@ int UEngineAPICore::EngineStart(HINSTANCE _Inst, UContentsCore* _UserCore)
 
 	UEngineWindow::EngineWindowInit(_Inst);
 
-	// ï¿½ï¿½Ã¼ ï¿½È¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ñ°ï¿½ ï¿½ï¿½ï¿½Æ¼ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
-	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ ï¿½Ö´ï¿½. CreateLevel;
+	// °´Ã¼ ¾È¸¸µé¸é °´Ã¼ÁöÇâÀÌ ¾Æ´Ñ°Å °°¾Æ¼­ °´Ã¼·Î ÇÏÀÚ.
+	// ¿£ÁøÀÇ ±â´ÉÀÌ Áý¾àµÇ¾î ÀÖ´Ù. CreateLevel;
 	UEngineAPICore Core = UEngineAPICore();
 	Core.EngineMainWindow.Open();
 	MainCore = &Core;
@@ -72,7 +72,7 @@ void UEngineAPICore::EngineBeginPlay()
 	UserCore->BeginPlay();
 }
 
-// ï¿½ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ 1ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç³Ä°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½.
+// ÀÌ ÇÔ¼ö°¡ 1ÃÊ¿¡ ¸î¹ø ½ÇÇàµÇ³Ä°¡ ÇÁ·¹ÀÓÀÔ´Ï´Ù.
 void UEngineAPICore::EngineTick()
 {
 
@@ -80,13 +80,13 @@ void UEngineAPICore::EngineTick()
 	//AXVidio NewVidio;
 	//NewVidio.Play("AAAA.avi");
 
-	// ï¿½Ã°ï¿½ï¿½ï¿½ï¿½
-	// ï¿½Ìºï¿½Æ®
-	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-	// ï¿½æµ¹
+	// ½Ã°£Àç±â
+	// ÀÌº¥Æ®
+	// ·£´õ¸µ
+	// Ãæµ¹
 
 
-	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ëµµï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ ï¿½Ô¼ï¿½ï¿½Ô´Ï´ï¿½.
+	// Áö±Ý ÀüÇô ¿ëµµ¸¦ Ã£Áö ¸øÇØ¼­ »ç¿ëÇÏÁö ¾Ê´Â ÇÔ¼öÀÔ´Ï´Ù.
 	UserCore->Tick();
 
 	// MainCore->TimeCheck();
@@ -108,8 +108,8 @@ void UEngineAPICore::Tick()
 
 	if (nullptr != NextLevel)
 	{
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ù°ï¿½ï¿½ï¿½ ï¿½Ò¶ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
-		// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½.
+		// ·¹º§µéÀ» ¿Ô´Ù°¬´Ù ÇÒ¶§°¡ ÀÖ±â ¶§¹®¿¡.
+		// ±× ¼ø°£¸¶´Ù ¿©·¯ºÐµéÀÌ ¹º°¡¸¦ ÇØÁÖ°í ½ÍÀ»¼ö°¡ ÀÖ´Ù.
 
 		if (nullptr != CurLevel)
 		{
@@ -121,17 +121,17 @@ void UEngineAPICore::Tick()
 		NextLevel->LevelChangeStart();
 
 		NextLevel = nullptr;
-		// ï¿½ï¿½Å¸Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½É¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ ï¿½ï¿½Å¸Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½ï¿½ï¿½ï¿½ï¿½Ö´Â°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
+		// µ¨Å¸Å¸ÀÓÀÌ Áö¿¬µÉ¼ö ÀÖÀ¸¹Ç·Î µ¨Å¸Å¸ÀÓÀ» ÃÊ±âÈ­½ÃÄÑÁÖ´Â°ÍÀÌ ÁÁ´Ù.
 		DeltaTimer.TimeStart();
 	}
 
-	// ï¿½Ã°ï¿½ï¿½ï¿½ ï¿½ï¿½Ì´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½Ã°ï¿½ 
+	// ½Ã°£À» Àê°Ì´Ï´Ù. ÇöÀç½Ã°£ 
 	DeltaTimer.TimeCheck();
 	float DeltaTime = DeltaTimer.GetDeltaTime();
 
 	DeltaTime *= GlobalTimeScale;
 
-	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½.
+	// ²ÀÇØÁà¾ß ÇÑ´Ù.
 	UEngineSound::Update();
 
 	// Å°Ã¼Å©
@@ -139,7 +139,7 @@ void UEngineAPICore::Tick()
 
 	if (nullptr == CurLevel)
 	{
-		MSGASSERT("ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¾î¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò½ï¿½ï¿½Ï´ï¿½");
+		MSGASSERT("¿£Áø ÄÚ¾î¿¡ ÇöÀç ·¹º§ÀÌ ÁöÁ¤µÇÁö ¾Ê¾Ò½À´Ï´Ù");
 		return;
 	}
 
@@ -148,10 +148,10 @@ void UEngineAPICore::Tick()
 	//  UEngineInput::GetInst().EventCheck(DeltaTime);
 	CurLevel->Render(DeltaTime);
 
-	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ì°ï¿½ ï¿½È¾ï¿½ï¿½Ñ´ï¿½.
+	// Àú´Â ÀÌ°É ½È¾îÇÑ´Ù.
 	CurLevel->Collision(DeltaTime);
 
-	// Æ½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// Æ½µ¹°í ·£´õµ¹°í ¸±¸®Áî
 	CurLevel->Release(DeltaTime);
 }
 
@@ -166,7 +166,7 @@ void UEngineAPICore::OpenLevel(std::string_view _LevelName)
 
 	if (EndIter == FindIter)
 	{
-		MSGASSERT(UpperName + " ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
+		MSGASSERT(UpperName + " ¶ó´Â ÀÌ¸§ÀÇ ·¹º§Àº Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
 		return;
 	}
 

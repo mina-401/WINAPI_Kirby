@@ -66,7 +66,7 @@ void AActor::Tick(float _DeltaTime)
 
 		FTransform Trans;
 		Trans.Location = Pos - CameraPos;
-		Trans.Scale = { 6, 6 };
+		Trans.Scale = {6, 6};
 
 		UEngineDebug::CoreDebugRender(Trans, UEngineDebug::EDebugPosType::Circle);
 	}

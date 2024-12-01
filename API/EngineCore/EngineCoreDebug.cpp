@@ -17,9 +17,9 @@ namespace UEngineDebug
 	std::vector<DebugTextInfo> DebugTexts;
 
 
-	// #ifdef _DEBUG
+// #ifdef _DEBUG
 	FVector2D EngineTextPos = FVector2D::ZERO;
-	// #endif
+// #endif
 
 #ifdef _DEBUG
 	bool IsDebug = true;
@@ -44,11 +44,11 @@ namespace UEngineDebug
 			return;
 		}
 
-		// #ifdef _DEBUG
-				// 바로 출력하지 않는다.
-		DebugTexts.push_back({ _Text.data(), EngineTextPos });
+// #ifdef _DEBUG
+		// 바로 출력하지 않는다.
+		DebugTexts.push_back({ _Text.data(), EngineTextPos});
 		EngineTextPos.Y += 20;
-		// endif 
+// endif 
 	}
 
 	void CoreOutPutString(std::string_view _Text, FVector2D _Pos)
@@ -57,9 +57,9 @@ namespace UEngineDebug
 		{
 			return;
 		}
-		// #ifdef _DEBUG
+// #ifdef _DEBUG
 		DebugTexts.push_back({ _Text.data(), _Pos });
-		// #endif
+// #endif
 	}
 
 	class DebugRenderInfo
