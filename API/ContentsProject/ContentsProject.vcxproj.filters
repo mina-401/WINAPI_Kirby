@@ -7,10 +7,6 @@
     <ClInclude Include="KirbyContentsCore.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="PlayGameMode.h">
-      <Filter>ContentsObject\GameMode</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayMap.h" />
     <ClInclude Include="TitleGameMode.h">
       <Filter>ContentsObject\GameMode</Filter>
     </ClInclude>
@@ -129,39 +125,35 @@
       <Filter>ContentsObject\Monster</Filter>
     </ClInclude>
     <ClInclude Include="ActorVector.h">
-      <Filter>ContentsObject\Kirby\Bullet</Filter>
+      <Filter>ContentsObject\Play\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
-      <Filter>ContentsObject\Kirby\Bullet</Filter>
+      <Filter>ContentsObject\Play\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="FireBullet.h">
-      <Filter>ContentsObject\Kirby\Bullet</Filter>
+      <Filter>ContentsObject\Play\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="FireBullet2.h">
-      <Filter>ContentsObject\Kirby\Bullet</Filter>
+      <Filter>ContentsObject\Play\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="JumpStar.h">
-      <Filter>ContentsObject\Kirby\Bullet</Filter>
+      <Filter>ContentsObject\Play\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="KingDedede.h">
       <Filter>ContentsObject\Monster</Filter>
     </ClInclude>
     <ClInclude Include="EatItem.h">
-      <Filter>ContentsObject\Kirby\Item</Filter>
+      <Filter>ContentsObject\Play\Item</Filter>
     </ClInclude>
     <ClInclude Include="FireItem.h">
-      <Filter>ContentsObject\Kirby\Item</Filter>
+      <Filter>ContentsObject\Play\Item</Filter>
     </ClInclude>
     <ClInclude Include="SparkItem.h">
-      <Filter>ContentsObject\Kirby\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="InhaleStar.h">
-      <Filter>ContentsObject\Monster</Filter>
+      <Filter>ContentsObject\Play\Item</Filter>
     </ClInclude>
     <ClInclude Include="SoundManager.h">
       <Filter>ContentsObject\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="MonsterBullet.h" />
     <ClInclude Include="EndingMap.h">
       <Filter>ContentsObject\GameMap</Filter>
     </ClInclude>
@@ -171,6 +163,20 @@
     <ClInclude Include="Fade.h">
       <Filter>ContentsObject\Kirby</Filter>
     </ClInclude>
+    <ClInclude Include="MonsterBullet.h">
+      <Filter>ContentsObject\Play\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BigBlock.h">
+      <Filter>ContentsObject\Play\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>ContentsObject\Play\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="SmallBlock.h">
+      <Filter>ContentsObject\Play\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="DownBrokeBlock.h" />
+    <ClInclude Include="HPItem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -179,10 +185,6 @@
     <ClCompile Include="KirbyContentsCore.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="PlayGameMode.cpp">
-      <Filter>ContentsObject\GameMode</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayMap.cpp" />
     <ClCompile Include="TitleGameMode.cpp">
       <Filter>ContentsObject\GameMode</Filter>
     </ClCompile>
@@ -277,39 +279,35 @@
       <Filter>ContentsObject\Monster</Filter>
     </ClCompile>
     <ClCompile Include="ActorVector.cpp">
-      <Filter>ContentsObject\Kirby\Bullet</Filter>
+      <Filter>ContentsObject\Play\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
-      <Filter>ContentsObject\Kirby\Bullet</Filter>
+      <Filter>ContentsObject\Play\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="FireBullet.cpp">
-      <Filter>ContentsObject\Kirby\Bullet</Filter>
+      <Filter>ContentsObject\Play\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="FireBullet2.cpp">
-      <Filter>ContentsObject\Kirby\Bullet</Filter>
+      <Filter>ContentsObject\Play\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="JumpStar.cpp">
-      <Filter>ContentsObject\Kirby\Bullet</Filter>
+      <Filter>ContentsObject\Play\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="KingDedede.cpp">
       <Filter>ContentsObject\Monster</Filter>
     </ClCompile>
     <ClCompile Include="EatItem.cpp">
-      <Filter>ContentsObject\Kirby\Item</Filter>
+      <Filter>ContentsObject\Play\Item</Filter>
     </ClCompile>
     <ClCompile Include="FireItem.cpp">
-      <Filter>ContentsObject\Kirby\Item</Filter>
+      <Filter>ContentsObject\Play\Item</Filter>
     </ClCompile>
     <ClCompile Include="SparkItem.cpp">
-      <Filter>ContentsObject\Kirby\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="InhaleStar.cpp">
-      <Filter>ContentsObject\Monster</Filter>
+      <Filter>ContentsObject\Play\Item</Filter>
     </ClCompile>
     <ClCompile Include="SoundManager.cpp">
       <Filter>ContentsObject\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="MonsterBullet.cpp" />
     <ClCompile Include="EndingMap.cpp">
       <Filter>ContentsObject\GameMap</Filter>
     </ClCompile>
@@ -319,6 +317,20 @@
     <ClCompile Include="Fade.cpp">
       <Filter>ContentsObject\Kirby</Filter>
     </ClCompile>
+    <ClCompile Include="MonsterBullet.cpp">
+      <Filter>ContentsObject\Play\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="BigBlock.cpp">
+      <Filter>ContentsObject\Play\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>ContentsObject\Play\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="SmallBlock.cpp">
+      <Filter>ContentsObject\Play\Block</Filter>
+    </ClCompile>
+    <ClCompile Include="DownBrokeBlock.cpp" />
+    <ClCompile Include="HPItem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
@@ -372,11 +384,17 @@
     <Filter Include="ThridParty\FMOD\Bin\Release">
       <UniqueIdentifier>{0d424e26-737e-4617-bba2-5ade2a07e31f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContentsObject\Kirby\Bullet">
+    <Filter Include="ContentsObject\Play">
+      <UniqueIdentifier>{1f0767f6-e8e7-478f-8322-17fc7214ea3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Play\Item">
+      <UniqueIdentifier>{21b1109a-4827-497f-b652-925f9da5adc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContentsObject\Play\Bullet">
       <UniqueIdentifier>{5158bce5-56e7-49c7-9ebb-977f074e4c84}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContentsObject\Kirby\Item">
-      <UniqueIdentifier>{21b1109a-4827-497f-b652-925f9da5adc9}</UniqueIdentifier>
+    <Filter Include="ContentsObject\Play\Block">
+      <UniqueIdentifier>{83528483-6931-485d-b155-08bf17856645}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

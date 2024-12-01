@@ -8,10 +8,16 @@
 #include "Player.h"
 #include "Stage1_2GameMode.h"
 #include "Monster.h"
+#include "Block.h"
+#include "SmallBlock.h"
+#include "BigBlock.h"
+#include "DownBrokeBlock.h"
 AStage1_2Map::AStage1_2Map()
 {
 
 	WinSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
+	UImageManager::GetInst().CuttingSprite("StarBulletIdle_Left.png", { 128, 128 });
+	UImageManager::GetInst().CuttingSprite("StarBulletIdle_Right.png", { 128, 128 });
 
 	{
 		SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
@@ -54,7 +60,7 @@ AStage1_2Map::AStage1_2Map()
 
 		StarSpriteRenderer->CreateAnimation("StarBulletIdle_Left", "StarBulletIdle_Left.png", 0, 1, 0.1f, true);
 		StarSpriteRenderer->CreateAnimation("StarBulletIdle_Right", "StarBulletIdle_Right.png", 0, 1, 0.1f, true);
-		StarSpriteRenderer->ChangeAnimation("StarBulletIdle_Left");
+		StarSpriteRenderer->ChangeAnimation("StarBulletIdle_Right");
 	}
 }
 
@@ -83,7 +89,22 @@ void AStage1_2Map::BeginPlay()
 	APlayer* player = GetWorld()->GetPawn<APlayer>();
 	player->SetActorLocation({ 100,300});
 	//player->SetActorLocation({ (float)MapScale.X - 80,(float)WinSize.Half().Y });
-
+	ASmallBlock* NewBlock = GetWorld()->SpawnActor<ASmallBlock>();
+	ABigBlock* NewBigBlock = GetWorld()->SpawnActor<ABigBlock>();
+	/*ADownBrokeBlock* Block1 = GetWorld()->SpawnActor<ADownBrokeBlock>();
+	ADownBrokeBlock* Block2 = GetWorld()->SpawnActor<ADownBrokeBlock>();
+	ADownBrokeBlock* Block3 = GetWorld()->SpawnActor<ADownBrokeBlock>();
+	ADownBrokeBlock* Block4 = GetWorld()->SpawnActor<ADownBrokeBlock>();
+	ADownBrokeBlock* Block5 = GetWorld()->SpawnActor<ADownBrokeBlock>();
+	ADownBrokeBlock* Block6 = GetWorld()->SpawnActor<ADownBrokeBlock>();
+	ADownBrokeBlock* Block7 = GetWorld()->SpawnActor<ADownBrokeBlock>();
+	Block1->SetActorLocation({ 1950+20,200+15 });
+	Block2->SetActorLocation({ 1950+60,200+15 });
+	Block3->SetActorLocation({ 1950+100,200+15 });
+	Block4->SetActorLocation({ 1950+140,200+15 });
+	Block5->SetActorLocation({ 1950+180,200+15 });
+	Block6->SetActorLocation({ 1950+220,200+15 });
+	Block7->SetActorLocation({ 1950+260,200+15 });*/
 
 	
 

@@ -160,7 +160,9 @@
     <ClInclude Include="..\EnginePlatform\ThirdParty\FMOD\Inc\fmod_errors.h" />
     <ClInclude Include="..\EnginePlatform\ThirdParty\FMOD\Inc\fmod_output.h" />
     <ClInclude Include="ActorVector.h" />
+    <ClInclude Include="BigBlock.h" />
     <ClInclude Include="DanceKirby.h" />
+    <ClInclude Include="DownBrokeBlock.h" />
     <ClInclude Include="EatItem.h">
       <SubType>
       </SubType>
@@ -183,10 +185,11 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="InhaleStar.h">
+    <ClInclude Include="Block.h">
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="HPItem.h" />
     <ClInclude Include="JumpStar.h">
       <SubType>
       </SubType>
@@ -218,6 +221,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Score.h" />
+    <ClInclude Include="SmallBlock.h" />
     <ClInclude Include="SoundManager.h">
       <SubType>
       </SubType>
@@ -262,11 +266,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="PlayGameMode.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="PlayMap.h" />
     <ClInclude Include="PreCompile.h" />
     <ClInclude Include="Stage1_1GameMode.h">
       <SubType>
@@ -332,7 +331,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActorVector.cpp" />
+    <ClCompile Include="BigBlock.cpp" />
     <ClCompile Include="DanceKirby.cpp" />
+    <ClCompile Include="DownBrokeBlock.cpp" />
     <ClCompile Include="EatItem.cpp">
       <SubType>
       </SubType>
@@ -355,10 +356,11 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="InhaleStar.cpp">
+    <ClCompile Include="Block.cpp">
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="HPItem.cpp" />
     <ClCompile Include="JumpStar.cpp">
       <SubType>
       </SubType>
@@ -390,6 +392,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Score.cpp" />
+    <ClCompile Include="SmallBlock.cpp" />
     <ClCompile Include="SoundManager.cpp">
       <SubType>
       </SubType>
@@ -434,11 +437,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="PlayGameMode.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="PlayMap.cpp" />
     <ClCompile Include="PreCompile.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

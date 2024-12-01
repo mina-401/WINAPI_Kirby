@@ -15,6 +15,7 @@ const FIntPoint FIntPoint::DOWN = { 0, 1 };
 
 const UColor UColor::WHITE = { 255, 255, 255, 0 };
 const UColor UColor::BLACK = { 0, 0, 0, 0 };
+const UColor UColor::GRAY = { 128, 128, 128, 0 };
 
 FIntPoint FVector2D::ConvertToPoint() const
 {
