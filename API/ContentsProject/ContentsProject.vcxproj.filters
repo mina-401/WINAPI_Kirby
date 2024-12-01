@@ -168,6 +168,9 @@
     <ClInclude Include="DanceKirby.h">
       <Filter>ContentsObject\Kirby</Filter>
     </ClInclude>
+    <ClInclude Include="Fade.h">
+      <Filter>ContentsObject\Kirby</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -311,6 +314,9 @@
       <Filter>ContentsObject\GameMap</Filter>
     </ClCompile>
     <ClCompile Include="DanceKirby.cpp">
+      <Filter>ContentsObject\Kirby</Filter>
+    </ClCompile>
+    <ClCompile Include="Fade.cpp">
       <Filter>ContentsObject\Kirby</Filter>
     </ClCompile>
   </ItemGroup>

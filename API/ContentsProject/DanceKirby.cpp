@@ -30,6 +30,13 @@ void ADanceKirby::BeginPlay()
 void ADanceKirby::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
+
+	if (true == SpriteRenderer->IsCurAnimationEnd())
+	{
+		//if (IsEndDance == true) return;
+
+		IsEndDance = true;
+	}
 }
 void ADanceKirby::LevelChangeStart()
 {

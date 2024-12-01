@@ -21,5 +21,6 @@ protected:
 
 private:
 	USoundPlayer BGMPlayer;
+	class AFade* Actor = nullptr;
 };
 

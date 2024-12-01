@@ -16,6 +16,9 @@ AStage1_1Map::AStage1_1Map()
 {
 	PngSize = {(float) 792.5 ,(float)103.5 };
 	WinSize = UEngineAPICore::GetCore()->GetMainWindow().GetWindowSize();
+
+	UImageManager::GetInst().CuttingSprite("StarBulletIdle_Left.png", { 128, 128 });
+	UImageManager::GetInst().CuttingSprite("StarBulletIdle_Right.png", { 128, 128 });
 	{
 		SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 		SpriteRenderer->SetOrder(ERenderOrder::FOREGROUND);
@@ -49,6 +52,18 @@ AStage1_1Map::AStage1_1Map()
 
 
 		DebugOn();
+	}
+	{
+		StarSpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
+		StarSpriteRenderer->SetSprite("StarBulletIdle_Left.png");
+		StarSpriteRenderer->SetOrder(ERenderOrder::PLAYER);
+		FVector2D StarScale = StarSpriteRenderer->SetSpriteScale(1.0f);
+		StarSpriteRenderer->SetComponentScale({ 250, 250 });
+		StarSpriteRenderer->SetComponentLocation({3880,250 });
+
+		StarSpriteRenderer->CreateAnimation("StarBulletIdle_Left", "StarBulletIdle_Left.png", 0, 1, 0.1f, true);
+		StarSpriteRenderer->CreateAnimation("StarBulletIdle_Right", "StarBulletIdle_Right.png", 0, 1, 0.1f, true);
+		StarSpriteRenderer->ChangeAnimation("StarBulletIdle_Left");
 	}
 }
 

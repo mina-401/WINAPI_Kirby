@@ -44,6 +44,18 @@ AStage1_2Map::AStage1_2Map()
 		PotalColComponent->SetCollisionEnd(std::bind(&AStage1_2Map::CollisionEnd, this, std::placeholders::_1));
 		DebugOn();
 	}
+	{
+		StarSpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
+		StarSpriteRenderer->SetSprite("StarBulletIdle_Left.png");
+		StarSpriteRenderer->SetOrder(ERenderOrder::PLAYER);
+		FVector2D StarScale = StarSpriteRenderer->SetSpriteScale(1.0f);
+		StarSpriteRenderer->SetComponentScale({ 250, 250 });
+		StarSpriteRenderer->SetComponentLocation({ 3540,220 });
+
+		StarSpriteRenderer->CreateAnimation("StarBulletIdle_Left", "StarBulletIdle_Left.png", 0, 1, 0.1f, true);
+		StarSpriteRenderer->CreateAnimation("StarBulletIdle_Right", "StarBulletIdle_Right.png", 0, 1, 0.1f, true);
+		StarSpriteRenderer->ChangeAnimation("StarBulletIdle_Left");
+	}
 }
 
 AStage1_2Map::~AStage1_2Map()

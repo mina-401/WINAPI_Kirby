@@ -17,7 +17,7 @@ public:
     void Tick(float _DeltaTime) override;
 
 
-
+    bool IsEndDance = false;
 
     //void RunSoundPlay();
 

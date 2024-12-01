@@ -23,12 +23,12 @@ public:
 
 	// 1 => 0
 	void FadeOut(float _val);
+	float FadeValue = 0.0f;
 
 protected:
 
 private:
 	void LevelChangeStart() override;
-	float FadeValue = 0.0f;
 	float FadeDir = 1.0f;
 	USpriteRenderer* BackSpriteRenderer;
 	void FadeChange();

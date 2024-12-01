@@ -29,6 +29,7 @@ private:
 	FVector2D MapScale;
 	class USpriteRenderer* SpriteRenderer = nullptr;
 	class USpriteRenderer* ColSpriteRenderer = nullptr;
+	class USpriteRenderer* StarSpriteRenderer = nullptr;
 
 	class U2DCollision* PotalColComponent = nullptr;
 	bool IsPlayerStayPotal = false;

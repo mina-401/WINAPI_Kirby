@@ -8,7 +8,8 @@ enum class ERenderOrder
 	COLMAP = -1001,
 	PLAYER = 0,
 	MONSTER = 0,
-	UI = 10000,
+	UI = 1000,
+	FADE= 2000,
 };
 enum class ECollisionGroup
 {

@@ -166,6 +166,7 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="EndingMap.h" />
+    <ClInclude Include="Fade.h" />
     <ClInclude Include="FireBullet.h">
       <SubType>
       </SubType>
@@ -337,6 +338,7 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="EndingMap.cpp" />
+    <ClCompile Include="Fade.cpp" />
     <ClCompile Include="FireBullet.cpp">
       <SubType>
       </SubType>
