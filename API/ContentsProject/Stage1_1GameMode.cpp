@@ -59,10 +59,6 @@ void AStage1_1GameMode::BeginPlay()
 	//MonsterWaddleDoo->SetActorLocation({ 1000, 50 });
 	MonsterSparky->SetActorLocation({ 3400, 200 });
 
-	/*MonsterWaddleDee->SetActive(false);
-	MonsterWaddleDoo->SetActive(false);
-	MonsterSparky->SetActive(false);*/
-	
 	Player->SetColImage("foreground1-1_col.png");
 
 	MonsterWaddleDee->SetColImage("foreground1-1_col.png");
