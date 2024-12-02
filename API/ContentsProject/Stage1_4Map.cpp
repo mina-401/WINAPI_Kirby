@@ -7,6 +7,7 @@
 #include "ContentsEnum.h"
 #include "StageBackground.h"
 #include "Player.h"
+#include "Stage1_4GameMode.h"
 AStage1_4Map::AStage1_4Map()
 {
 	PngSize = { (float)792.5 ,(float)103.5 };
@@ -67,9 +68,13 @@ void AStage1_4Map::Tick(float _deltaTime)
 {
 	Super::Tick(_deltaTime);
 	if (true == UEngineInput::GetInst().IsPress(VK_UP) && IsPlayerStayPotal) {
+
+		
 		USoundPlayer EffectSound;
 		EffectSound = UEngineSound::Play("Potal travel.WAV");
+		UEngineAPICore::GetCore()->ResetLevel<AStage1_4GameMode, APlayer>("Stage1_4");
 		UEngineAPICore::GetCore()->OpenLevel("ItemRoomBeforeBoss");
+		//UEngineAPICore::GetCore()->OpenLevel("ItemRoomBeforeBoss");
 	}
 	APlayer* player = GetWorld()->GetPawn<APlayer>();
 	player->BlockCameraPos(MapScale, WinSize);

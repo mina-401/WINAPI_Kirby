@@ -109,6 +109,7 @@ void AStage1_1Map::Tick(float _deltaTime)
 
 		USoundPlayer EffectSound;
 		EffectSound = UEngineSound::Play("Potal travel.WAV");
+		UEngineAPICore::GetCore()->ResetLevel<AStage1_1GameMode, APlayer>("Stage1_1");
 		UEngineAPICore::GetCore()->OpenLevel("Stage1_2");
 	}
 

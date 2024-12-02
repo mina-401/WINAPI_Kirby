@@ -14,6 +14,7 @@
 #include "SoundManager.h"
 
 #include "Stage1_1Map.h"
+#include "PlayerStatsManager.h"
 
 AStage1_1GameMode::AStage1_1GameMode()
 {
@@ -42,10 +43,6 @@ void AStage1_1GameMode::BeginPlay()
 			SoundManager.SetSoundPlayer(BGMPlayer);
 		}
 
-
-		
-
-
 	}
 	AStageBackground* NewActor = GetWorld()->SpawnActor<AStageBackground>();
 	AStage1_1Map* NewMap = GetWorld()->SpawnActor<AStage1_1Map>();
@@ -73,6 +70,11 @@ void AStage1_1GameMode::BeginPlay()
 	MonsterWaddleDoo->SetColImage("foreground1-1_col.png");
 	MonsterSparky->SetColImage("foreground1-1_col.png");
 
+	PlayerStatsManager::GetInst().SetCopyAbilityState(ECopyAbilityState::Normal);
+	PlayerStatsManager::GetInst().SetCopyAbilityState(ECopyAbilityState::Normal);
+	PlayerStatsManager::GetInst().SetHp(100.0f);
+
+
 }
 
 void AStage1_1GameMode::Tick(float _DeltaTime)
@@ -81,6 +83,7 @@ void AStage1_1GameMode::Tick(float _DeltaTime)
 
 	if (true == UEngineInput::GetInst().IsDown('P'))
 	{
+		UEngineAPICore::GetCore()->ResetLevel<AStage1_1GameMode, APlayer>("Stage1_1");
 		UEngineAPICore::GetCore()->OpenLevel("Stage1_2");
 	}
 	 

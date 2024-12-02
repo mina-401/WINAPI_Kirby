@@ -7,6 +7,7 @@
 #include "ContentsEnum.h"
 #include "StageBackground.h"
 #include "Player.h"
+#include "Stage1_3GameMode.h"
 
 AStage1_3Map::AStage1_3Map()
 {
@@ -99,6 +100,8 @@ void AStage1_3Map::Tick(float _deltaTime)
 
 		USoundPlayer EffectSound;
 		EffectSound = UEngineSound::Play("Potal travel.WAV");
+
+		UEngineAPICore::GetCore()->ResetLevel<AStage1_3GameMode, APlayer>("Stage1_3");
 		UEngineAPICore::GetCore()->OpenLevel("ItemRoomBeforeBoss");
 	}
 	APlayer* player = GetWorld()->GetPawn<APlayer>();

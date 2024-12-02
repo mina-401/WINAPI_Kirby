@@ -69,7 +69,7 @@ AStage1_2Map::~AStage1_2Map()
 }
 void AStage1_2Map::CollisionEnter(AActor* _ColActor)
 {
-	//IsPlayerStayPotal = true;
+	IsPlayerStayPotal = true;
 }
 
 void AStage1_2Map::CollisionStay(AActor* _ColActor)
@@ -114,6 +114,7 @@ void AStage1_2Map::Tick(float _deltaTime)
 {
 	Super::Tick(_deltaTime);
 	if (true == UEngineInput::GetInst().IsPress(VK_UP) && IsPlayerStayPotal) {
+		UEngineAPICore::GetCore()->ResetLevel<AStage1_2GameMode, APlayer>("Stage1_2");
 		UEngineAPICore::GetCore()->OpenLevel("Stage1_3");
 	}
 	APlayer* player = GetWorld()->GetPawn<APlayer>();
