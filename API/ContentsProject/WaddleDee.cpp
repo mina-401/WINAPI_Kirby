@@ -59,7 +59,7 @@ AWaddleDee::~AWaddleDee()
 void AWaddleDee::BeginPlay()
 {
 	AMonster::BeginPlay();
-	SetCopyAbilityState(ECopyAbilityState::Fire);
+	SetCopyAbilityState(ECopyAbilityState::Normal);
 	SetDamagePower(100.0f);
 
 }
