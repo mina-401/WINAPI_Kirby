@@ -1,5 +1,6 @@
 #pragma once
 #include "EatItem.h"
+#include <EnginePlatform/EngineSound.h>
 // Ό³Έν :
 class AFireItem : public AEatItem
 {
@@ -19,6 +20,6 @@ public:
 protected:
 
 private:
-
+	
 };
 

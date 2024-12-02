@@ -6,6 +6,7 @@
 #include <EngineCore/ImageManager.h>
 #include <EngineCore/2DCollision.h>
 #include "ContentsEnum.h"
+#include <EnginePlatform/EngineSound.h>
 
 AHPItem::AHPItem()
 {
@@ -46,6 +47,8 @@ void AHPItem::CollisionEnter(AActor* _ColActor)
 	APlayer* player = dynamic_cast<APlayer*>(_ColActor);
 	if (nullptr != player)
 	{
+		BGMPlayer= UEngineSound::Play("Eat Item.WAV");
+		BGMPlayer.Loop(0);
 		//player->SetCurPlayerCopyState(this->GetCopyState());
 		//player->SetColAnyActor(this);
 		player->SetCurLife(player->GetCurLife() + 1);

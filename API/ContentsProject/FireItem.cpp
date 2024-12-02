@@ -2,6 +2,7 @@
 #include <EngineCore/SpriteRenderer.h>
 #include "FireItem.h"
 #include <EngineCore/ImageManager.h>
+#include <EnginePlatform/EngineSound.h>
 
 AFireItem::AFireItem()
 {
@@ -29,7 +30,6 @@ AFireItem::~AFireItem()
 
 void AFireItem::BeginPlay()
 {
-
 	AEatItem::BeginPlay();
 	SetCopyState(ECopyAbilityState::Fire);
 

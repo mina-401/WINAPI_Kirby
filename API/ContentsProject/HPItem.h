@@ -2,6 +2,7 @@
 
 #include <EngineCore/Actor.h>
 #include "ContentsEnum.h"  
+#include <EnginePlatform/EngineSound.h>
 
 class AHPItem : public AActor
 {
@@ -32,7 +33,7 @@ protected:
 	class U2DCollision* CollisionComponent = nullptr;
 private:
 
-
+	USoundPlayer BGMPlayer;
 	class APlayer* MainPawn = nullptr;
 
 };
