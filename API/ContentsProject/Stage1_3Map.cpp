@@ -8,6 +8,7 @@
 #include "StageBackground.h"
 #include "Player.h"
 #include "Stage1_3GameMode.h"
+#include "HPItem.h"
 
 AStage1_3Map::AStage1_3Map()
 {
@@ -90,6 +91,9 @@ void AStage1_3Map::BeginPlay()
 	BackGroundMap->SetActorLocation({ (float)BackGroundMap->GetActorLocation().X,(float)BackGroundMap->GetActorLocation().Y  });
 	APlayer* player = GetWorld()->GetPawn<APlayer>();
 	player->SetActorLocation({ 60,500 });
+
+	AHPItem* hpItem = GetWorld()->SpawnActor<AHPItem>();
+	hpItem->SetActorLocation({ 120,196-15 });
 }
 
 void AStage1_3Map::Tick(float _deltaTime)

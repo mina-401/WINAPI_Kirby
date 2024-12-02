@@ -176,7 +176,9 @@
       <Filter>ContentsObject\Play\Block</Filter>
     </ClInclude>
     <ClInclude Include="DownBrokeBlock.h" />
-    <ClInclude Include="HPItem.h" />
+    <ClInclude Include="HPItem.h">
+      <Filter>ContentsObject\Play\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PreCompile.cpp">
@@ -330,7 +332,9 @@
       <Filter>ContentsObject\Play\Block</Filter>
     </ClCompile>
     <ClCompile Include="DownBrokeBlock.cpp" />
-    <ClCompile Include="HPItem.cpp" />
+    <ClCompile Include="HPItem.cpp">
+      <Filter>ContentsObject\Play\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PreCompile">
