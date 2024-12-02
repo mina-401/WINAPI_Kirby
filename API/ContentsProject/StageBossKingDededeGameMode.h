@@ -23,5 +23,6 @@ protected:
 
 private:
 	USoundPlayer BGMPlayer;
+	class AKingDedede* NewBoss = nullptr;
 };
 

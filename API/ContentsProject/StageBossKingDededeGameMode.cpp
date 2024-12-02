@@ -26,7 +26,7 @@ void AStageBossKingDededeGameMode::BeginPlay()
 	player->SetColImage("foregroundKingDedede1-1_col.png");
 	AStageKingDededeMap* NewActor = GetWorld()->SpawnActor<AStageKingDededeMap>();
 
-	AKingDedede* NewBoss= GetWorld()->SpawnActor<AKingDedede>();
+	NewBoss= GetWorld()->SpawnActor<AKingDedede>();
 	NewBoss->SetColImage("foregroundKingDedede1-1_col.png");
 	NewBoss->SetActorLocation({ 400,365 });
 
@@ -54,7 +54,10 @@ void AStageBossKingDededeGameMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);
 
+	if (false == NewBoss->IsActive) {
+		UEngineAPICore::GetCore()->OpenLevel("Stage_DanceEnding");
 
+	}
 	if (true == UEngineInput::GetInst().IsDown('P'))
 	{
 		UEngineAPICore::GetCore()->OpenLevel("Stage_DanceEnding");

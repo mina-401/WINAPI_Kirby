@@ -14,6 +14,7 @@
 #include <EngineCore/2DCollision.h>
 #include "ContentsEnum.h"
 #include "MonsterBullet.h"
+#include "SoundManager.h"
 AKingDedede::AKingDedede()
 {
 	{
@@ -100,6 +101,23 @@ void AKingDedede::DieStart()
 	CollisionComponent->SetActive(false);
 	SpriteRenderer->ChangeAnimation("Die" + DirString);
 	MonWidget->SetActive(false);
+
+	{
+
+		SoundManager& SoundManager = SoundManager::GetInst();
+		USoundPlayer& BGMPlayer = SoundManager.GetSoundPlayer(); // 레퍼런스 사용
+
+
+		if (true == BGMPlayer.IsPlaying())
+		{
+			BGMPlayer.Stop();
+
+		}
+
+	}
+
+	BGMPlayer = UEngineSound::Play("Boss Clear.WAV");
+	BGMPlayer.Loop(0);
 }
 
 void AKingDedede::Die(float _DeltaTime)
@@ -109,13 +127,41 @@ void AKingDedede::Die(float _DeltaTime)
 		IsActive = false;
 		CollisionComponent->SetActive(false);
 		//SetActive(false);
+		
 	}
 	
 }
 void AKingDedede::Chase(float _DeltaTime)
 {
-	AMonster::Chase(_DeltaTime);
-	//CheckPlayerPos();
+	ChangeMonsterDir(_DeltaTime);
+	ChaseStart();
+
+	Gravity(_DeltaTime);
+	MonsterGroundCheck(GravityForce);
+
+	UColor Color = ColImage->GetColor(GetActorLocation(), UColor::WHITE);
+	if (Color == UColor::BLACK)
+	{
+		//FVector2D Pos = { MoveVector.X, MoveVector.Y - 4.5f };
+		FVector2D Pos = { 0.0f,-4.5f };
+		//FVector2D NextPos = Pos *_DeltaTime * Speed;
+		UColor NextColor = ColImage->GetColor(GetActorLocation() + Pos, UColor::WHITE);
+		if (NextColor != UColor::BLACK)
+		{
+			AddActorLocation(FVector2D::UP);
+		}
+
+	}
+	else {
+
+		TargetPosVector.Normalize();
+		MoveDirCheck(TargetPosVector);
+
+		FVector2D NextPos = MoveVector * _DeltaTime * Speed;
+		AddActorLocation(NextPos);
+	}
+
+	MonsterClimbingUphill();
 
 	if (CurChaseTime > 500.0f)
 	{

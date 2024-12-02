@@ -11,7 +11,7 @@ ADanceKirby::ADanceKirby()
 	SpriteRenderer = CreateDefaultSubObject<USpriteRenderer>();
 	SpriteRenderer->SetOrder(ERenderOrder::PLAYER);
 	SpriteRenderer->SetComponentScale({ 270, 270 });
-	SpriteRenderer->CreateAnimation("KirbyDance", "KirbyDance.png", 0, 29, 0.1f,false);
+	SpriteRenderer->CreateAnimation("KirbyDance", "KirbyDance.png", 0, 29, 0.09f,false);
 	SpriteRenderer->ChangeAnimation("KirbyDance");
 
 

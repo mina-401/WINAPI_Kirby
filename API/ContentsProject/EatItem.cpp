@@ -36,7 +36,7 @@ void AEatItem::CollisionEnter(AActor* _ColActor)
 	{
 		player->SetCurPlayerCopyState(this->GetCopyState());
 		player->SetColAnyActor(this);
-
+		player->IsChange = true;
 		SetActive(false);
 	}
 }

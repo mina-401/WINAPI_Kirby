@@ -46,7 +46,7 @@ public:
 	 void CheckPlayerPos() override;
 	void AttackCollisionEnter(AActor* _ColActor);
 
-	bool IsActive = false;
+	bool IsActive = true;
 protected:
 
 private:
