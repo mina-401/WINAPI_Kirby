@@ -227,9 +227,16 @@ void AWaddleDoo::Attack(float _DeltaTime)
 
 	Pos.Normalize();
 	FVector2D StarPos1 = Pos * 100;
+	//StarPos1.Y -= 25;
 	FVector2D StarPos2 = Pos * 80;
+
 	FVector2D StarPos3 = Pos * 60;
 	FVector2D StarPos4 = Pos * 40;
+
+	StarPos1.Y -= 25;
+	StarPos2.Y -= 25;
+	StarPos3.Y -= 25;
+	StarPos4.Y -= 25;
 	//if( Pos.Length())
 	BeamSpriteRenderer1->SetComponentLocation(StarPos1);
 	BeamSpriteRenderer2->SetComponentLocation(StarPos2);
